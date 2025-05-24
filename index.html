@@ -53,6 +53,7 @@
       user-select: text;
       position: relative;
       color: white;
+      transition: width 0.3s ease, height 0.3s ease;
     }
 
     h2 {
@@ -148,6 +149,15 @@
       display: none !important;
     }
 
+    /* ปรับ container เมื่อแสดงผลแบบแค่ผลลัพธ์ แนวนอนบนมือถือ */
+    .landscape-view {
+      width: 95vw !important;
+      height: 70vh !important;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+
     @media (max-width: 600px) {
       .container {
         padding: 25px 25px;
@@ -155,11 +165,15 @@
       #result {
         font-size: 1.4rem;
       }
+      .landscape-view #result {
+        font-size: 2.2rem !important;
+        padding: 20px 30px !important;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="container">
     <h2 class="inputs">คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
     <input id="sku" type="number" placeholder="กรอก SKU" class="inputs" />
     <input id="mu" type="number" placeholder="กรอก MU" class="inputs" />
@@ -173,12 +187,17 @@
   <script>
     let fullResult = '';
     let showOnlyResult = false;
+    const container = document.getElementById('container');
+    const resultEl = document.getElementById('result');
+
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    }
 
     function calculate() {
       const sku = parseFloat(document.getElementById('sku').value);
       const mu = parseFloat(document.getElementById('mu').value);
       const days = parseFloat(document.getElementById('days').value);
-      const resultEl = document.getElementById('result');
 
       if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
         alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
@@ -203,8 +222,7 @@
       }, 300);
     }
 
-    function toggleView() {
-      const resultEl = document.getElementById('result');
+    async function toggleView() {
       if (!fullResult) return;
 
       if (showOnlyResult) {
@@ -212,8 +230,14 @@
         document.querySelectorAll('.inputs').forEach(el => {
           el.classList.remove('hidden');
         });
+        container.classList.remove('landscape-view');
         resultEl.innerText = fullResult;
         showOnlyResult = false;
+
+        // ออกจาก fullscreen ถ้าเปิดอยู่
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        }
       } else {
         // ซ่อน inputs + ปุ่ม fullscreen + ปุ่มออกfullscreen + แสดงผลลัพธ์อย่างเดียว
         document.querySelectorAll('.inputs').forEach(el => {
@@ -222,6 +246,22 @@
         resultEl.classList.remove('hidden');
         resultEl.innerText = fullResult;
         showOnlyResult = true;
+
+        if (isMobile()) {
+          // พยายามเปิด fullscreen และหมุนจอเป็น landscape ถ้า support
+          try {
+            if (!document.fullscreenElement) {
+              await container.requestFullscreen();
+            }
+            if (screen.orientation && screen.orientation.lock) {
+              await screen.orientation.lock('landscape');
+            }
+          } catch (err) {
+            // ถ้าไม่ได้ก็ไม่เป็นไร
+            console.warn('ไม่สามารถล็อคแนวนอนได้:', err);
+          }
+          container.classList.add('landscape-view');
+        }
       }
     }
 
@@ -254,7 +294,7 @@
       exitFullscreenBtn.classList.add('hidden');
     }
 
-    // เวลามีการออก fullscreen ด้วยปุ่ม F11 หรืออื่นๆ ให้ซิงค์ปุ่ม
+    // ซิงค์ปุ่ม fullscreen
     document.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement) {
         fullscreenBtn.classList.add('hidden');
@@ -262,6 +302,7 @@
       } else {
         fullscreenBtn.classList.remove('hidden');
         exitFullscreenBtn.classList.add('hidden');
+        container.classList.remove('landscape-view');
       }
     });
   </script>
