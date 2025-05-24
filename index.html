@@ -140,7 +140,7 @@
       user-select: text;
       max-width: 100%;
       word-break: break-word;
-      transition: transform 0.3s ease, font-size 0.3s ease, width 0.3s ease, height 0.3s ease, padding 0.3s ease;
+      transition: transform 0.3s ease;
       display: inline-block;
       cursor: pointer;
     }
@@ -149,26 +149,48 @@
       display: none !important;
     }
 
-    /* เมื่อแสดงผลลัพธ์ใหญ่ */
+    /* ปรับ container เมื่อแสดงผลแบบแค่ผลลัพธ์ แนวนอนบนมือถือ */
+    .landscape-view {
+      width: 95vw !important;
+      height: 70vh !important;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* คลาสเพิ่มขนาดใหญ่สำหรับผลลัพธ์ */
     .result-large {
-      font-size: 8vw;
+      font-size: 8vw; /* ประมาณ 50% ความกว้างหน้าจอ */
       width: 50vw;
       height: 50vh;
       line-height: 50vh;
-      padding: 0;
-      user-select: text;
+      padding: 0 10px;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
-      border-radius: 16px;
-      margin: 0 auto;
-      box-shadow: 0 0 30px 8px #ffd700;
-      background: rgba(255, 215, 0, 0.15);
       text-align: center;
-      white-space: nowrap; /* ป้องกันขึ้นบรรทัดใหม่ */
+      cursor: pointer;
+      user-select: text;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px 25px;
+      }
+      #result {
+        font-size: 1.4rem;
+      }
+      .landscape-view #result {
+        font-size: 2.2rem !important;
+        padding: 20px 30px !important;
+      }
     }
   </style>
 </head>
@@ -186,9 +208,15 @@
 
   <script>
     let fullResult = '';
-    let showingLargeResult = false;
+    let showOnlyResult = false;
     const container = document.getElementById('container');
     const resultEl = document.getElementById('result');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
+
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    }
 
     function calculate() {
       const sku = parseFloat(document.getElementById('sku').value);
@@ -200,34 +228,74 @@
         return;
       }
 
-      // สูตรคำนวณ
-      const average = ((sku / 12 + mu / 34) / (2 * days));
-      const rounded = average.toFixed(8);
+      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
 
-      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${rounded}`;
-
-      // ซ่อน input กับปุ่มทั้งหมด
-      document.querySelectorAll('.inputs').forEach(el => el.classList.add('hidden'));
-
-      // แสดงผลลัพธ์ขนาดใหญ่ครึ่งจอ
       resultEl.innerText = fullResult;
-      resultEl.classList.add('result-large');
-      showingLargeResult = true;
-    }
+      showOnlyResult = false;
 
-    function toggleView() {
-      if (!showingLargeResult) return;
+      // แสดง inputs และปุ่ม fullscreen ถ้าซ่อนไว้ก่อนหน้า
+      document.querySelectorAll('.inputs').forEach(el => {
+        el.classList.remove('hidden');
+      });
 
-      // ถ้ากำลังแสดงผลลัพธ์ใหญ่ ให้กลับไปแสดง input และปุ่มปกติ
+      // ซ่อนปุ่มออกจากเต็มจอ และแสดงปุ่มเปิดเต็มจอเสมอ
+      fullscreenBtn.classList.remove('hidden');
+      exitFullscreenBtn.classList.add('hidden');
+
+      // effect เล็กน้อย
+      resultEl.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        resultEl.style.transform = 'scale(1)';
+      }, 300);
+
+      // เอาคลาสขยายออก ถ้ามี (เพื่อ reset ตอนคำนวณใหม่)
       resultEl.classList.remove('result-large');
-      resultEl.innerText = '';
-      showingLargeResult = false;
-      document.querySelectorAll('.inputs').forEach(el => el.classList.remove('hidden'));
     }
 
-    // Fullscreen functions (ถ้าต้องการใช้ตามเดิม)
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
+    async function toggleView() {
+      if (!fullResult) return;
+
+      if (showOnlyResult) {
+        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์ปกติ
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.remove('hidden');
+        });
+        container.classList.remove('landscape-view');
+        resultEl.innerText = fullResult;
+        resultEl.classList.remove('result-large');  // เอาคลาสใหญ่ ออก
+        showOnlyResult = false;
+
+        // ออกจาก fullscreen ถ้าเปิดอยู่
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        }
+      } else {
+        // ซ่อน inputs + ปุ่ม fullscreen + แสดงผลลัพธ์ใหญ่
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.add('hidden');
+        });
+        resultEl.innerText = fullResult;
+        resultEl.classList.add('result-large'); // เพิ่มคลาสใหญ่
+        showOnlyResult = true;
+
+        if (isMobile()) {
+          try {
+            if (!document.fullscreenElement) {
+              await container.requestFullscreen();
+            }
+            if (screen.orientation && screen.orientation.lock) {
+              await screen.orientation.lock('landscape');
+            }
+          } catch (err) {
+            console.warn('ไม่สามารถล็อคแนวนอนได้:', err);
+          }
+          container.classList.add('landscape-view');
+        }
+      }
+    }
+
+    // Fullscreen functions
     const elem = document.documentElement;
 
     function openFullscreen() {
@@ -254,6 +322,7 @@
       exitFullscreenBtn.classList.add('hidden');
     }
 
+    // ซิงค์ปุ่ม fullscreen
     document.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement) {
         fullscreenBtn.classList.add('hidden');
@@ -261,6 +330,7 @@
       } else {
         fullscreenBtn.classList.remove('hidden');
         exitFullscreenBtn.classList.add('hidden');
+        container.classList.remove('landscape-view');
       }
     });
   </script>
