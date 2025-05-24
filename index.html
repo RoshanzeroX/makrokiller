@@ -140,15 +140,27 @@
       user-select: text;
       max-width: 100%;
       word-break: break-word;
-      transition: transform 0.3s ease, background 0.3s ease, padding 0.3s ease, border-radius 0.3s ease;
+      transition: transform 0.3s ease;
       display: inline-block;
       cursor: pointer;
-      overflow-wrap: break-word;
     }
 
-    /* คลาสตอนโชว์ใหญ่ ลบกล่อง ทำข้อความใหญ่ */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ปรับ container เมื่อแสดงผลแบบแค่ผลลัพธ์ แนวนอนบนมือถือ */
+    .landscape-view {
+      width: 95vw !important;
+      height: 70vh !important;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ฟอนต์ผลลัพธ์ใหญ่ 50% ของขนาดจอ */
     .result-large {
-      font-size: 8vw;
+      font-size: 12vw; /* ปรับจาก 8vw เป็น 12vw */
       width: 90vw;
       max-height: 80vh;
       line-height: normal;
@@ -170,19 +182,6 @@
       text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    /* ปรับ container เมื่อแสดงผลแบบแค่ผลลัพธ์ แนวนอนบนมือถือ */
-    .landscape-view {
-      width: 95vw !important;
-      height: 70vh !important;
-      display: flex !important;
-      justify-content: center;
-      align-items: center;
-    }
-
     @media (max-width: 600px) {
       .container {
         padding: 25px 25px;
@@ -193,6 +192,9 @@
       .landscape-view #result {
         font-size: 2.2rem !important;
         padding: 20px 30px !important;
+      }
+      .result-large {
+        font-size: 18vw; /* ใหญ่มากขึ้นบนมือถือ */
       }
     }
   </style>
@@ -234,20 +236,16 @@
       const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
       fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
 
-      // แสดงผลใหญ่ และลบกล่องออกตอนโชว์ผล
+      // แสดงผลลัพธ์ใหญ่และซ่อน inputs กับปุ่ม
       resultEl.innerText = fullResult;
       resultEl.classList.add('result-large');
+      showOnlyResult = true;
 
-      showOnlyResult = false;
-
-      // แสดง inputs และปุ่ม fullscreen ถ้าซ่อนไว้ก่อนหน้า
-      document.querySelectorAll('.inputs').forEach(el => {
-        el.classList.remove('hidden');
-      });
-
-      // ซ่อนปุ่มออกจากเต็มจอ และแสดงปุ่มเปิดเต็มจอเสมอ
-      fullscreenBtn.classList.remove('hidden');
+      document.querySelectorAll('.inputs').forEach(el => el.classList.add('hidden'));
+      fullscreenBtn.classList.add('hidden');
       exitFullscreenBtn.classList.add('hidden');
+
+      container.classList.add('landscape-view');
 
       // effect เล็กน้อย
       resultEl.style.transform = 'scale(1.1)';
@@ -260,10 +258,8 @@
       if (!fullResult) return;
 
       if (showOnlyResult) {
-        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์เต็ม
-        document.querySelectorAll('.inputs').forEach(el => {
-          el.classList.remove('hidden');
-        });
+        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์ขนาดปกติ
+        document.querySelectorAll('.inputs').forEach(el => el.classList.remove('hidden'));
         container.classList.remove('landscape-view');
         resultEl.innerText = fullResult;
         resultEl.classList.remove('result-large');
@@ -275,16 +271,13 @@
         }
       } else {
         // ซ่อน inputs + ปุ่ม fullscreen + ปุ่มออกfullscreen + แสดงผลลัพธ์อย่างเดียว
-        document.querySelectorAll('.inputs').forEach(el => {
-          el.classList.add('hidden');
-        });
+        document.querySelectorAll('.inputs').forEach(el => el.classList.add('hidden'));
         resultEl.classList.remove('hidden');
         resultEl.innerText = fullResult;
         resultEl.classList.add('result-large');
         showOnlyResult = true;
 
         if (isMobile()) {
-          // พยายามเปิด fullscreen และหมุนจอเป็น landscape ถ้า support
           try {
             if (!document.fullscreenElement) {
               await container.requestFullscreen();
@@ -293,7 +286,6 @@
               await screen.orientation.lock('landscape');
             }
           } catch (err) {
-            // ถ้าไม่ได้ก็ไม่เป็นไร
             console.warn('ไม่สามารถล็อคแนวนอนได้:', err);
           }
           container.classList.add('landscape-view');
