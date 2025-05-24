@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>คำนวณออเดอร์เฉลี่ย</title>
   <style>
+    /* (เหมือนเดิมนะ) */
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
 
     * {
@@ -109,28 +110,6 @@
       box-shadow: 0 6px 20px rgba(85, 99, 214, 0.8);
     }
 
-    button:active::after {
-      transform: scale(4);
-      opacity: 0.3;
-      transition: 0s;
-    }
-
-    button::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 100px;
-      height: 100px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      opacity: 0;
-      pointer-events: none;
-      transition: transform 0.5s ease, opacity 1s ease;
-      z-index: 0;
-    }
-
     #fullscreen-btn {
       background: linear-gradient(45deg, #28a745, #218838);
       box-shadow: 0 4px 15px rgba(40, 167, 69, 0.6);
@@ -167,6 +146,7 @@
       word-break: break-word;
       transition: transform 0.3s ease;
       display: inline-block;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
@@ -188,10 +168,14 @@
     <button onclick="calculate()">คำนวณ</button>
     <button id="fullscreen-btn" onclick="openFullscreen()">เปิดเต็มจอ</button>
     <button id="exitfullscreen-btn" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
-    <h3 id="result"></h3>
+    <h3 id="result" onclick="toggleResult()"></h3>
   </div>
 
   <script>
+    let fullResult = ''; // เก็บข้อความแบบเต็ม
+    let shortResult = ''; // เก็บผลลัพธ์แค่ตัวเลข
+    let showingShort = false;
+
     function calculate() {
       const sku = parseFloat(document.getElementById('sku').value);
       const mu = parseFloat(document.getElementById('mu').value);
@@ -204,11 +188,28 @@
       }
 
       const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      resultEl.innerText = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+      shortResult = `${result}`;
+
+      resultEl.innerText = fullResult;
+      showingShort = false;
       resultEl.style.transform = 'scale(1.1)';
       setTimeout(() => {
         resultEl.style.transform = 'scale(1)';
       }, 300);
+    }
+
+    function toggleResult() {
+      const resultEl = document.getElementById('result');
+      if (!fullResult) return; // ถ้ายังไม่มีผลลัพธ์อย่าให้ทำอะไร
+
+      if (showingShort) {
+        resultEl.innerText = fullResult;
+        showingShort = false;
+      } else {
+        resultEl.innerText = shortResult;
+        showingShort = true;
+      }
     }
 
     function openFullscreen() {
