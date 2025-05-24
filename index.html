@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>คำนวณออเดอร์เฉลี่ย</title>
+  <title>เฉลี่ยออเดอร์ต่อวัน</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    body {
+    html, body {
       font-family: 'Sarabun', sans-serif;
-      margin: 0;
       height: 100vh;
+      width: 100vw;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
+      background: #000;
       position: relative;
-      z-index: 0;
-      overflow: hidden;
     }
 
     body::before {
@@ -34,171 +36,94 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      filter: blur(4px) brightness(0.5);
+      filter: blur(4px) brightness(0.5); /* เบลอน้อยลง + มืด */
       z-index: -1;
     }
 
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 30px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      animation: fadeIn 0.8s ease;
-      transform: scale(1);
-      transition: transform 0.2s ease;
-    }
-
-    .container:hover {
-      transform: scale(1.02);
-    }
-
-    h2 {
-      color: #2c3e50;
-      margin-bottom: 20px;
-      cursor: pointer;
-    }
-
-    input[type="number"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      margin-top: 15px;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    #result {
-      margin-top: 30px;
-      font-size: 26px;
-      font-weight: bold;
+    .result-display {
       color: #28a745;
+      text-align: center;
+      font-size: 8vw; /* ~50% ของจอมือถือแนวนอน */
+      font-weight: bold;
+      animation: popIn 0.6s ease, glow 1.5s ease-in-out;
+    }
+
+    @keyframes popIn {
+      0%   { transform: scale(0.6); opacity: 0; }
+      60%  { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 0px rgba(40,167,69,0); }
+      50% { text-shadow: 0 0 30px rgba(40,167,69,0.7); }
     }
 
     .hidden {
       display: none;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      body::before {
-        filter: blur(3px) brightness(0.4);
+    @media screen and (orientation: portrait) {
+      body.force-landscape::after {
+        content: "กรุณาหมุนหน้าจอเป็นแนวนอนเพื่อดูผลลัพธ์";
+        color: white;
+        font-size: 6vw;
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.7);
+        padding: 20px;
+        border-radius: 15px;
       }
-    }
-
-    .landscape-view {
-      transform: rotate(0deg);
     }
   </style>
 </head>
 <body>
-  <div class="container" id="container">
-    <h2 onclick="showResultOnly()">เฉลี่ยออเดอร์ต่อวัน</h2>
-    <div id="form-section">
-      <input id="sku" type="number" placeholder="กรอก SKU" />
-      <input id="mu" type="number" placeholder="กรอก MU" />
-      <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-      <button onclick="calculate()">คำนวณ</button>
-      <button id="fullscreenBtn" onclick="openFullscreen()">เปิดเต็มหน้าจอ</button>
-      <button id="exitFullscreenBtn" class="hidden" onclick="closeFullscreen()">ออกจากเต็มหน้าจอ</button>
-    </div>
-    <div id="result"></div>
-  </div>
+  <div class="result-display" id="result" onclick="showResultOnly()">เฉลี่ยออเดอร์ต่อวัน</div>
 
+  <!-- Confetti Script -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    const elem = document.documentElement;
-    const fullscreenBtn = document.getElementById("fullscreenBtn");
-    const exitFullscreenBtn = document.getElementById("exitFullscreenBtn");
-    const container = document.getElementById("container");
-
-    function calculate() {
-      const sku = parseFloat(document.getElementById('sku').value);
-      const mu = parseFloat(document.getElementById('mu').value);
-      const days = parseFloat(document.getElementById('days').value);
-
-      if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
-        alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
-        return;
-      }
-
-      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      document.getElementById('result').innerText = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
-    }
-
-    function openFullscreen() {
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen().then(() => {
-          updateFullscreenButtons();
-        }).catch(err => {
-          console.warn("เข้า fullscreen ไม่ได้:", err);
-        });
-      }
-    }
-
-    function closeFullscreen() {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-    }
-
-    function updateFullscreenButtons() {
-      if (document.fullscreenElement) {
-        fullscreenBtn.classList.add("hidden");
-        exitFullscreenBtn.classList.remove("hidden");
-      } else {
-        fullscreenBtn.classList.remove("hidden");
-        exitFullscreenBtn.classList.add("hidden");
-      }
-    }
-
-    document.addEventListener("fullscreenchange", () => {
-      updateFullscreenButtons();
-      if (!document.fullscreenElement) {
-        container.classList.remove("landscape-view");
-      }
-    });
+    const resultBox = document.getElementById("result");
+    const resultText = "เฉลี่ยออเดอร์ต่อวัน: 123.456"; // เปลี่ยนค่าตรงนี้ได้ตามจริง
 
     function showResultOnly() {
-      // คำนวณผลลัพธ์ก่อน
-      calculate();
+      // แสดงข้อความผลลัพธ์
+      resultBox.textContent = resultText;
+      resultBox.style.animation = "popIn 0.6s ease, glow 1.5s ease-in-out";
 
-      // ซ่อนฟอร์มและปุ่ม
-      document.getElementById("form-section").style.display = "none";
-
-      // พยายามเปิดแนวนอน (เฉพาะมือถือที่รองรับ)
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(() => {});
+      // เต็มหน้าจอ
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
       }
 
-      // ซ่อนปุ่ม fullscreen/exit
-      fullscreenBtn.classList.add("hidden");
-      exitFullscreenBtn.classList.add("hidden");
+      // ยิง confetti หลายชุด
+      bigConfettiBurst();
 
-      // เพิ่ม class เพื่อจัดแนวนอน (desktop fallback)
-      container.classList.add("landscape-view");
+      // บังคับแนวนอน (แค่ใส่ class แจ้งเตือนถ้าเป็นแนวตั้ง)
+      if (window.innerHeight > window.innerWidth) {
+        document.body.classList.add("force-landscape");
+      }
+    }
+
+    function bigConfettiBurst() {
+      const duration = 1.5 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 60,
+          spread: 140,
+          startVelocity: 50,
+          scalar: 1.4,
+          origin: { y: 0.6 }
+        });
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
     }
   </script>
 </body>
