@@ -40,7 +40,7 @@
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 20px;
       width: 90%;
@@ -50,6 +50,8 @@
       animation: fadeIn 0.8s ease;
       transform: scale(1);
       transition: transform 0.2s ease;
+      position: relative;
+      overflow: visible;
     }
 
     .container:hover {
@@ -81,6 +83,7 @@
       cursor: pointer;
       transition: background 0.3s ease;
       margin-top: 15px;
+      user-select: none;
     }
 
     button:hover {
@@ -96,11 +99,69 @@
       background: #1e7e34;
     }
 
+    #exitfullscreen-btn {
+      background: #dc3545;
+      margin-top: 10px;
+    }
+
+    #exitfullscreen-btn:hover {
+      background: #a71d2a;
+    }
+
     #result {
       margin-top: 20px;
-      font-size: 20px;
       font-weight: bold;
       color: #28a745;
+      font-size: 1.5rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      user-select: text;
+    }
+
+    #result.show {
+      opacity: 1;
+      transform: scale(1.6);
+    }
+
+    /* ริบบิ้นโปรยลงมา */
+    .ribbon {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 30px;
+      background: linear-gradient(45deg, #ff005e, #ff79c6);
+      opacity: 0.8;
+      animation: ribbonDrop 1.5s linear forwards;
+      border-radius: 3px;
+      box-shadow: 0 0 8px #ff005e;
+    }
+
+    /* สร้างริบบิ้นหลายอันโปรย */
+    .ribbons-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 10;
+    }
+
+    @keyframes ribbonDrop {
+      0% {
+        top: -30px;
+        opacity: 0.8;
+        transform: translateX(0) rotate(0deg);
+      }
+      100% {
+        top: 120%;
+        opacity: 0;
+        transform: translateX(20px) rotate(45deg);
+      }
     }
 
     @keyframes fadeIn {
@@ -124,7 +185,10 @@
     <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
     <button onclick="calculate()">คำนวณ</button>
     <button id="fullscreen-btn" onclick="openFullscreen()">เปิดเต็มจอ</button>
+    <button id="exitfullscreen-btn" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
     <h3 id="result"></h3>
+
+    <div class="ribbons-container" id="ribbons-container"></div>
   </div>
 
   <script>
@@ -132,6 +196,8 @@
       const sku = parseFloat(document.getElementById('sku').value);
       const mu = parseFloat(document.getElementById('mu').value);
       const days = parseFloat(document.getElementById('days').value);
+      const resultEl = document.getElementById('result');
+      const ribbonsContainer = document.getElementById('ribbons-container');
 
       if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
         alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
@@ -139,7 +205,31 @@
       }
 
       const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      document.getElementById('result').innerText = `ผลลัพธ์: ${result}`;
+      resultEl.innerText = `ผลลัพธ์: ${result}`;
+      // แสดงผลใหญ่ขึ้นพร้อม animation
+      resultEl.classList.add('show');
+
+      // สร้างริบบิ้นโปรยลงมาหลายอัน
+      ribbonsContainer.innerHTML = ''; // ล้างก่อน
+
+      for(let i = 0; i < 15; i++) {
+        const ribbon = document.createElement('div');
+        ribbon.classList.add('ribbon');
+        // กำหนดตำแหน่งซ้ายแบบสุ่มใน container
+        ribbon.style.left = (Math.random() * 100) + '%';
+        // กำหนดดีเลย์สุ่มของ animation เพื่อให้โปรยไม่พร้อมกัน
+        ribbon.style.animationDelay = (i * 0.1) + 's';
+        // กำหนดความสูงและความกว้างแบบสุ่มเล็กน้อย
+        ribbon.style.width = (5 + Math.random() * 5) + 'px';
+        ribbon.style.height = (20 + Math.random() * 20) + 'px';
+        ribbonsContainer.appendChild(ribbon);
+      }
+
+      // เอา effect ออกหลัง 3 วินาที
+      setTimeout(() => {
+        resultEl.classList.remove('show');
+        ribbonsContainer.innerHTML = '';
+      }, 3000);
     }
 
     function openFullscreen() {
@@ -150,6 +240,16 @@
         elem.webkitRequestFullscreen();
       } else if (elem.msRequestFullscreen) {
         elem.msRequestFullscreen();
+      }
+    }
+
+    function closeFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
       }
     }
   </script>
