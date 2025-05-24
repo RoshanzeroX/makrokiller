@@ -189,6 +189,8 @@
     let showOnlyResult = false;
     const container = document.getElementById('container');
     const resultEl = document.getElementById('result');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
 
     function isMobile() {
       return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
@@ -214,6 +216,10 @@
       document.querySelectorAll('.inputs').forEach(el => {
         el.classList.remove('hidden');
       });
+
+      // ซ่อนปุ่มออกจากเต็มจอ และแสดงปุ่มเปิดเต็มจอเสมอ
+      fullscreenBtn.classList.remove('hidden');
+      exitFullscreenBtn.classList.add('hidden');
 
       // effect เล็กน้อย
       resultEl.style.transform = 'scale(1.1)';
@@ -267,8 +273,6 @@
 
     // Fullscreen functions
     const elem = document.documentElement;
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
 
     function openFullscreen() {
       if (elem.requestFullscreen) {
