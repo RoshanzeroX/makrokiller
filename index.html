@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>คำนวณออเดอร์เฉลี่ย</title>
   <style>
-    /* (เหมือนเดิมนะ) */
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
 
     * {
@@ -19,9 +18,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
-      overflow: hidden;
       background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      user-select: none;
     }
 
     body::before {
@@ -50,9 +49,9 @@
       -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.18);
       text-align: center;
-      color: white;
-      user-select: none;
+      user-select: text;
       position: relative;
+      color: white;
     }
 
     h2 {
@@ -87,8 +86,6 @@
     }
 
     button {
-      position: relative;
-      overflow: hidden;
       width: 100%;
       padding: 16px 0;
       margin-top: 18px;
@@ -110,10 +107,13 @@
       box-shadow: 0 6px 20px rgba(85, 99, 214, 0.8);
     }
 
+    #fullscreen-btn, #exitfullscreen-btn {
+      margin-top: 12px;
+    }
+
     #fullscreen-btn {
       background: linear-gradient(45deg, #28a745, #218838);
       box-shadow: 0 4px 15px rgba(40, 167, 69, 0.6);
-      margin-top: 12px;
     }
 
     #fullscreen-btn:hover {
@@ -124,7 +124,6 @@
     #exitfullscreen-btn {
       background: linear-gradient(45deg, #dc3545, #b02a37);
       box-shadow: 0 4px 15px rgba(220, 53, 69, 0.6);
-      margin-top: 12px;
     }
 
     #exitfullscreen-btn:hover {
@@ -149,6 +148,10 @@
       cursor: pointer;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
     @media (max-width: 600px) {
       .container {
         padding: 25px 25px;
@@ -161,20 +164,21 @@
 </head>
 <body>
   <div class="container">
-    <h2>คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
-    <input id="sku" type="number" placeholder="กรอก SKU" />
-    <input id="mu" type="number" placeholder="กรอก MU" />
-    <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-    <button onclick="calculate()">คำนวณ</button>
+    <h2 class="inputs">คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
+    <input id="sku" type="number" placeholder="กรอก SKU" class="inputs" />
+    <input id="mu" type="number" placeholder="กรอก MU" class="inputs" />
+    <input id="days" type="number" placeholder="จำนวนวันทำงาน" class="inputs" />
+    <button onclick="calculate()" class="inputs">คำนวณ</button>
     <button id="fullscreen-btn" onclick="openFullscreen()">เปิดเต็มจอ</button>
     <button id="exitfullscreen-btn" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
-    <h3 id="result" onclick="toggleResult()"></h3>
+    <h3 id="result" onclick="toggleView()"></h3>
   </div>
 
   <script>
-    let fullResult = ''; // เก็บข้อความแบบเต็ม
-    let shortResult = ''; // เก็บผลลัพธ์แค่ตัวเลข
+    let fullResult = '';
+    let shortResult = '';
     let showingShort = false;
+    let showOnlyResult = false;
 
     function calculate() {
       const sku = parseFloat(document.getElementById('sku').value);
@@ -193,22 +197,38 @@
 
       resultEl.innerText = fullResult;
       showingShort = false;
+      showOnlyResult = false;
+
+      // แสดง inputs ถ้าซ่อนไว้ก่อนหน้า
+      document.querySelectorAll('.inputs').forEach(el => {
+        el.classList.remove('hidden');
+      });
+
+      // เพิ่ม effect เล็กน้อย
       resultEl.style.transform = 'scale(1.1)';
       setTimeout(() => {
         resultEl.style.transform = 'scale(1)';
       }, 300);
     }
 
-    function toggleResult() {
+    function toggleView() {
       const resultEl = document.getElementById('result');
-      if (!fullResult) return; // ถ้ายังไม่มีผลลัพธ์อย่าให้ทำอะไร
+      if (!fullResult) return;
 
-      if (showingShort) {
+      if (showOnlyResult) {
+        // แสดง inputs + ผลลัพธ์เต็ม
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.remove('hidden');
+        });
         resultEl.innerText = fullResult;
-        showingShort = false;
+        showOnlyResult = false;
       } else {
+        // ซ่อน inputs + แสดงผลลัพธ์แค่ตัวเลข
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.add('hidden');
+        });
         resultEl.innerText = shortResult;
-        showingShort = true;
+        showOnlyResult = true;
       }
     }
 
