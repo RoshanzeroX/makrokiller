@@ -5,55 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>คำนวณออเดอร์เฉลี่ย</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Sarabun', sans-serif;
-      background-color: #f0f4f8;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       margin: 0;
-      padding: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
+
     .container {
-      background-color: #ffffff;
+      background: white;
       padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
       text-align: center;
+      animation: fadeIn 0.8s ease;
+      transform: scale(1);
+      transition: transform 0.2s ease;
     }
+
+    .container:hover {
+      transform: scale(1.02);
+    }
+
     h2 {
-      margin-bottom: 24px;
-      color: #333333;
+      color: #2c3e50;
+      margin-bottom: 20px;
     }
+
     input[type="number"] {
       width: 100%;
       padding: 12px;
-      margin: 8px 0;
+      margin: 10px 0;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
     }
+
     button {
-      margin-top: 16px;
-      padding: 12px 20px;
+      width: 100%;
+      padding: 14px;
       font-size: 16px;
-      background-color: #007bff;
+      background: #007bff;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 15px;
     }
+
     button:hover {
-      background-color: #0056b3;
+      background: #0056b3;
     }
+
     #result {
       margin-top: 20px;
       font-size: 20px;
       font-weight: bold;
       color: #28a745;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -62,7 +87,7 @@
     <h2>คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
     <input id="sku" type="number" placeholder="กรอก SKU" />
     <input id="mu" type="number" placeholder="กรอก MU" />
-    <input id="days" type="number" placeholder="กรอกจำนวนวันทำงาน" />
+    <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
     <button onclick="calculate()">คำนวณ</button>
     <h3 id="result"></h3>
   </div>
