@@ -108,6 +108,25 @@
       box-shadow: 0 6px 20px rgba(85, 99, 214, 0.8);
     }
 
+    #fullscreenBtn, #exitFullscreenBtn {
+      margin-top: 10px;
+      padding: 10px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #34ace0, #33d9b2);
+      box-shadow: 0 3px 12px rgba(51, 217, 178, 0.6);
+      user-select: none;
+      cursor: pointer;
+      border: none;
+      color: white;
+      transition: background 0.3s ease;
+    }
+    #fullscreenBtn:hover, #exitFullscreenBtn:hover {
+      background: linear-gradient(45deg, #2c99cc, #28b999);
+      box-shadow: 0 5px 18px rgba(40, 185, 153, 0.8);
+    }
+
     #result {
       margin-top: 28px;
       font-weight: 700;
@@ -146,12 +165,13 @@
     <input id="mu" type="number" placeholder="กรอก MU" class="inputs" />
     <input id="days" type="number" placeholder="จำนวนวันทำงาน" class="inputs" />
     <button onclick="calculate()" class="inputs">คำนวณ</button>
+    <button id="fullscreenBtn" class="inputs" onclick="openFullscreen()">เปิดเต็มจอ</button>
+    <button id="exitFullscreenBtn" class="inputs hidden" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
     <h3 id="result" onclick="toggleView()"></h3>
   </div>
 
   <script>
     let fullResult = '';
-    let showingShort = false;
     let showOnlyResult = false;
 
     function calculate() {
@@ -169,15 +189,14 @@
       fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
 
       resultEl.innerText = fullResult;
-      showingShort = false;
       showOnlyResult = false;
 
-      // แสดง inputs ถ้าซ่อนไว้ก่อนหน้า
+      // แสดง inputs และปุ่ม fullscreen ถ้าซ่อนไว้ก่อนหน้า
       document.querySelectorAll('.inputs').forEach(el => {
         el.classList.remove('hidden');
       });
 
-      // เพิ่ม effect เล็กน้อย
+      // effect เล็กน้อย
       resultEl.style.transform = 'scale(1.1)';
       setTimeout(() => {
         resultEl.style.transform = 'scale(1)';
@@ -189,21 +208,62 @@
       if (!fullResult) return;
 
       if (showOnlyResult) {
-        // แสดง inputs + ผลลัพธ์เต็ม
+        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์เต็ม
         document.querySelectorAll('.inputs').forEach(el => {
           el.classList.remove('hidden');
         });
         resultEl.innerText = fullResult;
         showOnlyResult = false;
       } else {
-        // ซ่อน inputs + แสดงผลลัพธ์เต็มแค่ข้อความเดียว
+        // ซ่อน inputs + ปุ่ม fullscreen + ปุ่มออกfullscreen + แสดงผลลัพธ์อย่างเดียว
         document.querySelectorAll('.inputs').forEach(el => {
           el.classList.add('hidden');
         });
+        resultEl.classList.remove('hidden');
         resultEl.innerText = fullResult;
         showOnlyResult = true;
       }
     }
+
+    // Fullscreen functions
+    const elem = document.documentElement;
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
+
+    function openFullscreen() {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+      }
+      fullscreenBtn.classList.add('hidden');
+      exitFullscreenBtn.classList.remove('hidden');
+    }
+
+    function closeFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+      fullscreenBtn.classList.remove('hidden');
+      exitFullscreenBtn.classList.add('hidden');
+    }
+
+    // เวลามีการออก fullscreen ด้วยปุ่ม F11 หรืออื่นๆ ให้ซิงค์ปุ่ม
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement) {
+        fullscreenBtn.classList.add('hidden');
+        exitFullscreenBtn.classList.remove('hidden');
+      } else {
+        fullscreenBtn.classList.remove('hidden');
+        exitFullscreenBtn.classList.add('hidden');
+      }
+    });
   </script>
 </body>
 </html>
