@@ -151,7 +151,7 @@
 
     /* เมื่อแสดงผลลัพธ์ใหญ่ */
     .result-large {
-      font-size: 8vw; /* ขนาดใหญ่ตาม viewport width */
+      font-size: 8vw;
       width: 50vw;
       height: 50vh;
       line-height: 50vh;
@@ -166,7 +166,7 @@
       box-shadow: 0 0 30px 8px #ffd700;
       background: rgba(255, 215, 0, 0.15);
       text-align: center;
-      white-space: nowrap;
+      white-space: nowrap; /* ป้องกันขึ้นบรรทัดใหม่ */
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -200,8 +200,11 @@
         return;
       }
 
-      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+      // สูตรคำนวณ
+      const average = ((sku / 12 + mu / 34) / (2 * days));
+      const rounded = average.toFixed(8);
+
+      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${rounded}`;
 
       // ซ่อน input กับปุ่มทั้งหมด
       document.querySelectorAll('.inputs').forEach(el => el.classList.add('hidden'));
