@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>คำนวณออเดอร์เฉลี่ย</title>
+</head>
+<body>
+<h2>คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
+
+<label>SKU: <input id="sku" type="number" placeholder="กรอก SKU" /></label><br/><br/>
+<label>MU: <input id="mu" type="number" placeholder="กรอก MU" /></label><br/><br/>
+<label>จำนวนวันทำงาน: <input id="days" type="number" placeholder="กรอกจำนวนวันทำงาน" /></label><br/><br/>
+<button onclick="calculate()">คำนวณ</button>
+
+<h3 id="result"></h3>
+
+<script>
+function calculate() {
+  const sku = parseFloat(document.getElementById('sku').value);
+  const mu = parseFloat(document.getElementById('mu').value);
+  const days = parseFloat(document.getElementById('days').value);
+
+  if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
+    alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
+    return;
+  }
+
+  const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+  document.getElementById('result').innerText = `ผลลัพธ์: ${result}`;
+}
+</script>
+</body>
+</html>
