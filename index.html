@@ -1,34 +1,86 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>คำนวณออเดอร์เฉลี่ย</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>คำนวณออเดอร์เฉลี่ย</title>
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 24px;
+      color: #333333;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 16px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #28a745;
+    }
+  </style>
 </head>
 <body>
-<h2>คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
+  <div class="container">
+    <h2>คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
+    <input id="sku" type="number" placeholder="กรอก SKU" />
+    <input id="mu" type="number" placeholder="กรอก MU" />
+    <input id="days" type="number" placeholder="กรอกจำนวนวันทำงาน" />
+    <button onclick="calculate()">คำนวณ</button>
+    <h3 id="result"></h3>
+  </div>
 
-<label>SKU: <input id="sku" type="number" placeholder="กรอก SKU" /></label><br/><br/>
-<label>MU: <input id="mu" type="number" placeholder="กรอก MU" /></label><br/><br/>
-<label>จำนวนวันทำงาน: <input id="days" type="number" placeholder="กรอกจำนวนวันทำงาน" /></label><br/><br/>
-<button onclick="calculate()">คำนวณ</button>
+  <script>
+    function calculate() {
+      const sku = parseFloat(document.getElementById('sku').value);
+      const mu = parseFloat(document.getElementById('mu').value);
+      const days = parseFloat(document.getElementById('days').value);
 
-<h3 id="result"></h3>
+      if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
+        alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
+        return;
+      }
 
-<script>
-function calculate() {
-  const sku = parseFloat(document.getElementById('sku').value);
-  const mu = parseFloat(document.getElementById('mu').value);
-  const days = parseFloat(document.getElementById('days').value);
-
-  if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
-    alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
-    return;
-  }
-
-  const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-  document.getElementById('result').innerText = `ผลลัพธ์: ${result}`;
-}
-</script>
+      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+      document.getElementById('result').innerText = `ผลลัพธ์: ${result}`;
+    }
+  </script>
 </body>
 </html>
