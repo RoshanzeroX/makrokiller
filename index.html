@@ -87,6 +87,15 @@
       background: #0056b3;
     }
 
+    #fullscreen-btn {
+      background: #28a745;
+      margin-top: 10px;
+    }
+
+    #fullscreen-btn:hover {
+      background: #1e7e34;
+    }
+
     #result {
       margin-top: 20px;
       font-size: 20px;
@@ -114,6 +123,7 @@
     <input id="mu" type="number" placeholder="กรอก MU" />
     <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
     <button onclick="calculate()">คำนวณ</button>
+    <button id="fullscreen-btn" onclick="openFullscreen()">เปิดเต็มจอ</button>
     <h3 id="result"></h3>
   </div>
 
@@ -130,6 +140,17 @@
 
       const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
       document.getElementById('result').innerText = `ผลลัพธ์: ${result}`;
+    }
+
+    function openFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
     }
   </script>
 </body>
