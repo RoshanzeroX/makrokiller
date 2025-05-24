@@ -18,8 +18,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
-      z-index: 0;
+      background: linear-gradient(135deg, #323232, #1a1a1a);
+      color: white;
+      user-select: none;
       overflow: hidden;
     }
 
@@ -34,105 +35,164 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      filter: blur(4px) brightness(0.5);
+      filter: blur(6px) brightness(0.5);
       z-index: -1;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 30px;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
+      padding: 30px 40px;
       width: 90%;
       max-width: 420px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       text-align: center;
-      animation: fadeIn 0.8s ease;
-      transform: scale(1);
-      transition: transform 0.2s ease;
-    }
-
-    .container:hover {
-      transform: scale(1.02);
+      user-select: text;
+      position: relative;
+      color: white;
+      transition: width 0.3s ease, height 0.3s ease;
     }
 
     h2 {
-      color: #2c3e50;
-      margin-bottom: 20px;
-      cursor: pointer;
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 1.8rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
     }
 
     input[type="number"] {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
+      padding: 14px 15px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      outline: none;
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
+      transition: background 0.3s ease;
+      user-select: text;
+    }
+
+    input[type="number"]::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    input[type="number"]:focus {
+      background: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 0 12px 2px rgba(255,255,255,0.6);
     }
 
     button {
       width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      background: #007bff;
-      color: white;
+      padding: 16px 0;
+      margin-top: 18px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #667eea, #764ba2);
       border: none;
-      border-radius: 10px;
+      border-radius: 15px;
       cursor: pointer;
-      transition: background 0.3s ease;
-      margin-top: 15px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.6);
+      user-select: none;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
     }
 
     button:hover {
-      background: #0056b3;
+      background: linear-gradient(45deg, #5563d6, #6b3ea3);
+      box-shadow: 0 6px 20px rgba(85, 99, 214, 0.8);
+    }
+
+    #fullscreenBtn, #exitFullscreenBtn {
+      margin-top: 10px;
+      padding: 10px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #34ace0, #33d9b2);
+      box-shadow: 0 3px 12px rgba(51, 217, 178, 0.6);
+      user-select: none;
+      cursor: pointer;
+      border: none;
+      color: white;
+      transition: background 0.3s ease;
+    }
+    #fullscreenBtn:hover, #exitFullscreenBtn:hover {
+      background: linear-gradient(45deg, #2c99cc, #28b999);
+      box-shadow: 0 5px 18px rgba(40, 185, 153, 0.8);
     }
 
     #result {
-      margin-top: 30px;
-      font-size: 26px;
-      font-weight: bold;
-      color: #28a745;
+      margin-top: 28px;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #ffd700;
+      text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
+      background: rgba(0,0,0,0.3);
+      padding: 12px 18px;
+      border-radius: 12px;
+      user-select: text;
+      max-width: 100%;
+      word-break: break-word;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      cursor: pointer;
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* ปรับ container เมื่อแสดงผลแบบแค่ผลลัพธ์ แนวนอนบนมือถือ */
+    .landscape-view {
+      width: 95vw !important;
+      height: 70vh !important;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
     }
 
     @media (max-width: 600px) {
-      body::before {
-        filter: blur(3px) brightness(0.4);
+      .container {
+        padding: 25px 25px;
       }
-    }
-
-    .landscape-view {
-      transform: rotate(0deg);
+      #result {
+        font-size: 1.4rem;
+      }
+      .landscape-view #result {
+        font-size: 2.2rem !important;
+        padding: 20px 30px !important;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container" id="container">
-    <h2 onclick="showResultOnly()">เฉลี่ยออเดอร์ต่อวัน</h2>
-    <div id="form-section">
-      <input id="sku" type="number" placeholder="กรอก SKU" />
-      <input id="mu" type="number" placeholder="กรอก MU" />
-      <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-      <button onclick="calculate()">คำนวณ</button>
-      <button id="fullscreenBtn" onclick="openFullscreen()">เปิดเต็มหน้าจอ</button>
-      <button id="exitFullscreenBtn" class="hidden" onclick="closeFullscreen()">ออกจากเต็มหน้าจอ</button>
-    </div>
-    <div id="result"></div>
+    <h2 class="inputs">คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
+    <input id="sku" type="number" placeholder="กรอก SKU" class="inputs" />
+    <input id="mu" type="number" placeholder="กรอก MU" class="inputs" />
+    <input id="days" type="number" placeholder="จำนวนวันทำงาน" class="inputs" />
+    <button onclick="calculate()" class="inputs">คำนวณ</button>
+    <button id="fullscreenBtn" class="inputs" onclick="openFullscreen()">เปิดเต็มจอ</button>
+    <button id="exitFullscreenBtn" class="inputs hidden" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
+    <h3 id="result" onclick="toggleView()"></h3>
   </div>
 
   <script>
-    const elem = document.documentElement;
-    const fullscreenBtn = document.getElementById("fullscreenBtn");
-    const exitFullscreenBtn = document.getElementById("exitFullscreenBtn");
-    const container = document.getElementById("container");
+    let fullResult = '';
+    let showOnlyResult = false;
+    const container = document.getElementById('container');
+    const resultEl = document.getElementById('result');
+
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    }
 
     function calculate() {
       const sku = parseFloat(document.getElementById('sku').value);
@@ -145,61 +205,106 @@
       }
 
       const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      document.getElementById('result').innerText = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+
+      resultEl.innerText = fullResult;
+      showOnlyResult = false;
+
+      // แสดง inputs และปุ่ม fullscreen ถ้าซ่อนไว้ก่อนหน้า
+      document.querySelectorAll('.inputs').forEach(el => {
+        el.classList.remove('hidden');
+      });
+
+      // effect เล็กน้อย
+      resultEl.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        resultEl.style.transform = 'scale(1)';
+      }, 300);
     }
+
+    async function toggleView() {
+      if (!fullResult) return;
+
+      if (showOnlyResult) {
+        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์เต็ม
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.remove('hidden');
+        });
+        container.classList.remove('landscape-view');
+        resultEl.innerText = fullResult;
+        showOnlyResult = false;
+
+        // ออกจาก fullscreen ถ้าเปิดอยู่
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        }
+      } else {
+        // ซ่อน inputs + ปุ่ม fullscreen + ปุ่มออกfullscreen + แสดงผลลัพธ์อย่างเดียว
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.add('hidden');
+        });
+        resultEl.classList.remove('hidden');
+        resultEl.innerText = fullResult;
+        showOnlyResult = true;
+
+        if (isMobile()) {
+          // พยายามเปิด fullscreen และหมุนจอเป็น landscape ถ้า support
+          try {
+            if (!document.fullscreenElement) {
+              await container.requestFullscreen();
+            }
+            if (screen.orientation && screen.orientation.lock) {
+              await screen.orientation.lock('landscape');
+            }
+          } catch (err) {
+            // ถ้าไม่ได้ก็ไม่เป็นไร
+            console.warn('ไม่สามารถล็อคแนวนอนได้:', err);
+          }
+          container.classList.add('landscape-view');
+        }
+      }
+    }
+
+    // Fullscreen functions
+    const elem = document.documentElement;
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
 
     function openFullscreen() {
       if (elem.requestFullscreen) {
-        elem.requestFullscreen().then(() => {
-          updateFullscreenButtons();
-        }).catch(err => {
-          console.warn("เข้า fullscreen ไม่ได้:", err);
-        });
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
       }
+      fullscreenBtn.classList.add('hidden');
+      exitFullscreenBtn.classList.remove('hidden');
     }
 
     function closeFullscreen() {
       if (document.exitFullscreen) {
         document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
       }
+      fullscreenBtn.classList.remove('hidden');
+      exitFullscreenBtn.classList.add('hidden');
     }
 
-    function updateFullscreenButtons() {
+    // ซิงค์ปุ่ม fullscreen
+    document.addEventListener('fullscreenchange', () => {
       if (document.fullscreenElement) {
-        fullscreenBtn.classList.add("hidden");
-        exitFullscreenBtn.classList.remove("hidden");
+        fullscreenBtn.classList.add('hidden');
+        exitFullscreenBtn.classList.remove('hidden');
       } else {
-        fullscreenBtn.classList.remove("hidden");
-        exitFullscreenBtn.classList.add("hidden");
-      }
-    }
-
-    document.addEventListener("fullscreenchange", () => {
-      updateFullscreenButtons();
-      if (!document.fullscreenElement) {
-        container.classList.remove("landscape-view");
+        fullscreenBtn.classList.remove('hidden');
+        exitFullscreenBtn.classList.add('hidden');
+        container.classList.remove('landscape-view');
       }
     });
-
-    function showResultOnly() {
-      // คำนวณผลลัพธ์ก่อน
-      calculate();
-
-      // ซ่อนฟอร์มและปุ่ม
-      document.getElementById("form-section").style.display = "none";
-
-      // พยายามเปิดแนวนอน (เฉพาะมือถือที่รองรับ)
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(() => {});
-      }
-
-      // ซ่อนปุ่ม fullscreen/exit
-      fullscreenBtn.classList.add("hidden");
-      exitFullscreenBtn.classList.add("hidden");
-
-      // เพิ่ม class เพื่อจัดแนวนอน (desktop fallback)
-      container.classList.add("landscape-view");
-    }
   </script>
 </body>
 </html>
