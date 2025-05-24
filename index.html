@@ -9,20 +9,18 @@
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
-    html, body {
+    body {
       font-family: 'Sarabun', sans-serif;
+      margin: 0;
       height: 100vh;
-      width: 100vw;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #000;
       position: relative;
+      z-index: 0;
+      overflow: hidden;
     }
 
     body::before {
@@ -44,81 +42,139 @@
       background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      text-align: center;
       width: 90%;
       max-width: 420px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+      transform: scale(1);
       transition: transform 0.2s ease;
     }
 
-    .container input, .container button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      font-size: 16px;
-      border-radius: 10px;
+    .container:hover {
+      transform: scale(1.02);
     }
 
-    .container button {
-      background-color: #007bff;
-      color: white;
-      border: none;
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
       cursor: pointer;
     }
 
-    .container button:hover {
-      background-color: #0056b3;
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
     }
 
-    .result-display {
-      display: none;
-      color: #28a745;
-      text-align: center;
-      font-size: 8vw;
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 26px;
       font-weight: bold;
-      animation: popIn 0.6s ease, glow 1.5s ease-in-out;
+      color: #28a745;
+      min-height: 40px;
+      user-select: none;
     }
 
-    @keyframes popIn {
-      0%   { transform: scale(0.6); opacity: 0; }
-      60%  { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); }
+    #result.big-result {
+      font-size: 8vh; /* ประมาณ 50% ของความสูงหน้าจอ */
+      font-weight: bold;
+      color: #28a745;
+      text-shadow: 0 0 10px #28a745, 0 0 20px #28a745;
+      animation: zoomPop 0.6s ease-out;
+      user-select: text;
     }
 
-    @keyframes glow {
-      0%, 100% { text-shadow: 0 0 0px rgba(40,167,69,0); }
-      50% { text-shadow: 0 0 30px rgba(40,167,69,0.7); }
-    }
-
-    @media screen and (orientation: portrait) {
-      body.force-landscape::after {
-        content: "กรุณาหมุนหน้าจอเป็นแนวนอนเพื่อดูผลลัพธ์";
-        color: white;
-        font-size: 6vw;
-        position: fixed;
-        text-align: center;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0,0,0,0.7);
-        padding: 20px;
-        border-radius: 15px;
+    @keyframes zoomPop {
+      0% {
+        transform: scale(0.3);
+        opacity: 0;
       }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      body::before {
+        filter: blur(3px) brightness(0.4);
+      }
+      .landscape-view {
+        /* ปรับ container ให้กว้างเต็มหน้าจอ และแนวนอน */
+        width: 100vw !important;
+        max-width: none !important;
+        height: 100vh;
+        border-radius: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #result.big-result {
+        font-size: 12vh;
+        word-break: break-word;
+      }
+    }
+
+    .landscape-view {
+      transform: rotate(0deg);
     }
   </style>
 </head>
 <body>
-  <div class="container" id="inputContainer">
-    <h2>คำนวณออเดอร์เฉลี่ยต่อวัน</h2>
-    <input id="sku" type="number" placeholder="กรอก SKU" />
-    <input id="mu" type="number" placeholder="กรอก MU" />
-    <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-    <button onclick="calculate()">คำนวณ</button>
+  <div class="container" id="container">
+    <h2 onclick="showResultOnly()">เฉลี่ยออเดอร์ต่อวัน</h2>
+    <div id="form-section">
+      <input id="sku" type="number" placeholder="กรอก SKU" />
+      <input id="mu" type="number" placeholder="กรอก MU" />
+      <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
+      <button onclick="calculate()">คำนวณ</button>
+      <button id="fullscreenBtn" onclick="openFullscreen()">เปิดเต็มหน้าจอ</button>
+      <button id="exitFullscreenBtn" class="hidden" onclick="closeFullscreen()">ออกจากเต็มหน้าจอ</button>
+    </div>
+    <div id="result"></div>
   </div>
 
-  <div class="result-display" id="resultDisplay"></div>
-
   <script>
+    const elem = document.documentElement;
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
+    const exitFullscreenBtn = document.getElementById("exitFullscreenBtn");
+    const container = document.getElementById("container");
+    const formSection = document.getElementById("form-section");
+    const resultEl = document.getElementById("result");
+
     function calculate() {
       const sku = parseFloat(document.getElementById('sku').value);
       const mu = parseFloat(document.getElementById('mu').value);
@@ -126,26 +182,63 @@
 
       if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
         alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
-        return;
+        return null;
       }
 
-      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+      return ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+    }
 
-      // ซ่อน input, แสดงผลลัพธ์
-      document.getElementById('inputContainer').style.display = 'none';
-      const resultBox = document.getElementById('resultDisplay');
-      resultBox.textContent = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
-      resultBox.style.display = 'block';
-
-      // ขอ fullscreen
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
+    function openFullscreen() {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen().then(() => {
+          updateFullscreenButtons();
+        }).catch(err => {
+          console.warn("เข้า fullscreen ไม่ได้:", err);
+        });
       }
+    }
 
-      // ถ้าแนวตั้ง → เตือนให้หมุนหน้าจอ
-      if (window.innerHeight > window.innerWidth) {
-        document.body.classList.add("force-landscape");
+    function closeFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
       }
+    }
+
+    function updateFullscreenButtons() {
+      if (document.fullscreenElement) {
+        fullscreenBtn.classList.add("hidden");
+        exitFullscreenBtn.classList.remove("hidden");
+      } else {
+        fullscreenBtn.classList.remove("hidden");
+        exitFullscreenBtn.classList.add("hidden");
+      }
+    }
+
+    document.addEventListener("fullscreenchange", () => {
+      updateFullscreenButtons();
+      if (!document.fullscreenElement) {
+        container.classList.remove("landscape-view");
+      }
+    });
+
+    function showResultOnly() {
+      const res = calculate();
+      if (res === null) return;
+
+      // แสดงผล
+      resultEl.innerText = `เฉลี่ยออเดอร์ต่อวัน: ${res}`;
+      resultEl.classList.add("big-result");
+
+      // ซ่อนฟอร์มและปุ่มทั้งหมด
+      formSection.style.display = "none";
+      fullscreenBtn.classList.add("hidden");
+      exitFullscreenBtn.classList.add("hidden");
+
+      // ปรับ container แนวนอนสำหรับมือถือ
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(() => {});
+      }
+      container.classList.add("landscape-view");
     }
   </script>
 </body>
