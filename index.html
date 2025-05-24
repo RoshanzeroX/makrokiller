@@ -92,31 +92,6 @@
       font-size: 26px;
       font-weight: bold;
       color: #28a745;
-      min-height: 40px;
-      user-select: none;
-    }
-
-    #result.big-result {
-      font-size: 8vh; /* ประมาณ 50% ของความสูงหน้าจอ */
-      font-weight: bold;
-      color: #28a745;
-      text-shadow: 0 0 10px #28a745, 0 0 20px #28a745;
-      animation: zoomPop 0.6s ease-out;
-      user-select: text;
-    }
-
-    @keyframes zoomPop {
-      0% {
-        transform: scale(0.3);
-        opacity: 0;
-      }
-      50% {
-        transform: scale(1.2);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1);
-      }
     }
 
     .hidden {
@@ -131,20 +106,6 @@
     @media (max-width: 600px) {
       body::before {
         filter: blur(3px) brightness(0.4);
-      }
-      .landscape-view {
-        /* ปรับ container ให้กว้างเต็มหน้าจอ และแนวนอน */
-        width: 100vw !important;
-        max-width: none !important;
-        height: 100vh;
-        border-radius: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #result.big-result {
-        font-size: 12vh;
-        word-break: break-word;
       }
     }
 
@@ -172,8 +133,6 @@
     const fullscreenBtn = document.getElementById("fullscreenBtn");
     const exitFullscreenBtn = document.getElementById("exitFullscreenBtn");
     const container = document.getElementById("container");
-    const formSection = document.getElementById("form-section");
-    const resultEl = document.getElementById("result");
 
     function calculate() {
       const sku = parseFloat(document.getElementById('sku').value);
@@ -182,10 +141,11 @@
 
       if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
         alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
-        return null;
+        return;
       }
 
-      return ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+      document.getElementById('result').innerText = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
     }
 
     function openFullscreen() {
@@ -222,22 +182,22 @@
     });
 
     function showResultOnly() {
-      const res = calculate();
-      if (res === null) return;
+      // คำนวณผลลัพธ์ก่อน
+      calculate();
 
-      // แสดงผล
-      resultEl.innerText = `เฉลี่ยออเดอร์ต่อวัน: ${res}`;
-      resultEl.classList.add("big-result");
+      // ซ่อนฟอร์มและปุ่ม
+      document.getElementById("form-section").style.display = "none";
 
-      // ซ่อนฟอร์มและปุ่มทั้งหมด
-      formSection.style.display = "none";
-      fullscreenBtn.classList.add("hidden");
-      exitFullscreenBtn.classList.add("hidden");
-
-      // ปรับ container แนวนอนสำหรับมือถือ
+      // พยายามเปิดแนวนอน (เฉพาะมือถือที่รองรับ)
       if (screen.orientation && screen.orientation.lock) {
         screen.orientation.lock('landscape').catch(() => {});
       }
+
+      // ซ่อนปุ่ม fullscreen/exit
+      fullscreenBtn.classList.add("hidden");
+      exitFullscreenBtn.classList.add("hidden");
+
+      // เพิ่ม class เพื่อจัดแนวนอน (desktop fallback)
       container.classList.add("landscape-view");
     }
   </script>
