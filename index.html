@@ -140,9 +140,34 @@
       user-select: text;
       max-width: 100%;
       word-break: break-word;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s ease, padding 0.3s ease, border-radius 0.3s ease;
       display: inline-block;
       cursor: pointer;
+      overflow-wrap: break-word;
+    }
+
+    /* คลาสตอนโชว์ใหญ่ ลบกล่อง ทำข้อความใหญ่ */
+    .result-large {
+      font-size: 8vw;
+      width: 90vw;
+      max-height: 80vh;
+      line-height: normal;
+      padding: 0;
+      background: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center !important;
+      cursor: pointer;
+      user-select: text;
+      white-space: normal;
+      overflow-wrap: break-word;
+      overflow-y: auto;
+      margin: 0 auto;
+      color: #ffd700;
+      text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500;
     }
 
     .hidden {
@@ -156,28 +181,6 @@
       display: flex !important;
       justify-content: center;
       align-items: center;
-    }
-
-    /* คลาสเพิ่มขนาดใหญ่สำหรับผลลัพธ์ */
-    .result-large {
-      font-size: 8vw; /* ประมาณ 50% ความกว้างหน้าจอ */
-      width: 50vw;
-      height: 50vh;
-      line-height: 50vh;
-      padding: 0 10px;
-      background: transparent;
-      border-radius: 0;
-      box-shadow: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      cursor: pointer;
-      user-select: text;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin: 0 auto;
     }
 
     @media (max-width: 600px) {
@@ -231,7 +234,10 @@
       const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
       fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
 
+      // แสดงผลใหญ่ และลบกล่องออกตอนโชว์ผล
       resultEl.innerText = fullResult;
+      resultEl.classList.add('result-large');
+
       showOnlyResult = false;
 
       // แสดง inputs และปุ่ม fullscreen ถ้าซ่อนไว้ก่อนหน้า
@@ -248,22 +254,19 @@
       setTimeout(() => {
         resultEl.style.transform = 'scale(1)';
       }, 300);
-
-      // เอาคลาสขยายออก ถ้ามี (เพื่อ reset ตอนคำนวณใหม่)
-      resultEl.classList.remove('result-large');
     }
 
     async function toggleView() {
       if (!fullResult) return;
 
       if (showOnlyResult) {
-        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์ปกติ
+        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์เต็ม
         document.querySelectorAll('.inputs').forEach(el => {
           el.classList.remove('hidden');
         });
         container.classList.remove('landscape-view');
         resultEl.innerText = fullResult;
-        resultEl.classList.remove('result-large');  // เอาคลาสใหญ่ ออก
+        resultEl.classList.remove('result-large');
         showOnlyResult = false;
 
         // ออกจาก fullscreen ถ้าเปิดอยู่
@@ -271,15 +274,17 @@
           await document.exitFullscreen();
         }
       } else {
-        // ซ่อน inputs + ปุ่ม fullscreen + แสดงผลลัพธ์ใหญ่
+        // ซ่อน inputs + ปุ่ม fullscreen + ปุ่มออกfullscreen + แสดงผลลัพธ์อย่างเดียว
         document.querySelectorAll('.inputs').forEach(el => {
           el.classList.add('hidden');
         });
+        resultEl.classList.remove('hidden');
         resultEl.innerText = fullResult;
-        resultEl.classList.add('result-large'); // เพิ่มคลาสใหญ่
+        resultEl.classList.add('result-large');
         showOnlyResult = true;
 
         if (isMobile()) {
+          // พยายามเปิด fullscreen และหมุนจอเป็น landscape ถ้า support
           try {
             if (!document.fullscreenElement) {
               await container.requestFullscreen();
@@ -288,6 +293,7 @@
               await screen.orientation.lock('landscape');
             }
           } catch (err) {
+            // ถ้าไม่ได้ก็ไม่เป็นไร
             console.warn('ไม่สามารถล็อคแนวนอนได้:', err);
           }
           container.classList.add('landscape-view');
