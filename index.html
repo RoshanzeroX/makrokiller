@@ -3,40 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>หน้าแรก - คำนวณค่าเฉลี่ย MU และ SKU</title>
+  <title>หน้าแรก - คำนวณค่าเฉลี่ย</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="background-blur"></div>
-  <div class="container">
-
+  <div class="main-container">
     <header>
-      <h1>คำนวณค่าเฉลี่ย MU และ SKU</h1>
+      <h1>เครื่องมือคำนวณค่าเฉลี่ย MU และ SKU</h1>
     </header>
 
-    <main>
-      <form id="calcForm">
-        <label for="sku">จำนวน SKU (sku):</label>
-        <input type="number" id="sku" name="sku" min="0" required />
+    <form id="calcForm">
+      <label for="skuInput">SKU:</label>
+      <input type="number" id="skuInput" min="0" required />
 
-        <label for="mu">จำนวน MU (mu):</label>
-        <input type="number" id="mu" name="mu" min="0" required />
+      <label for="muInput">MU:</label>
+      <input type="number" id="muInput" min="0" required />
 
-        <label for="days">จำนวนวัน (days):</label>
-        <input type="number" id="days" name="days" min="1" required />
+      <label for="daysInput">จำนวนวัน:</label>
+      <input type="number" id="daysInput" min="1" required />
 
-        <button type="button" id="calcBtn">คำนวณค่าเฉลี่ย</button>
-      </form>
+      <button type="submit" id="calcBtn">คำนวณ</button>
+    </form>
 
-      <div id="result"></div>
+    <div id="resultContainer">
+      <p>ค่าเฉลี่ยจะปรากฏที่นี่หลังคำนวณ</p>
+    </div>
 
-      <div class="button-row">
-        <button id="goFullScreenBtn">แสดงผลเต็มหน้าจอ</button>
-        <button id="exitFullScreenBtn" style="display:none;">ออกจากเต็มหน้าจอ</button>
-        <button id="toAverageBtn" disabled>ไปยังหน้าค่าเฉลี่ย</button>
-        <button id="toSongsBtn" title="เลือกเพลง" class="floating-duck-btn">🦆</button>
-      </div>
-    </main>
+    <div class="button-row">
+      <button id="goFullScreenBtn" class="fullscreen-btn">แสดงผลเต็มหน้าจอ</button>
+      <button id="exitFullScreenBtn" class="fullscreen-btn" style="display:none;">ออกจากโหมดเต็มหน้าจอ</button>
+
+      <button id="goToAverageBtn">ดูผลค่าเฉลี่ย</button>
+      <button id="goToSongsBtn" title="เลือกเพลง">
+        <img src="duck.png" alt="เป็ด" class="duck-icon" />
+      </button>
+    </div>
 
     <footer>
       <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
@@ -48,7 +49,6 @@
       <p>ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้</p>
       <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
     </footer>
-
   </div>
 
   <script src="script.js"></script>
