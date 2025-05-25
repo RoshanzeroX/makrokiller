@@ -1,102 +1,77 @@
-/* style.css */
-@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
-
-* {
-  box-sizing: border-box;
-}
-
+/* Font and base styling */
 body {
   font-family: 'Sarabun', sans-serif;
+  background: #121212;
+  color: #eee;
   margin: 0;
-  height: 100vh;
+  padding: 0 10px 50px 10px;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  background: linear-gradient(135deg, #323232, #1a1a1a);
-  color: white;
-  overflow: hidden;
-  position: relative;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('bg.webp');
-  background-size: cover;
-  background-position: center;
-  filter: blur(6px) brightness(0.5);
-  z-index: -1;
 }
 
 .container {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 30px 40px;
-  width: 90%;
-  max-width: 420px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(8px);
+  max-width: 480px;
+  width: 100%;
+  margin-top: 20px;
   text-align: center;
-  color: white;
 }
 
 h2 {
-  margin-bottom: 25px;
-  font-size: 1.8rem;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
 }
 
-input[type="number"] {
-  width: 100%;
-  padding: 14px 15px;
-  margin: 12px 0;
+input[type=number] {
+  width: 90%;
+  padding: 12px 10px;
+  margin: 6px 0;
+  border-radius: 6px;
   border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
-}
-
-input::placeholder {
-  color: rgba(255,255,255,0.7);
+  font-size: 1rem;
 }
 
 button {
-  width: 100%;
-  padding: 16px 0;
-  margin-top: 18px;
-  font-size: 1.1rem;
-  color: #fff;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
-#fullscreenBtn,
-#exitFullscreenBtn {
-  margin-top: 10px;
-  padding: 10px 0;
+  margin: 10px 6px 10px 6px;
+  padding: 12px 20px;
   font-size: 1rem;
-  border-radius: 12px;
-  background: linear-gradient(45deg, #34ace0, #33d9b2);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #0066ff;
+  color: white;
+  transition: background-color 0.3s ease;
 }
 
-#exitFullscreenBtn {
-  display: none;
+button:hover {
+  background-color: #004bb5;
 }
 
+/* Result styling */
+#result {
+  margin-top: 28px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #ffd700;
+  text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: underline;
+  transition: transform 0.2s ease;
+}
+
+#result:hover {
+  transform: scale(1.1);
+}
+
+/* Duck icon */
 #duck {
   position: fixed;
   right: 20px;
   bottom: 30px;
   font-size: 2.2rem;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   padding: 10px 12px;
   border-radius: 50%;
   cursor: pointer;
@@ -106,46 +81,27 @@ button {
 }
 
 #duck:hover {
-  background: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.4);
   transform: scale(1.2);
 }
 
+/* Float animation for duck */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
 
-#result {
-  margin-top: 28px;
-  font-weight: 700;
-  font-size: 2rem;
-  color: #ffd700;
-  text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
-  cursor: pointer;
-  user-select: none;
-  text-decoration: none;
-}
-
+/* Footer styling - no background, smaller and less prominent text */
 footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 12px 20px;
+  font-family: 'Sarabun', sans-serif;
   font-size: 0.75rem;
-  background: rgba(0, 0, 0, 0.5);
-  color: #ddd;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 12px 20px;
+  margin-top: 20px;
   text-align: center;
   line-height: 1.4;
-  backdrop-filter: blur(5px);
-}
-
-@media (max-width: 600px) {
-  .container {
-    padding: 25px;
-  }
-
-  footer {
-    font-size: 0.65rem;
-    padding: 8px 10px;
-  }
+  position: relative;
+  z-index: 1;
+  max-width: 100vw;
+  user-select: none;
 }
