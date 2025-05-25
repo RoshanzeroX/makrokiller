@@ -2,53 +2,50 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
+      margin: 0;
+      padding: 0;
       font-family: 'Sarabun', sans-serif;
-      width: 100vw;
-      height: 100vh;
+      height: 100%;
       overflow: hidden;
-      background: linear-gradient(135deg, #323232, #1a1a1a);
-      color: white;
+    }
+
+    #bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-image: url('bg.webp');
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px) brightness(0.5);
+      z-index: -1;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      position: relative;
-    }
-
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('bg.webp') no-repeat center center;
-      background-size: cover;
-      filter: blur(6px) brightness(0.5);
-      z-index: -1;
+      color: white;
     }
 
     #resultImage {
-      width: 160px;
-      margin-bottom: 20px;
+      max-width: 200px;
       border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      margin-bottom: 15px;
     }
 
     #avgResult {
-      font-size: 2rem;
-      margin-bottom: 15px;
+      font-size: 2.2rem;
+      margin: 15px 0;
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
       color: #ffd700;
     }
@@ -56,30 +53,25 @@
     .message {
       font-size: 1.4rem;
       font-weight: bold;
+      color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
     .floating-icon {
       position: fixed;
+      bottom: 20px;
       font-size: 2.5rem;
-      cursor: pointer;
       z-index: 10;
       animation: float 3s ease-in-out infinite;
-      transition: transform 0.3s ease;
+      cursor: pointer;
       user-select: none;
     }
 
-    .floating-icon:hover {
-      transform: scale(1.2);
-    }
-
-    #homeBtn {
-      bottom: 20px;
+    .home-button {
       right: 20px;
     }
 
-    #fullscreenBtn {
-      bottom: 20px;
+    .fullscreen-button {
       left: 20px;
     }
 
@@ -89,21 +81,22 @@
     }
 
     @media (max-width: 600px) {
-      #avgResult { font-size: 1.5rem; }
+      #avgResult { font-size: 1.8rem; }
       .message { font-size: 1.2rem; }
+      #resultImage { max-width: 140px; }
     }
   </style>
 </head>
 <body>
-  <img id="resultImage" src="" alt="" />
+  <div id="bg"></div>
+
+  <img id="resultImage" src="" alt="ผลลัพธ์" />
   <div id="avgResult">กำลังโหลด...</div>
   <div class="message" id="messageText"></div>
 
-  <!-- ปุ่มกลับหน้าแรก -->
-  <div id="homeBtn" class="floating-icon" onclick="location.href='index.html'">🏠</div>
-
-  <!-- ปุ่มแสดงผลเต็มหน้าจอ -->
-  <div id="fullscreenBtn" class="floating-icon" onclick="goFullscreen()">📱</div>
+  <!-- ปุ่มลอย -->
+  <div class="floating-icon home-button" onclick="window.location.href='index.html'">🏠</div>
+  <div class="floating-icon fullscreen-button" onclick="requestFullScreen()">📱</div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -131,18 +124,13 @@
       avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
     }
 
-    function goFullscreen() {
-      const docEl = document.documentElement;
-      if (docEl.requestFullscreen) {
-        docEl.requestFullscreen();
-      } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen();
-      } else if (docEl.msRequestFullscreen) {
-        docEl.msRequestFullscreen();
-      }
-
-      if (screen.orientation && screen.orientation.lock) {
+    function requestFullScreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
         screen.orientation.lock('landscape').catch(() => {});
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
       }
     }
   </script>
