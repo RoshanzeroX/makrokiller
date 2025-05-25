@@ -7,16 +7,27 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
     * { box-sizing: border-box; }
-
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Sarabun', sans-serif;
-      height: 100%;
       overflow: hidden;
+      font-family: 'Sarabun', sans-serif;
     }
 
-    #bg {
+    body {
+      background: linear-gradient(135deg, #323232, #1a1a1a);
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      text-align: center;
+    }
+
+    body::before {
+      content: "";
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
@@ -24,30 +35,37 @@
       background-size: cover;
       background-position: center;
       filter: blur(6px) brightness(0.5);
-      z-index: -1;
+      z-index: -2;
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
+    #particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
 
     #resultImage {
       max-width: 200px;
       border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
       margin-bottom: 15px;
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+
+    #resultImage:hover {
+      transform: scale(1.05);
     }
 
     #avgResult {
-      font-size: 2.2rem;
-      margin: 15px 0;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
       color: #ffd700;
+      animation: pulse 2.5s ease-in-out infinite;
     }
 
     .message {
@@ -55,23 +73,41 @@
       font-weight: bold;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      animation: pulse 2.5s ease-in-out infinite;
     }
 
-    .floating-icon {
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.04); opacity: 0.9; }
+    }
+
+    .floating-btn {
       position: fixed;
       bottom: 20px;
-      font-size: 2.5rem;
-      z-index: 10;
-      animation: float 3s ease-in-out infinite;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
       cursor: pointer;
-      user-select: none;
+      animation: float 3s ease-in-out infinite;
+      z-index: 5;
     }
 
-    .home-button {
+    .floating-btn:hover {
+      transform: scale(1.1);
+    }
+
+    #homeBtn {
       right: 20px;
     }
 
-    .fullscreen-button {
+    #fullscreenBtn {
       left: 20px;
     }
 
@@ -81,22 +117,28 @@
     }
 
     @media (max-width: 600px) {
-      #avgResult { font-size: 1.8rem; }
-      .message { font-size: 1.2rem; }
-      #resultImage { max-width: 140px; }
+      #avgResult {
+        font-size: 2rem;
+      }
+      #resultImage {
+        max-width: 70%;
+      }
+      .message {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="bg"></div>
+  <canvas id="particles"></canvas>
+  <div>
+    <img id="resultImage" src="" alt="" />
+    <div id="avgResult">กำลังโหลด...</div>
+    <div class="message" id="messageText"></div>
+  </div>
 
-  <img id="resultImage" src="" alt="ผลลัพธ์" />
-  <div id="avgResult">กำลังโหลด...</div>
-  <div class="message" id="messageText"></div>
-
-  <!-- ปุ่มลอย -->
-  <div class="floating-icon home-button" onclick="window.location.href='index.html'">🏠</div>
-  <div class="floating-icon fullscreen-button" onclick="requestFullScreen()">📱</div>
+  <div id="homeBtn" class="floating-btn" onclick="window.location.href='index.html'">🏠</div>
+  <div id="fullscreenBtn" class="floating-btn" onclick="openFullscreen()">📱</div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -124,15 +166,69 @@
       avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
     }
 
-    function requestFullScreen() {
-      const elem = document.documentElement;
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-        screen.orientation.lock('landscape').catch(() => {});
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
+    function openFullscreen() {
+      const docElm = document.documentElement;
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+      } else if (docElm.webkitRequestFullscreen) {
+        docElm.webkitRequestFullscreen();
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      }
+      screen.orientation.lock('landscape').catch(() => {});
+    }
+
+    // particle effect
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let w, h;
+    let particles = [];
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createParticles(count) {
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2 + 1,
+          dx: (Math.random() - 0.5) * 0.5,
+          dy: (Math.random() - 0.5) * 0.5,
+          alpha: Math.random() * 0.6 + 0.2
+        });
       }
     }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "white";
+      particles.forEach(p => {
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+      });
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(drawParticles);
+    }
+
+    createParticles(50);
+    drawParticles();
   </script>
 </body>
 </html>
