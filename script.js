@@ -1,20 +1,17 @@
-const resultEl = document.getElementById('result');
-const fullscreenBtn = document.getElementById('fullscreenBtn');
-
 function calculate() {
   const sku = parseFloat(document.getElementById('sku').value);
   const mu = parseFloat(document.getElementById('mu').value);
   const days = parseFloat(document.getElementById('days').value);
 
-  if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
-    alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
-    resultEl.textContent = '';
+  if (isNaN(sku) || isNaN(mu) || isNaN(days) || days === 0) {
+    alert('กรุณากรอกข้อมูลให้ถูกต้องและไม่ใช่ 0 ในจำนวนวันทำงาน');
     return;
   }
 
-  // สูตรคำนวณที่แก้ไขให้ถูกต้อง (ตามที่เข้าใจ)
-  const result = ((sku + mu) / days).toFixed(8);
-  resultEl.textContent = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+  // สูตรใหม่ตามที่แจ้ง
+  const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+
+  document.getElementById('result').textContent = result;
 }
 
 function toggleFullscreen() {
@@ -29,19 +26,25 @@ function openFullscreen() {
   const elem = document.documentElement;
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
   }
-  fullscreenBtn.textContent = '🖥️ ออกจากเต็มจอ';
+  document.getElementById('fullscreenBtn').textContent = 'ออกจากเต็มจอ';
 }
 
 function closeFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
   }
-  fullscreenBtn.textContent = '🖥️ เปิดเต็มจอ';
+  document.getElementById('fullscreenBtn').textContent = 'เปิดเต็มจอ';
 }
-
-document.addEventListener('fullscreenchange', () => {
-  if (!document.fullscreenElement) {
-    fullscreenBtn.textContent = '🖥️ เปิดเต็มจอ';
-  }
-});
