@@ -10,16 +10,16 @@
     body {
       font-family: 'Sarabun', sans-serif;
       margin: 0;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #323232, #1a1a1a);
       color: white;
       overflow-x: hidden;
-      flex-direction: column;
-      position: relative;
-      padding-bottom: 150px; /* เพิ่มช่องว่างล่างเยอะขึ้น */
+      overflow-y: auto;
+      padding-bottom: 40px; /* เว้นช่องสำหรับ about */
     }
     body::before {
       content: "";
@@ -43,7 +43,6 @@
       text-align: center;
       position: relative;
       color: white;
-      z-index: 1;
     }
     h2 {
       margin-bottom: 25px;
@@ -66,10 +65,7 @@
       background: linear-gradient(45deg, #667eea, #764ba2);
       border: none; border-radius: 15px;
       cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: linear-gradient(45deg, #764ba2, #667eea);
+      user-select: none;
     }
     #fullscreenBtn, #exitFullscreenBtn {
       margin-top: 10px; padding: 10px 0;
@@ -82,7 +78,7 @@
     #duck {
       position: fixed;
       right: 20px;
-      bottom: 150px; /* เลื่อนขึ้นตาม padding-bottom */
+      bottom: 30px;
       font-size: 2.2rem;
       background: rgba(255,255,255,0.2);
       padding: 10px 12px;
@@ -91,6 +87,7 @@
       z-index: 999;
       animation: float 3s ease-in-out infinite;
       transition: transform 0.3s ease;
+      user-select: none;
     }
     #duck:hover {
       background: rgba(255,255,255,0.4);
@@ -113,15 +110,15 @@
       text-decoration: none;
     }
 
-    /* Credit / About Box */
+    /* About container ปรับแก้ให้แสดงข้อความยาวๆ อ่านง่าย */
     .credit-container {
       position: fixed;
       bottom: 6px;
       left: 50%;
       transform: translateX(-50%);
-      max-width: 95vw;
+      max-width: 90vw;
       color: #bbb;
-      font-size: 0.6rem; /* ลดขนาดลง */
+      font-size: 0.55rem;
       font-weight: 300;
       font-family: 'Sarabun', sans-serif;
       text-align: center;
@@ -131,18 +128,23 @@
       text-shadow: 0 0 3px rgba(0,0,0,0.6);
       z-index: 9999;
       pointer-events: none;
-      white-space: nowrap; /* ให้เรียงเป็นบรรทัดเดียว */
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 0 8px;
+      white-space: normal;
+      overflow: visible;
+      padding: 0 10px;
+      line-height: 1.3em;
+      word-wrap: break-word;
     }
 
+    /* ปรับสำหรับมือถือ */
     @media (max-width: 600px) {
-      .container { padding: 25px; }
-      #duck { bottom: 160px; }
+      .container {
+        padding: 25px;
+      }
       .credit-container {
-        font-size: 0.55rem;
-        padding: 0 6px;
+        font-size: 0.45rem;
+        max-width: 95vw;
+        padding: 0 8px;
+        line-height: 1.2em;
       }
     }
   </style>
@@ -158,11 +160,12 @@
     <button id="exitFullscreenBtn" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
     <div id="result"></div>
   </div>
+
   <div id="duck" onclick="window.location.href='songs.html'" title="ไปหน้าเพลง">🦆</div>
 
-  <!-- Credit / About Box -->
-  <div class="credit-container" aria-label="About and credits">
-    เว็บไซต์นี้พัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างรวดเร็วและสะดวกสบาย โดยออกแบบให้ใช้งานง่ายและตอบโจทย์จริง โค้ดเขียนด้วย HTML, CSS และ JavaScript พร้อมฟีเจอร์เปิดเต็มจอเพื่อเพิ่มความชัดเจนในการแสดงผล พัฒนาโดย Jack Makro © 2025 ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX หากพบปัญหาหรือข้อเสนอแนะ ติดต่อได้ที่ P'Jack OCS Lock 12
+  <!-- About / Credit ด้านล่างสุด -->
+  <div class="credit-container" aria-label="เกี่ยวกับเว็บไซต์">
+    เว็บไซต์นี้สร้างโดย Jack Makro ทีมพัฒนา: P'Jack OCS Lock 12 และ Team Dev RoshanzeroX — หากพบปัญหาหรือข้อเสนอแนะ ติดต่อ P'Jack OCS Lock 12 ได้โดยตรง — เว็บไซต์นี้สร้างขึ้นเพื่อช่วยให้คุณคำนวณออเดอร์เฉลี่ยอย่างง่ายดาย และเพื่อเพิ่มประสิทธิภาพในการทำงานของคุณ
   </div>
 
   <script>
