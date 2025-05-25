@@ -8,35 +8,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="container" id="container">
+  <div class="container" style="max-width: 500px; margin-top: 40px;">
     <h2>ผลค่าเฉลี่ยออเดอร์ต่อวัน</h2>
-    <div id="averageResult" style="font-size: 2.5rem; font-weight: 700; color: #ffd700; text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500; min-height: 3rem;"></div>
-    <button id="backBtn">กลับไปคำนวณใหม่</button>
+    <div id="averageDisplay" style="font-size: 24px; color: #fff; margin: 20px 0;"></div>
+    <button onclick="goBack()">กลับไปคำนวณใหม่</button>
   </div>
 
   <script>
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
+    // ดึงค่า averageOrder จาก localStorage
+    const averageOrder = localStorage.getItem('averageOrder');
+
+    const display = document.getElementById('averageDisplay');
+    if (averageOrder && !isNaN(parseFloat(averageOrder))) {
+      display.textContent = `ค่าเฉลี่ยออเดอร์ต่อวันคือ: ${averageOrder}`;
+    } else {
+      display.textContent = 'ไม่พบข้อมูลค่าเฉลี่ย';
     }
 
-    window.onload = () => {
-      const averageResultEl = document.getElementById('averageResult');
-      const backBtn = document.getElementById('backBtn');
-      const result = getQueryParam('result');
-
-      if (result && result.trim() !== '') {
-        averageResultEl.textContent = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result}`;
-      } else {
-        averageResultEl.textContent = 'ไม่พบข้อมูลค่าเฉลี่ย';
-        averageResultEl.style.color = '#ff6b6b';
-        averageResultEl.style.textShadow = '0 0 8px #ff6b6b';
-      }
-
-      backBtn.onclick = () => {
-        window.location.href = 'index.html';
-      };
-    };
+    function goBack() {
+      window.location.href = 'index.html';
+    }
   </script>
 </body>
 </html>
