@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>เลือกเพลง YouTube</title>
   <style>
     body {
@@ -17,13 +17,11 @@
       min-height: 100vh;
       box-sizing: border-box;
     }
-
     h1 {
       font-size: 2rem;
       margin-bottom: 20px;
       text-align: center;
     }
-
     button {
       background: linear-gradient(45deg, #34ace0, #33d9b2);
       border: none;
@@ -35,11 +33,9 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-
     button:hover {
       background: linear-gradient(45deg, #2c99cc, #28b999);
     }
-
     iframe {
       margin-top: 30px;
       width: 90vw;
@@ -48,7 +44,6 @@
       border: none;
       border-radius: 12px;
     }
-
     .back-btn {
       position: fixed;
       bottom: 20px;
@@ -57,11 +52,9 @@
       border: none;
       cursor: pointer;
     }
-
     .back-btn img {
       width: 50px;
     }
-
     .exit-fullscreen {
       margin-top: 15px;
       background: #ff5e57;
@@ -73,7 +66,6 @@
       font-size: 1rem;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
-
     .video-container {
       display: flex;
       flex-direction: column;
@@ -97,23 +89,8 @@
 
   <!-- ปุ่มกลับหน้า index -->
   <button class="back-btn" onclick="window.location.href='index.html'">
-    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="กลับ">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="กลับ" />
   </button>
 
   <script>
-    function loadVideo(videoId) {
-      const player = document.getElementById('ytPlayer');
-      player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-    }
-
-    function exitFullScreen() {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else if (window.innerHeight == screen.height) {
-        // fallback: try to exit via resize or prompt
-        alert("เบราว์เซอร์ของคุณอาจไม่รองรับการออกจากโหมด fullscreen ด้วย script นี้ กรุณาใช้ปุ่มย้อนกลับของระบบแทน");
-      }
-    }
-  </script>
-</body>
-</html>
+    function loadVideo(videoId)
