@@ -2,34 +2,27 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>เลือกเพลง YouTube</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="background-blur"></div>
-  <div class="container">
+  <h1>เลือกเพลงที่ต้องการฟัง</h1>
 
-    <h1>เลือกเพลงที่ต้องการฟัง</h1>
+  <button onclick="loadVideo('Jl2GVV5OYfY')">ถ้าคิดถึงเธอมากกว่านี้ x Pimthitiii</button>
+  <button onclick="loadVideo('yqpmX4eOCHo')">หมากเกมนี้ - อินคา [Cover By สมอารมณ์ x Pimthitiii]</button>
+  <button onclick="loadVideo('HtsXPgf830k')">苏慕遮</button>
+  <button onclick="loadVideo('nNZ5C30d6EE')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก</button>
+  <button onclick="loadVideo('VRVFAHidHm8')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก(Rock) EP.2</button>
 
-    <div class="song-buttons">
-      <button onclick="loadVideo('Jl2GVV5OYfY')">ถ้าคิดถึงเธอมากกว่านี้ x Pimthitiii</button>
-      <button onclick="loadVideo('yqpmX4eOCHo')">หมากเกมนี้ - อินคา [Cover By สมอารมณ์ x Pimthitiii]</button>
-      <button onclick="loadVideo('HtsXPgf830k')">苏慕遮</button>
-      <button onclick="loadVideo('nNZ5C30d6EE')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก</button>
-      <button onclick="loadVideo('VRVFAHidHm8')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก(Rock) EP.2</button>
-    </div>
-
-    <div class="video-container">
-      <iframe id="ytPlayer" src="" allowfullscreen allow="autoplay"></iframe>
-    </div>
-
-    <!-- ปุ่มกลับหน้า index -->
-    <button class="back-btn" onclick="window.location.href='index.html'">
-      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="กลับ" />
-    </button>
-
+  <div class="video-container">
+    <iframe id="ytPlayer" src="" allowfullscreen allow="autoplay"></iframe>
   </div>
+
+  <!-- ปุ่มกลับหน้า index -->
+  <button class="back-btn" onclick="window.location.href='index.html'">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="กลับ" />
+  </button>
 
   <script>
     function loadVideo(videoId) {
