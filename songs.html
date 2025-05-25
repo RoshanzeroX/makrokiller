@@ -5,20 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>เลือกเพลง YouTube</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Sarabun', sans-serif;
+      margin: 0;
       background: #121212;
       color: white;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       padding: 30px;
+      position: relative;
+      overflow: hidden;
     }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('bg.webp');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(6px) brightness(0.5);
+      z-index: -1;
+    }
+
     h1 {
       font-size: 2rem;
       margin-bottom: 20px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
+
     button {
       background: linear-gradient(45deg, #34ace0, #33d9b2);
       border: none;
@@ -29,10 +57,14 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s;
+      box-shadow: 0 3px 12px rgba(51, 217, 178, 0.4);
     }
+
     button:hover {
       background: linear-gradient(45deg, #2c99cc, #28b999);
+      box-shadow: 0 5px 18px rgba(40, 185, 153, 0.6);
     }
+
     iframe {
       margin-top: 30px;
       width: 90vw;
@@ -40,6 +72,16 @@
       height: 340px;
       border: none;
       border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+
+    .back-button {
+      background: linear-gradient(45deg, #ff6b6b, #ff4757);
+      margin-top: 30px;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(45deg, #e74c3c, #e84118);
     }
   </style>
 </head>
@@ -52,12 +94,13 @@
     <button onclick="loadVideo('nNZ5C30d6EE')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก</button>
     <button onclick="loadVideo('VRVFAHidHm8')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก(Rock) EP.2</button>
   </div>
+
   <iframe id="ytPlayer" src="" allowfullscreen></iframe>
-<a href="index.html">
-  <button style="background: linear-gradient(45deg, #ff6b6b, #ff4757); margin-top: 30px;">
-    🏠 กลับหน้าแรก
-  </button>
-</a>
+
+  <a href="index.html">
+    <button class="back-button">🏠 กลับหน้าแรก</button>
+  </a>
+
   <script>
     function loadVideo(videoId) {
       const player = document.getElementById('ytPlayer');
