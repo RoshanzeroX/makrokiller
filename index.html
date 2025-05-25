@@ -8,20 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="container" id="container">
+  <div class="container">
     <h2>คำนวณออเดอร์เฉลี่ยต่อวัน</h2>
     <input id="sku" type="number" placeholder="กรอก SKU" />
     <input id="mu" type="number" placeholder="กรอก MU" />
     <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-    <div>
-      <button id="fullscreenBtn">เปิดเต็มจอ</button>
-      <button id="exitFullscreenBtn">ออกจากเต็มจอ</button>
-    </div>
-    <button onclick="calculate()">คำนวณ</button>
-    <div id="result" title="คลิกเพื่อดูรายละเอียด"></div>
+    <button id="calculateBtn">คำนวณ</button>
+    <button id="fullscreenBtn">เปิด/ออกเต็มจอ</button>
+    <div id="result"></div>
   </div>
 
-  <div id="duck" onclick="window.location.href='songs.html'" title="ไปหน้าเพลง">🦆</div>
+  <div id="duck" title="ไปหน้าเพลง" onclick="window.location.href='songs.html'">🦆</div>
 
   <footer>
     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
