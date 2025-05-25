@@ -17,11 +17,13 @@
       min-height: 100vh;
       box-sizing: border-box;
     }
+
     h1 {
       font-size: 2rem;
       margin-bottom: 20px;
       text-align: center;
     }
+
     button {
       background: linear-gradient(45deg, #34ace0, #33d9b2);
       border: none;
@@ -33,9 +35,11 @@
       cursor: pointer;
       transition: background 0.3s;
     }
+
     button:hover {
       background: linear-gradient(45deg, #2c99cc, #28b999);
     }
+
     iframe {
       margin-top: 30px;
       width: 90vw;
@@ -53,23 +57,27 @@
       border: none;
       cursor: pointer;
     }
+
     .back-btn img {
       width: 50px;
     }
 
     .exit-fullscreen {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 100;
-      padding: 10px 16px;
-      font-size: 1rem;
+      margin-top: 15px;
       background: #ff5e57;
       border: none;
       border-radius: 8px;
       color: white;
       cursor: pointer;
+      padding: 10px 20px;
+      font-size: 1rem;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   </style>
 </head>
@@ -82,15 +90,15 @@
   <button onclick="loadVideo('nNZ5C30d6EE')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก</button>
   <button onclick="loadVideo('VRVFAHidHm8')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก(Rock) EP.2</button>
 
-  <iframe id="ytPlayer" src="" allowfullscreen allow="autoplay"></iframe>
+  <div class="video-container">
+    <iframe id="ytPlayer" src="" allowfullscreen allow="autoplay"></iframe>
+    <button class="exit-fullscreen" onclick="exitFullScreen()">⛶ ออกจากโหมดเต็มหน้าจอ</button>
+  </div>
 
   <!-- ปุ่มกลับหน้า index -->
   <button class="back-btn" onclick="window.location.href='index.html'">
     <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="กลับ">
   </button>
-
-  <!-- ปุ่มออกจาก fullscreen -->
-  <button class="exit-fullscreen" onclick="exitFullScreen()">⛶ ออกจากโหมดเต็มหน้าจอ</button>
 
   <script>
     function loadVideo(videoId) {
@@ -101,6 +109,9 @@
     function exitFullScreen() {
       if (document.fullscreenElement) {
         document.exitFullscreen();
+      } else if (window.innerHeight == screen.height) {
+        // fallback: try to exit via resize or prompt
+        alert("เบราว์เซอร์ของคุณอาจไม่รองรับการออกจากโหมด fullscreen ด้วย script นี้ กรุณาใช้ปุ่มย้อนกลับของระบบแทน");
       }
     }
   </script>
