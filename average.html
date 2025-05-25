@@ -6,12 +6,15 @@
   <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
     * { box-sizing: border-box; }
+
     html, body {
-      margin: 0; padding: 0; height: 100vh; width: 100vw;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
       font-family: 'Sarabun', sans-serif;
-      background: linear-gradient(135deg, #323232, #1a1a1a);
-      color: white;
       overflow: hidden;
     }
 
@@ -22,8 +25,7 @@
       align-items: center;
       position: relative;
       text-align: center;
-      overflow: hidden;
-      padding: 10px;
+      background: #000; /* fallback background */
     }
 
     body::before {
@@ -87,13 +89,14 @@
       line-height: 1;
       text-decoration: none;
       z-index: 10;
-      user-select: none;
     }
+
     .home-button {
       right: 20px;
     }
+
     .fullscreen-button {
-      right: 80px;
+      right: 80px; /* ขยับให้ห่างจาก 🏠 */
       display: none; /* แสดงเฉพาะแนวตั้ง */
     }
 
@@ -152,7 +155,6 @@
     const msgEl = document.getElementById('messageText');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
 
-    // แสดงผลลัพธ์และรูปตามเงื่อนไข
     if (!isNaN(result)) {
       avgEl.innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result.toFixed(8)}`;
 
@@ -172,42 +174,34 @@
       avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
     }
 
-    // ตรวจสอบแนวหน้าจอมือถือ
     function isPortrait() {
       return window.matchMedia("(orientation: portrait)").matches;
     }
 
     function checkOrientationAndToggleFullscreenBtn() {
-      if (isPortrait()) {
-        fullscreenBtn.style.display = "flex";
-      } else {
-        fullscreenBtn.style.display = "none";
-      }
+      fullscreenBtn.style.display = isPortrait() ? "flex" : "none";
     }
 
-    // เรียกครั้งแรก และเมื่อเปลี่ยน orientation
     checkOrientationAndToggleFullscreenBtn();
     window.addEventListener('resize', checkOrientationAndToggleFullscreenBtn);
     window.addEventListener('orientationchange', checkOrientationAndToggleFullscreenBtn);
 
-    // ฟังก์ชันเข้าสู่ fullscreen และพยายามล็อคหน้าจอแนวนอน
     fullscreenBtn.addEventListener('click', async () => {
       const elem = document.documentElement;
       try {
         if (elem.requestFullscreen) {
           await elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
+        } else if (elem.webkitRequestFullscreen) {
           await elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
+        } else if (elem.msRequestFullscreen) {
           await elem.msRequestFullscreen();
         }
 
-        // พยายามล็อคหน้าจอเป็นแนวนอน
         if (screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
         }
       } catch (err) {
-        console.warn('ไม่สามารถเข้าสู่โหมดเต็มหน้าจอหรือล็อคหน้าจอแนวนอนได้:', err);
+        console.warn('ไม่สามารถเข้าสู่โหมดเต็มหน้าจอหรือล็อคแนวนอนได้:', err);
       }
     });
   </script>
