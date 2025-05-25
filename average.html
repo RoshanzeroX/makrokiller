@@ -2,25 +2,27 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
     * { box-sizing: border-box; }
-    body {
+    html, body {
+      margin: 0; padding: 0; height: 100vh; width: 100vw;
       font-family: 'Sarabun', sans-serif;
-      margin: 0;
-      padding: 0;
       background: linear-gradient(135deg, #323232, #1a1a1a);
       color: white;
-      height: 100vh;
+      overflow: hidden;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       position: relative;
-      overflow: hidden;
       text-align: center;
+      overflow: hidden;
     }
 
     body::before {
@@ -60,17 +62,83 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      font-size: 2rem;
+      font-size: 3.5rem;
+      cursor: pointer;
+      user-select: none;
+      color: #ffd700;
+      text-shadow:
+        0 0 5px #ffd700,
+        0 0 10px #ffa500,
+        0 0 20px #ffa500,
+        0 0 30px #ffb400;
+      animation: float 3s ease-in-out infinite;
+      transition: color 0.3s ease;
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow:
+        0 0 15px rgba(255, 215, 0, 0.4),
+        inset 0 0 8px rgba(255, 215, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 1;
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 8px 12px;
-      border-radius: 12px;
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
-      transition: transform 0.2s ease;
+      z-index: 10;
     }
 
     .home-button:hover {
-      transform: scale(1.1);
+      color: #fff;
+      text-shadow:
+        0 0 10px #fff,
+        0 0 20px #ffd700,
+        0 0 30px #ffa500,
+        0 0 40px #ffb400;
+      box-shadow:
+        0 0 20px #fff,
+        inset 0 0 12px #fff;
+      transform: translateY(-5px) scale(1.1);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* แสดงข้อความให้หมุนหน้าจอถ้าแนวตั้ง */
+    #rotateNotice {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      color: #ffd700;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    #rotateNotice p {
+      max-width: 300px;
+    }
+
+    /* สั่งให้หน้าจอแสดงแบบ landscape เสมอ */
+    @media screen and (orientation: portrait) {
+      body > *:not(#rotateNotice) {
+        filter: blur(4px);
+        pointer-events: none;
+        user-select: none;
+      }
+      #rotateNotice {
+        display: flex;
+      }
     }
 
     @media (max-width: 600px) {
@@ -84,17 +152,22 @@
         font-size: 1.1rem;
       }
       .home-button {
-        font-size: 1.6rem;
-        padding: 6px 10px;
+        font-size: 2.8rem;
+        padding: 8px;
       }
     }
   </style>
 </head>
 <body>
+  <div id="rotateNotice">
+    <p>กรุณาหมุนหน้าจอเป็นแนวนอน เพื่อประสบการณ์ที่ดีที่สุด</p>
+    <p>➡️📱⬅️</p>
+  </div>
+
   <img id="resultImage" src="" alt="ผลลัพธ์" />
   <div id="avgResult">กำลังโหลด...</div>
   <div class="message" id="messageText"></div>
-  <a href="index.html" class="home-button" title="กลับหน้าแรก">🏠</a>
+  <a href="index.html" class="home-button" title="กลับหน้าแรก" aria-label="กลับหน้าแรก">🏠</a>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
