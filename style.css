@@ -1,142 +1,127 @@
 /* style.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
 
-body {
-  margin: 0;
-  font-family: 'Sarabun', sans-serif;
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
-  color: #eee;
-}
-
-/* background เบลอแค่ภาพ */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url('bg.webp') no-repeat center center fixed;
-  background-size: cover;
-  filter: blur(5px);
-  z-index: -1;
-}
-
-/* container main */
-.container {
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 25px 35px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-  max-width: 450px;
-  width: 100%;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  margin: 40px auto;
-}
-
-.container h2 {
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-input[type=number] {
-  width: 90%;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
+* {
   box-sizing: border-box;
 }
 
-button {
-  margin: 10px 5px;
-  padding: 10px 18px;
-  background-color: #f3c623;
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Sarabun', sans-serif;
+  background: #222;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-image: url('bg.webp');
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px) brightness(0.5);
+  z-index: -1;
+}
+
+.container {
+  position: relative;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 25px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 15px;
+  box-shadow: 0 0 25px #ffbf00;
+  text-align: center;
+  z-index: 1;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  border-radius: 8px;
   border: none;
-  border-radius: 5px;
-  font-weight: 600;
+  outline: none;
+}
+
+input:focus {
+  box-shadow: 0 0 8px #ffbf00;
+}
+
+button {
+  width: 48%;
+  margin: 5px 1%;
+  padding: 10px;
+  font-size: 1.2rem;
+  background: #ffbf00;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: bold;
+  color: #222;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #d4a017;
+  background-color: #ffa500;
 }
 
 #result {
   margin-top: 20px;
-  font-size: 18px;
-  color: #fff;
-  cursor: pointer;
-  text-decoration: underline;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 0 8px #ffbf00;
 }
 
-/* เป็ด 🦆 */
 #duck {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  font-size: 35px;
+  bottom: 25px;
+  right: 25px;
+  font-size: 3rem;
   cursor: pointer;
   user-select: none;
-  z-index: 10;
+  z-index: 5;
+  animation: float 3s ease-in-out infinite;
 }
 
-/* footer about */
+#duck:hover {
+  transform: scale(1.2);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  color: #bbb;
-  font-size: 12px;
-  background: transparent;
-  padding: 8px 10px;
+  background: rgba(0,0,0,0.7);
+  color: #ddd;
+  font-size: 0.75rem;
+  padding: 10px 12px;
   text-align: center;
-  line-height: 1.3em;
-  font-weight: 400;
-  z-index: 5;
+  line-height: 1.2em;
+  z-index: 10;
 }
 
-footer p {
-  margin: 3px 0;
-}
-
-/* Fullscreen buttons */
-#fullscreenBtn,
-#exitFullscreenBtn {
-  background-color: #f3c623;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#fullscreenBtn:hover,
-#exitFullscreenBtn:hover {
-  background-color: #d4a017;
-}
-
-#exitFullscreenBtn {
-  display: none;
-}
-
-/* Responsive */
 @media (max-width: 480px) {
   .container {
-    max-width: 95%;
+    max-width: 90vw;
     margin: 20px auto;
-    padding: 20px;
   }
-  #duck {
-    font-size: 28px;
-  }
-  footer {
-    font-size: 10px;
-    padding: 6px 5px;
+  button {
+    width: 100%;
+    margin: 6px 0;
   }
 }
