@@ -11,7 +11,17 @@ function calculate() {
   // สูตร ((sku / 12 + mu / 34) / (2 * days))
   const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
 
-  document.getElementById('result').textContent = result;
+  const resultDiv = document.getElementById('result');
+  resultDiv.textContent = result;
+  // ให้คลิกผลลัพธ์ได้
+  resultDiv.style.pointerEvents = 'auto';
+}
+
+function goToAverage() {
+  const resultDiv = document.getElementById('result');
+  if (resultDiv.textContent.trim() !== '') {
+    window.location.href = 'average.html';
+  }
 }
 
 function toggleFullscreen() {
@@ -27,24 +37,4 @@ function openFullscreen() {
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.mozRequestFullScreen) {
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) {
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
-    elem.msRequestFullscreen();
-  }
-  document.getElementById('fullscreenBtn').textContent = 'ออกจากเต็มจอ';
-}
-
-function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  }
-  document.getElementById('fullscreenBtn').textContent = 'เปิดเต็มจอ';
-}
+    elem.moz
