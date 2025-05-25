@@ -70,4 +70,105 @@ button[type="submit"], button#goAverage {
 }
 
 button[type="submit"]:hover, button#goAverage:hover {
-  background: linear-gradient(45deg, #2
+  background: linear-gradient(45deg, #2c99cc, #28b999);
+}
+
+.result {
+  margin-top: 25px;
+  font-size: 1.5rem;
+  min-height: 50px;
+  font-weight: 700;
+}
+
+footer {
+  padding: 20px;
+  background: #222;
+  color: #ccc;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: auto;
+}
+
+.average-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.average-container img {
+  max-width: 200px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #ffd700;
+}
+
+.average-container #avgResult {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 0 7px #ffd700;
+}
+
+.average-container .message {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(45deg, #34ace0, #33d9b2);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #28b999;
+  margin-left: 10px;
+}
+
+.floating-btn:nth-child(2) {
+  right: 80px;
+}
+
+/* particles canvas full screen */
+canvas#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .floating-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  input[type="number"] {
+    font-size: 1rem;
+  }
+
+  button[type="submit"], button#goAverage {
+    font-size: 1rem;
+  }
+
+  .average-container #avgResult {
+    font-size: 1.5rem;
+  }
+}
