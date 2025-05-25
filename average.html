@@ -23,6 +23,7 @@
       position: relative;
       text-align: center;
       overflow: hidden;
+      padding: 10px;
     }
 
     body::before {
@@ -49,6 +50,7 @@
       margin-bottom: 20px;
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
       color: #ffd700;
+      word-break: break-word;
     }
 
     .message {
@@ -56,6 +58,7 @@
       font-weight: bold;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 30px;
     }
 
     .home-button {
@@ -72,7 +75,7 @@
         0 0 20px #ffa500,
         0 0 30px #ffb400;
       animation: float 3s ease-in-out infinite;
-      transition: color 0.3s ease;
+      transition: color 0.3s ease, transform 0.3s ease;
       background: rgba(255, 215, 0, 0.1);
       border-radius: 50%;
       padding: 10px;
@@ -105,40 +108,25 @@
       50% { transform: translateY(-10px); }
     }
 
-    /* แสดงข้อความให้หมุนหน้าจอถ้าแนวตั้ง */
-    #rotateNotice {
+    #fullscreenBtn {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.85);
-      color: #ffd700;
-      font-size: 2rem;
+      bottom: 90px;
+      right: 20px;
+      background: #ffd700;
+      border-radius: 12px;
+      padding: 12px 18px;
       font-weight: bold;
-      text-align: center;
-      padding: 20px;
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      font-size: 1.1rem;
+      color: #222;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffd700;
       user-select: none;
+      transition: background 0.3s ease;
+      z-index: 15;
     }
-
-    #rotateNotice p {
-      max-width: 300px;
-    }
-
-    /* สั่งให้หน้าจอแสดงแบบ landscape เสมอ */
-    @media screen and (orientation: portrait) {
-      body > *:not(#rotateNotice) {
-        filter: blur(4px);
-        pointer-events: none;
-        user-select: none;
-      }
-      #rotateNotice {
-        display: flex;
-      }
+    #fullscreenBtn:hover {
+      background: #ffaa00;
     }
 
     @media (max-width: 600px) {
@@ -150,23 +138,27 @@
       }
       .message {
         font-size: 1.1rem;
+        margin-bottom: 20px;
       }
       .home-button {
         font-size: 2.8rem;
         padding: 8px;
       }
+      #fullscreenBtn {
+        font-size: 1rem;
+        padding: 10px 14px;
+        bottom: 80px;
+        right: 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="rotateNotice">
-    <p>กรุณาหมุนหน้าจอเป็นแนวนอน เพื่อประสบการณ์ที่ดีที่สุด</p>
-    <p>➡️📱⬅️</p>
-  </div>
-
   <img id="resultImage" src="" alt="ผลลัพธ์" />
   <div id="avgResult">กำลังโหลด...</div>
   <div class="message" id="messageText"></div>
+
+  <button id="fullscreenBtn" aria-label="แสดงผลเต็มหน้าจอ">📱 แสดงผลเต็มหน้าจอ</button>
   <a href="index.html" class="home-button" title="กลับหน้าแรก" aria-label="กลับหน้าแรก">🏠</a>
 
   <script>
@@ -175,7 +167,9 @@
     const avgEl = document.getElementById('avgResult');
     const imgEl = document.getElementById('resultImage');
     const msgEl = document.getElementById('messageText');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
 
+    // แสดงผลลัพธ์และรูปตามเงื่อนไข
     if (!isNaN(result)) {
       avgEl.innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result.toFixed(8)}`;
 
@@ -194,6 +188,37 @@
     } else {
       avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
     }
+
+    // ฟังก์ชันตรวจสอบแนวหน้าจอมือถือ
+    function isPortrait() {
+      return window.matchMedia("(orientation: portrait)").matches;
+    }
+
+    function checkOrientationAndShowBtn() {
+      if (isPortrait()) {
+        fullscreenBtn.style.display = "block";
+      } else {
+        fullscreenBtn.style.display = "none";
+      }
+    }
+
+    // เรียกครั้งแรกและเมื่อเปลี่ยน orientation
+    checkOrientationAndShowBtn();
+    window.addEventListener('resize', checkOrientationAndShowBtn);
+    window.addEventListener('orientationchange', checkOrientationAndShowBtn);
+
+    // ฟังก์ชันเข้าสู่ fullscreen mode
+    fullscreenBtn.addEventListener('click', () => {
+      const elem = document.documentElement;
+
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+      }
+    });
   </script>
 </body>
 </html>
