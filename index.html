@@ -8,21 +8,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <!-- Background effect -->
-  <div class="background"></div>
+  <div class="background-container">
+    <img src="bg.webp" alt="Background" class="bg-image" />
+    <canvas id="confetti-canvas"></canvas>
+  </div>
 
   <div class="container" id="container">
     <h2>คำนวณออเดอร์เฉลี่ยต่อวัน</h2>
-
     <input id="sku" type="number" placeholder="กรอก SKU" />
     <input id="mu" type="number" placeholder="กรอก MU" />
     <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-
-    <button onclick="calculate()">คำนวณ</button>
+    <button id="calculateBtn" onclick="calculate()">คำนวณ</button>
     <button id="fullscreenBtn" onclick="toggleFullscreen()">เปิดเต็มจอ</button>
-
-    <!-- ผลลัพธ์คลิกได้ -->
-    <div id="result" title="คลิกเพื่อดูรายละเอียด" onclick="goToAverage()" style="cursor:pointer;"></div>
+    <div id="result" onclick="goToAverage()" title="คลิกเพื่อดูรายละเอียด"></div>
   </div>
 
   <div id="duck" onclick="window.location.href='songs.html'" title="ไปหน้าเพลง">🦆</div>
