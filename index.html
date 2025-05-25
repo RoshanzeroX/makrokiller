@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <!-- Background image -->
+  <!-- Background effect -->
   <div class="background"></div>
 
   <div class="container" id="container">
@@ -21,12 +21,8 @@
     <button onclick="calculate()">คำนวณ</button>
     <button id="fullscreenBtn" onclick="toggleFullscreen()">เปิดเต็มจอ</button>
 
-    <div id="result"></div>
-
-    <!-- ลิงก์ไปหน้า average.html -->
-    <p style="margin-top:20px; text-align:center;">
-      <a href="average.html" class="link-average">ไปหน้า Average.html</a>
-    </p>
+    <!-- ผลลัพธ์คลิกได้ -->
+    <div id="result" title="คลิกเพื่อดูรายละเอียด" onclick="goToAverage()" style="cursor:pointer;"></div>
   </div>
 
   <div id="duck" onclick="window.location.href='songs.html'" title="ไปหน้าเพลง">🦆</div>
