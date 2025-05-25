@@ -1,128 +1,219 @@
-/* ฟอนต์หลัก */
-body {
+/* พื้นหลังและ container */
+body, html {
   margin: 0;
   padding: 0;
   font-family: 'Sarabun', sans-serif;
+  height: 100%;
   background: url('bg.webp') no-repeat center center fixed;
   background-size: cover;
+  color: #eee;
+  overflow-x: hidden;
+}
+
+.background-blur {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+  z-index: -1;
+}
+
+.container {
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 12px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+header h1 {
+  margin: 0 0 20px 0;
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+main {
+  flex-grow: 1;
+}
+
+form label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+form input[type=number] {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1rem;
+  margin-top: 4px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 16px;
+  background: linear-gradient(45deg, #34ace0, #33d9b2);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #2c99cc, #28b999);
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: #fff;
   text-align: center;
 }
 
-/* หัวข้อหลัก */
-h1 {
+/* ปุ่มลอยเป็ด */
+.floating-duck-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #33d9b2;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
   font-size: 2rem;
-  margin-top: 30px;
-  text-shadow: 1px 1px 3px #000;
-}
-
-/* ปุ่มทั่วไป */
-button {
-  font-size: 1rem;
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 8px;
+  line-height: 56px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
   cursor: pointer;
-  background: linear-gradient(45deg, #34ace0, #33d9b2);
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
-}
-
-button:hover {
-  transform: scale(1.05);
-}
-
-/* กล่องอินพุต */
-input {
-  font-size: 1rem;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 6px;
   border: none;
-  width: 100px;
+  user-select: none;
+  z-index: 9999;
+  transition: transform 0.3s ease;
+}
+
+.floating-duck-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ปุ่มแถวเดียวกัน */
+.button-row {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* footer */
+footer {
+  font-size: 0.7rem;
+  color: #ccc;
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.2rem;
+}
+
+/* average.html */
+.average-container {
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 12px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #eee;
   text-align: center;
 }
 
-/* กล่องคอนเทนเนอร์กลาง */
-.container {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
+.avg-result p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #fff;
 }
 
-/* ปุ่มเป็ด */
-.duck-btn {
+.avg-image {
+  max-width: 200px;
+  margin: 10px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* songs.html */
+.song-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.song-buttons button {
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+/* iframe เพลง */
+.video-container iframe {
+  margin-top: 20px;
+  width: 90vw;
+  max-width: 600px;
+  height: 340px;
+  border: none;
+  border-radius: 12px;
+}
+
+/* ปุ่มกลับ */
+.back-btn {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
   background: transparent;
   border: none;
   cursor: pointer;
+  z-index: 9999;
 }
 
-.duck-btn img {
-  width: 60px;
-  transition: transform 0.3s;
-}
-.duck-btn img:hover {
-  transform: rotate(15deg) scale(1.1);
+.back-btn img {
+  width: 50px;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
 }
 
-/* Footer */
-footer {
-  font-size: 0.7rem;
-  background: rgba(0, 0, 0, 0.35);
-  color: #ccc;
-  padding: 15px 20px;
-  line-height: 1.4;
-  text-align: center;
-  border-top: 1px solid #444;
-  margin-top: 40px;
-}
-
-/* ปุ่มเปิด/ออกเต็มจอ */
-.fullscreen-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  font-size: 0.9rem;
-  padding: 8px 15px;
-  border-radius: 6px;
-  z-index: 999;
-  background: #444;
-  color: white;
-}
-
-/* หน้า average ซ่อน footer */
-body.average-page footer {
-  display: none;
-}
-
-/* รองรับมือถือ */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 1.6rem;
+/* Responsive */
+@media (max-width: 600px) {
+  .container, .average-container {
+    max-width: 100%;
+    margin: 0 10px;
   }
 
-  input {
-    width: 80px;
-  }
-
-  .duck-btn img {
-    width: 50px;
-  }
-
-  .fullscreen-btn {
-    font-size: 0.8rem;
-    padding: 6px 12px;
-  }
-
-  footer {
-    font-size: 0.6rem;
+  button {
+    font-size: 1rem;
     padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
   }
 }
