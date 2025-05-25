@@ -2,21 +2,94 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ผลลัพธ์</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ค่าเฉลี่ยออเดอร์</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="average-page">
+<body>
   <div class="average-container">
-    <img id="resultImage" src="" alt="result" />
-    <div id="avgResult">กำลังโหลด...</div>
-    <div id="messageText" class="message"></div>
+    <h1>ผลค่าเฉลี่ยออเดอร์ต่อวัน</h1>
+    <div id="avgResult">
+      <!-- แสดงผลค่าเฉลี่ยพร้อมรูปและข้อความที่นี่ -->
+    </div>
+
+    <button id="avgGoFullScreenBtn" class="fullscreen-btn">แสดงผลเต็มหน้าจอ</button>
+    <button id="avgExitFullScreenBtn" class="fullscreen-btn" style="display:none;">ออกจากโหมดเต็มหน้าจอ</button>
+
+    <button id="backToIndexBtn" title="กลับหน้าแรก">
+      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="กลับ" />
+    </button>
   </div>
 
-  <div class="floating-btn" onclick="goHome()">🏠</div>
-  <div class="floating-btn left" onclick="openFullscreenLandscape()">📱</div>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const avgResult = document.getElementById('avgResult');
+      let avg = localStorage.getItem('averageValue');
+      if (!avg) {
+        avgResult.innerHTML = "<p>ไม่พบข้อมูลค่าเฉลี่ย กรุณาคำนวณในหน้าแรกก่อน</p>";
+        return;
+      }
+      avg = parseFloat(avg);
 
-  <canvas id="particles"></canvas>
-  <script src="script.js"></script>
+      let imgSrc = "";
+      let message = "";
+
+      if (avg > 12) {
+        const choices = [
+          {
+            img: "images/1(10).png",
+            msg: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!"
+          },
+          {
+            img: "images/1 (2).png",
+            msg: "เป็นคนดีนี้น่า"
+          }
+        ];
+        const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+        imgSrc = randomChoice.img;
+        message = randomChoice.msg;
+      } else {
+        imgSrc = "images/1 (1).png";
+        message = "ดีขึ้นให้ได้นะ";
+      }
+
+      avgResult.innerHTML = `
+        <p>ค่าเฉลี่ย: <strong>${avg.toFixed(2)}</strong></p>
+        <img src="${imgSrc}" alt="ภาพผลลัพธ์" class="avg-image" />
+        <p class="avg-message">${message}</p>
+      `;
+    });
+
+    const goFullScreenBtn = document.getElementById('avgGoFullScreenBtn');
+    const exitFullScreenBtn = document.getElementById('avgExitFullScreenBtn');
+
+    goFullScreenBtn.addEventListener('click', () => {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().then(() => {
+          if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock('landscape').catch(() => {});
+          }
+          goFullScreenBtn.style.display = 'none';
+          exitFullScreenBtn.style.display = 'inline-block';
+        });
+      }
+    });
+
+    exitFullScreenBtn.addEventListener('click', () => {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().then(() => {
+          goFullScreenBtn.style.display = 'inline-block';
+          exitFullScreenBtn.style.display = 'none';
+          if (screen.orientation && screen.orientation.unlock) {
+            screen.orientation.unlock();
+          }
+        });
+      }
+    });
+
+    document.getElementById('backToIndexBtn').addEventListener('click', () => {
+      window.location.href = "index.html";
+    });
+  </script>
 </body>
 </html>
