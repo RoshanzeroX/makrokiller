@@ -8,15 +8,104 @@
 </head>
 <body>
   <canvas id="particles"></canvas>
-  <div class="result-wrapper">
-    <img id="resultImage" src="" alt="ผลลัพธ์" />
-    <div id="avgResult">กำลังโหลด...</div>
+  <main class="result-container" role="main">
+    <img id="resultImage" src="" alt="" />
+    <div id="avgResult" aria-live="polite">กำลังโหลด...</div>
     <div class="message" id="messageText"></div>
-    <button id="fullscreenBtn" onclick="openFullscreen()">⛶ แสดงผลเต็มจอ</button>
-    <button id="exitFullscreenBtn" onclick="closeFullscreen()" class="hidden">🛑 ออกจากเต็มจอ</button>
-    <button id="homeBtn" onclick="window.location.href='index.html'">🏠 หน้าแรก</button>
-  </div>
+  </main>
 
-  <script src="script.js"></script>
+  <div id="homeBtn" class="floating-btn" title="กลับหน้าหลัก" role="button" tabindex="0" onclick="window.location.href='index.html'">🏠</div>
+  <div id="fullscreenBtn" class="floating-btn" title="แสดงผลเต็มจอ" role="button" tabindex="0" onclick="toggleFullscreen()">📱</div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const result = parseFloat(urlParams.get('result'));
+    const avgEl = document.getElementById('avgResult');
+    const imgEl = document.getElementById('resultImage');
+    const msgEl = document.getElementById('messageText');
+
+    if (!isNaN(result)) {
+      avgEl.innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result.toFixed(8)}`;
+
+      if (result >= 12.0) {
+        const options = [
+          { img: "1(10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" },
+          { img: "1 (2).png", text: "เป็นคนดีนี้น่า" }
+        ];
+        const choice = options[Math.floor(Math.random() * options.length)];
+        imgEl.src = choice.img;
+        imgEl.alt = choice.text;
+        msgEl.innerText = choice.text;
+      } else {
+        imgEl.src = "1 (1).png";
+        imgEl.alt = "ดีขึ้นให้ได้นะ";
+        msgEl.innerText = "ดีขึ้นให้ได้นะ";
+      }
+    } else {
+      avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
+      imgEl.src = "";
+      imgEl.alt = "";
+      msgEl.innerText = "";
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+        screen.orientation.lock('landscape').catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    // Particle effect code
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let w, h;
+    let particles = [];
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createParticles(count) {
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2 + 1,
+          dx: (Math.random() - 0.5) * 0.5,
+          dy: (Math.random() - 0.5) * 0.5,
+          alpha: Math.random() * 0.6 + 0.2
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "white";
+      particles.forEach(p => {
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+      });
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(drawParticles);
+    }
+
+    createParticles(50);
+    drawParticles();
+  </script>
 </body>
 </html>
