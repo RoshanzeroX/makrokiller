@@ -1,4 +1,4 @@
-/* พื้นหลังรูป bg.webp */
+/* พื้นหลังและเอฟเฟกต์ */
 .background {
   position: fixed;
   top: 0;
@@ -7,15 +7,22 @@
   height: 100%;
   background: url('bg.webp') no-repeat center center fixed;
   background-size: cover;
+  filter: brightness(0.85);
   z-index: -2;
+}
+
+/* อาจเพิ่มเอฟเฟกต์พ่นฝุ่นแบบเก่า (ถ้ามี) */
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg);}
+  100% { transform: translateY(100vh) rotate(360deg);}
 }
 
 body {
   font-family: 'Sarabun', sans-serif;
   margin: 0;
-  padding: 0 15px 90px 15px; /* กั้น footer */
+  padding: 0 15px 90px 15px; /* ช่องว่าง footer */
   color: #333;
-  background: transparent; /* ใช้ background div แทน */
+  background: transparent;
 }
 
 .container {
@@ -23,7 +30,7 @@ body {
   margin: 30px auto;
   padding: 25px 20px 20px 20px;
   background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.12);
   border-radius: 12px;
   text-align: center;
   position: relative;
@@ -69,15 +76,27 @@ button:hover {
   background-color: #004999;
 }
 
+/* กล่องผลลัพธ์ที่สวยและคลิกได้ */
 #result {
   margin-top: 22px;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #222;
   min-height: 40px;
+  background: #e1f0ff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0, 100, 180, 0.2);
+  user-select: none;
+  transition: background-color 0.3s ease;
 }
 
-/* เป็ดลอยขวาล่าง */
+#result:hover {
+  background-color: #c3ddff;
+  cursor: pointer;
+}
+
+/* เป็ดขวาล่าง */
 #duck {
   position: fixed;
   right: 20px;
@@ -105,41 +124,27 @@ button:hover {
   }
 }
 
-/* Footer ปรับให้อ่านง่ายและไม่ทับ */
+/* Footer อ่านง่ายและจาง */
 footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 12px 15px;
+  padding: 10px 15px;
   background: transparent;
   color: #777;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: 1rem;
   text-align: center;
   font-weight: 400;
   user-select: none;
-  box-sizing: border-box;
   pointer-events: none;
-  white-space: normal;
   z-index: 10;
 }
 
 footer p {
   margin: 2px 0;
   padding: 0;
-}
-
-/* ลิงก์ไป average.html สวยและกดได้ */
-.link-average {
-  color: #0066cc;
-  text-decoration: underline;
-  cursor: pointer;
-  font-weight: 600;
-  user-select: text;
   pointer-events: auto;
-}
-
-.link-average:hover {
-  color: #004999;
+  user-select: text;
 }
