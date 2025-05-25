@@ -1,48 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('calcForm');
-  const totalOrdersInput = document.getElementById('totalOrders');
-  const workingDaysInput = document.getElementById('workingDays');
-  const avgResultSpan = document.getElementById('avgResult');
-  const resultMessage = document.getElementById('resultMessage');
-  const goToAverageBtn = document.getElementById('goToAverage');
+  const resultDisplay = document.getElementById('resultDisplay');
+  const goAverageBtn = document.getElementById('goAverage');
 
-  function calculateAverage(totalOrders, workingDays) {
-    if (workingDays === 0) return null;
-    return totalOrders / workingDays;
-  }
+  let lastResult = null;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', e => {
     e.preventDefault();
-    const totalOrders = Number(totalOrdersInput.value);
-    const workingDays = Number(workingDaysInput.value);
 
-    if (totalOrders < 0 || workingDays <= 0) {
-      avgResultSpan.textContent = '-';
-      resultMessage.textContent = 'กรุณากรอกจำนวนที่ถูกต้อง';
-      goToAverageBtn.disabled = true;
+    const sku = Number(form.sku.value);
+    const mu = Number(form.mu.value);
+    const days = Number(form.days.value);
+
+    if (days <= 0) {
+      resultDisplay.textContent = "กรุณาใส่จำนวนวันที่ถูกต้อง (มากกว่า 0)";
       return;
     }
 
-    const avg = calculateAverage(totalOrders, workingDays);
-    if (avg === null || isNaN(avg)) {
-      avgResultSpan.textContent = '-';
-      resultMessage.textContent = 'ไม่สามารถคำนวณค่าเฉลี่ยได้';
-      goToAverageBtn.disabled = true;
-      return;
-    }
+    const average = ((sku / 12) + (mu / 34)) / (2 * days);
+    lastResult = average;
 
-    avgResultSpan.textContent = avg.toFixed(8);
-    resultMessage.textContent = avg >= 12 ? 'ค่าเฉลี่ยสูงมาก!' : 'ค่าเฉลี่ยปกติ';
-    goToAverageBtn.disabled = false;
-
-    // Save average to sessionStorage for average.html
-    sessionStorage.setItem('averageOrder', avg.toFixed(8));
+    resultDisplay.textContent = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${average.toFixed(8)}`;
+    goAverageBtn.disabled = false;
   });
 
-  goToAverageBtn.addEventListener('click', () => {
-    const avg = sessionStorage.getItem('averageOrder');
-    if (avg) {
-      window.location.href = `average.html?result=${avg}`;
+  goAverageBtn.addEventListener('click', () => {
+    if (lastResult !== null) {
+      window.location.href = `average.html?result=${lastResult}`;
     }
   });
 });
