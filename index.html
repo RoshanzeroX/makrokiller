@@ -8,22 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="background-container">
-    <img src="bg.webp" alt="Background" class="bg-image" />
-    <canvas id="confetti-canvas"></canvas>
-  </div>
-
   <div class="container" id="container">
     <h2>คำนวณออเดอร์เฉลี่ยต่อวัน</h2>
     <input id="sku" type="number" placeholder="กรอก SKU" />
     <input id="mu" type="number" placeholder="กรอก MU" />
     <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-    <button id="calculateBtn" onclick="calculate()">คำนวณ</button>
-    <button id="fullscreenBtn" onclick="toggleFullscreen()">เปิดเต็มจอ</button>
-    <div id="result" onclick="goToAverage()" title="คลิกเพื่อดูรายละเอียด"></div>
+    <button id="calculateBtn">คำนวณ</button>
+    <button id="fullscreenToggleBtn">เปิดเต็มจอ</button>
+    <div id="result"></div>
   </div>
 
-  <div id="duck" onclick="window.location.href='songs.html'" title="ไปหน้าเพลง">🦆</div>
+  <div id="duck" title="ไปหน้าเพลง" onclick="window.location.href='songs.html'">🦆</div>
 
   <footer>
     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
@@ -35,6 +30,8 @@
     <p>ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้</p>
     <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
   </footer>
+
+  <canvas id="confettiCanvas"></canvas>
 
   <script src="script.js"></script>
 </body>
