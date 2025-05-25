@@ -1,54 +1,103 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ผลลัพธ์เฉลี่ยออเดอร์</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+    * { box-sizing: border-box; }
     body {
-      margin: 0;
       font-family: 'Sarabun', sans-serif;
-      background-color: #121212;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #323232, #1a1a1a);
       color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       height: 100vh;
+      display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
       text-align: center;
     }
-    .result {
-      font-size: 10vw;
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-image: url('bg.webp');
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px) brightness(0.5);
+      z-index: -1;
+    }
+
+    #avgResult {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
+      color: #ffd700;
+    }
+
+    img {
+      max-width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      margin-bottom: 15px;
+    }
+
+    .message {
+      font-size: 1.4rem;
       font-weight: bold;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    button {
-      margin-top: 40px;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      background-color: #ff6b6b;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #e55050;
+
+    @media (max-width: 600px) {
+      #avgResult {
+        font-size: 2rem;
+      }
+      img {
+        max-width: 90%;
+      }
+      .message {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="result" id="avgText">เฉลี่ยออเดอร์ต่อวัน: -</div>
-  <button onclick="goBack()">กลับไปหน้าแรก</button>
+  <div id="avgResult">กำลังโหลด...</div>
+  <img id="resultImage" src="" alt="" />
+  <div class="message" id="messageText"></div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const avg = params.get('avg');
-    if (avg) {
-      document.getElementById('avgText').textContent = `เฉลี่ยออเดอร์ต่อวัน: ${avg}`;
-    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const result = parseFloat(urlParams.get('result'));
+    const avgEl = document.getElementById('avgResult');
+    const imgEl = document.getElementById('resultImage');
+    const msgEl = document.getElementById('messageText');
 
-    function goBack() {
-      window.location.href = "index.html";
+    if (!isNaN(result)) {
+      avgEl.innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result.toFixed(8)}`;
+
+      if (result >= 12.00) {
+        const options = [
+          { img: "1(10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" },
+          { img: "1(2).png", text: "เป็นคนดีนี้น่า" }
+        ];
+        const choice = options[Math.floor(Math.random() * options.length)];
+        imgEl.src = choice.img;
+        msgEl.innerText = choice.text;
+      } else {
+        imgEl.src = "1(1).png";
+        msgEl.innerText = "ดีขึ้นให้ได้นะ";
+      }
+    } else {
+      avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
     }
   </script>
 </body>
