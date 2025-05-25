@@ -35,78 +35,66 @@
       z-index: -1;
     }
 
+    #resultImage {
+      max-width: 180px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+
     #avgResult {
       font-size: 2.2rem;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
       color: #ffd700;
     }
 
-    img {
-      max-width: 180px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      margin-bottom: 10px;
-    }
-
     .message {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: bold;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-      margin-bottom: 25px;
     }
 
-   .home-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  font-size: 2rem;
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 8px 12px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(255,255,255,0.3);
-  transition: transform 0.2s ease;
-}
+    .home-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2rem;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      transition: transform 0.2s ease;
+    }
 
-.home-button:hover {
-  transform: scale(1.1);
-}
-
-
-    .home-button img {
-      width: 40px;
-      height: 40px;
-      filter: drop-shadow(0 0 4px #fff);
+    .home-button:hover {
+      transform: scale(1.1);
     }
 
     @media (max-width: 600px) {
       #avgResult {
         font-size: 1.8rem;
       }
-      img {
-        max-width: 140px;
+      #resultImage {
+        max-width: 120px;
       }
       .message {
         font-size: 1.1rem;
       }
-      .home-button img {
-        width: 36px;
-        height: 36px;
+      .home-button {
+        font-size: 1.6rem;
+        padding: 6px 10px;
       }
     }
   </style>
 </head>
 <body>
-  <img id="resultImage" src="" alt="" />
-  <div class="message" id="messageText"></div>
+  <img id="resultImage" src="" alt="ผลลัพธ์" />
   <div id="avgResult">กำลังโหลด...</div>
-
-  <!-- ปุ่มกลับหน้าแรก -->
+  <div class="message" id="messageText"></div>
   <a href="index.html" class="home-button" title="กลับหน้าแรก">🏠</a>
-    <img src="home-icon.png" alt="Home Icon" />
-  </a>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
