@@ -39,12 +39,4 @@ function calculate() {
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen();
-    fullscreenToggleBtn.innerText = 'ออกจากเต็มจอ';
-  } else {
-    document.exitFullscreen();
-    fullscreenToggleBtn.innerText = 'เปิดเต็มจอ';
-  }
-}
-
-// Confetti effect
-
+    fullscreenToggle
