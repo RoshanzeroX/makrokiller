@@ -2,111 +2,21 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ผลลัพธ์ค่าเฉลี่ย</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ผลลัพธ์</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <canvas id="particles"></canvas>
-
-  <div class="container average-container">
-    <img id="resultImage" src="" alt="" />
+<body class="average-page">
+  <div class="average-container">
+    <img id="resultImage" src="" alt="result" />
     <div id="avgResult">กำลังโหลด...</div>
-    <div class="message" id="messageText"></div>
-
-    <button id="fullscreenBtn" class="floating-btn" onclick="openFullscreen()">📱</button>
-    <button id="homeBtn" class="floating-btn" onclick="window.location.href='index.html'">🏠</button>
+    <div id="messageText" class="message"></div>
   </div>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const result = parseFloat(urlParams.get('result'));
-    const avgEl = document.getElementById('avgResult');
-    const imgEl = document.getElementById('resultImage');
-    const msgEl = document.getElementById('messageText');
+  <div class="floating-btn" onclick="goHome()">🏠</div>
+  <div class="floating-btn left" onclick="openFullscreenLandscape()">📱</div>
 
-    if (!isNaN(result)) {
-      avgEl.innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result.toFixed(8)}`;
-
-      if (result >= 12.00) {
-        const options = [
-          { img: "1(10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" },
-          { img: "1 (2).png", text: "เป็นคนดีนี้น่า" }
-        ];
-        const choice = options[Math.floor(Math.random() * options.length)];
-        imgEl.src = choice.img;
-        msgEl.innerText = choice.text;
-      } else {
-        imgEl.src = "1 (1).png";
-        msgEl.innerText = "ดีขึ้นให้ได้นะ";
-      }
-    } else {
-      avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
-    }
-
-    function openFullscreen() {
-      const docElm = document.documentElement;
-      if (docElm.requestFullscreen) {
-        docElm.requestFullscreen();
-      } else if (docElm.mozRequestFullScreen) {
-        docElm.mozRequestFullScreen();
-      } else if (docElm.webkitRequestFullscreen) {
-        docElm.webkitRequestFullscreen();
-      } else if (docElm.msRequestFullscreen) {
-        docElm.msRequestFullscreen();
-      }
-      screen.orientation.lock('landscape').catch(() => {});
-    }
-
-    // particle effect
-    const canvas = document.getElementById("particles");
-    const ctx = canvas.getContext("2d");
-    let w, h;
-    let particles = [];
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    function createParticles(count) {
-      particles = [];
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: Math.random() * 2 + 1,
-          dx: (Math.random() - 0.5) * 0.5,
-          dy: (Math.random() - 0.5) * 0.5,
-          alpha: Math.random() * 0.6 + 0.2
-        });
-      }
-    }
-
-    function drawParticles() {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "white";
-      particles.forEach(p => {
-        ctx.globalAlpha = p.alpha;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-        p.x += p.dx;
-        p.y += p.dy;
-        if (p.x < 0) p.x = w;
-        if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h;
-        if (p.y > h) p.y = 0;
-      });
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(drawParticles);
-    }
-
-    createParticles(50);
-    drawParticles();
-  </script>
+  <canvas id="particles"></canvas>
+  <script src="script.js"></script>
 </body>
 </html>
