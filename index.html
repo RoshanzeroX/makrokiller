@@ -19,7 +19,7 @@
       overflow: hidden;
       flex-direction: column;
       position: relative;
-      padding-bottom: 40px; /* เผื่อพื้นที่ให้ credit */
+      padding-bottom: 80px; /* เพิ่มที่ว่างให้ข้อความเยอะขึ้น */
     }
     body::before {
       content: "";
@@ -82,7 +82,7 @@
     #duck {
       position: fixed;
       right: 20px;
-      bottom: 70px;
+      bottom: 90px;
       font-size: 2.2rem;
       background: rgba(255,255,255,0.2);
       padding: 10px 12px;
@@ -113,15 +113,15 @@
       text-decoration: none;
     }
 
-    /* Credit Box updated for subtle footer style */
+    /* Credit / About Box */
     .credit-container {
       position: fixed;
-      bottom: 8px;
+      bottom: 6px;
       left: 50%;
       transform: translateX(-50%);
       max-width: 95vw;
-      padding: 0 8px;
-      color: #ccc;
+      padding: 0 12px;
+      color: #bbb;
       font-size: 0.75rem;
       font-weight: 300;
       font-family: 'Sarabun', sans-serif;
@@ -129,14 +129,20 @@
       user-select: none;
       background: transparent;
       box-shadow: none;
-      text-shadow: 0 0 3px rgba(0,0,0,0.5);
+      text-shadow: 0 0 3px rgba(0,0,0,0.6);
       z-index: 9999;
-      pointer-events: none; /* คลิกผ่าน */
+      pointer-events: none;
+      line-height: 1.4;
+      white-space: pre-line; /* รักษา \n ในข้อความ */
     }
 
     @media (max-width: 600px) {
       .container { padding: 25px; }
-      #duck { bottom: 100px; }
+      #duck { bottom: 110px; }
+      .credit-container {
+        font-size: 0.7rem;
+        padding: 0 8px;
+      }
     }
   </style>
 </head>
@@ -155,9 +161,19 @@
 
   <!-- Credit / About Box -->
   <div class="credit-container" aria-label="About and credits">
-    เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย<br>
-    ออกแบบ UI ให้ใช้งานง่ายและดูสบายตา<br>
-    พัฒนาโดย Jack Makro © 2025
+    เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย  
+    โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย  
+    ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง  
+    <br><br>
+    โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์  
+    รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว  
+    <br><br>
+    พัฒนาโดย Jack Makro © 2025  
+    ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev123  
+    ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้  
+    หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ support@example.com  
+    <br><br>
+    “สร้างสรรค์เพื่อความง่ายดาย และประสิทธิภาพของการทำงานของคุณ”
   </div>
 
   <script>
