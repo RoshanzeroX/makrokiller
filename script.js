@@ -1,41 +1,40 @@
-// script.js
+const resultEl = document.getElementById('result');
 
 function calculate() {
   const sku = parseFloat(document.getElementById('sku').value);
   const mu = parseFloat(document.getElementById('mu').value);
   const days = parseFloat(document.getElementById('days').value);
 
-  if (isNaN(sku) || isNaN(mu) || isNaN(days) || days === 0) {
-    document.getElementById('result').innerText = "กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง";
+  if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
+    alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
     return;
   }
 
-  const average = ((sku * mu) / days).toFixed(2);
-  document.getElementById('result').innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${average}`;
+  const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+  resultEl.innerText = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+  
+  // คลิกผลลัพธ์ไป average.html พร้อมส่งพารามิเตอร์
+  resultEl.onclick = () => {
+    window.location.href = `average.html?result=${encodeURIComponent(result)}`;
+  };
 }
 
-// Fullscreen Functions
 function openFullscreen() {
   const elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) {
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
-    elem.msRequestFullscreen();
-  }
+  if (elem.requestFullscreen) elem.requestFullscreen();
   document.getElementById('fullscreenBtn').style.display = 'none';
-  document.getElementById('exitFullscreenBtn').style.display = 'inline-block';
+  document.getElementById('exitFullscreenBtn').style.display = 'block';
 }
 
 function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  }
-  document.getElementById('fullscreenBtn').style.display = 'inline-block';
+  if (document.exitFullscreen) document.exitFullscreen();
+  document.getElementById('fullscreenBtn').style.display = 'block';
   document.getElementById('exitFullscreenBtn').style.display = 'none';
 }
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    document.getElementById('fullscreenBtn').style.display = 'block';
+    document.getElementById('exitFullscreenBtn').style.display = 'none';
+  }
+});
