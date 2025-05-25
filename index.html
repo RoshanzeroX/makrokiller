@@ -19,7 +19,7 @@
       overflow-x: hidden;
       flex-direction: column;
       position: relative;
-      padding-bottom: 120px; /* เพิ่มช่องว่างเพื่อไม่ให้ข้อความเครดิตทับ */
+      padding-bottom: 150px; /* เพิ่มช่องว่างล่างเยอะขึ้น */
     }
     body::before {
       content: "";
@@ -82,7 +82,7 @@
     #duck {
       position: fixed;
       right: 20px;
-      bottom: 130px; /* เลื่อนขึ้นตาม padding-bottom */
+      bottom: 150px; /* เลื่อนขึ้นตาม padding-bottom */
       font-size: 2.2rem;
       background: rgba(255,255,255,0.2);
       padding: 10px 12px;
@@ -120,9 +120,8 @@
       left: 50%;
       transform: translateX(-50%);
       max-width: 95vw;
-      padding: 0 12px;
       color: #bbb;
-      font-size: 0.75rem;
+      font-size: 0.6rem; /* ลดขนาดลง */
       font-weight: 300;
       font-family: 'Sarabun', sans-serif;
       text-align: center;
@@ -132,16 +131,18 @@
       text-shadow: 0 0 3px rgba(0,0,0,0.6);
       z-index: 9999;
       pointer-events: none;
-      line-height: 1.4;
-      white-space: pre-line;
+      white-space: nowrap; /* ให้เรียงเป็นบรรทัดเดียว */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 8px;
     }
 
     @media (max-width: 600px) {
       .container { padding: 25px; }
-      #duck { bottom: 150px; }
+      #duck { bottom: 160px; }
       .credit-container {
-        font-size: 0.7rem;
-        padding: 0 8px;
+        font-size: 0.55rem;
+        padding: 0 6px;
       }
     }
   </style>
@@ -161,17 +162,7 @@
 
   <!-- Credit / About Box -->
   <div class="credit-container" aria-label="About and credits">
-    เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย  
-    โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย  
-    ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง  
-    <br><br>
-    โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์  
-    รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว  
-    <br><br>
-    พัฒนาโดย Jack Makro © 2025  
-    ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX  
-    ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้  
-    หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12  
+    เว็บไซต์นี้พัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างรวดเร็วและสะดวกสบาย โดยออกแบบให้ใช้งานง่ายและตอบโจทย์จริง โค้ดเขียนด้วย HTML, CSS และ JavaScript พร้อมฟีเจอร์เปิดเต็มจอเพื่อเพิ่มความชัดเจนในการแสดงผล พัฒนาโดย Jack Makro © 2025 ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX หากพบปัญหาหรือข้อเสนอแนะ ติดต่อได้ที่ P'Jack OCS Lock 12
   </div>
 
   <script>
