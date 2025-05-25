@@ -146,7 +146,7 @@
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
       user-select: text;
       word-break: break-word;
-      cursor: pointer;
+      cursor: default;
       display: inline-block;
       transition: transform 0.3s ease;
     }
@@ -185,8 +185,8 @@
     <button onclick="calculate()" class="inputs">คำนวณ</button>
     <button id="fullscreenBtn" class="inputs" onclick="openFullscreen()">เปิดเต็มจอ</button>
     <button id="exitFullscreenBtn" class="inputs hidden" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
-    <button onclick="goToSongs()" id="duckButton" title="ไปหน้าเพลง">🦆</button>
-    <h3 id="result" onclick="toggleView()"></h3>
+    <button onclick="window.location.href='songs.html'" id="duckButton" title="ไปหน้าเพลง">🦆</button>
+    <h3 id="result"></h3>
   </div>
 
   <script>
@@ -211,16 +211,14 @@
         return;
       }
 
-      // สูตรคำนวณเฉลี่ย (ตามที่คุณให้มา)
-      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+      const avg = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+      fullResult = avg;
 
-      resultEl.innerText = fullResult;
+      // แสดงผลเป็นลิงก์คลิกได้ไปหน้า average.html พร้อมส่งค่า avg ผ่าน URL
+      resultEl.innerHTML = `<a href="average.html?avg=${encodeURIComponent(avg)}" style="color:#ffd700; text-decoration: underline;">เฉลี่ยออเดอร์ต่อวัน: ${avg}</a>`;
       showOnlyResult = false;
 
-      document.querySelectorAll('.inputs').forEach(el => {
-        el.classList.remove('hidden');
-      });
+      document.querySelectorAll('.inputs').forEach(el => el.classList.remove('hidden'));
       fullscreenBtn.classList.remove('hidden');
       exitFullscreenBtn.classList.add('hidden');
       container.classList.remove('only-result');
@@ -231,78 +229,31 @@
       }, 300);
     }
 
-    async function toggleView() {
-      if (!fullResult) return;
+    // ไม่มี toggleView() เพราะผลลัพธ์เป็นลิงก์แล้ว ไม่ต้องซ่อน input
 
-      if (showOnlyResult) {
-        // แสดง input & ปุ่มทั้งหมด
-        document.querySelectorAll('.inputs').forEach(el => {
-          el.classList.remove('hidden');
-        });
-        container.classList.remove('landscape-view', 'only-result');
-        resultEl.innerText = fullResult;
-        showOnlyResult = false;
-
-        if (document.fullscreenElement) {
-          await document.exitFullscreen();
-        }
-      } else {
-        // ซ่อน input & ปุ่มทั้งหมด แสดงผลลัพธ์อย่างเดียว
-        document.querySelectorAll('.inputs').forEach(el => {
-          el.classList.add('hidden');
-        });
-        resultEl.classList.remove('hidden');
-        resultEl.innerText = fullResult;
-        showOnlyResult = true;
-
-        container.classList.add('only-result');
-
-        if (isMobile()) {
-          try {
-            if (!document.fullscreenElement) {
-              await container.requestFullscreen();
-            }
-            if (screen.orientation && screen.orientation.lock) {
-              await screen.orientation.lock('landscape');
-            }
-          } catch (err) {
-            console.warn('ไม่สามารถล็อคแนวนอนได้:', err);
-          }
-          container.classList.add('landscape-view');
-        }
-      }
-    }
-
+    // ฟังก์ชัน full screen
     function openFullscreen() {
-      const elem = document.documentElement;
-      if (elem.requestFullscreen) elem.requestFullscreen();
-      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-      else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
-
+      if (container.requestFullscreen) {
+        container.requestFullscreen();
+      } else if (container.webkitRequestFullscreen) { /* Safari */
+        container.webkitRequestFullscreen();
+      } else if (container.msRequestFullscreen) { /* IE11 */
+        container.msRequestFullscreen();
+      }
       fullscreenBtn.classList.add('hidden');
       exitFullscreenBtn.classList.remove('hidden');
     }
 
     function closeFullscreen() {
-      if (document.exitFullscreen) document.exitFullscreen();
-      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-      else if (document.msExitFullscreen) document.msExitFullscreen();
-
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
       fullscreenBtn.classList.remove('hidden');
       exitFullscreenBtn.classList.add('hidden');
-    }
-
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        fullscreenBtn.classList.remove('hidden');
-        exitFullscreenBtn.classList.add('hidden');
-        container.classList.remove('landscape-view');
-      }
-    });
-
-    function goToSongs() {
-      // เปลี่ยน URL ไปหน้า songs.html
-      window.location.href = 'songs.html';
     }
   </script>
 </body>
