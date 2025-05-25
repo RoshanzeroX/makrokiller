@@ -4,7 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>เลือกเพลง YouTube</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: linear-gradient(135deg, #1e1e1e, #121212);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 30px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: linear-gradient(45deg, #34ace0, #33d9b2);
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 10px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #2c99cc, #28b999);
+    }
+
+    iframe {
+      margin-top: 30px;
+      width: 90vw;
+      max-width: 600px;
+      height: 340px;
+      border: none;
+      border-radius: 12px;
+    }
+
+    .back-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .back-btn img {
+      width: 50px;
+    }
+
+    .exit-fullscreen {
+      margin-top: 15px;
+      background: #ff5e57;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      padding: 10px 20px;
+      font-size: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
 </head>
 <body>
   <h1>เลือกเพลงที่ต้องการฟัง</h1>
@@ -33,7 +108,7 @@
     function exitFullScreen() {
       if (document.fullscreenElement) {
         document.exitFullscreen();
-      } else if (window.innerHeight == screen.height) {
+      } else if (window.innerHeight === screen.height) {
         alert("เบราว์เซอร์ของคุณอาจไม่รองรับการออกจากโหมด fullscreen ด้วย script นี้ กรุณาใช้ปุ่มย้อนกลับของระบบแทน");
       }
     }
