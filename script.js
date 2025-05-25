@@ -1,49 +1,44 @@
-// ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตร (sku/12 + mu/34) / (2*days)
-function calculateAverage(sku, mu, days) {
-  return ( (sku/12 + mu/34) / (2*days) );
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  const skuInput = document.getElementById('sku');
-  const muInput = document.getElementById('mu');
-  const daysInput = document.getElementById('days');
+  const skuInput = document.getElementById('skuInput');
+  const muInput = document.getElementById('muInput');
+  const daysInput = document.getElementById('daysInput');
   const calcBtn = document.getElementById('calcBtn');
-  const resultDiv = document.getElementById('result');
-  const toAverageBtn = document.getElementById('toAverageBtn');
+  const resultContainer = document.getElementById('resultContainer');
 
-  calcBtn.addEventListener('click', () => {
+  const goFullScreenBtn = document.getElementById('goFullScreenBtn');
+  const exitFullScreenBtn = document.getElementById('exitFullScreenBtn');
+  const goToAverageBtn = document.getElementById('goToAverageBtn');
+  const goToSongsBtn = document.getElementById('goToSongsBtn');
+
+  // ฟังก์ชันคำนวณตามสูตร ((sku/12 + mu/34) / (2*days))
+  function calculateAverage(sku, mu, days) {
+    return ((sku / 12) + (mu / 34)) / (2 * days);
+  }
+
+  calcBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
     const sku = parseFloat(skuInput.value);
     const mu = parseFloat(muInput.value);
     const days = parseFloat(daysInput.value);
 
     if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
-      alert('กรุณากรอกตัวเลขที่ถูกต้องและจำนวนวันต้องมากกว่า 0');
+      resultContainer.innerHTML = "<p>กรุณากรอกข้อมูลให้ถูกต้องและครบถ้วน</p>";
       return;
     }
 
     const avg = calculateAverage(sku, mu, days);
-    const avgFixed = avg.toFixed(2);
-
-    resultDiv.textContent = `ค่าเฉลี่ยที่คำนวณได้คือ: ${avgFixed}`;
-
-    // เก็บค่าไว้ใน localStorage เพื่อส่งต่อไป average.html
-    localStorage.setItem('averageValue', avgFixed);
-
-    // เปิดใช้งานปุ่มไปหน้า average
-    toAverageBtn.disabled = false;
+    localStorage.setItem('averageValue', avg.toFixed(2));
+    resultContainer.innerHTML = `<p>ค่าเฉลี่ยที่คำนวณได้: <strong>${avg.toFixed(2)}</strong></p>`;
   });
 
-  toAverageBtn.addEventListener('click', () => {
-    window.location.href = 'average.html';
-  });
-
-  // ฟีเจอร์ fullscreen หน้า index
-  const goFullScreenBtn = document.getElementById('goFullScreenBtn');
-  const exitFullScreenBtn = document.getElementById('exitFullScreenBtn');
-
+  // ฟูลสกรีน
   goFullScreenBtn.addEventListener('click', () => {
     if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen().then(() => {
+        if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock('landscape').catch(() => {});
+        }
         goFullScreenBtn.style.display = 'none';
         exitFullScreenBtn.style.display = 'inline-block';
       });
@@ -55,13 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
       document.exitFullscreen().then(() => {
         goFullScreenBtn.style.display = 'inline-block';
         exitFullScreenBtn.style.display = 'none';
+        if (screen.orientation && screen.orientation.unlock) {
+          screen.orientation.unlock();
+        }
       });
     }
   });
 
-  // ปุ่มลอยเป็ดไปหน้า songs.html
-  const duckBtn = document.querySelector('.floating-duck-btn');
-  duckBtn.addEventListener('click', () => {
+  // ไปหน้า average.html
+  goToAverageBtn.addEventListener('click', () => {
+    window.location.href = 'average.html';
+  });
+
+  // ปุ่มเป็ดไปหน้า songs.html
+  goToSongsBtn.addEventListener('click', () => {
     window.location.href = 'songs.html';
   });
 });
