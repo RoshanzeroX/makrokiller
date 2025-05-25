@@ -1,150 +1,131 @@
-/* พื้นหลังและเอฟเฟกต์ */
-.background {
+/* เบสิกสไตล์และฟอนต์ */
+body, html {
+  margin: 0; padding: 0;
+  font-family: 'Sarabun', sans-serif;
+  background: #111;
+  color: #eee;
+  height: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.background-container {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.bg-image {
   width: 100%;
   height: 100%;
-  background: url('bg.webp') no-repeat center center fixed;
-  background-size: cover;
-  filter: brightness(0.85);
-  z-index: -2;
+  object-fit: cover;
+  filter: brightness(0.4);
+  position: absolute;
+  top: 0; left: 0;
 }
 
-/* อาจเพิ่มเอฟเฟกต์พ่นฝุ่นแบบเก่า (ถ้ามี) */
-@keyframes confetti {
-  0% { transform: translateY(0) rotate(0deg);}
-  100% { transform: translateY(100vh) rotate(360deg);}
-}
-
-body {
-  font-family: 'Sarabun', sans-serif;
-  margin: 0;
-  padding: 0 15px 90px 15px; /* ช่องว่าง footer */
-  color: #333;
-  background: transparent;
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .container {
-  max-width: 480px;
-  margin: 30px auto;
-  padding: 25px 20px 20px 20px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 0 15px rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.6);
+  margin: 80px auto 20px auto;
+  max-width: 420px;
+  padding: 25px 30px;
   border-radius: 12px;
+  box-shadow: 0 0 20px #222 inset;
   text-align: center;
-  position: relative;
-  z-index: 1;
 }
 
 h2 {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   font-weight: 600;
-  color: #222;
+  font-size: 1.8rem;
+  color: #fff;
 }
 
 input[type=number] {
-  width: 90%;
-  max-width: 350px;
+  width: calc(100% - 24px);
   padding: 10px;
-  margin: 10px 0;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: none;
   font-size: 1.1rem;
-  border-radius: 8px;
-  border: 1.8px solid #bbb;
-  transition: border-color 0.3s ease;
-}
-
-input[type=number]:focus {
-  outline: none;
-  border-color: #0088cc;
-  box-shadow: 0 0 8px rgba(0, 136, 204, 0.5);
+  box-sizing: border-box;
 }
 
 button {
-  margin: 15px 5px 10px 5px;
-  padding: 12px 26px;
-  font-size: 1.15rem;
-  background-color: #0066cc;
+  width: 48%;
+  padding: 10px 0;
+  margin: 8px 1%;
+  border-radius: 6px;
   border: none;
-  border-radius: 10px;
+  background-color: #3377ff;
   color: white;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #004999;
+  background-color: #2255cc;
 }
 
-/* กล่องผลลัพธ์ที่สวยและคลิกได้ */
 #result {
-  margin-top: 22px;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #222;
-  min-height: 40px;
-  background: #e1f0ff;
-  border-radius: 10px;
-  padding: 12px;
-  box-shadow: 0 2px 6px rgba(0, 100, 180, 0.2);
-  user-select: none;
-  transition: background-color 0.3s ease;
-}
-
-#result:hover {
-  background-color: #c3ddff;
+  margin-top: 20px;
+  font-size: 1.3rem;
+  color: #ccddff;
   cursor: pointer;
+  user-select: none;
 }
 
-/* เป็ดขวาล่าง */
 #duck {
   position: fixed;
   right: 20px;
-  bottom: 30px;
-  font-size: 2.5rem;
-  background: rgba(255,255,255,0.3);
-  padding: 12px 14px;
-  border-radius: 50%;
+  bottom: 20px;
+  font-size: 2.6rem;
   cursor: pointer;
-  z-index: 999;
-  animation: float 3s ease-in-out infinite;
-  transition: transform 0.3s ease;
-}
-
-#duck:hover {
-  transform: scale(1.2);
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-/* Footer อ่านง่ายและจาง */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px 15px;
-  background: transparent;
-  color: #777;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  text-align: center;
-  font-weight: 400;
   user-select: none;
-  pointer-events: none;
   z-index: 10;
 }
 
+footer {
+  background: transparent;
+  color: #aaa;
+  font-size: 0.8rem;
+  max-width: 700px;
+  margin: auto;
+  padding: 12px 20px;
+  line-height: 1.4;
+  text-align: center;
+  user-select: none;
+}
+
 footer p {
-  margin: 2px 0;
-  padding: 0;
-  pointer-events: auto;
-  user-select: text;
+  margin: 4px 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+    margin: 70px auto 15px auto;
+    padding: 20px;
+  }
+  button {
+    width: 100%;
+    margin: 8px 0;
+  }
+  #result {
+    font-size: 1.1rem;
+  }
 }
