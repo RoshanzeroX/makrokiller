@@ -2,30 +2,25 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
-
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      width: 100vw;
       font-family: 'Sarabun', sans-serif;
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
-    }
-
-    body {
+      background: linear-gradient(135deg, #323232, #1a1a1a);
+      color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
       text-align: center;
-      background: #000; /* fallback background */
+      position: relative;
     }
 
     body::before {
@@ -41,111 +36,63 @@
     }
 
     #resultImage {
-      max-width: 180px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      width: 160px;
       margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
     }
 
     #avgResult {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
+      font-size: 2rem;
+      margin-bottom: 15px;
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
       color: #ffd700;
-      word-break: break-word;
     }
 
     .message {
       font-size: 1.4rem;
       font-weight: bold;
-      color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-      margin-bottom: 30px;
     }
 
-    .home-button, .fullscreen-button {
+    .floating-button {
       position: fixed;
-      bottom: 20px;
-      font-size: 3.5rem;
+      font-size: 2rem;
       cursor: pointer;
-      user-select: none;
-      color: #ffd700;
-      text-shadow:
-        0 0 5px #ffd700,
-        0 0 10px #ffa500,
-        0 0 20px #ffa500,
-        0 0 30px #ffb400;
-      animation: float 3s ease-in-out infinite;
-      transition: color 0.3s ease, transform 0.3s ease;
-      background: rgba(255, 215, 0, 0.1);
-      border-radius: 50%;
-      padding: 10px;
-      box-shadow:
-        0 0 15px rgba(255, 215, 0, 0.4),
-        inset 0 0 8px rgba(255, 215, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      line-height: 1;
-      text-decoration: none;
       z-index: 10;
+      transition: transform 0.3s ease;
     }
 
-    .home-button {
+    .floating-button:hover {
+      transform: scale(1.2);
+    }
+
+    #homeBtn {
+      bottom: 20px;
       right: 20px;
     }
 
-    .fullscreen-button {
-      right: 80px; /* ขยับให้ห่างจาก 🏠 */
-      display: none; /* แสดงเฉพาะแนวตั้ง */
-    }
-
-    .home-button:hover, .fullscreen-button:hover {
-      color: #fff;
-      text-shadow:
-        0 0 10px #fff,
-        0 0 20px #ffd700,
-        0 0 30px #ffa500,
-        0 0 40px #ffb400;
-      box-shadow:
-        0 0 20px #fff,
-        inset 0 0 12px #fff;
-      transform: translateY(-5px) scale(1.1);
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    #fullscreenBtn {
+      bottom: 20px;
+      left: 20px;
     }
 
     @media (max-width: 600px) {
-      #avgResult {
-        font-size: 1.8rem;
-      }
-      #resultImage {
-        max-width: 120px;
-      }
-      .message {
-        font-size: 1.1rem;
-        margin-bottom: 20px;
-      }
-      .home-button, .fullscreen-button {
-        font-size: 2.8rem;
-        padding: 8px;
-      }
-      .fullscreen-button {
-        right: 70px;
-      }
+      #avgResult { font-size: 1.5rem; }
+      .message { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
-  <img id="resultImage" src="" alt="ผลลัพธ์" />
+  <img id="resultImage" src="" alt="" />
   <div id="avgResult">กำลังโหลด...</div>
   <div class="message" id="messageText"></div>
 
-  <button class="fullscreen-button" id="fullscreenBtn" aria-label="แสดงผลเต็มหน้าจอ">📱</button>
-  <a href="index.html" class="home-button" title="กลับหน้าแรก" aria-label="กลับหน้าแรก">🏠</a>
+  <!-- ปุ่มกลับหน้าแรก -->
+  <div id="homeBtn" class="floating-button" onclick="location.href='index.html'">🏠</div>
+
+  <!-- ปุ่มเปิดเต็มหน้าจอ -->
+  <div id="fullscreenBtn" class="floating-button" onclick="goFullscreen()">📱</div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -153,7 +100,6 @@
     const avgEl = document.getElementById('avgResult');
     const imgEl = document.getElementById('resultImage');
     const msgEl = document.getElementById('messageText');
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
 
     if (!isNaN(result)) {
       avgEl.innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result.toFixed(8)}`;
@@ -174,36 +120,21 @@
       avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
     }
 
-    function isPortrait() {
-      return window.matchMedia("(orientation: portrait)").matches;
-    }
-
-    function checkOrientationAndToggleFullscreenBtn() {
-      fullscreenBtn.style.display = isPortrait() ? "flex" : "none";
-    }
-
-    checkOrientationAndToggleFullscreenBtn();
-    window.addEventListener('resize', checkOrientationAndToggleFullscreenBtn);
-    window.addEventListener('orientationchange', checkOrientationAndToggleFullscreenBtn);
-
-    fullscreenBtn.addEventListener('click', async () => {
-      const elem = document.documentElement;
-      try {
-        if (elem.requestFullscreen) {
-          await elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-          await elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-          await elem.msRequestFullscreen();
-        }
-
-        if (screen.orientation && screen.orientation.lock) {
-          await screen.orientation.lock('landscape');
-        }
-      } catch (err) {
-        console.warn('ไม่สามารถเข้าสู่โหมดเต็มหน้าจอหรือล็อคแนวนอนได้:', err);
+    function goFullscreen() {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen();
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
       }
-    });
+
+      // ล็อกหมุนจอแนวนอน
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(() => {});
+      }
+    }
   </script>
 </body>
 </html>
