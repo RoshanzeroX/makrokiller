@@ -19,7 +19,7 @@
       color: white;
       overflow-x: hidden;
       overflow-y: auto;
-      padding-bottom: 40px; /* เว้นช่องสำหรับ about */
+      padding-bottom: 80px; /* เว้นที่สำหรับ about */
     }
     body::before {
       content: "";
@@ -113,7 +113,7 @@
     /* About container ปรับแก้ให้แสดงข้อความยาวๆ อ่านง่าย */
     .credit-container {
       position: fixed;
-      bottom: 6px;
+      bottom: 8px;
       left: 50%;
       transform: translateX(-50%);
       max-width: 90vw;
@@ -130,9 +130,10 @@
       pointer-events: none;
       white-space: normal;
       overflow: visible;
-      padding: 0 10px;
+      padding: 0 12px;
       line-height: 1.3em;
       word-wrap: break-word;
+      letter-spacing: 0.03em;
     }
 
     /* ปรับสำหรับมือถือ */
@@ -144,7 +145,7 @@
         font-size: 0.45rem;
         max-width: 95vw;
         padding: 0 8px;
-        line-height: 1.2em;
+        line-height: 1.25em;
       }
     }
   </style>
@@ -165,7 +166,7 @@
 
   <!-- About / Credit ด้านล่างสุด -->
   <div class="credit-container" aria-label="เกี่ยวกับเว็บไซต์">
-    เว็บไซต์นี้สร้างโดย Jack Makro ทีมพัฒนา: P'Jack OCS Lock 12 และ Team Dev RoshanzeroX — หากพบปัญหาหรือข้อเสนอแนะ ติดต่อ P'Jack OCS Lock 12 ได้โดยตรง — เว็บไซต์นี้สร้างขึ้นเพื่อช่วยให้คุณคำนวณออเดอร์เฉลี่ยอย่างง่ายดาย และเพื่อเพิ่มประสิทธิภาพในการทำงานของคุณ
+    เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว พัฒนาโดย Jack Makro © 2025 ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้ หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12
   </div>
 
   <script>
