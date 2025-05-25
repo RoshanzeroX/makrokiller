@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>คำนวณออเดอร์เฉลี่ย</title>
+  <title>เครื่องคิดเลขค่าเฉลี่ย</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="background"></div>
-  <div class="container" id="container">
-    <h2>คำนวณออเดอร์เฉลี่ยต่อวัน</h2>
-    <input id="sku" type="number" placeholder="กรอก SKU" />
-    <input id="mu" type="number" placeholder="กรอก MU" />
-    <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
-    <button id="calcBtn">คำนวณ</button>
-    <button id="fullscreenToggleBtn">เปิดเต็มจอ</button>
-    <div id="result"></div>
+  <canvas id="bgCanvas"></canvas>
+  <div class="container">
+    <h1>คิดค่าเฉลี่ยออเดอร์ต่อวัน</h1>
+    <label>จำนวน SKU:</label>
+    <input type="number" id="sku" placeholder="กรอกจำนวน SKU" />
+    <label>จำนวน MU:</label>
+    <input type="number" id="mu" placeholder="กรอกจำนวน MU" />
+    <label>จำนวนวันทำงาน:</label>
+    <input type="number" id="days" placeholder="กรอกจำนวนวัน" />
+    <button id="calculateBtn">คำนวณ</button>
   </div>
 
-  <div id="duck" onclick="goToAverage()" title="ไปหน้าเพลง">🦆</div>
+  <div class="duck" id="duck" title="คลิกเพื่อดูผลลัพธ์">🦆</div>
 
   <footer>
     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
