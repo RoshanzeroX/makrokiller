@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ผลลัพธ์เฉลี่ยออเดอร์</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Sarabun', sans-serif;
+      background-color: #121212;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+    .result {
+      font-size: 10vw;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 40px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #ff6b6b;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e55050;
+    }
+  </style>
+</head>
+<body>
+  <div class="result" id="avgText">เฉลี่ยออเดอร์ต่อวัน: -</div>
+  <button onclick="goBack()">กลับไปหน้าแรก</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const avg = params.get('avg');
+    if (avg) {
+      document.getElementById('avgText').textContent = `เฉลี่ยออเดอร์ต่อวัน: ${avg}`;
+    }
+
+    function goBack() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
