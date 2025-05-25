@@ -50,7 +50,6 @@
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.18);
       text-align: center;
-      user-select: text;
       position: relative;
       color: white;
       transition: width 0.3s ease, height 0.3s ease;
@@ -75,7 +74,6 @@
       color: white;
       box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
       transition: background 0.3s ease;
-      user-select: text;
     }
 
     input[type="number"]::placeholder {
@@ -99,9 +97,7 @@
       border-radius: 15px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(102, 126, 234, 0.6);
-      user-select: none;
       transition: background 0.3s ease, box-shadow 0.3s ease;
-      outline: none;
     }
 
     button:hover {
@@ -117,39 +113,54 @@
       border-radius: 12px;
       background: linear-gradient(45deg, #34ace0, #33d9b2);
       box-shadow: 0 3px 12px rgba(51, 217, 178, 0.6);
-      user-select: none;
-      cursor: pointer;
-      border: none;
-      color: white;
-      transition: background 0.3s ease;
     }
+
     #fullscreenBtn:hover, #exitFullscreenBtn:hover {
       background: linear-gradient(45deg, #2c99cc, #28b999);
       box-shadow: 0 5px 18px rgba(40, 185, 153, 0.8);
     }
 
+    #duckButton {
+      margin-top: 15px;
+      padding: 12px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    #duckButton:hover {
+      transform: scale(1.15);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
     #result {
       margin-top: 28px;
       font-weight: 700;
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: #ffd700;
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
-      background: rgba(0,0,0,0.3);
-      padding: 12px 18px;
-      border-radius: 12px;
       user-select: text;
-      max-width: 100%;
       word-break: break-word;
-      transition: transform 0.3s ease;
-      display: inline-block;
       cursor: pointer;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .only-result #result {
+      font-size: 7vw !important;
+      padding: 0 !important;
+      background: none !important;
     }
 
     .hidden {
       display: none !important;
     }
 
-    /* ปรับ container เมื่อแสดงผลแบบแค่ผลลัพธ์ แนวนอนบนมือถือ */
     .landscape-view {
       width: 95vw !important;
       height: 70vh !important;
@@ -158,43 +169,9 @@
       align-items: center;
     }
 
-    /* ฟอนต์ผลลัพธ์ใหญ่ 50% ของขนาดจอ */
-    .result-large {
-      font-size: 12vw; /* ปรับจาก 8vw เป็น 12vw */
-      width: 90vw;
-      max-height: 80vh;
-      line-height: normal;
-      padding: 0;
-      background: none !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      text-align: center !important;
-      cursor: pointer;
-      user-select: text;
-      white-space: normal;
-      overflow-wrap: break-word;
-      overflow-y: auto;
-      margin: 0 auto;
-      color: #ffd700;
-      text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500;
-    }
-
     @media (max-width: 600px) {
       .container {
-        padding: 25px 25px;
-      }
-      #result {
-        font-size: 1.4rem;
-      }
-      .landscape-view #result {
-        font-size: 2.2rem !important;
-        padding: 20px 30px !important;
-      }
-      .result-large {
-        font-size: 18vw; /* ใหญ่มากขึ้นบนมือถือ */
+        padding: 25px;
       }
     }
   </style>
@@ -208,6 +185,7 @@
     <button onclick="calculate()" class="inputs">คำนวณ</button>
     <button id="fullscreenBtn" class="inputs" onclick="openFullscreen()">เปิดเต็มจอ</button>
     <button id="exitFullscreenBtn" class="inputs hidden" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
+    <button onclick="window.location.href='songs.html'" id="duckButton" title="ไปหน้าเพลง">🦆</button>
     <h3 id="result" onclick="toggleView()"></h3>
   </div>
 
@@ -236,18 +214,16 @@
       const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
       fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
 
-      // แสดงผลลัพธ์ใหญ่และซ่อน inputs กับปุ่ม
       resultEl.innerText = fullResult;
-      resultEl.classList.add('result-large');
-      showOnlyResult = true;
+      showOnlyResult = false;
 
-      document.querySelectorAll('.inputs').forEach(el => el.classList.add('hidden'));
-      fullscreenBtn.classList.add('hidden');
+      document.querySelectorAll('.inputs').forEach(el => {
+        el.classList.remove('hidden');
+      });
+      fullscreenBtn.classList.remove('hidden');
       exitFullscreenBtn.classList.add('hidden');
+      container.classList.remove('only-result');
 
-      container.classList.add('landscape-view');
-
-      // effect เล็กน้อย
       resultEl.style.transform = 'scale(1.1)';
       setTimeout(() => {
         resultEl.style.transform = 'scale(1)';
@@ -258,24 +234,25 @@
       if (!fullResult) return;
 
       if (showOnlyResult) {
-        // แสดง inputs + ปุ่ม fullscreen + ผลลัพธ์ขนาดปกติ
-        document.querySelectorAll('.inputs').forEach(el => el.classList.remove('hidden'));
-        container.classList.remove('landscape-view');
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.remove('hidden');
+        });
+        container.classList.remove('landscape-view', 'only-result');
         resultEl.innerText = fullResult;
-        resultEl.classList.remove('result-large');
         showOnlyResult = false;
 
-        // ออกจาก fullscreen ถ้าเปิดอยู่
         if (document.fullscreenElement) {
           await document.exitFullscreen();
         }
       } else {
-        // ซ่อน inputs + ปุ่ม fullscreen + ปุ่มออกfullscreen + แสดงผลลัพธ์อย่างเดียว
-        document.querySelectorAll('.inputs').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.add('hidden');
+        });
         resultEl.classList.remove('hidden');
         resultEl.innerText = fullResult;
-        resultEl.classList.add('result-large');
         showOnlyResult = true;
+
+        container.classList.add('only-result');
 
         if (isMobile()) {
           try {
@@ -293,39 +270,27 @@
       }
     }
 
-    // Fullscreen functions
-    const elem = document.documentElement;
-
     function openFullscreen() {
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) { /* Safari */
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE11 */
-        elem.msRequestFullscreen();
-      }
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) elem.requestFullscreen();
+      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+
       fullscreenBtn.classList.add('hidden');
       exitFullscreenBtn.classList.remove('hidden');
     }
 
     function closeFullscreen() {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) { /* Safari */
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { /* IE11 */
-        document.msExitFullscreen();
-      }
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      else if (document.msExitFullscreen) document.msExitFullscreen();
+
       fullscreenBtn.classList.remove('hidden');
       exitFullscreenBtn.classList.add('hidden');
     }
 
-    // ซิงค์ปุ่ม fullscreen
     document.addEventListener('fullscreenchange', () => {
-      if (document.fullscreenElement) {
-        fullscreenBtn.classList.add('hidden');
-        exitFullscreenBtn.classList.remove('hidden');
-      } else {
+      if (!document.fullscreenElement) {
         fullscreenBtn.classList.remove('hidden');
         exitFullscreenBtn.classList.add('hidden');
         container.classList.remove('landscape-view');
