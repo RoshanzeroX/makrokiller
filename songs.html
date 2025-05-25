@@ -11,19 +11,14 @@
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Sarabun', sans-serif;
+    html, body {
       margin: 0;
+      padding: 0;
+      font-family: 'Sarabun', sans-serif;
       background: #121212;
       color: white;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 30px;
-      position: relative;
-      overflow: hidden;
+      height: 100%;
+      overflow-y: auto;
     }
 
     body::before {
@@ -31,20 +26,28 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background-image: url('bg.webp');
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
       filter: blur(6px) brightness(0.5);
       z-index: -1;
     }
 
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
     h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       margin-bottom: 20px;
       text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      text-align: center;
     }
 
     button {
@@ -52,22 +55,23 @@
       border: none;
       border-radius: 12px;
       padding: 12px 20px;
-      margin: 10px;
+      margin: 8px;
       color: white;
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s;
-      box-shadow: 0 3px 12px rgba(51, 217, 178, 0.4);
+      width: 90vw;
+      max-width: 400px;
+      word-wrap: break-word;
     }
 
     button:hover {
       background: linear-gradient(45deg, #2c99cc, #28b999);
-      box-shadow: 0 5px 18px rgba(40, 185, 153, 0.6);
     }
 
     iframe {
-      margin-top: 30px;
-      width: 90vw;
+      margin-top: 20px;
+      width: 100%;
       max-width: 600px;
       height: 340px;
       border: none;
@@ -86,25 +90,27 @@
   </style>
 </head>
 <body>
-  <h1>เลือกเพลงที่ต้องการฟัง</h1>
-  <div>
-    <button onclick="loadVideo('Jl2GVV5OYfY')">ถ้าคิดถึงเธอมากกว่านี้ x Pimthitiii</button>
-    <button onclick="loadVideo('yqpmX4eOCHo')">หมากเกมนี้ - อินคา [Cover By สมอารมณ์ x Pimthitiii]</button>
-    <button onclick="loadVideo('HtsXPgf830k')">苏慕遮</button>
-    <button onclick="loadVideo('nNZ5C30d6EE')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก</button>
-    <button onclick="loadVideo('VRVFAHidHm8')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก(Rock) EP.2</button>
+  <div class="container">
+    <h1>เลือกเพลงที่ต้องการฟัง</h1>
+    <div>
+      <button onclick="loadVideo('Jl2GVV5OYfY')">ถ้าคิดถึงเธอมากกว่านี้ x Pimthitiii</button>
+      <button onclick="loadVideo('yqpmX4eOCHo')">หมากเกมนี้ - อินคา [Cover By สมอารมณ์ x Pimthitiii]</button>
+      <button onclick="loadVideo('HtsXPgf830k')">苏慕遮</button>
+      <button onclick="loadVideo('nNZ5C30d6EE')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก</button>
+      <button onclick="loadVideo('VRVFAHidHm8')">Aunchi | เมดเลย์เพลงผู้หญิงอกหัก(Rock) EP.2</button>
+    </div>
+
+    <iframe id="ytPlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <a href="index.html">
+      <button class="back-button">🏠 กลับหน้าแรก</button>
+    </a>
   </div>
-
-  <iframe id="ytPlayer" src="" allowfullscreen></iframe>
-
-  <a href="index.html">
-    <button class="back-button">🏠 กลับหน้าแรก</button>
-  </a>
 
   <script>
     function loadVideo(videoId) {
       const player = document.getElementById('ytPlayer');
-      player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
     }
   </script>
 </body>
