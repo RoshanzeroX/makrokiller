@@ -3,128 +3,307 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>คำนวณเฉลี่ยออเดอร์ + ไปหน้าเพลง</title>
+  <title>คำนวณออเดอร์เฉลี่ย</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      margin: 0; padding: 0;
       font-family: 'Sarabun', sans-serif;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
+      margin: 0;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 40px 20px;
+      background: linear-gradient(135deg, #323232, #1a1a1a);
+      color: white;
+      user-select: none;
+      overflow: hidden;
     }
-    h1 {
-      font-size: 2.4rem;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('bg.webp');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(6px) brightness(0.5);
+      z-index: -1;
     }
-    input {
-      font-size: 1.1rem;
-      padding: 10px 12px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-      width: 250px;
-      max-width: 90vw;
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px 40px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      text-align: center;
+      position: relative;
+      color: white;
+      transition: width 0.3s ease, height 0.3s ease;
     }
-    button {
-      background: linear-gradient(45deg, #34ace0, #33d9b2);
+
+    h2 {
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 1.8rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 14px 15px;
+      margin: 12px 0;
       border: none;
       border-radius: 12px;
-      padding: 12px 24px;
-      margin: 15px 10px 10px 10px;
+      font-size: 1.1rem;
+      outline: none;
+      background: rgba(255, 255, 255, 0.25);
       color: white;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
       transition: background 0.3s ease;
     }
-    button:hover {
-      background: linear-gradient(45deg, #2c99cc, #28b999);
+
+    input[type="number"]::placeholder {
+      color: rgba(255, 255, 255, 0.7);
     }
-    #goSongs {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: transparent;
-      box-shadow: none;
-      padding: 0;
-      width: 60px;
-      height: 60px;
+
+    input[type="number"]:focus {
+      background: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 0 12px 2px rgba(255,255,255,0.6);
     }
-    #goSongs img {
+
+    button {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      padding: 16px 0;
+      margin-top: 18px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border: none;
+      border-radius: 15px;
       cursor: pointer;
-      filter: drop-shadow(1px 1px 2px black);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.6);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #5563d6, #6b3ea3);
+      box-shadow: 0 6px 20px rgba(85, 99, 214, 0.8);
+    }
+
+    #fullscreenBtn, #exitFullscreenBtn {
+      margin-top: 10px;
+      padding: 10px 0;
+      font-size: 1rem;
+      font-weight: 600;
       border-radius: 12px;
+      background: linear-gradient(45deg, #34ace0, #33d9b2);
+      box-shadow: 0 3px 12px rgba(51, 217, 178, 0.6);
+    }
+
+    #fullscreenBtn:hover, #exitFullscreenBtn:hover {
+      background: linear-gradient(45deg, #2c99cc, #28b999);
+      box-shadow: 0 5px 18px rgba(40, 185, 153, 0.8);
+    }
+
+    #duckButton {
+      margin-top: 15px;
+      padding: 12px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    #duckButton:hover {
+      transform: scale(1.15);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    #result {
+      margin-top: 28px;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #ffd700;
+      text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
+      user-select: text;
+      word-break: break-word;
+      cursor: pointer;
+      display: inline-block;
       transition: transform 0.3s ease;
     }
-    #goSongs img:hover {
-      transform: scale(1.1);
+
+    .only-result #result {
+      font-size: 7vw !important;
+      padding: 0 !important;
+      background: none !important;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .landscape-view {
+      width: 95vw !important;
+      height: 70vh !important;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px;
+      }
     }
   </style>
 </head>
 <body>
-
-  <h1>คำนวณเฉลี่ยออเดอร์ต่อวัน</h1>
-
-  <input type="text" id="sku" placeholder="SKU (เช่น ABC123)" />
-  <input type="number" id="mu" placeholder="MU (เช่น 50)" />
-  <input type="number" id="orders" placeholder="จำนวนออเดอร์ทั้งหมด" />
-  <input type="number" id="days" placeholder="จำนวนวัน" />
-
-  <button onclick="calculate()">คำนวณเฉลี่ย</button>
-
-  <button id="goSongs" title="ไปหน้าเพลง" onclick="goToSongs()">
-    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="เป็ด" />
-  </button>
+  <div class="container" id="container">
+    <h2 class="inputs">คำนวณออเดอร์เฉลี่ยต่อเดือน</h2>
+    <input id="sku" type="number" placeholder="กรอก SKU" class="inputs" />
+    <input id="mu" type="number" placeholder="กรอก MU" class="inputs" />
+    <input id="days" type="number" placeholder="จำนวนวันทำงาน" class="inputs" />
+    <button onclick="calculate()" class="inputs">คำนวณ</button>
+    <button id="fullscreenBtn" class="inputs" onclick="openFullscreen()">เปิดเต็มจอ</button>
+    <button id="exitFullscreenBtn" class="inputs hidden" onclick="closeFullscreen()">ออกจากเต็มจอ</button>
+    <button onclick="goToSongs()" id="duckButton" title="ไปหน้าเพลง">🦆</button>
+    <h3 id="result" onclick="toggleView()"></h3>
+  </div>
 
   <script>
-    function calculate() {
-      const sku = document.getElementById("sku").value.trim();
-      const mu = parseFloat(document.getElementById("mu").value);
-      const orders = parseFloat(document.getElementById("orders").value);
-      const days = parseFloat(document.getElementById("days").value);
+    let fullResult = '';
+    let showOnlyResult = false;
+    const container = document.getElementById('container');
+    const resultEl = document.getElementById('result');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
 
-      if (!sku) {
-        alert("กรุณากรอก SKU");
-        return;
-      }
-      if (isNaN(mu) || mu <= 0) {
-        alert("กรุณากรอก MU ให้ถูกต้อง");
-        return;
-      }
-      if (isNaN(orders) || orders < 0) {
-        alert("กรุณากรอกจำนวนออเดอร์");
-        return;
-      }
-      if (isNaN(days) || days <= 0) {
-        alert("กรุณากรอกจำนวนวันให้ถูกต้อง");
-        return;
-      }
-
-      const avg = (orders / days).toFixed(1);
-
-      // ส่งข้อมูลไป average.html พร้อม query params
-      const params = new URLSearchParams({
-        sku,
-        mu,
-        avg
-      });
-      window.location.href = `average.html?${params.toString()}`;
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
     }
+
+    function calculate() {
+      const sku = parseFloat(document.getElementById('sku').value);
+      const mu = parseFloat(document.getElementById('mu').value);
+      const days = parseFloat(document.getElementById('days').value);
+
+      if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
+        alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
+        return;
+      }
+
+      // สูตรคำนวณเฉลี่ย (ตามที่คุณให้มา)
+      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
+      fullResult = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
+
+      resultEl.innerText = fullResult;
+      showOnlyResult = false;
+
+      document.querySelectorAll('.inputs').forEach(el => {
+        el.classList.remove('hidden');
+      });
+      fullscreenBtn.classList.remove('hidden');
+      exitFullscreenBtn.classList.add('hidden');
+      container.classList.remove('only-result');
+
+      resultEl.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        resultEl.style.transform = 'scale(1)';
+      }, 300);
+    }
+
+    async function toggleView() {
+      if (!fullResult) return;
+
+      if (showOnlyResult) {
+        // แสดง input & ปุ่มทั้งหมด
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.remove('hidden');
+        });
+        container.classList.remove('landscape-view', 'only-result');
+        resultEl.innerText = fullResult;
+        showOnlyResult = false;
+
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        }
+      } else {
+        // ซ่อน input & ปุ่มทั้งหมด แสดงผลลัพธ์อย่างเดียว
+        document.querySelectorAll('.inputs').forEach(el => {
+          el.classList.add('hidden');
+        });
+        resultEl.classList.remove('hidden');
+        resultEl.innerText = fullResult;
+        showOnlyResult = true;
+
+        container.classList.add('only-result');
+
+        if (isMobile()) {
+          try {
+            if (!document.fullscreenElement) {
+              await container.requestFullscreen();
+            }
+            if (screen.orientation && screen.orientation.lock) {
+              await screen.orientation.lock('landscape');
+            }
+          } catch (err) {
+            console.warn('ไม่สามารถล็อคแนวนอนได้:', err);
+          }
+          container.classList.add('landscape-view');
+        }
+      }
+    }
+
+    function openFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) elem.requestFullscreen();
+      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+
+      fullscreenBtn.classList.add('hidden');
+      exitFullscreenBtn.classList.remove('hidden');
+    }
+
+    function closeFullscreen() {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      else if (document.msExitFullscreen) document.msExitFullscreen();
+
+      fullscreenBtn.classList.remove('hidden');
+      exitFullscreenBtn.classList.add('hidden');
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        fullscreenBtn.classList.remove('hidden');
+        exitFullscreenBtn.classList.add('hidden');
+        container.classList.remove('landscape-view');
+      }
+    });
 
     function goToSongs() {
-      window.location.href = "songs.html";
+      // เปลี่ยน URL ไปหน้า songs.html
+      window.location.href = 'songs.html';
     }
   </script>
-
 </body>
 </html>
