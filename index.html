@@ -1,123 +1,12 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>คำนวณออเดอร์เฉลี่ย</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Sarabun', sans-serif;
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #323232, #1a1a1a);
-      color: white;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-image: url('bg.webp');
-      background-size: cover;
-      background-position: center;
-      filter: blur(6px) brightness(0.5);
-      z-index: -1;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 30px 40px;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(8px);
-      text-align: center;
-      color: white;
-    }
-    h2 {
-      margin-bottom: 25px;
-      font-size: 1.8rem;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    }
-    input[type="number"] {
-      width: 100%; padding: 14px 15px; margin: 12px 0;
-      border: none; border-radius: 12px;
-      font-size: 1.1rem;
-      background: rgba(255, 255, 255, 0.25);
-      color: white;
-      box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
-    }
-    input::placeholder { color: rgba(255,255,255,0.7); }
-    button {
-      width: 100%; padding: 16px 0; margin-top: 18px;
-      font-size: 1.1rem;
-      color: #fff;
-      background: linear-gradient(45deg, #667eea, #764ba2);
-      border: none; border-radius: 15px;
-      cursor: pointer;
-    }
-    #fullscreenBtn, #exitFullscreenBtn {
-      margin-top: 10px; padding: 10px 0;
-      font-size: 1rem;
-      border-radius: 12px;
-      background: linear-gradient(45deg, #34ace0, #33d9b2);
-    }
-    #exitFullscreenBtn { display: none; }
-
-    #duck {
-      position: fixed;
-      right: 20px;
-      bottom: 80px;
-      font-size: 2.2rem;
-      background: rgba(255,255,255,0.2);
-      padding: 10px 12px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 999;
-      animation: float 3s ease-in-out infinite;
-      transition: transform 0.3s ease;
-    }
-    #duck:hover {
-      background: rgba(255,255,255,0.4);
-      transform: scale(1.2);
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    #result {
-      margin-top: 28px;
-      font-weight: 700;
-      font-size: 2rem;
-      color: #ffd700;
-      text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    footer {
-      font-size: 0.75rem;
-      padding: 20px;
-      color: rgba(255, 255, 255, 0.75);
-      text-align: center;
-      line-height: 1.6;
-      max-width: 800px;
-    }
-
-    @media (max-width: 600px) {
-      .container { padding: 25px; }
-      footer { font-size: 0.7rem; padding: 15px; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container" id="container">
@@ -137,49 +26,6 @@
     เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว พัฒนาโดย Jack Makro © 2025 ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้ หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12
   </footer>
 
-  <script>
-    let fullResult = '';
-    const resultEl = document.getElementById('result');
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
-
-    function calculate() {
-      const sku = parseFloat(document.getElementById('sku').value);
-      const mu = parseFloat(document.getElementById('mu').value);
-      const days = parseFloat(document.getElementById('days').value);
-
-      if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
-        alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
-        return;
-      }
-
-      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      fullResult = result;
-      resultEl.innerText = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
-      resultEl.onclick = () => {
-        window.location.href = `average.html?result=${encodeURIComponent(result)}`;
-      };
-    }
-
-    function openFullscreen() {
-      const elem = document.documentElement;
-      if (elem.requestFullscreen) elem.requestFullscreen();
-      fullscreenBtn.style.display = 'none';
-      exitFullscreenBtn.style.display = 'block';
-    }
-
-    function closeFullscreen() {
-      if (document.exitFullscreen) document.exitFullscreen();
-      fullscreenBtn.style.display = 'block';
-      exitFullscreenBtn.style.display = 'none';
-    }
-
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        fullscreenBtn.style.display = 'block';
-        exitFullscreenBtn.style.display = 'none';
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
