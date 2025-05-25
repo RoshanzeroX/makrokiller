@@ -8,16 +8,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="background"></div> <!-- พื้นหลังเอฟเฟกต์ -->
+  <!-- Background image -->
+  <div class="background"></div>
 
   <div class="container" id="container">
     <h2>คำนวณออเดอร์เฉลี่ยต่อวัน</h2>
+
     <input id="sku" type="number" placeholder="กรอก SKU" />
     <input id="mu" type="number" placeholder="กรอก MU" />
     <input id="days" type="number" placeholder="จำนวนวันทำงาน" />
+
     <button onclick="calculate()">คำนวณ</button>
     <button id="fullscreenBtn" onclick="toggleFullscreen()">เปิดเต็มจอ</button>
+
     <div id="result"></div>
+
+    <!-- ลิงก์ไปหน้า average.html -->
+    <p style="margin-top:20px; text-align:center;">
+      <a href="average.html" class="link-average">ไปหน้า Average.html</a>
+    </p>
   </div>
 
   <div id="duck" onclick="window.location.href='songs.html'" title="ไปหน้าเพลง">🦆</div>
