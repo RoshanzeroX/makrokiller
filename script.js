@@ -8,7 +8,7 @@ function calculate() {
     return;
   }
 
-  // สูตรที่ให้ ((sku / 12 + mu / 34) / (2 * days))
+  // สูตร ((sku / 12 + mu / 34) / (2 * days))
   const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
 
   document.getElementById('result').textContent = result;
