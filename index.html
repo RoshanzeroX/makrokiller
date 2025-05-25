@@ -3,23 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>เครื่องคิดเลขค่าเฉลี่ย</title>
+  <title>หน้าแรก - คำนวณค่าเฉลี่ย</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
   <div class="container">
-    <h1>คิดค่าเฉลี่ยออเดอร์ต่อวัน</h1>
-    <label>จำนวน SKU:</label>
-    <input type="number" id="sku" placeholder="กรอกจำนวน SKU" />
-    <label>จำนวน MU:</label>
-    <input type="number" id="mu" placeholder="กรอกจำนวน MU" />
-    <label>จำนวนวันทำงาน:</label>
-    <input type="number" id="days" placeholder="กรอกจำนวนวัน" />
-    <button id="calculateBtn">คำนวณ</button>
-  </div>
+    <h1>คำนวณค่าเฉลี่ยออเดอร์ต่อวัน</h1>
+    <form id="calcForm">
+      <label for="orders">จำนวนออเดอร์ทั้งหมด:</label>
+      <input type="number" id="orders" name="orders" min="0" required />
+      
+      <label for="days">จำนวนวันทั้งหมด:</label>
+      <input type="number" id="days" name="days" min="1" required />
+      
+      <button type="submit">คำนวณ</button>
+    </form>
 
-  <div class="duck" id="duck" title="คลิกเพื่อดูผลลัพธ์">🦆</div>
+    <div id="resultContainer" class="hidden">
+      <p>ค่าเฉลี่ยออเดอร์ต่อวัน: <span id="averageDisplay"></span></p>
+      <button id="goToAverage">ไปหน้าผลลัพธ์</button>
+    </div>
+  </div>
 
   <footer>
     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
