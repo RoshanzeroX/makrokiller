@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>เครื่องมือคำนวณค่าเฉลี่ยออเดอร์ต่อวัน</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>คำนวณค่าเฉลี่ย MU และ SKU</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>เครื่องมือคำนวณค่าเฉลี่ยออเดอร์ต่อวัน</h1>
+    <h1>คำนวณค่าเฉลี่ย MU และ SKU</h1>
     <form id="calcForm">
-      <label for="totalOrders">จำนวนออเดอร์ทั้งหมด:</label>
-      <input type="number" id="totalOrders" min="0" required />
-      
-      <label for="workingDays">จำนวนวันทำงาน:</label>
-      <input type="number" id="workingDays" min="1" required />
-      
+      <label for="sku">รวมจำนวน SKU:</label>
+      <input type="number" id="sku" name="sku" min="0" required />
+
+      <label for="mu">รวมจำนวน MU:</label>
+      <input type="number" id="mu" name="mu" min="0" required />
+
+      <label for="days">จำนวนวัน:</label>
+      <input type="number" id="days" name="days" min="1" required />
+
       <button type="submit">คำนวณ</button>
     </form>
 
-    <div id="resultArea" tabindex="0" role="region" aria-live="polite">
-      <p>ค่าเฉลี่ยออเดอร์ต่อวัน: <span id="avgResult">-</span></p>
-      <p id="resultMessage"></p>
-    </div>
+    <div id="resultDisplay" class="result"></div>
 
-    <button id="goToAverage" disabled>ดูผลค่าเฉลี่ยโดยละเอียด</button>
-
-    <footer>
-      <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
-      <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
-      <p>ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง</p>
-      <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว</p>
-      <p>พัฒนาโดย Jack Makro © 2025</p>
-      <p>ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX</p>
-      <p>ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้</p>
-      <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
-    </footer>
+    <button id="goAverage" disabled>ไปยังหน้าค่าเฉลี่ย</button>
   </div>
+
+  <footer>
+    <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
+    <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
+    <p>ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง</p>
+    <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว</p>
+    <p>พัฒนาโดย Jack Makro © 2025</p>
+    <p>ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX</p>
+    <p>ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้</p>
+    <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
