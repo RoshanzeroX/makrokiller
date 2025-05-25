@@ -6,7 +6,11 @@
   <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     html, body {
       font-family: 'Sarabun', sans-serif;
@@ -25,12 +29,12 @@
 
     body::before {
       content: "";
-      position: fixed;
+      position: absolute;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-image: url('bg.webp');
+      width: 100%;
+      height: 100%;
+      background: url('bg.webp') no-repeat center center;
       background-size: cover;
-      background-position: center;
       filter: blur(6px) brightness(0.5);
       z-index: -1;
     }
@@ -55,15 +59,17 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
-    .floating-button {
+    .floating-icon {
       position: fixed;
-      font-size: 2rem;
+      font-size: 2.5rem;
       cursor: pointer;
       z-index: 10;
+      animation: float 3s ease-in-out infinite;
       transition: transform 0.3s ease;
+      user-select: none;
     }
 
-    .floating-button:hover {
+    .floating-icon:hover {
       transform: scale(1.2);
     }
 
@@ -75,6 +81,11 @@
     #fullscreenBtn {
       bottom: 20px;
       left: 20px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     @media (max-width: 600px) {
@@ -89,10 +100,10 @@
   <div class="message" id="messageText"></div>
 
   <!-- ปุ่มกลับหน้าแรก -->
-  <div id="homeBtn" class="floating-button" onclick="location.href='index.html'">🏠</div>
+  <div id="homeBtn" class="floating-icon" onclick="location.href='index.html'">🏠</div>
 
-  <!-- ปุ่มเปิดเต็มหน้าจอ -->
-  <div id="fullscreenBtn" class="floating-button" onclick="goFullscreen()">📱</div>
+  <!-- ปุ่มแสดงผลเต็มหน้าจอ -->
+  <div id="fullscreenBtn" class="floating-icon" onclick="goFullscreen()">📱</div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -130,7 +141,6 @@
         docEl.msRequestFullscreen();
       }
 
-      // ล็อกหมุนจอแนวนอน
       if (screen.orientation && screen.orientation.lock) {
         screen.orientation.lock('landscape').catch(() => {});
       }
