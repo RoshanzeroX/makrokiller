@@ -10,16 +10,16 @@
     body {
       font-family: 'Sarabun', sans-serif;
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #323232, #1a1a1a);
       color: white;
-      overflow: hidden;
+      overflow-x: hidden;
       flex-direction: column;
       position: relative;
-      padding-bottom: 80px; /* เพิ่มที่ว่างให้ข้อความเยอะขึ้น */
+      padding-bottom: 120px; /* เพิ่มช่องว่างเพื่อไม่ให้ข้อความเครดิตทับ */
     }
     body::before {
       content: "";
@@ -82,7 +82,7 @@
     #duck {
       position: fixed;
       right: 20px;
-      bottom: 90px;
+      bottom: 130px; /* เลื่อนขึ้นตาม padding-bottom */
       font-size: 2.2rem;
       background: rgba(255,255,255,0.2);
       padding: 10px 12px;
@@ -133,12 +133,12 @@
       z-index: 9999;
       pointer-events: none;
       line-height: 1.4;
-      white-space: pre-line; /* รักษา \n ในข้อความ */
+      white-space: pre-line;
     }
 
     @media (max-width: 600px) {
       .container { padding: 25px; }
-      #duck { bottom: 110px; }
+      #duck { bottom: 150px; }
       .credit-container {
         font-size: 0.7rem;
         padding: 0 8px;
@@ -169,11 +169,9 @@
     รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว  
     <br><br>
     พัฒนาโดย Jack Makro © 2025  
-    ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev123  
+    ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX  
     ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้  
-    หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ support@example.com  
-    <br><br>
-    “สร้างสรรค์เพื่อความง่ายดาย และประสิทธิภาพของการทำงานของคุณ”
+    หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12  
   </div>
 
   <script>
