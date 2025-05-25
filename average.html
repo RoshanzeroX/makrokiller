@@ -7,41 +7,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
-  <div class="container">
-    <img id="resultImage" src="" alt="" style="max-width: 200px;" />
-    <div id="avgResult"></div>
+  <canvas id="particles"></canvas>
+  <div class="result-wrapper">
+    <img id="resultImage" src="" alt="ผลลัพธ์" />
+    <div id="avgResult">กำลังโหลด...</div>
     <div class="message" id="messageText"></div>
-    <button onclick="window.location.href='index.html'">🔙 กลับหน้าหลัก</button>
+    <button id="fullscreenBtn" onclick="openFullscreen()">⛶ แสดงผลเต็มจอ</button>
+    <button id="exitFullscreenBtn" onclick="closeFullscreen()" class="hidden">🛑 ออกจากเต็มจอ</button>
+    <button id="homeBtn" onclick="window.location.href='index.html'">🏠 หน้าแรก</button>
   </div>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const result = parseFloat(urlParams.get('result'));
-    const avgEl = document.getElementById('avgResult');
-    const imgEl = document.getElementById('resultImage');
-    const msgEl = document.getElementById('messageText');
-
-    if (!isNaN(result)) {
-      avgEl.innerText = `ค่าเฉลี่ยออเดอร์ต่อวัน: ${result.toFixed(8)}`;
-      if (result >= 12) {
-        const options = [
-          { img: "1(10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" },
-          { img: "1 (2).png", text: "เป็นคนดีนี้น่า" }
-        ];
-        const choice = options[Math.floor(Math.random() * options.length)];
-        imgEl.src = choice.img;
-        msgEl.innerText = choice.text;
-      } else if (result < 1) {
-        imgEl.src = "1 (1).png";
-        msgEl.innerText = "ดีขึ้นให้ได้นะ";
-      } else {
-        imgEl.style.display = "none";
-        msgEl.innerText = "ผลลัพธ์อยู่ในช่วงปกติ";
-      }
-    } else {
-      avgEl.innerText = "ไม่พบข้อมูลค่าเฉลี่ย";
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
