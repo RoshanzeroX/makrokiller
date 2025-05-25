@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
@@ -17,6 +17,7 @@
       background: linear-gradient(135deg, #323232, #1a1a1a);
       color: white;
       overflow: hidden;
+      position: relative;
     }
     body::before {
       content: "";
@@ -40,6 +41,7 @@
       text-align: center;
       position: relative;
       color: white;
+      z-index: 2;
     }
     h2 {
       margin-bottom: 25px;
@@ -108,6 +110,69 @@
     @media (max-width: 600px) {
       .container { padding: 25px; }
     }
+
+
+    /* Credit Box Styles */
+    .credit-container {
+      position: fixed;
+      bottom: 40px;
+      right: 20px;
+      width: 320px;
+      max-width: 90vw;
+      background: rgba(0,0,0,0.65);
+      border-radius: 16px;
+      padding: 20px 25px;
+      color: #fff;
+      font-family: 'Sarabun', sans-serif;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+      line-height: 1.5;
+      user-select: none;
+      animation: glow 3s ease-in-out infinite alternate;
+      z-index: 999;
+      font-weight: 300;
+    }
+
+    .credit-container h2 {
+      font-size: 1.8rem;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      color: #ffd700;
+      text-shadow: 0 0 8px #ffa500;
+      font-weight: 900;
+    }
+
+    .credit-container h3 {
+      font-size: 1.3rem;
+      margin: 20px 0 8px 0;
+      font-weight: 700;
+      color: #ffcc00;
+      text-shadow: 0 0 6px #ff9900;
+    }
+
+    .credit-container p {
+      font-size: 1rem;
+      margin: 0 0 12px 0;
+    }
+
+    .credit-container small {
+      display: block;
+      margin-top: 18px;
+      font-size: 0.75rem;
+      color: #ccc;
+      letter-spacing: 1.5px;
+      font-style: italic;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      }
+      100% {
+        box-shadow: 0 0 35px rgba(255, 215, 0, 1);
+      }
+    }
   </style>
 </head>
 <body>
@@ -123,49 +188,30 @@
   </div>
   <div id="duck" onclick="window.location.href='songs.html'" title="ไปหน้าเพลง">🦆</div>
 
+  <!-- Credit / About Box -->
+  <div class="credit-container" aria-label="About and credits">
+    <h2>ABOUT THIS WEBPAGE</h2>
+    <p>
+      เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณ<br>
+      และแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดายและสวยงาม<br><br>
+      โดยเน้นการออกแบบ UI ที่ทันสมัย ใช้งานง่าย และมีภาพประกอบที่น่ารัก<br>
+      เพื่อให้ผู้ใช้ได้รับประสบการณ์ที่ดีและสนุกสนานกับการใช้งาน<br><br>
+      จุดประสงค์หลักคือการนำเสนอข้อมูลสถิติในรูปแบบที่เข้าถึงง่าย<br>
+      เพื่อให้การวิเคราะห์ข้อมูลเป็นเรื่องที่ใครก็สามารถทำได้<br><br>
+      หากคุณชอบเว็บไซต์นี้ หรืออยากติดต่อพูดคุยเกี่ยวกับการพัฒนา<br>
+      ยินดีต้อนรับทุกความเห็นและข้อเสนอแนะที่ส่งมาได้เลยครับ!
+    </p>
+
+    <h3>Developed and Designed by</h3>
+    <p><strong>Jack Makro</strong></p>
+
+    <h3>Special Thanks to</h3>
+    <p>แรงบันดาลใจจากชุมชนผู้พัฒนาทุกท่าน<br>และเพื่อนๆ ที่ให้คำแนะนำดีๆ</p>
+
+    <small>© 2025 Jack Makro. All rights reserved.</small>
+  </div>
+
   <script>
     let fullResult = '';
     const resultEl = document.getElementById('result');
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const exitFullscreenBtn = document.getElementById('exitFullscreenBtn');
-
-    function calculate() {
-      const sku = parseFloat(document.getElementById('sku').value);
-      const mu = parseFloat(document.getElementById('mu').value);
-      const days = parseFloat(document.getElementById('days').value);
-
-      if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
-        alert('กรุณากรอกข้อมูลให้ครบและถูกต้อง');
-        return;
-      }
-
-      const result = ((sku / 12 + mu / 34) / (2 * days)).toFixed(8);
-      fullResult = result;
-      resultEl.innerText = `เฉลี่ยออเดอร์ต่อวัน: ${result}`;
-      resultEl.onclick = () => {
-        window.location.href = `average.html?result=${encodeURIComponent(result)}`;
-      };
-    }
-
-    function openFullscreen() {
-      const elem = document.documentElement;
-      if (elem.requestFullscreen) elem.requestFullscreen();
-      fullscreenBtn.style.display = 'none';
-      exitFullscreenBtn.style.display = 'block';
-    }
-
-    function closeFullscreen() {
-      if (document.exitFullscreen) document.exitFullscreen();
-      fullscreenBtn.style.display = 'block';
-      exitFullscreenBtn.style.display = 'none';
-    }
-
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        fullscreenBtn.style.display = 'block';
-        exitFullscreenBtn.style.display = 'none';
-      }
-    });
-  </script>
-</body>
-</html>
+    const fullscreenBtn = document.getElement
