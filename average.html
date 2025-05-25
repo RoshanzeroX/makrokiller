@@ -36,43 +36,77 @@
     }
 
     #avgResult {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
+      font-size: 2.2rem;
+      margin-bottom: 15px;
       text-shadow: 0 0 8px #ffd700, 0 0 15px #ffa500;
       color: #ffd700;
     }
 
     img {
-      max-width: 300px;
+      max-width: 180px;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .message {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 25px;
+    }
+
+   .home-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 2rem;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.3);
+  transition: transform 0.2s ease;
+}
+
+.home-button:hover {
+  transform: scale(1.1);
+}
+
+
+    .home-button img {
+      width: 40px;
+      height: 40px;
+      filter: drop-shadow(0 0 4px #fff);
     }
 
     @media (max-width: 600px) {
       #avgResult {
-        font-size: 2rem;
+        font-size: 1.8rem;
       }
       img {
-        max-width: 90%;
+        max-width: 140px;
       }
       .message {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+      }
+      .home-button img {
+        width: 36px;
+        height: 36px;
       }
     }
   </style>
 </head>
 <body>
-  <div id="avgResult">กำลังโหลด...</div>
   <img id="resultImage" src="" alt="" />
   <div class="message" id="messageText"></div>
+  <div id="avgResult">กำลังโหลด...</div>
+
+  <!-- ปุ่มกลับหน้าแรก -->
+  <a href="index.html" class="home-button" title="กลับหน้าแรก">🏠</a>
+    <img src="home-icon.png" alt="Home Icon" />
+  </a>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -87,13 +121,13 @@
       if (result >= 12.00) {
         const options = [
           { img: "1(10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" },
-          { img: "1(2).png", text: "เป็นคนดีนี้น่า" }
+          { img: "1 (2).png", text: "เป็นคนดีนี้น่า" }
         ];
         const choice = options[Math.floor(Math.random() * options.length)];
         imgEl.src = choice.img;
         msgEl.innerText = choice.text;
       } else {
-        imgEl.src = "1(1).png";
+        imgEl.src = "1 (1).png";
         msgEl.innerText = "ดีขึ้นให้ได้นะ";
       }
     } else {
