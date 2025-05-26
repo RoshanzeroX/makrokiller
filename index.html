@@ -2,35 +2,24 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>คำนวณค่าเฉลี่ย</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="background"></div>
-
   <main>
-    <h1>โปรแกรมคำนวณค่าเฉลี่ยออเดอร์</h1>
-
+    <h1>คำนวณค่าเฉลี่ย</h1>
     <form id="averageForm">
-      <label for="sku">SKU:</label>
-      <input type="number" id="sku" required>
-
-      <label for="mu">MU:</label>
-      <input type="number" id="mu" required>
-
-      <label for="days">จำนวนวัน:</label>
-      <input type="number" id="days" required>
-
-      <button type="submit">คำนวณ</button>
+      <input type="number" id="sku" placeholder="SKU" required />
+      <input type="number" id="mu" placeholder="MU" required />
+      <input type="number" id="days" placeholder="จำนวนวันทำงาน" required />
+      <button type="submit">คำนวณค่าเฉลี่ย</button>
     </form>
-
-    <p id="resultText"></p>
   </main>
 
-  <!-- ปุ่มลอย -->
-  <button id="fullscreenBtn" class="floating-btn right">⛶</button>
-  <button onclick="location.href='songs.html'" class="floating-btn left">🦆</button>
+  <button id="duckButton" class="floating-button left">🦆</button>
+  <button id="fullscreenButton" class="floating-button right">📱</button>
 
   <footer>
     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
