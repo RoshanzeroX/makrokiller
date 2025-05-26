@@ -1,4 +1,5 @@
 /* พื้นหลังเหมือนหน้า index */
+/* เพิ่มเบลอและมืด */
 .background {
   position: fixed;
   top: 0;
@@ -8,10 +9,10 @@
   background-image: url('bg.webp');
   background-size: cover;
   background-position: center;
+  filter: brightness(0.4) blur(5px);
   z-index: -1;
 }
 
-/* ตัว wrapper */
 .content-wrapper {
   max-width: 900px;
   margin: auto;
@@ -19,16 +20,16 @@
   color: #222;
   font-family: 'Kanit', 'Sarabun', 'Noto Sans Thai', sans-serif;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
-/* หัวข้อ */
 .title-no-wrap {
   white-space: nowrap;
   font-size: 2em;
   margin-bottom: 0.5em;
 }
 
-/* container ผลลัพธ์ */
 .result-container {
   margin-top: 2em;
   display: flex;
@@ -36,14 +37,12 @@
   align-items: center;
 }
 
-/* ภาพขนาดเล็ก กึ่งกลาง */
 .result-container img {
   max-width: 140px;
   height: auto;
   margin-bottom: 1em;
 }
 
-/* ข้อความใต้ภาพ */
 .result-text {
   font-size: 1.25em;
   font-weight: 600;
@@ -53,7 +52,6 @@
   word-break: break-word;
 }
 
-/* ปุ่มกลับบ้าน (🏠) อยู่ล่างซ้าย ลอยขึ้นลง */
 .floating-button {
   position: fixed;
   bottom: 15px;
@@ -69,8 +67,6 @@
   transition: transform 0.2s ease;
   user-select: none;
   z-index: 1000;
-
-  /* เอฟเฟกต์ลอยขึ้นลง */
   animation: floatUpDown 3s ease-in-out infinite;
 }
 
@@ -78,12 +74,11 @@
   transform: translateY(-6px);
 }
 
-/* ปุ่มซ้ายล่าง */
-.floating-button.left {
-  left: 15px;
+/* ปุ่มขวาล่าง */
+.floating-button.right {
+  right: 15px;
 }
 
-/* Animation ลอยขึ้นลง */
 @keyframes floatUpDown {
   0%, 100% {
     transform: translateY(0);
