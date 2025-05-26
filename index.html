@@ -1,43 +1,172 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>โปรแกรมคำนวนค่าเฉลี่ย Order Picker</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="background-blur"></div>
-  <main>
-    <h1>โปรแกรมคำนวนค่าเฉลี่ย Order Picker</h1>
-    <form id="calcForm" action="average.html" method="GET">
-      <label for="sku">SKU</label>
-      <input type="number" id="sku" name="sku" required />
+/* Reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
+  background: transparent;
+  overflow-x: hidden;
+}
 
-      <label for="mu">MU</label>
-      <input type="number" id="mu" name="mu" required />
+.background {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url("bg.webp") center/cover no-repeat;
+  filter: brightness(40%) blur(2px);
+  z-index: -1;
+  background-attachment: fixed;
+}
 
-      <label for="days">จำนวนวันทำงาน</label>
-      <input type="number" id="days" name="days" required />
+/* Layout wrapper for sticky footer */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 3vh 2em 2em;
+  box-sizing: border-box;
+}
 
-      <button type="submit">คำนวณค่าเฉลี่ย</button>
-    </form>
-  </main>
+/* Fade and slide in effect */
+.fade-slide-in {
+  animation: fadeSlideIn 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
 
-  <button id="btnSongs" class="floating-btn left">🦆</button>
-  <button id="btnFullscreen" class="floating-btn right">📱</button>
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  <footer>
-    <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
-    <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
-    <p>ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง</p>
-    <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว</p>
-    <p>พัฒนาโดย Jack Makro © 2025</p>
-    <p>ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX</p>
-    <p>ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้</p>
-    <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
-  </footer>
+/* Main */
+main {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
+  align-items: center;
+  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
+}
 
-  <script src="script.js"></script>
-</body>
-</html>
+h1.title-no-wrap {
+  font-size: 2.2em;
+  margin-bottom: 1em;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive font adjustment for the title */
+@media (max-width: 480px) {
+  h1.title-no-wrap {
+    font-size: 1.3em;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+}
+
+/* Form */
+input, button {
+  display: block;
+  width: 80%;
+  max-width: 400px;
+  margin: 1em auto;
+  padding: 1em;
+  font-size: 1em;
+  border-radius: 12px;
+  border: none;
+  text-shadow: none;
+}
+
+input {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid #ccc;
+}
+
+input::placeholder {
+  color: #ddd;
+}
+
+button {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Floating buttons */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floaty 2.5s ease-in-out infinite;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating-button.left {
+  left: 20px;
+}
+
+.floating-button.right {
+  right: 20px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: 0.1em; /* 10% */
+  padding: 1em 1em 1.5em;
+  color: #eee;
+  line-height: 2.0em;
+  background: none !important;
+  box-sizing: border-box;
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  max-width: 100vw;
+  word-break: break-word;
+}
+
+/* Footer paragraphs */
+footer p {
+  margin: 0.4em 0;
+}
+
+/* Scrollbar style for the title if overflow */
+h1.title-no-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 3px;
+}
