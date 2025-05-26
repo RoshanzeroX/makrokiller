@@ -141,7 +141,7 @@ footer {
   font-size: 0.1em; /* 10% */
   padding: 1em 1em 1.5em;
   color: #eee;
-  line-height: 2.0em; /* เพิ่มระยะห่างบรรทัดให้กว้างขึ้น */
+  line-height: 4em; /* เพิ่มระยะห่างบรรทัดให้กว้างขึ้น */
   background: none !important;
   box-sizing: border-box;
   margin-top: auto;
