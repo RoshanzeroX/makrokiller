@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Submit form เพื่อไป average.html พร้อมส่งค่าเฉลี่ย
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const sku = Number(document.getElementById("sku").value);
@@ -19,6 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sku <= 0 || mu <= 0 || days <= 0) {
       alert("กรุณากรอกข้อมูลเป็นตัวเลขบวกมากกว่า 0 ทุกช่อง");
       return;
+    }
+
+    // บังคับ fullscreen และล็อกแนวนอนก่อนส่งข้อมูล
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      }
+      if (screen.orientation && screen.orientation.lock) {
+        await screen.orientation.lock('landscape');
+      }
+    } catch (error) {
+      console.warn("Fullscreen หรือ ล็อกแนวนอน ไม่สำเร็จ:", error);
     }
 
     const avg = calculateAverage(sku, mu, days);
