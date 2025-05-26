@@ -24,11 +24,26 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding: 3vh 2em 2em;
+  box-sizing: border-box;
+}
+
+/* Fade and slide in effect */
+.fade-slide-in {
+  animation: fadeSlideIn 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Main */
 main {
-  padding: 4vh 2em 2em;
   text-align: center;
   flex: 1;
 }
@@ -123,10 +138,10 @@ button:hover {
 /* Footer */
 footer {
   text-align: center;
-  font-size: 0.1em; /* ลดลงเหลือ 10% */
-  padding: 0.5em 1em 1em;
+  font-size: 0.1em; /* 10% */
+  padding: 0.7em 1em 1em;
   color: #eee;
-  line-height: 1.2em;
+  line-height: 1.6em; /* เพิ่มระยะห่างบรรทัด */
   background: none !important;
   box-sizing: border-box;
   margin-top: auto;
@@ -136,7 +151,7 @@ footer {
 
 /* Footer paragraphs */
 footer p {
-  margin: 0.15em 0;
+  margin: 0.25em 0; /* เพิ่มช่องว่างระหว่างบรรทัด */
 }
 
 /* Scrollbar style for the title if overflow */
