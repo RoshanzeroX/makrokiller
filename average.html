@@ -5,13 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <link rel="stylesheet" href="style.css" />
-  <script>
-    window.addEventListener("load", () => {
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(() => {});
-      }
-    });
-  </script>
   <style>
     #avgValue {
       font-size: 2rem;
@@ -22,7 +15,7 @@
       text-align: center;
     }
     #imageContainer img {
-      max-width: 300px;
+      max-width: 150px;
       margin-top: 20px;
     }
     #imageContainer p {
@@ -46,11 +39,24 @@
       transform: scale(1.1);
     }
   </style>
+  <script>
+    window.addEventListener("load", async () => {
+      if (window.innerWidth < 768 && document.documentElement.requestFullscreen) {
+        try {
+          await document.documentElement.requestFullscreen();
+          if (screen.orientation && screen.orientation.lock) {
+            await screen.orientation.lock('landscape');
+          }
+        } catch (err) {
+          console.log("ไม่สามารถเปิด fullscreen หรือ lock orientation ได้:", err);
+        }
+      }
+    });
+  </script>
 </head>
 <body>
   <div class="background"></div>
   <main>
-    <h1>ผลลัพธ์</h1>
     <p id="avgValue"></p>
     <div id="imageContainer"></div>
   </main>
@@ -64,7 +70,7 @@
     const avgText = document.getElementById("avgValue");
     const container = document.getElementById("imageContainer");
 
-    avgText.textContent = `ค่าเฉลี่ยของคุณคือ: ${avg.toFixed(2)}`;
+    avgText.textContent = `${avg.toFixed(2)}`;
 
     const img = document.createElement("img");
     const caption = document.createElement("p");
