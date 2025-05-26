@@ -3,7 +3,7 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.75); /* มืดขึ้นจากเดิม */
   overflow-x: hidden;
   color: #fff;
   text-shadow: 0 0 5px rgba(0,0,0,0.9);
@@ -99,10 +99,10 @@ button:hover {
 
 /* Footer */
 footer {
-  font-size: 3vw; /* เล็กกว่าเดิม */
+  font-size: 1.2vw; /* ประมาณ 20% จากเดิม */
   text-align: center;
   color: #eee;
-  padding: 0.3em 1em 1em;
+  padding: 0.2em 1em 0.6em;
   background: none;
   border: none;
   opacity: 0.9;
@@ -117,8 +117,8 @@ footer {
 
 /* Footer p spacing */
 footer p {
-  margin: 0.1em 0;
-  line-height: 1.2em;
+  margin: 0.08em 0;
+  line-height: 1.1em;
   color: #eee;
   text-shadow: 0 0 4px rgba(0,0,0,0.7);
 }
