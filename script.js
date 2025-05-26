@@ -8,7 +8,7 @@ document.getElementById("fullscreenButton").onclick = () => {
     document.webkitFullscreenElement ||
     document.msFullscreenElement
   ) {
-    // ถ้าอยู่ fullscreen ให้ยกเลิก fullscreen
+    // ออกจาก fullscreen
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
@@ -17,7 +17,7 @@ document.getElementById("fullscreenButton").onclick = () => {
       document.msExitFullscreen();
     }
   } else {
-    // ไม่อยู่ fullscreen ให้เข้า fullscreen
+    // เข้าสู่ fullscreen
     const docElm = document.documentElement;
     if (docElm.requestFullscreen) {
       docElm.requestFullscreen();
