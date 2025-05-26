@@ -21,13 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // บังคับ fullscreen และล็อกแนวนอนก่อนส่งข้อมูล
+    // ✅ บังคับ fullscreen และล็อกแนวนอนก่อนส่งข้อมูล (ถ้าเป็นมือถือ)
     try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
-      }
-      if (screen.orientation && screen.orientation.lock) {
-        await screen.orientation.lock('landscape');
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+        if (screen.orientation && screen.orientation.lock) {
+          await screen.orientation.lock('landscape');
+        }
       }
     } catch (error) {
       console.warn("Fullscreen หรือ ล็อกแนวนอน ไม่สำเร็จ:", error);
