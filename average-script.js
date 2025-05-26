@@ -44,7 +44,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   showResult();
 
   homeButton.addEventListener("click", () => {
-    window.location.href = "index.html";
+    // เปลี่ยนจากการเปลี่ยน URL เป็นกลับหน้าเดิมแบบ history back
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // กรณีถ้าไม่มีหน้าเก่าใน history ให้ไปหน้า index.html ตามปกติ
+      window.location.href = "index.html";
+    }
   });
 
   // ✅ บังคับ Fullscreen และล็อกแนวนอน (เฉพาะมือถือ)
