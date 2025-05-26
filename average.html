@@ -5,16 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>ผลค่าเฉลี่ย</title>
   <link rel="stylesheet" href="average-style.css" />
+  <style>
+    /* background แบบเดียวกับ index */
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: sans-serif;
+      background: url('bg.webp') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+    .container {
+      text-align: center;
+      margin-top: 5vh;
+    }
+    #averageValue {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+    #resultSection img {
+      max-width: 150px;
+      margin: 0 auto 1rem;
+      display: block;
+    }
+    .result-text {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .floating-button.right {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: #ffeb3b;
+      border: none;
+      border-radius: 50%;
+      width: 3.5rem;
+      height: 3.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease-in-out;
+      z-index: 9999;
+    }
+    .floating-button.right:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 <body>
-  <div class="background"></div>
-
   <div class="container">
     <h1>ค่าเฉลี่ยของคุณคือ</h1>
     <div id="averageValue" class="average-value"></div>
-    <div id="resultSection" class="result-section">
-      <!-- รูปและข้อความจะถูกแทรกที่นี่โดย JS -->
-    </div>
+    <div id="resultSection" class="result-section"></div>
   </div>
 
   <button id="homeButton" class="floating-button right" aria-label="กลับหน้าแรก">🏠</button>
