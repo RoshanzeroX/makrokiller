@@ -34,8 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resultContainer.innerHTML = `
       <img src="${imgSrc}" alt="ผลลัพธ์" />
-      <div class="result-text">${text}</div>
-      <div class="average-value">ค่าเฉลี่ย: ${avg.toFixed(2)}</div>
+      <div class="result-text-and-average">
+        <div class="result-text">${text}</div>
+        <div class="average-value">ค่าเฉลี่ย: ${avg.toFixed(2)}</div>
+      </div>
     `;
   }
 
@@ -45,20 +47,24 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 
-  // เปิด fullscreen และล็อกแนวนอนบนมือถือ
+  // ฟังก์ชันเปิด fullscreen และล็อกแนวนอนบนมือถืออย่างถูกต้อง
   async function openFullscreenAndLockOrientation() {
     try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
-      }
-      if (screen.orientation && screen.orientation.lock) {
-        await screen.orientation.lock('landscape');
+      // เช็คว่าเป็นมือถือหรือไม่ (iOS, Android)
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+        if (screen.orientation && screen.orientation.lock) {
+          await screen.orientation.lock('landscape');
+        }
       }
     } catch (err) {
       console.warn("ไม่สามารถเปิด fullscreen หรือล็อกแนวนอน:", err);
     }
   }
 
-  // เรียกใช้ทันทีหลังโหลดหน้า
+  // เรียกใช้หลังโหลดหน้า
   openFullscreenAndLockOrientation();
 });
