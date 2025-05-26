@@ -17,11 +17,11 @@
   max-width: 900px;
   margin: auto;
   padding: 1em 1.5em;
-  color: #222;
   font-family: 'Kanit', 'Sarabun', 'Noto Sans Thai', sans-serif;
   text-align: center;
   position: relative;
   z-index: 1;
+  color: #222; /* default desktop color */
 }
 
 .title-no-wrap {
@@ -43,22 +43,40 @@
   margin-bottom: 1em;
 }
 
-.result-text {
-  font-size: 1.25em;
+/* ปรับ layout ให้ข้อความและค่าเฉลี่ยอยู่บรรทัดเดียวกัน */
+.result-text-and-average {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 1em;
   font-weight: 600;
-  color: #333;
-  line-height: 1.4;
+  font-size: 2.2rem;
   max-width: 90vw;
   word-break: break-word;
+  color: #222;
 }
 
-/* ปรับขนาดค่าเฉลี่ยให้ใหญ่สุดพอดีกับจอ (ฟีเจอร์หลัก) */
+/* ค่าเฉลี่ยขนาดเหมาะสมและเน้น */
 .average-value {
   font-weight: 900;
-  font-size: min(20vw, 150px);
-  color: #222;
-  margin-top: 1em;
+  font-size: 3rem;
   user-select: text;
+}
+
+/* สีตัวหนังสือบนมือถือเหมือนหน้า index */
+@media (max-width: 768px) {
+  .content-wrapper {
+    color: #b3d4ff;
+  }
+  .result-text-and-average {
+    font-size: 2rem;
+    color: #b3d4ff;
+  }
+  .average-value {
+    font-size: 2.5rem;
+    color: #b3d4ff;
+  }
 }
 
 .floating-button {
