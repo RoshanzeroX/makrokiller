@@ -3,7 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Kanit', 'Segoe UI', sans-serif;
+  font-family: 'Kanit', 'Sarabun', 'Noto Sans Thai', 'Segoe UI', sans-serif;
   color: #fff;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
   background: transparent;
@@ -48,9 +48,9 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
   align-items: center;
-  min-height: 50vh;
+  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
 }
 
 h1.title-no-wrap {
@@ -159,6 +159,13 @@ footer {
 /* Footer paragraphs */
 footer p {
   margin: 2em 0;
+}
+
+@media (min-width: 768px) {
+  footer p {
+    margin-top: 3.5em;
+    margin-bottom: 2em;
+  }
 }
 
 /* Scrollbar style for the title if overflow */
