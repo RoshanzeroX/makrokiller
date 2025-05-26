@@ -102,4 +102,71 @@ button {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-but
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Floating buttons */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floaty 2.5s ease-in-out infinite;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating-button.left {
+  left: 20px;
+}
+
+.floating-button.right {
+  right: 20px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: 0.1em;
+  padding: 1em 1em 1.5em;
+  color: #eee;
+  line-height: 2.0em;
+  background: none !important;
+  box-sizing: border-box;
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  max-width: 100vw;
+  word-break: break-word;
+}
+
+/* Footer paragraphs */
+footer p {
+  margin: 0.4em 0;
+}
+
+/* Scrollbar style for the title if overflow */
+h1.title-no-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 3px;
+}
