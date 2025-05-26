@@ -48,9 +48,9 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
+  justify-content: center;
   align-items: center;
-  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
+  min-height: 50vh;
 }
 
 h1.title-no-wrap {
@@ -158,7 +158,7 @@ footer {
 
 /* Footer paragraphs */
 footer p {
-  margin: 0.4em 0;
+  margin: 2em 0;
 }
 
 /* Scrollbar style for the title if overflow */
