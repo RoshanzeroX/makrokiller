@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getRandomPositive() {
     const images = [
-      { src: "1 (10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" },
+      { src: "1(10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" },
       { src: "1 (2).png", text: "เป็นคนดีนี้น่า" }
     ];
     return images[Math.floor(Math.random() * images.length)];
