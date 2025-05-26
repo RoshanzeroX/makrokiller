@@ -47,17 +47,23 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 
-  // ฟังก์ชันเปิด fullscreen และล็อกแนวนอนบนมือถืออย่างถูกต้อง
   async function openFullscreenAndLockOrientation() {
     try {
-      // เช็คว่าเป็นมือถือหรือไม่ (iOS, Android)
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
         if (!document.fullscreenElement) {
           await document.documentElement.requestFullscreen();
         }
+
+        // บาง browser อาจยังไม่ได้ล็อกแนวนอนทันที ต้องรอ resize event ช่วยด้วย
         if (screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
+          // รอ resize event ช่วยให้แนวนอนล็อกสมบูรณ์
+          window.addEventListener('resize', () => {
+            if(window.innerHeight > window.innerWidth) {
+              screen.orientation.lock('landscape').catch(() => {});
+            }
+          });
         }
       }
     } catch (err) {
@@ -65,6 +71,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // เรียกใช้หลังโหลดหน้า
   openFullscreenAndLockOrientation();
 });
