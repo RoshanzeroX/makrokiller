@@ -1,85 +1,68 @@
+/* รีเซ็ตพื้นฐาน */
 body, html {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  color: #222;
+  background-color: transparent;
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .background {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: url("bg.webp") center/cover no-repeat;
-  filter: blur(2px); /* ประมาณ 10% */
+  filter: blur(2px); /* ~10% */
   z-index: -1;
-  background-attachment: fixed; /* ไม่เลื่อน */
+  background-attachment: fixed;
 }
 
 main {
-  padding: 2em;
+  padding: 4vh 2em 2em;
   text-align: center;
+  backdrop-filter: blur(2px);
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 1em;
+  color: #111;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 input, button {
   display: block;
   width: 80%;
+  max-width: 400px;
   margin: 1em auto;
   padding: 1em;
   font-size: 1em;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #ccc;
+  background: #fefefecc;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 button {
-  background: #4CAF50;
+  background: #00b894;
   color: white;
-  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  background: #45a049;
+  background: #019875;
+  transform: scale(1.03);
 }
 
+/* ปุ่มลอย */
 .floating-button {
   position: fixed;
   bottom: 20px;
   width: 60px;
   height: 60px;
-  font-size: 24px;
-  border: none;
+  font-size: 26px;
   border-radius: 50%;
-  background-color: #ffffffcc;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  animation: float 2s ease-in-out infinite;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.floating-button.left {
-  left: 20px;
-}
-
-.floating-button.right {
-  right: 20px;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
-
-footer {
-  font-size: 3vw; /* ขนาดเล็กแบบ responsive */
-  text-align: center;
-  color: #444;
-  background: none;
-  border: none;
-  padding: 1em;
-  margin-top: 2em;
-}
-
-footer p {
-  margin: 0.2em 0;
-}
+  background-color: #ffffffdd;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  animation: float
