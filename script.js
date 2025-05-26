@@ -1,43 +1,25 @@
-document.getElementById("duckButton").onclick = () => {
-  window.location.href = "songs.html";
-};
-
-document.getElementById("fullscreenButton").onclick = () => {
-  if (
-    document.fullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.msFullscreenElement
-  ) {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  } else {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen();
-    }
+function enterFullscreen() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
   }
-};
+}
 
-document
-  .getElementById("averageForm")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    const sku = Number(document.getElementById("sku").value);
-    const mu = Number(document.getElementById("mu").value);
-    const days = Number(document.getElementById("days").value);
-    if (days === 0) {
-      alert("จำนวนวันทำงานต้องมากกว่า 0");
-      return;
-    }
-    const average = ((sku * mu) / days).toFixed(2);
-    alert(`ค่าเฉลี่ย Order Picker ต่อวัน: ${average}`);
-  });
+document.getElementById("avgForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const sku = parseFloat(document.getElementById("sku").value);
+  const mu = parseFloat(document.getElementById("mu").value);
+  const days = parseFloat(document.getElementById("days").value);
+
+  if (sku > 0 && mu > 0 && days > 0) {
+    const average = (sku * mu) / days;
+    const encodedAverage = encodeURIComponent(average.toFixed(2));
+    window.location.href = `average.html?average=${encodedAverage}`;
+  } else {
+    alert("กรุณากรอกข้อมูลให้ครบและถูกต้อง");
+  }
+});
