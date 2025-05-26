@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "index.html";
   });
 
-  // ✅ เพิ่มบังคับ Fullscreen + หมุนหน้าจอทันที (ถ้ามือถือ)
+  // ✅ บังคับ Fullscreen และล็อกแนวนอน (เฉพาะมือถือ)
   async function forceFullscreenAndLandscape() {
     try {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
 
-          // ถ้า resize แล้วเป็นแนวตั้ง ให้หมุนกลับ
+          // ✅ หากผู้ใช้หมุนกลับแนวตั้งให้ล็อก landscape ซ้ำ
           window.addEventListener('resize', () => {
             if (window.innerHeight > window.innerWidth) {
               screen.orientation.lock('landscape').catch(() => {});
