@@ -3,13 +3,29 @@ document.getElementById("duckButton").onclick = () => {
 };
 
 document.getElementById("fullscreenButton").onclick = () => {
-  const docElm = document.documentElement;
-  if (docElm.requestFullscreen) {
-    docElm.requestFullscreen();
-  } else if (docElm.webkitRequestFullscreen) {
-    docElm.webkitRequestFullscreen();
-  } else if (docElm.msRequestFullscreen) {
-    docElm.msRequestFullscreen();
+  if (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement
+  ) {
+    // ถ้าอยู่ fullscreen ให้ยกเลิก fullscreen
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  } else {
+    // ไม่อยู่ fullscreen ให้เข้า fullscreen
+    const docElm = document.documentElement;
+    if (docElm.requestFullscreen) {
+      docElm.requestFullscreen();
+    } else if (docElm.webkitRequestFullscreen) {
+      docElm.webkitRequestFullscreen();
+    } else if (docElm.msRequestFullscreen) {
+      docElm.msRequestFullscreen();
+    }
   }
 };
 
