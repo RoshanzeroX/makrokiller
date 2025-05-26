@@ -2,62 +2,20 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ผลลัพธ์</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>ผลค่าเฉลี่ย</title>
+  <link rel="stylesheet" href="average-style.css" />
 </head>
 <body>
-  <div class="background"></div>
-  <main id="resultContainer"></main>
-  <button id="homeButton" class="floating-button left">🏠</button>
+  <div class="container">
+    <h1>ค่าเฉลี่ยของคุณคือ</h1>
+    <div id="resultSection" class="result-section">
+      <!-- รูปและข้อความจะถูกแทรกที่นี่โดย JS -->
+    </div>
+  </div>
 
-  <script>
-    function lockOrientation() {
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(console.warn);
-      }
-    }
+  <button id="homeButton" class="floating-button left" aria-label="กลับหน้าแรก">🏠</button>
 
-    function enterFullscreen() {
-      const docElm = document.documentElement;
-      if (docElm.requestFullscreen) {
-        docElm.requestFullscreen();
-      }
-    }
-
-    window.onload = () => {
-      enterFullscreen();
-      lockOrientation();
-
-      const params = new URLSearchParams(window.location.search);
-      const avg = parseFloat(params.get("average"));
-
-      const container = document.getElementById("resultContainer");
-      let img = document.createElement("img");
-      let text = document.createElement("p");
-
-      img.className = "result-image";
-
-      if (avg > 12) {
-        const rand = Math.random() < 0.5;
-        img.src = rand ? "1 (10).png" : "1 (2).png";
-        text.textContent = rand ? "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" : "เป็นคนดีนี้น่า";
-      } else {
-        img.src = "1 (1).png";
-        text.textContent = "ดีขึ้นให้ได้นะ";
-      }
-
-      const avgText = document.createElement("h2");
-      avgText.textContent = `ค่าเฉลี่ย: ${avg.toFixed(2)}`;
-
-      container.appendChild(img);
-      container.appendChild(avgText);
-      container.appendChild(text);
-    };
-
-    document.getElementById("homeButton").onclick = () => {
-      window.location.href = "index.html";
-    };
-  </script>
+  <script src="average-script.js"></script>
 </body>
 </html>
