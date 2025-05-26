@@ -40,8 +40,5 @@ document.getElementById("averageForm").onsubmit = (e) => {
   }
 
   const average = ((sku / 12) + (mu / 34)) / (2 * days);
-  const averageRounded = average.toFixed(2);
-
-  // ส่งค่า average ไป average.html ผ่าน query string
-  window.location.href = `average.html?average=${averageRounded}`;
+  window.location.href = average.html?average=${average};
 };
