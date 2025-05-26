@@ -40,6 +40,5 @@ document.getElementById("averageForm").onsubmit = (e) => {
   }
 
   const average = ((sku / 12) + (mu / 34)) / (2 * days);
-  window.location.href = `average.html?average=${average}`;
+  window.location.href = average.html?average=${average};
 };
-``
