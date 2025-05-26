@@ -16,19 +16,28 @@ document.getElementById("fullscreenButton").onclick = () => {
       document.msExitFullscreen();
     }
   } else {
-    const docElm = document.documentElement;
-    if (docElm.requestFullscreen) {
-      docElm.requestFullscreen();
-    } else if (docElm.webkitRequestFullscreen) {
-      docElm.webkitRequestFullscreen();
-    } else if (docElm.msRequestFullscreen) {
-      docElm.msRequestFullscreen();
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
     }
   }
 };
 
-document.getElementById("averageForm").onsubmit = (e) => {
-  e.preventDefault();
-
-  const sku = parseFloat(document.getElementById("sku").value);
-  const mu = parseFloat(document.getElementById("mu").value);
+document
+  .getElementById("averageForm")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    const sku = Number(document.getElementById("sku").value);
+    const mu = Number(document.getElementById("mu").value);
+    const days = Number(document.getElementById("days").value);
+    if (days === 0) {
+      alert("จำนวนวันทำงานต้องมากกว่า 0");
+      return;
+    }
+    const average = ((sku * mu) / days).toFixed(2);
+    alert(`ค่าเฉลี่ย Order Picker ต่อวัน: ${average}`);
+  });
