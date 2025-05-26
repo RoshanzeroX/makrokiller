@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultContainer = document.getElementById("result-container");
   const homeButton = document.getElementById("homeButton");
 
-  // ฟังก์ชันสุ่มเลือกภาพ "1(10).png" หรือ "1 (2).png"
   function randomImageAndText() {
     if (Math.random() < 0.5) {
       return {
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // แสดงผลลัพธ์ตามค่าเฉลี่ย
   function showResult() {
     let imgSrc = "";
     let text = "";
@@ -37,13 +35,30 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerHTML = `
       <img src="${imgSrc}" alt="ผลลัพธ์" />
       <div class="result-text">${text}</div>
+      <div style="margin-top:1em; font-weight:bold; font-size:1.1em; color:#555;">ค่าเฉลี่ย: ${avg.toFixed(2)}</div>
     `;
   }
 
   showResult();
 
-  // ปุ่มกลับหน้า index.html
   homeButton.addEventListener("click", () => {
     window.location.href = "index.html";
   });
+
+  // เปิด fullscreen และล็อกแนวนอนบนมือถือ
+  async function openFullscreenAndLockOrientation() {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      }
+      if (screen.orientation && screen.orientation.lock) {
+        await screen.orientation.lock('landscape');
+      }
+    } catch (err) {
+      console.warn("ไม่สามารถเปิด fullscreen หรือล็อกแนวนอน:", err);
+    }
+  }
+
+  // เรียกใช้ทันทีหลังโหลดหน้า
+  openFullscreenAndLockOrientation();
 });
