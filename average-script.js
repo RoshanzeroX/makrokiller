@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const avg = Number(urlParams.get("average"));
 
@@ -47,12 +47,19 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 
-  async function lockOrientationIfMobile() {
+  // ✅ เพิ่มบังคับ Fullscreen + หมุนหน้าจอทันที (ถ้ามือถือ)
+  async function forceFullscreenAndLandscape() {
     try {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile && document.fullscreenElement) {
+      if (isMobile) {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+
         if (screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
+
+          // ถ้า resize แล้วเป็นแนวตั้ง ให้หมุนกลับ
           window.addEventListener('resize', () => {
             if (window.innerHeight > window.innerWidth) {
               screen.orientation.lock('landscape').catch(() => {});
@@ -61,9 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     } catch (err) {
-      console.warn("ไม่สามารถล็อกแนวนอนได้:", err);
+      console.warn("ไม่สามารถเปิด fullscreen หรือล็อกแนวนอนได้:", err);
     }
   }
 
-  lockOrientationIfMobile();
+  await forceFullscreenAndLandscape();
 });
