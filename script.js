@@ -32,13 +32,3 @@ document.getElementById("averageForm").onsubmit = (e) => {
 
   const sku = parseFloat(document.getElementById("sku").value);
   const mu = parseFloat(document.getElementById("mu").value);
-  const days = parseFloat(document.getElementById("days").value);
-
-  if (days <= 0) {
-    alert("จำนวนวันต้องมากกว่า 0");
-    return;
-  }
-
-  const average = ((sku / 12) + (mu / 34)) / (2 * days);
-  window.location.href = average.html?average=${average};
-};
