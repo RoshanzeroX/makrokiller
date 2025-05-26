@@ -71,6 +71,16 @@ h1.title-no-wrap {
 }
 
 /* Form */
+form.centered-form {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2em 1.5em;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+  width: 90%;
+  max-width: 440px;
+  margin: 0 auto 2em;
+}
+
 input, button {
   display: block;
   width: 80%;
@@ -159,13 +169,6 @@ footer {
 /* Footer paragraphs */
 footer p {
   margin: 2em 0;
-}
-
-@media (min-width: 768px) {
-  footer p {
-    margin-top: 3.5em;
-    margin-bottom: 2em;
-  }
 }
 
 /* Scrollbar style for the title if overflow */
