@@ -3,7 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Kanit', 'Segoe UI', sans-serif;
   color: #fff;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
   background: transparent;
@@ -48,9 +48,9 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
+  justify-content: center;
   align-items: center;
-  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
+  min-height: 50vh;
 }
 
 h1.title-no-wrap {
