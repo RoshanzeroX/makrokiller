@@ -91,6 +91,14 @@ input, button {
   border-radius: 12px;
   border: none;
   text-shadow: none;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Focus animation */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 12px 3px #00bfff;
+  transform: scale(1.02);
 }
 
 input {
@@ -168,7 +176,7 @@ footer {
 
 /* Footer paragraphs */
 footer p {
-  margin: 2em 0;
+  margin: 3.5em 0;
 }
 
 /* Scrollbar style for the title if overflow */
