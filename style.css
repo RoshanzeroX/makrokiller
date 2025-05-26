@@ -1,123 +1,172 @@
-/* พื้นหลัง bg.webp เบลอ 10% */
-body, html {
+/* Reset */
+html, body {
   margin: 0;
+  padding: 0;
   height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
-  text-shadow: 0 0 5px #000;
-  background: url('bg.webp') center center no-repeat fixed;
-  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
+  background: transparent;
   overflow-x: hidden;
-  position: relative;
 }
 
-.background-blur {
+.background {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  backdrop-filter: blur(2px);
-  background-color: rgba(0,0,0,0.1);
+  background: url("bg.webp") center/cover no-repeat;
+  filter: brightness(40%) blur(2px);
   z-index: -1;
+  background-attachment: fixed;
 }
 
-main {
-  /* เลื่อนลงมากึ่งกลางจอแนวตั้ง */
+/* Layout wrapper for sticky footer */
+.content-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 160px); /* ลบ footer สูงประมาณ 160px */
-  padding: 0 1rem;
+  min-height: 100vh;
+  padding: 3vh 2em 2em;
   box-sizing: border-box;
 }
 
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Fade and slide in effect */
+.fade-slide-in {
+  animation: fadeSlideIn 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
-form {
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main */
+main {
+  text-align: center;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  width: 280px;
-  max-width: 90vw;
+  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
+  align-items: center;
+  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
 }
 
-label {
-  margin-bottom: 0.25em;
-  font-weight: 600;
+h1.title-no-wrap {
+  font-size: 2.2em;
+  margin-bottom: 1em;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive font adjustment for the title */
+@media (max-width: 480px) {
+  h1.title-no-wrap {
+    font-size: 1.3em;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+}
+
+/* Form */
+input, button {
+  display: block;
+  width: 80%;
+  max-width: 400px;
+  margin: 1em auto;
+  padding: 1em;
+  font-size: 1em;
+  border-radius: 12px;
+  border: none;
+  text-shadow: none;
 }
 
 input {
-  padding: 0.5em;
-  margin-bottom: 1em;
-  border-radius: 5px;
-  border: none;
-  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid #ccc;
 }
 
-button[type="submit"] {
-  background-color: #4caf50;
+input::placeholder {
+  color: #ddd;
+}
+
+button {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: white;
-  border: none;
-  padding: 0.75em;
-  border-radius: 25px;
-  font-size: 1.1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-button[type="submit"]:hover {
-  background-color: #45a049;
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* ปุ่มลอย */
-.floating-btn {
+/* Floating buttons */
+.floating-button {
   position: fixed;
   bottom: 20px;
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
   border-radius: 50%;
-  font-size: 24px;
+  background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
   cursor: pointer;
+  z-index: 10;
   display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease;
-  user-select: none;
-  background: #3498db;
-  color: white;
+  justify-content: center;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floaty 2.5s ease-in-out infinite;
 }
 
-.floating-btn.left {
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating-button.left {
   left: 20px;
 }
 
-.floating-btn.right {
+.floating-button.right {
   right: 20px;
 }
 
-.floating-btn:hover {
-  transform: translateY(-8px);
-}
-
-/* footer */
+/* Footer */
 footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  color: white;
-  font-size: 10%;
   text-align: center;
-  padding: 0.5em 1em;
-  line-height: 1.6;
-  user-select: none;
-  pointer-events: none;
+  font-size: 0.1em; /* 10% */
+  padding: 1em 1em 1.5em;
+  color: #eee;
+  line-height: 2.0em;
+  background: none !important;
+  box-sizing: border-box;
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  max-width: 100vw;
+  word-break: break-word;
 }
 
+/* Footer paragraphs */
 footer p {
-  margin: 2em 0;
+  margin: 0.4em 0;
+}
+
+/* Scrollbar style for the title if overflow */
+h1.title-no-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 3px;
 }
