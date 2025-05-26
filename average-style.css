@@ -1,5 +1,6 @@
-/* พื้นหลังเหมือนหน้า index */
-/* เพิ่มเบลอและมืด */
+/* ใช้ font-family แบบเดียวกับหน้า index */
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Sarabun&display=swap');
+
 .background {
   position: fixed;
   top: 0;
@@ -21,7 +22,7 @@
   text-align: center;
   position: relative;
   z-index: 1;
-  color: #222; /* default desktop color */
+  color: #222; /* desktop default */
 }
 
 .title-no-wrap {
@@ -43,7 +44,6 @@
   margin-bottom: 1em;
 }
 
-/* ปรับ layout ให้ข้อความและค่าเฉลี่ยอยู่บรรทัดเดียวกัน */
 .result-text-and-average {
   display: flex;
   flex-wrap: wrap;
@@ -57,14 +57,13 @@
   color: #222;
 }
 
-/* ค่าเฉลี่ยขนาดเหมาะสมและเน้น */
 .average-value {
   font-weight: 900;
   font-size: 3rem;
   user-select: text;
 }
 
-/* สีตัวหนังสือบนมือถือเหมือนหน้า index */
+/* บนมือถือใช้สีแบบหน้า index และ font-family แบบเดียวกัน */
 @media (max-width: 768px) {
   .content-wrapper {
     color: #b3d4ff;
@@ -101,7 +100,6 @@
   transform: translateY(-6px);
 }
 
-/* ปุ่มขวาล่าง */
 .floating-button.right {
   right: 15px;
 }
