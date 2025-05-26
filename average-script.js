@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isMobile && document.fullscreenElement) {
         if (screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
-          // ป้องกันหลุดแนวนอนหลังจากหมุนเครื่อง
           window.addEventListener('resize', () => {
             if (window.innerHeight > window.innerWidth) {
               screen.orientation.lock('landscape').catch(() => {});
