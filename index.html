@@ -3,21 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>เครื่องคำนวณค่าเฉลี่ย MU และ SKU</title>
-  <link rel="stylesheet" href="style.css">
+  <title>คำนวณค่าเฉลี่ย</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="bg-blur"></div>
+  <div class="background"></div>
+
   <main>
-    <h1>เครื่องคำนวณค่าเฉลี่ย MU และ SKU</h1>
-    <label>จำนวนวัน: <input type="number" id="days" /></label>
-    <label>จำนวน MU: <input type="number" id="mu" /></label>
-    <label>จำนวน SKU: <input type="number" id="sku" /></label>
-    <button onclick="calculate()">คำนวณ</button>
+    <h1>โปรแกรมคำนวณค่าเฉลี่ยออเดอร์</h1>
+
+    <form id="averageForm">
+      <label for="sku">SKU:</label>
+      <input type="number" id="sku" required>
+
+      <label for="mu">MU:</label>
+      <input type="number" id="mu" required>
+
+      <label for="days">จำนวนวัน:</label>
+      <input type="number" id="days" required>
+
+      <button type="submit">คำนวณ</button>
+    </form>
+
+    <p id="resultText"></p>
   </main>
 
-  <button class="floating-btn" onclick="toggleFullscreen()">⛶</button>
-  <button class="floating-btn duck" onclick="window.location.href='songs.html'">🦆</button>
+  <!-- ปุ่มลอย -->
+  <button id="fullscreenBtn" class="floating-btn right">⛶</button>
+  <button onclick="location.href='songs.html'" class="floating-btn left">🦆</button>
 
   <footer>
     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
