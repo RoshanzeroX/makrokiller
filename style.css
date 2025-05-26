@@ -153,7 +153,7 @@ footer {
 
 /* Footer paragraphs */
 footer p {
-  margin: 0.4em 0; /* เพิ่มช่องว่างระหว่างบรรทัด */
+  margin: 2em 0; /* เพิ่มช่องว่างระหว่างบรรทัด */
 }
 
 /* Scrollbar style for the title if overflow */
