@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerHTML = `
       <img src="${imgSrc}" alt="ผลลัพธ์" />
       <div class="result-text">${text}</div>
-      <div style="margin-top:1em; font-weight:bold; font-size:1.1em; color:#555;">ค่าเฉลี่ย: ${avg.toFixed(2)}</div>
+      <div class="average-value">ค่าเฉลี่ย: ${avg.toFixed(2)}</div>
     `;
   }
 
