@@ -2,94 +2,62 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ผลลัพธ์ค่าเฉลี่ย</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ผลลัพธ์</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    #avgValue {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    #imageContainer {
-      text-align: center;
-    }
-    #imageContainer img {
-      max-width: 150px;
-      margin-top: 20px;
-    }
-    #imageContainer p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
-    .floating-btn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 12px 16px;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      background-color: #28b999;
-      color: white;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .floating-btn:hover {
-      transform: scale(1.1);
-    }
-  </style>
-  <script>
-    window.addEventListener("load", async () => {
-      if (window.innerWidth < 768 && document.documentElement.requestFullscreen) {
-        try {
-          await document.documentElement.requestFullscreen();
-          if (screen.orientation && screen.orientation.lock) {
-            await screen.orientation.lock('landscape');
-          }
-        } catch (err) {
-          console.log("ไม่สามารถเปิด fullscreen หรือ lock orientation ได้:", err);
-        }
-      }
-    });
-  </script>
 </head>
 <body>
   <div class="background"></div>
-  <main>
-    <p id="avgValue"></p>
-    <div id="imageContainer"></div>
-  </main>
-
-  <!-- ปุ่มกลับหน้าแรก -->
-  <button onclick="window.location.href='index.html'" class="floating-btn">🏠</button>
+  <main id="resultContainer"></main>
+  <button id="homeButton" class="floating-button left">🏠</button>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const avg = parseFloat(params.get("avg"));
-    const avgText = document.getElementById("avgValue");
-    const container = document.getElementById("imageContainer");
-
-    avgText.textContent = `${avg.toFixed(2)}`;
-
-    const img = document.createElement("img");
-    const caption = document.createElement("p");
-
-    if (avg > 12) {
-      const options = [
-        { src: "1 (2).png", text: "เป็นคนดีนี้น่า" },
-        { src: "1 (10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" }
-      ];
-      const choice = options[Math.floor(Math.random() * options.length)];
-      img.src = choice.src;
-      caption.textContent = choice.text;
-    } else {
-      img.src = "1 (1).png";
-      caption.textContent = "ดีขึ้นให้ได้นะ";
+    function lockOrientation() {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(console.warn);
+      }
     }
 
-    container.appendChild(img);
-    container.appendChild(caption);
+    function enterFullscreen() {
+      const docElm = document.documentElement;
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      }
+    }
+
+    window.onload = () => {
+      enterFullscreen();
+      lockOrientation();
+
+      const params = new URLSearchParams(window.location.search);
+      const avg = parseFloat(params.get("average"));
+
+      const container = document.getElementById("resultContainer");
+      let img = document.createElement("img");
+      let text = document.createElement("p");
+
+      img.className = "result-image";
+
+      if (avg > 12) {
+        const rand = Math.random() < 0.5;
+        img.src = rand ? "1 (10).png" : "1 (2).png";
+        text.textContent = rand ? "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" : "เป็นคนดีนี้น่า";
+      } else {
+        img.src = "1 (1).png";
+        text.textContent = "ดีขึ้นให้ได้นะ";
+      }
+
+      const avgText = document.createElement("h2");
+      avgText.textContent = `ค่าเฉลี่ย: ${avg.toFixed(2)}`;
+
+      container.appendChild(img);
+      container.appendChild(avgText);
+      container.appendChild(text);
+    };
+
+    document.getElementById("homeButton").onclick = () => {
+      window.location.href = "index.html";
+    };
   </script>
 </body>
 </html>
