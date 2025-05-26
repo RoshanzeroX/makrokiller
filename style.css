@@ -1,4 +1,3 @@
-/* ====== Fonts & Reset ====== */
 @import url('https://fonts.googleapis.com/css2?family=Kanit&family=Sarabun&family=Noto+Sans+Thai&display=swap');
 
 * {
@@ -15,7 +14,6 @@ html, body {
   text-shadow: 0 0 6px rgba(0,0,0,0.85);
 }
 
-/* ====== Background ====== */
 .background {
   position: fixed;
   top: 0; left: 0;
@@ -26,7 +24,6 @@ html, body {
   z-index: -1;
 }
 
-/* ====== Container ====== */
 .content-wrapper {
   min-height: 100vh;
   display: flex;
@@ -35,7 +32,6 @@ html, body {
   padding: 1em;
 }
 
-/* ====== Title ====== */
 .title-no-wrap {
   white-space: nowrap;
   text-align: center;
@@ -44,14 +40,12 @@ html, body {
   font-weight: 700;
 }
 
-/* ====== Form ====== */
 .centered-form {
   background: rgba(255, 255, 255, 0.1);
   padding: 2em;
   max-width: 350px;
   margin: 0 auto;
-  border-radius: 12px; /* ขอบโค้ง เพิ่มมิติ */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* เงา */
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -88,10 +82,9 @@ html, body {
   background-color: #357ae8;
 }
 
-/* ====== Footer ====== */
 footer {
   text-align: center;
-  font-size: 15vw; /* ปรับขนาดตามที่เคยตั้ง */
+  font-size: 15vw;
   margin-top: 1em;
   padding: 0 0.5em;
   user-select: none;
@@ -100,10 +93,9 @@ footer {
 }
 
 footer p {
-  margin: 2em 0;  /* แก้ตามคำขอ */
+  margin: 2em 0;
 }
 
-/* ====== Floating Buttons ====== */
 .floating-button {
   position: fixed;
   bottom: 1em;
@@ -134,7 +126,6 @@ footer p {
   box-shadow: 0 8px 20px rgba(100, 181, 246, 0.7);
 }
 
-/* ====== Animations ====== */
 .fade-slide-in {
   animation: fadeSlideIn 0.7s ease forwards;
   opacity: 0;
@@ -148,7 +139,6 @@ footer p {
   }
 }
 
-/* ====== Responsive ====== */
 @media (max-width: 600px) {
   .title-no-wrap {
     font-size: 1.5rem;
