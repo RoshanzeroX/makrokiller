@@ -1,44 +1,53 @@
-document.getElementById("duckButton").onclick = () => {
-  window.location.href = "songs.html";
-};
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("averageForm");
+  const duckButton = document.getElementById("duckButton");
+  const fullscreenButton = document.getElementById("fullscreenButton");
 
-document.getElementById("fullscreenButton").onclick = () => {
-  if (
-    document.fullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.msFullscreenElement
-  ) {
-    if (document.exitFullscreen) {
+  // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรที่เคยใช้
+  function calculateAverage(sku, mu, days) {
+    // สูตรคำนวณ (ตัวอย่างสมมติ) ให้ปรับตามจริงที่ใช้
+    return (sku * mu) / days;
+  }
+
+  // Submit form เพื่อไป average.html พร้อมส่งค่าเฉลี่ย
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const sku = Number(document.getElementById("sku").value);
+    const mu = Number(document.getElementById("mu").value);
+    const days = Number(document.getElementById("days").value);
+
+    if (sku <= 0 || mu <= 0 || days <= 0) {
+      alert("กรุณากรอกข้อมูลเป็นตัวเลขบวกมากกว่า 0 ทุกช่อง");
+      return;
+    }
+
+    const avg = calculateAverage(sku, mu, days);
+
+    // ส่งค่าเฉลี่ยเป็น query param ไป average.html
+    const params = new URLSearchParams({
+      sku,
+      mu,
+      days,
+      average: avg.toFixed(2)
+    });
+
+    window.location.href = `average.html?${params.toString()}`;
+  });
+
+  // ปุ่มเป็ด ไปหน้า songs.html
+  duckButton.addEventListener("click", () => {
+    window.location.href = "songs.html";
+  });
+
+  // ปุ่ม fullscreen toggle
+  fullscreenButton.addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        alert(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
+      });
+    } else {
       document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
     }
-  } else {
-    const docElm = document.documentElement;
-    if (docElm.requestFullscreen) {
-      docElm.requestFullscreen();
-    } else if (docElm.webkitRequestFullscreen) {
-      docElm.webkitRequestFullscreen();
-    } else if (docElm.msRequestFullscreen) {
-      docElm.msRequestFullscreen();
-    }
-  }
-};
-
-document.getElementById("averageForm").onsubmit = (e) => {
-  e.preventDefault();
-
-  const sku = parseFloat(document.getElementById("sku").value);
-  const mu = parseFloat(document.getElementById("mu").value);
-  const days = parseFloat(document.getElementById("days").value);
-
-  if (days <= 0) {
-    alert("จำนวนวันต้องมากกว่า 0");
-    return;
-  }
-
-  const average = ((sku / 12) + (mu / 34)) / (2 * days);
-  window.location.href = average.html?average=${average};
-};
+  });
+});
