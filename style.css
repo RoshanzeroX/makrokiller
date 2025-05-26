@@ -14,7 +14,7 @@ html, body {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: url("bg.webp") center/cover no-repeat;
-  filter: brightness(40%) blur(2px); /* มืดลงโดยใช้ brightness */
+  filter: brightness(40%) blur(2px);
   z-index: -1;
   background-attachment: fixed;
 }
@@ -84,18 +84,20 @@ button:hover {
   font-size: 28px;
   border-radius: 50%;
   background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floaty 2.5s ease-in-out infinite;
 }
 
-.floating-button:hover {
-  transform: scale(1.08);
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .floating-button.left {
@@ -109,8 +111,8 @@ button:hover {
 /* Footer */
 footer {
   text-align: center;
-  font-size: 0.9em;
-  padding: 1em 1em 2em;
+  font-size: 0.8em;
+  padding: 0.5em 1em 1em;
   color: #eee;
   line-height: 1.2em;
   background: none;
@@ -119,5 +121,5 @@ footer {
 }
 
 footer p {
-  margin: 0.3em 0;
+  margin: 0.2em 0;
 }
