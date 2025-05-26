@@ -33,9 +33,12 @@ main {
   flex: 1;
 }
 
-h1 {
-  font-size: 2.5em;
+h1.title-no-wrap {
+  font-size: 2.2em;
   margin-bottom: 1em;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Form */
@@ -118,8 +121,30 @@ footer {
   background: none;
   box-sizing: border-box;
   margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: saturate(180%) blur(8px);
 }
 
+/* Footer paragraphs */
 footer p {
-  margin: 0.2em 0;
+  margin: 0.15em 0;
+}
+
+/* Scrollbar style for the title if overflow */
+h1.title-no-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 3px;
+}
+
+/* Responsive font adjustment for the title */
+@media (max-width: 480px) {
+  h1.title-no-wrap {
+    font-size: 1.6em;
+  }
 }
