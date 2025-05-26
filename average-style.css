@@ -1,4 +1,4 @@
-/* พื้นหลังเหมือน index.html */
+/* พื้นหลังเหมือนหน้า index */
 .background {
   position: fixed;
   top: 0;
@@ -11,7 +11,7 @@
   z-index: -1;
 }
 
-/* ปรับ layout */
+/* ตัว wrapper */
 .content-wrapper {
   max-width: 900px;
   margin: auto;
@@ -21,13 +21,14 @@
   text-align: center;
 }
 
+/* หัวข้อ */
 .title-no-wrap {
   white-space: nowrap;
   font-size: 2em;
   margin-bottom: 0.5em;
 }
 
-/* result container */
+/* container ผลลัพธ์ */
 .result-container {
   margin-top: 2em;
   display: flex;
@@ -35,8 +36,9 @@
   align-items: center;
 }
 
+/* ภาพขนาดเล็ก กึ่งกลาง */
 .result-container img {
-  max-width: 150px;
+  max-width: 140px;
   height: auto;
   margin-bottom: 1em;
 }
@@ -46,9 +48,12 @@
   font-size: 1.25em;
   font-weight: 600;
   color: #333;
+  line-height: 1.4;
+  max-width: 90vw;
+  word-break: break-word;
 }
 
-/* ปุ่มกลับบ้านที่ล่างขวา ใช้สไตล์เดียวกับปุ่มเป็ดหน้า index */
+/* ปุ่มกลับบ้าน (🏠) อยู่ล่างซ้าย ลอยขึ้นลง */
 .floating-button {
   position: fixed;
   bottom: 15px;
@@ -64,12 +69,26 @@
   transition: transform 0.2s ease;
   user-select: none;
   z-index: 1000;
+
+  /* เอฟเฟกต์ลอยขึ้นลง */
+  animation: floatUpDown 3s ease-in-out infinite;
 }
 
 .floating-button:hover {
   transform: translateY(-6px);
 }
 
-.floating-button.right {
-  right: 15px;
+/* ปุ่มซ้ายล่าง */
+.floating-button.left {
+  left: 15px;
+}
+
+/* Animation ลอยขึ้นลง */
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
