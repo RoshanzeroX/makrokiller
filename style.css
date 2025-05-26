@@ -1,44 +1,47 @@
-/* เพิ่มฟอนต์ Google Fonts */
+/* เพิ่มแค่ฟอนต์ให้ดูนุ่มนวลขึ้น (optional) */
 @import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 
 html, body {
   font-family: 'Kanit', sans-serif;
 }
 
-/* ปรับ form container */
-form#averageForm {
-  background: linear-gradient(135deg, #1a73e8cc, #4285f466);
-  padding: 2em;
-  border-radius: 20px;
-  box-shadow: 0 12px 25px rgba(66, 133, 244, 0.6);
+/* ปรับ form ให้อยู่ตรงกลางใน main (แบบนุ่มนวล) */
+main form#averageForm {
   max-width: 420px;
   margin: 0 auto;
+  padding: 1.5em 1em;
+  border-radius: 15px;
 }
 
-/* ปรับ input */
+/* ปรับ input กับ button ให้ดูทันสมัยขึ้นแต่ยังคงรูปแบบเดิม */
 input {
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 1em;
+  font-size: 1em;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: #1a73e8;
+  border-color: #00aaff;
   background: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 0 8px #1a73e8;
 }
 
-/* ปรับปุ่ม */
+/* ปรับปุ่มแบบเดิม เพิ่มแค่ transition นุ่มนวล */
 button {
-  background: linear-gradient(135deg, #4a90e2, #357ABD);
-  font-weight: 700;
-  box-shadow: 0 8px 15px rgba(53, 122, 189, 0.6);
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 1em;
+  font-size: 1em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
 }
 
 button:hover {
-  background: linear-gradient(135deg, #357ABD, #2a5f9e);
-  box-shadow: 0 12px 25px rgba(53, 122, 189, 0.9);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #0088dd, #005fbb);
 }
