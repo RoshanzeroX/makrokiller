@@ -52,6 +52,15 @@
   word-break: break-word;
 }
 
+/* ปรับขนาดค่าเฉลี่ยให้ใหญ่สุดพอดีกับจอ (ฟีเจอร์หลัก) */
+.average-value {
+  font-weight: 900;
+  font-size: min(20vw, 150px);
+  color: #222;
+  margin-top: 1em;
+  user-select: text;
+}
+
 .floating-button {
   position: fixed;
   bottom: 15px;
