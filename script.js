@@ -3,10 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const duckButton = document.getElementById("duckButton");
   const fullscreenButton = document.getElementById("fullscreenButton");
 
-  // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรที่เคยใช้
+  // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรใหม่
   function calculateAverage(sku, mu, days) {
-    // สูตรคำนวณ (ตัวอย่างสมมติ) ให้ปรับตามจริงที่ใช้
-    return (sku * mu) / days;
+    return ((sku / 12) + (mu / 34)) / (2 * days);
   }
 
   // Submit form เพื่อไป average.html พร้อมส่งค่าเฉลี่ย
