@@ -2,94 +2,50 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ค่าเฉลี่ยออเดอร์</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ผลลัพธ์ค่าเฉลี่ย</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock('landscape').catch(() => {});
+    }
+  </script>
 </head>
 <body>
-  <div class="average-container">
-    <h1>ผลค่าเฉลี่ยออเดอร์ต่อวัน</h1>
-    <div id="avgResult">
-      <!-- แสดงผลค่าเฉลี่ยพร้อมรูปและข้อความที่นี่ -->
-    </div>
-
-    <button id="avgGoFullScreenBtn" class="fullscreen-btn">แสดงผลเต็มหน้าจอ</button>
-    <button id="avgExitFullScreenBtn" class="fullscreen-btn" style="display:none;">ออกจากโหมดเต็มหน้าจอ</button>
-
-    <button id="backToIndexBtn" title="กลับหน้าแรก">
-      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="กลับ" />
-    </button>
-  </div>
+  <div class="background"></div>
+  <main>
+    <h1>ผลลัพธ์</h1>
+    <p id="avgValue"></p>
+    <div id="imageContainer"></div>
+  </main>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const avgResult = document.getElementById('avgResult');
-      let avg = localStorage.getItem('averageValue');
-      if (!avg) {
-        avgResult.innerHTML = "<p>ไม่พบข้อมูลค่าเฉลี่ย กรุณาคำนวณในหน้าแรกก่อน</p>";
-        return;
-      }
-      avg = parseFloat(avg);
+    const params = new URLSearchParams(window.location.search);
+    const avg = parseFloat(params.get("avg"));
+    const avgText = document.getElementById("avgValue");
+    const container = document.getElementById("imageContainer");
 
-      let imgSrc = "";
-      let message = "";
+    avgText.textContent = `ค่าเฉลี่ยของคุณคือ: ${avg.toFixed(2)}`;
 
-      if (avg > 12) {
-        const choices = [
-          {
-            img: "images/1(10).png",
-            msg: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!"
-          },
-          {
-            img: "images/1 (2).png",
-            msg: "เป็นคนดีนี้น่า"
-          }
-        ];
-        const randomChoice = choices[Math.floor(Math.random() * choices.length)];
-        imgSrc = randomChoice.img;
-        message = randomChoice.msg;
-      } else {
-        imgSrc = "images/1 (1).png";
-        message = "ดีขึ้นให้ได้นะ";
-      }
+    const img = document.createElement("img");
+    const caption = document.createElement("p");
 
-      avgResult.innerHTML = `
-        <p>ค่าเฉลี่ย: <strong>${avg.toFixed(2)}</strong></p>
-        <img src="${imgSrc}" alt="ภาพผลลัพธ์" class="avg-image" />
-        <p class="avg-message">${message}</p>
-      `;
-    });
+    if (avg > 12) {
+      const options = [
+        { src: "1 (2).png", text: "เป็นคนดีนี้น่า" },
+        { src: "1 (10).png", text: "ก็ทำได้หนิหว่า มา!! ชนแก้ว !!" }
+      ];
+      const choice = options[Math.floor(Math.random() * options.length)];
+      img.src = choice.src;
+      caption.textContent = choice.text;
+    } else {
+      img.src = "1 (1).png";
+      caption.textContent = "ดีขึ้นให้ได้นะ";
+    }
 
-    const goFullScreenBtn = document.getElementById('avgGoFullScreenBtn');
-    const exitFullScreenBtn = document.getElementById('avgExitFullScreenBtn');
-
-    goFullScreenBtn.addEventListener('click', () => {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().then(() => {
-          if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('landscape').catch(() => {});
-          }
-          goFullScreenBtn.style.display = 'none';
-          exitFullScreenBtn.style.display = 'inline-block';
-        });
-      }
-    });
-
-    exitFullScreenBtn.addEventListener('click', () => {
-      if (document.exitFullscreen) {
-        document.exitFullscreen().then(() => {
-          goFullScreenBtn.style.display = 'inline-block';
-          exitFullScreenBtn.style.display = 'none';
-          if (screen.orientation && screen.orientation.unlock) {
-            screen.orientation.unlock();
-          }
-        });
-      }
-    });
-
-    document.getElementById('backToIndexBtn').addEventListener('click', () => {
-      window.location.href = "index.html";
-    });
+    img.style.maxWidth = "300px";
+    container.appendChild(img);
+    container.appendChild(caption);
   </script>
 </body>
 </html>
