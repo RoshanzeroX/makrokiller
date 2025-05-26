@@ -47,29 +47,24 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 
-  async function openFullscreenAndLockOrientation() {
+  async function lockOrientationIfMobile() {
     try {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-        }
-
-        // บาง browser อาจยังไม่ได้ล็อกแนวนอนทันที ต้องรอ resize event ช่วยด้วย
+      if (isMobile && document.fullscreenElement) {
         if (screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
-          // รอ resize event ช่วยให้แนวนอนล็อกสมบูรณ์
+          // ป้องกันหลุดแนวนอนหลังจากหมุนเครื่อง
           window.addEventListener('resize', () => {
-            if(window.innerHeight > window.innerWidth) {
+            if (window.innerHeight > window.innerWidth) {
               screen.orientation.lock('landscape').catch(() => {});
             }
           });
         }
       }
     } catch (err) {
-      console.warn("ไม่สามารถเปิด fullscreen หรือล็อกแนวนอน:", err);
+      console.warn("ไม่สามารถล็อกแนวนอนได้:", err);
     }
   }
 
-  openFullscreenAndLockOrientation();
+  lockOrientationIfMobile();
 });
