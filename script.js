@@ -1,3 +1,18 @@
+document.getElementById("duckButton").onclick = () => {
+  window.location.href = "songs.html";
+};
+
+document.getElementById("fullscreenButton").onclick = () => {
+  const docElm = document.documentElement;
+  if (docElm.requestFullscreen) {
+    docElm.requestFullscreen();
+  } else if (docElm.webkitRequestFullscreen) {
+    docElm.webkitRequestFullscreen();
+  } else if (docElm.msRequestFullscreen) {
+    docElm.msRequestFullscreen();
+  }
+};
+
 document.getElementById("averageForm").onsubmit = (e) => {
   e.preventDefault();
 
@@ -12,15 +27,4 @@ document.getElementById("averageForm").onsubmit = (e) => {
 
   const average = ((sku / 12) + (mu / 34)) / (2 * days);
   window.location.href = `average.html?average=${average}`;
-};
-
-document.getElementById("duckButton").onclick = () => {
-  window.location.href = "songs.html";
-};
-
-document.getElementById("fullscreenButton").onclick = () => {
-  const docElm = document.documentElement;
-  if (docElm.requestFullscreen) {
-    docElm.requestFullscreen();
-  }
 };
