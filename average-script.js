@@ -44,11 +44,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   showResult();
 
   homeButton.addEventListener("click", () => {
-    // เปลี่ยนจากการเปลี่ยน URL เป็นกลับหน้าเดิมแบบ history back
     if (window.history.length > 1) {
       window.history.back();
     } else {
-      // กรณีถ้าไม่มีหน้าเก่าใน history ให้ไปหน้า index.html ตามปกติ
       window.location.href = "index.html";
     }
   });
@@ -65,7 +63,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
 
-          // ✅ หากผู้ใช้หมุนกลับแนวตั้งให้ล็อก landscape ซ้ำ
           window.addEventListener('resize', () => {
             if (window.innerHeight > window.innerWidth) {
               screen.orientation.lock('landscape').catch(() => {});
@@ -79,4 +76,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   await forceFullscreenAndLandscape();
+
+  // ✅ ปุ่ม fullscreen แบบเดียวกับหน้า index (ไม่ล็อกแนวนอน)
+  const fullscreenButton = document.getElementById("fullscreenButton");
+  if (fullscreenButton) {
+    fullscreenButton.addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (err) {
+        console.warn("เข้าสู่โหมดเต็มจอไม่สำเร็จ:", err);
+      }
+    });
+  }
 });
