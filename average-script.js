@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const resultContainer = document.getElementById("result-container");
   const homeButton = document.getElementById("homeButton");
+  const fullscreenButton = document.getElementById("fullscreenButton");
 
   function randomImageAndText() {
     if (Math.random() < 0.5) {
@@ -51,43 +52,38 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ✅ บังคับ Fullscreen และล็อกแนวนอน (เฉพาะมือถือ)
-  async function forceFullscreenAndLandscape() {
+  // ✅ Toggle Fullscreen และล็อกแนวนอนเมื่อเข้า Fullscreen
+  async function toggleFullscreen() {
     try {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-        }
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
 
-        if (screen.orientation && screen.orientation.lock) {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile && screen.orientation && screen.orientation.lock) {
           await screen.orientation.lock('landscape');
 
+          // ล็อกซ้ำเมื่อมีการหมุนผิดแนว
           window.addEventListener('resize', () => {
             if (window.innerHeight > window.innerWidth) {
               screen.orientation.lock('landscape').catch(() => {});
             }
           });
         }
+      } else {
+        await document.exitFullscreen();
       }
     } catch (err) {
-      console.warn("ไม่สามารถเปิด fullscreen หรือล็อกแนวนอนได้:", err);
+      console.warn("ไม่สามารถเข้าสู่/ออก fullscreen หรือเปลี่ยนแนวได้:", err);
     }
   }
 
-  await forceFullscreenAndLandscape();
-
-  // ✅ ปุ่ม fullscreen แบบเดียวกับหน้า index (ไม่ล็อกแนวนอน)
-  const fullscreenButton = document.getElementById("fullscreenButton");
   if (fullscreenButton) {
-    fullscreenButton.addEventListener("click", async () => {
-      try {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-        }
-      } catch (err) {
-        console.warn("เข้าสู่โหมดเต็มจอไม่สำเร็จ:", err);
-      }
-    });
+    fullscreenButton.addEventListener("click", toggleFullscreen);
   }
+
+  // ✅ Fade-slide-in effect
+  const fadeElements = document.querySelectorAll('.fade-slide-in');
+  fadeElements.forEach(el => {
+    el.classList.add('visible');
+  });
 });
