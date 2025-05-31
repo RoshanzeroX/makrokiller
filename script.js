@@ -65,4 +65,16 @@ document.addEventListener("DOMContentLoaded", () => {
       document.exitFullscreen();
     }
   });
+
+  // เพิ่มฟังก์ชันเคลียร์ค่า input เมื่อกดปุ่มกากบาท
+  document.querySelectorAll('.clear-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      if (input) {
+        input.value = "";
+        input.focus();
+      }
+    });
+  });
 });
