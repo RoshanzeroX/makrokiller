@@ -1,88 +1,134 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const avg = Number(urlParams.get("average"));
+body {
+  margin: 0;
+  font-family: 'Kanit', sans-serif;
+  background-color: #f0f4ff;
+  overflow-x: hidden;
+}
 
-  const resultContainer = document.getElementById("result-container");
-  const homeButton = document.getElementById("homeButton");
-  const fullscreenButton = document.getElementById("fullscreenButton");
+.content-container {
+  text-align: center;
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: auto;
+}
 
-  function getRandomPositiveImage() {
-    const images = [
-      "1 (3).png",
-      "1 (4).png",
-      "1 (5).png",
-      "1 (6).png",
-      "1 (7).png",
-      "1 (8).png",
-      "1 (9).png"
-    ];
-    const randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex];
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.result-image-text {
+  margin-top: 1rem;
+}
+
+.result-image-text img {
+  width: 60%;
+  max-width: 300px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  animation: bounce-in 0.8s ease;
+}
+
+.result-text-and-average {
+  margin-top: 1rem;
+}
+
+.result-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.average-value {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.floating-button {
+  position: fixed;
+  padding: 10px 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  background: #ffffffaa;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.floating-button:hover {
+  transform: scale(1.1);
+}
+
+.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.fade-slide-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.fade-slide-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.background-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  background: linear-gradient(135deg, #f0f4ff, #e2ecff);
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
   }
-
-  function showResult() {
-    let imgSrc = "";
-    let text = "";
-
-    if (avg > 12) {
-      imgSrc = getRandomPositiveImage();
-      text = "เจ๋งไปเลยพ่อหนุ่มน้อย !!";
-    } else {
-      imgSrc = "1 (1).png";
-      text = "ดีขึ้นให้ได้นะ";
-    }
-
-    resultContainer.innerHTML = `
-      <img src="${imgSrc}" alt="ผลลัพธ์" />
-      <div class="result-text-and-average">
-        <div class="result-text">${text}</div>
-        <div class="average-value">ค่าเฉลี่ย: ${avg.toFixed(2)}</div>
-      </div>
-    `;
+  50% {
+    opacity: 1;
   }
-
-  showResult();
-
-  homeButton.addEventListener("click", () => {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = "index.html";
-    }
-  });
-
-  // ✅ Toggle Fullscreen และล็อกแนวนอนเมื่อเข้า Fullscreen
-  async function toggleFullscreen() {
-    try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
-
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile && screen.orientation && screen.orientation.lock) {
-          await screen.orientation.lock('landscape');
-
-          // ล็อกซ้ำเมื่อมีการหมุนผิดแนว
-          window.addEventListener('resize', () => {
-            if (window.innerHeight > window.innerWidth) {
-              screen.orientation.lock('landscape').catch(() => {});
-            }
-          });
-        }
-      } else {
-        await document.exitFullscreen();
-      }
-    } catch (err) {
-      console.warn("ไม่สามารถเข้าสู่/ออก fullscreen หรือเปลี่ยนแนวได้:", err);
-    }
+  100% {
+    transform: translateY(-10vh) scale(1.2);
+    opacity: 0;
   }
+}
 
-  if (fullscreenButton) {
-    fullscreenButton.addEventListener("click", toggleFullscreen);
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
   }
-
-  // ✅ Fade-slide-in effect
-  const fadeElements = document.querySelectorAll('.fade-slide-in');
-  fadeElements.forEach(el => {
-    el.classList.add('visible');
-  });
-});
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
