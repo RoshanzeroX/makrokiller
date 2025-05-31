@@ -14,6 +14,41 @@
       font-weight: 400;
       line-height: 1.5;
     }
+    /* สไตล์กล่อง input กับปุ่มกากบาท */
+    .input-clear-wrapper {
+      position: relative;
+      margin: 0.5em 0;
+      width: 100%;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .input-clear-wrapper input[type=number] {
+      width: 100%;
+      padding-right: 2.5em; /* เผื่อที่ให้ปุ่มกากบาท */
+      font-size: 1.1em;
+      box-sizing: border-box;
+    }
+    .clear-btn {
+      position: absolute;
+      right: 0.5em;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      font-size: 1.3em;
+      color: #888;
+      cursor: pointer;
+      user-select: none;
+      padding: 0;
+      line-height: 1;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .clear-btn:hover {
+      opacity: 1;
+      color: #f33;
+    }
   </style>
 </head>
 <body>
@@ -23,9 +58,18 @@
     <main>
       <h1 class="title-no-wrap">โปรแกรมคำนวนค่าเฉลี่ย Order Picker</h1>
       <form id="averageForm" class="centered-form">
-        <input type="number" id="sku" placeholder="SKU" required />
-        <input type="number" id="mu" placeholder="MU" required />
-        <input type="number" id="days" placeholder="จำนวนวันทำงาน" required />
+        <div class="input-clear-wrapper">
+          <input type="number" id="sku" placeholder="SKU" required />
+          <button type="button" class="clear-btn" aria-label="ลบค่า SKU" data-target="sku">×</button>
+        </div>
+        <div class="input-clear-wrapper">
+          <input type="number" id="mu" placeholder="MU" required />
+          <button type="button" class="clear-btn" aria-label="ลบค่า MU" data-target="mu">×</button>
+        </div>
+        <div class="input-clear-wrapper">
+          <input type="number" id="days" placeholder="จำนวนวันทำงาน" required />
+          <button type="button" class="clear-btn" aria-label="ลบค่าจำนวนวันทำงาน" data-target="days">×</button>
+        </div>
         <button type="submit">คำนวณค่าเฉลี่ย</button>
       </form>
     </main>
