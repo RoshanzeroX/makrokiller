@@ -19,6 +19,27 @@ h1.title-no-wrap {
     min-height: 80vh;
 }
 
+/* ปรับขนาดปุ่ม X ให้เล็กลง */
+.clear-btn {
+    position: absolute;
+    right: 0.6em;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 1em;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.clear-btn:hover {
+    opacity: 1;
+    color: #f33;
+}
+
 input, button {
     display: block;
     width: 80%;
