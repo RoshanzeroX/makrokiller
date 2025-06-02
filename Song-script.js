@@ -20,13 +20,18 @@ function calculateTargets() {
 
     let today = new Date().getDate();
     let workingDays = daysInMonth - holidays;
+    let remainingDays = workingDays - today;
 
     let totalMonthlySKUs = 120 * daysInMonth;
     let totalMonthlyMUs = 340 * daysInMonth;
 
-    let remainingDays = workingDays - today;
     let remainingSKUsMonthly = Math.max(0, totalMonthlySKUs - totalSKUs);
     let remainingMUsMonthly = Math.max(0, totalMonthlyMUs - totalMUs);
+    let remainingSKUsDaily = remainingDays > 0 ? (remainingSKUsMonthly / remainingDays).toFixed(2) : remainingSKUsMonthly;
+    let remainingMUsDaily = remainingDays > 0 ? (remainingMUsMonthly / remainingDays).toFixed(2) : remainingMUsMonthly;
+
+    let progress = ((totalSKUs + totalMUs) / (totalMonthlySKUs + totalMonthlyMUs)) * 100;
+    progress = Math.min(progress, 100);
 
     let message = (totalSKUs >= totalMonthlySKUs && totalMUs >= totalMonthlyMUs) 
         ? "🌟 เก่งค่ะลูกกกก" 
@@ -34,9 +39,13 @@ function calculateTargets() {
 
     document.getElementById("results").innerHTML = `
         <p>📅 จำนวนวันทำงานที่เหลือ: ${remainingDays} วัน</p>
+        <p>📦 วันนี้ต้องทำ: ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
         <p>📦 เดือนนี้ต้องทำ: ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
         <h3>${message}</h3>
     `;
+
+    document.getElementById("progressBar").style.width = `${progress.toFixed(2)}%`;
+    document.getElementById("progressBar").innerText = `${progress.toFixed(2)}%`;
 }
 
 function toggleFullscreen() {
