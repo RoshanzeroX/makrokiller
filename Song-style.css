@@ -20,7 +20,7 @@ h2 {
     color: #66BB6A;
     font-size: 22px;
 }
-#currentTime, #currentDate, #currentYear {
+#currentDateTime, #currentYear {
     font-size: 16px;
     margin-bottom: 5px;
     color: #FFD54F;
@@ -71,13 +71,11 @@ button:hover {
     color: white;
     line-height: 20px;
 }
-.fullscreen-btn {
+.fullscreen-btn, .back-btn {
     position: fixed;
     bottom: 15px;
-    right: 15px;
     width: 35px;
     height: 35px;
-    background: rgba(255, 152, 0, 0.3);
     color: white;
     border: none;
     font-size: 16px;
@@ -89,6 +87,17 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     transition: background 0.3s;
 }
+.fullscreen-btn {
+    right: 15px;
+    background: rgba(255, 152, 0, 0.3);
+}
 .fullscreen-btn:hover {
     background: rgba(245, 124, 0, 0.6);
+}
+.back-btn {
+    left: 15px;
+    background: rgba(52, 152, 219, 0.3);
+}
+.back-btn:hover {
+    background: rgba(41, 128, 185, 0.6);
 }
