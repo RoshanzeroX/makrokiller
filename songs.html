@@ -8,20 +8,22 @@
 </head>
 <body>
 
-    <div class="container">
-        <h2>📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h2>
+    <div class="background"></div>
+
+    <div class="content-wrapper fade-slide-in">
+        <h1 class="title-no-wrap">📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h1>
         <p id="currentDateTime">⏳ กำลังโหลด...</p>
         <p id="currentYear">📅 ค.ศ. <span id="yearCE"></span> | พ.ศ. <span id="yearBE"></span></p>
         <p>📅 เดือน: <span id="currentMonth"></span> (มี <span id="totalDays"></span> วัน)</p>
 
         <label for="totalSKUs">✅ จำนวน SKU ที่ทำได้แล้ว</label>
-        <input type="number" id="totalSKUs" min="0">
+        <input type="number" id="totalSKUs" placeholder="กรอกจำนวน SKU ที่ทำได้แล้ว" min="0">
 
         <label for="totalMUs">✅ จำนวน MU ที่ทำได้แล้ว</label>
-        <input type="number" id="totalMUs" min="0">
+        <input type="number" id="totalMUs" placeholder="กรอกจำนวน MU ที่ทำได้แล้ว" min="0">
 
         <label for="holidays">🚫 จำนวนวันหยุดในเดือนนี้</label>
-        <input type="number" id="holidays" min="0">
+        <input type="number" id="holidays" placeholder="กรอกจำนวนวันหยุดในเดือนนี้" min="0">
 
         <button onclick="calculateTargets()">🔍 คำนวณ</button>
 
@@ -31,8 +33,8 @@
         </div>
     </div>
 
-    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
-    <button class="back-btn" onclick="goToIndex()">🏠</button>
+    <button class="floating-button right" onclick="toggleFullscreen()">⛶</button>
+    <button class="floating-button left" onclick="goToIndex()">🏠</button>
 
     <script src="Song-script.js"></script>
 
