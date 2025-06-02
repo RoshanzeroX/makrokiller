@@ -1,9 +1,8 @@
 function updateDateTime() {
     let now = new Date();
-    document.getElementById("currentTime").innerText = `⏳ ${now.toLocaleTimeString('th-TH')}`;
-    document.getElementById("currentDate").innerText = `📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })}`;
-    document.getElementById("yearCE").innerText = now.getFullYear();
-    document.getElementById("yearBE").innerText = now.getFullYear() + 543;
+    document.getElementById("currentDateTime").innerHTML = `<strong>📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })} ⏳ ${now.toLocaleTimeString('th-TH')}</strong>`;
+    document.getElementById("yearCE").innerHTML = `<strong>${now.getFullYear()}</strong>`;
+    document.getElementById("yearBE").innerHTML = `<strong>${now.getFullYear() + 543}</strong>`;
 }
 
 setInterval(updateDateTime, 1000);
@@ -20,7 +19,7 @@ function calculateTargets() {
 
     let today = new Date().getDate();
     let workingDays = daysInMonth - holidays;
-    let remainingDays = workingDays - today;
+    let remainingDays = Math.max(0, workingDays - today);
 
     let totalMonthlySKUs = 120 * daysInMonth;
     let totalMonthlyMUs = 340 * daysInMonth;
@@ -38,9 +37,8 @@ function calculateTargets() {
         : "💪 ดีขึ้นให้ได้นะ";
 
     document.getElementById("results").innerHTML = `
-        <p>📅 จำนวนวันทำงานที่เหลือ: ${remainingDays} วัน</p>
-        <p>📦 วันนี้ต้องทำ: ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
-        <p>📦 เดือนนี้ต้องทำ: ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
+        <p><strong>📦 วันนี้ต้องทำ:</strong> ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
+        <p><strong>📦 เดือนนี้ต้องทำ:</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
         <h3>${message}</h3>
     `;
 
@@ -49,9 +47,9 @@ function calculateTargets() {
 }
 
 function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+}
+
+function goToIndex() {
+    window.location.href = "index.html";
 }
