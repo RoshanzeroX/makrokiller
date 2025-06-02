@@ -29,6 +29,9 @@ function calculateTargets() {
     let remainingSKUsDaily = remainingDays > 0 ? (remainingSKUsMonthly / remainingDays).toFixed(2) : remainingSKUsMonthly;
     let remainingMUsDaily = remainingDays > 0 ? (remainingMUsMonthly / remainingDays).toFixed(2) : remainingMUsMonthly;
 
+    let progress = ((totalSKUs + totalMUs) / (totalMonthlySKUs + totalMonthlyMUs)) * 100;
+    progress = Math.min(progress, 100);
+
     let message = (totalSKUs >= totalMonthlySKUs && totalMUs >= totalMonthlyMUs) 
         ? "🌟 เก่งค่ะลูกกกก" 
         : "💪 ดีขึ้นให้ได้นะ";
@@ -38,7 +41,11 @@ function calculateTargets() {
         <p><strong>📦 วันนี้ต้องจัด:</strong> ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
         <p><strong>📦 เดือนนี้ต้องจัด:</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
         <h3>${message}</h3>
+        <p>📊 ความคืบหน้า: <strong>${progress.toFixed(2)}%</strong></p>
     `;
+
+    document.getElementById("progressBar").style.width = `${progress.toFixed(2)}%`;
+    document.getElementById("progressBar").innerText = `${progress.toFixed(2)}%`;
 }
 
 function toggleFullscreen() {
