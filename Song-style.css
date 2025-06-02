@@ -10,6 +10,15 @@ h1.title-no-wrap {
     text-align: center;
 }
 
+/* จัดเรียงให้อยู่กลางและปรับให้เข้ากับมือถือ */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
 input, button {
     display: block;
     width: 80%;
