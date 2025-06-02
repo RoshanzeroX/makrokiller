@@ -1,9 +1,8 @@
 function updateDateTime() {
     let now = new Date();
-    document.getElementById("currentTime").innerText = `⏳ ${now.toLocaleTimeString('th-TH')}`;
-    document.getElementById("currentDate").innerText = `📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })}`;
-    document.getElementById("yearCE").innerText = now.getFullYear();
-    document.getElementById("yearBE").innerText = now.getFullYear() + 543;
+    document.getElementById("currentDateTime").innerHTML = `<strong>📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })} ⏳ ${now.toLocaleTimeString('th-TH')}</strong>`;
+    document.getElementById("yearCE").innerHTML = `<strong>${now.getFullYear()}</strong>`;
+    document.getElementById("yearBE").innerHTML = `<strong>${now.getFullYear() + 543}</strong>`;
 }
 
 setInterval(updateDateTime, 1000);
@@ -34,18 +33,18 @@ function calculateTargets() {
     progress = Math.min(progress, 100);
 
     let message = (totalSKUs >= totalMonthlySKUs && totalMUs >= totalMonthlyMUs) 
-        ? "🌟 เก่งค่ะลูกกกก" 
-        : "💪 ดีขึ้นให้ได้นะ";
+        ? "<strong style='color: green;'>🌟 เก่งค่ะลูกกกก</strong>" 
+        : "<strong style='color: orange;'>💪 ดีขึ้นให้ได้นะ</strong>";
 
     document.getElementById("results").innerHTML = `
-        <p>📅 จำนวนวันทำงานที่เหลือ: ${remainingDays} วัน</p>
-        <p>📦 วันนี้ต้องทำ: ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
-        <p>📦 เดือนนี้ต้องทำ: ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
+        <p><strong>📅 จำนวนวันทำงานที่เหลือ:</strong> <span style="color: yellow;">${remainingDays}</span> วัน</p>
+        <p><strong>📦 วันนี้ต้องทำ:</strong> <span style="color: cyan;">${remainingSKUsDaily}</span> SKU / <span style="color: cyan;">${remainingMUsDaily}</span> MU</p>
+        <p><strong>📦 เดือนนี้ต้องทำ:</strong> <span style="color: lime;">${remainingSKUsMonthly}</span> SKU / <span style="color: lime;">${remainingMUsMonthly}</span> MU</p>
         <h3>${message}</h3>
     `;
 
     document.getElementById("progressBar").style.width = `${progress.toFixed(2)}%`;
-    document.getElementById("progressBar").innerText = `${progress.toFixed(2)}%`;
+    document.getElementById("progressBar").innerHTML = `<strong>${progress.toFixed(2)}%</strong>`;
 }
 
 function toggleFullscreen() {
