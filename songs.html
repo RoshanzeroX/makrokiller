@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📦 โปรแกรมคำนวณ Order ที่ต้องจัด</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Song-style.css">
 </head>
 <body>
@@ -11,26 +12,32 @@
     <div class="background"></div>
 
     <div class="content-wrapper fade-slide-in">
-        <h1 class="title-no-wrap">📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h1>
-        <p id="currentDateTime">⏳ กำลังโหลด...</p>
-        <p id="currentYear">📅 ค.ศ. <span id="yearCE"></span> | พ.ศ. <span id="yearBE"></span></p>
-        <p>📅 เดือน: <span id="currentMonth"></span> (มี <span id="totalDays"></span> วัน)</p>
+        <main>
+            <h1 class="title-no-wrap">📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h1>
+            <p id="currentDateTime">⏳ กำลังโหลด...</p>
+            <p id="currentYear">📅 ค.ศ. <span id="yearCE"></span> | พ.ศ. <span id="yearBE"></span></p>
+            <p>📅 เดือน: <span id="currentMonth"></span> (มี <span id="totalDays"></span> วัน)</p>
 
-        <label for="totalSKUs">✅ จำนวน SKU ที่ทำได้แล้ว</label>
-        <input type="number" id="totalSKUs" placeholder="กรอกจำนวน SKU ที่ทำได้แล้ว" min="0">
+            <div class="input-clear-wrapper">
+                <input type="number" id="totalSKUs" placeholder="✅ จำนวน SKU ที่ทำได้แล้ว" min="0">
+                <button type="button" class="clear-btn" aria-label="ลบค่าจำนวน SKU" data-target="totalSKUs">×</button>
+            </div>
+            <div class="input-clear-wrapper">
+                <input type="number" id="totalMUs" placeholder="✅ จำนวน MU ที่ทำได้แล้ว" min="0">
+                <button type="button" class="clear-btn" aria-label="ลบค่าจำนวน MU" data-target="totalMUs">×</button>
+            </div>
+            <div class="input-clear-wrapper">
+                <input type="number" id="holidays" placeholder="🚫 จำนวนวันหยุดในเดือนนี้" min="0">
+                <button type="button" class="clear-btn" aria-label="ลบค่าจำนวนวันหยุด" data-target="holidays">×</button>
+            </div>
+            
+            <button onclick="calculateTargets()">🔍 คำนวณ</button>
 
-        <label for="totalMUs">✅ จำนวน MU ที่ทำได้แล้ว</label>
-        <input type="number" id="totalMUs" placeholder="กรอกจำนวน MU ที่ทำได้แล้ว" min="0">
-
-        <label for="holidays">🚫 จำนวนวันหยุดในเดือนนี้</label>
-        <input type="number" id="holidays" placeholder="กรอกจำนวนวันหยุดในเดือนนี้" min="0">
-
-        <button onclick="calculateTargets()">🔍 คำนวณ</button>
-
-        <div id="results"></div>
-        <div class="progress-bar">
-            <div id="progressBar" style="width: 0%;">0%</div>
-        </div>
+            <div id="results"></div>
+            <div class="progress-bar">
+                <div id="progressBar" style="width: 0%;">0%</div>
+            </div>
+        </main>
     </div>
 
     <button class="floating-button right" onclick="toggleFullscreen()">⛶</button>
