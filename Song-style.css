@@ -26,34 +26,6 @@ body, input, button, p, h1, h2, h3 {
     min-height: 80vh;
 }
 
-/* ปรับขนาดปุ่ม X ให้เล็กลง และนำไปไว้ด้านหลังช่องกรอกข้อมูล */
-.input-clear-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    margin: auto;
-}
-
-.clear-btn {
-    position: absolute;
-    right: 0.8em;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    font-size: 0.9em;
-    color: #888;
-    cursor: pointer;
-    padding: 0;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-
-.clear-btn:hover {
-    opacity: 1;
-    color: #f33;
-}
-
 input, button {
     display: block;
     width: 80%;
