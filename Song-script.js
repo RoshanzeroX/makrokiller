@@ -1,8 +1,8 @@
 function updateDateTime() {
     let now = new Date();
     document.getElementById("currentDateTime").innerHTML = `<strong>📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })} ⏳ ${now.toLocaleTimeString('th-TH')}</strong>`;
-    document.getElementById("yearCE").innerHTML = `<strong>${now.getFullYear()}</strong>`;
-    document.getElementById("yearBE").innerHTML = `<strong>${now.getFullYear() + 543}</strong>`;
+    document.getElementById("yearCE").innerText = now.getFullYear();
+    document.getElementById("yearBE").innerText = now.getFullYear() + 543;
 }
 
 setInterval(updateDateTime, 1000);
@@ -37,9 +37,6 @@ function calculateTargets() {
         <p><strong>📦 วันนี้ต้องทำ:</strong> ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
         <p><strong>📦 เดือนนี้ต้องทำ:</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
     `;
-
-    document.getElementById("progressBar").style.width = `${progress.toFixed(2)}%`;
-    document.getElementById("progressBar").innerText = `${progress.toFixed(2)}%`;
 }
 
 function toggleFullscreen() {
