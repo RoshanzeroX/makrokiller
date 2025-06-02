@@ -4,10 +4,17 @@ body, input, button, p, h1, h2, h3 {
     font-family: 'Kanit', sans-serif;
 }
 
-h1.title-no-wrap {
-    font-size: 2em;
+/* ปรับขนาดหัวข้อให้พอดีกับหน้าจอ */
+.title-resize {
+    font-size: 1.8em;
     margin-bottom: 1em;
     text-align: center;
+}
+
+@media (max-width: 480px) {
+    .title-resize {
+        font-size: 1.4em;
+    }
 }
 
 /* จัดเรียงให้อยู่กลางและปรับให้เข้ากับมือถือ */
@@ -19,15 +26,22 @@ h1.title-no-wrap {
     min-height: 80vh;
 }
 
-/* ปรับขนาดปุ่ม X ให้เล็กลง */
+/* ปรับขนาดปุ่ม X ให้เล็กลง และนำไปไว้ด้านหลังช่องกรอกข้อมูล */
+.input-clear-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+}
+
 .clear-btn {
     position: absolute;
-    right: 0.6em;
+    right: 0.8em;
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
     border: none;
-    font-size: 1em;
+    font-size: 0.9em;
     color: #888;
     cursor: pointer;
     padding: 0;
@@ -87,18 +101,4 @@ button:hover {
     font-size: 1.2em;
     font-weight: bold;
     color: #E0E0E0;
-}
-
-/* เอฟเฟกต์เลื่อนเข้า */
-.fade-slide-in {
-    animation: fadeSlideIn 1s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-@keyframes fadeSlideIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
