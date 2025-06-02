@@ -26,15 +26,9 @@ function calculateTargets() {
 
     let remainingSKUsMonthly = Math.max(0, totalMonthlySKUs - totalSKUs);
     let remainingMUsMonthly = Math.max(0, totalMonthlyMUs - totalMUs);
-    let remainingSKUsDaily = remainingDays > 0 ? (remainingSKUsMonthly / remainingDays).toFixed(2) : remainingSKUsMonthly;
-    let remainingMUsDaily = remainingDays > 0 ? (remainingMUsMonthly / remainingDays).toFixed(2) : remainingMUsMonthly;
-
-    let progress = ((totalSKUs + totalMUs) / (totalMonthlySKUs + totalMonthlyMUs)) * 100;
-    progress = Math.min(progress, 100);
 
     document.getElementById("results").innerHTML = `
         <p><strong>📅 จำนวนวันทำงานที่เหลือ:</strong> ${remainingDays} วัน</p>
-        <p><strong>📦 วันนี้ต้องทำ:</strong> ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
         <p><strong>📦 เดือนนี้ต้องทำ:</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
     `;
 }
