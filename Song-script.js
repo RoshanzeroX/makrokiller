@@ -32,14 +32,10 @@ function calculateTargets() {
     let progress = ((totalSKUs + totalMUs) / (totalMonthlySKUs + totalMonthlyMUs)) * 100;
     progress = Math.min(progress, 100);
 
-    let message = (totalSKUs >= totalMonthlySKUs && totalMUs >= totalMonthlyMUs) 
-        ? "🌟 เก่งค่ะลูกกกก" 
-        : "💪 ดีขึ้นให้ได้นะ";
-
     document.getElementById("results").innerHTML = `
+        <p><strong>📅 จำนวนวันทำงานที่เหลือ:</strong> ${remainingDays} วัน</p>
         <p><strong>📦 วันนี้ต้องทำ:</strong> ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
         <p><strong>📦 เดือนนี้ต้องทำ:</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
-        <h3>${message}</h3>
     `;
 
     document.getElementById("progressBar").style.width = `${progress.toFixed(2)}%`;
