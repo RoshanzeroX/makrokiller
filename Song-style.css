@@ -1,103 +1,72 @@
-body {
-    font-family: 'Prompt', sans-serif;
+@import url('index-style.css'); /* นำเข้าสไตล์จาก index */
+
+h1.title-no-wrap {
+    font-size: 2em;
+    margin-bottom: 1em;
     text-align: center;
-    padding: 15px;
-    max-width: 100%;
-    margin: auto;
-    background: #121212;
-    color: #E0E0E0;
 }
-.container {
-    background: #1E1E1E;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    max-width: 380px;
-    margin: auto;
-    position: relative;
-}
-h2 {
-    color: #66BB6A;
-    font-size: 22px;
-}
-#currentDateTime, #currentYear {
-    font-size: 16px;
-    margin-bottom: 5px;
-    color: #FFD54F;
-}
-input {
-    width: 90%;
-    padding: 12px;
-    margin: 8px 0;
-    font-size: 14px;
-    border: 1px solid #424242;
-    background: #2C2C2C;
-    color: white;
-    border-radius: 5px;
-}
-button {
-    width: 90%;
-    padding: 12px;
-    background: #26A69A;
-    color: white;
+
+input, button {
+    display: block;
+    width: 80%;
+    max-width: 400px;
+    margin: 1em auto;
+    padding: 1em;
+    font-size: 1em;
+    border-radius: 12px;
     border: none;
-    font-size: 16px;
+    text-shadow: none;
+}
+
+input {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid #ccc;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+input:focus {
+    outline: none;
+    border-color: #00aaff;
+    box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+button {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    font-weight: bold;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 button:hover {
-    background: #00796B;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
+
 #results {
     margin-top: 15px;
-    font-size: 16px;
+    font-size: 1.2em;
     font-weight: bold;
     color: #E0E0E0;
 }
-.progress-bar {
-    width: 90%;
-    background: #2C2C2C;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
+
+/* ใช้เอฟเฟกต์เลื่อนเข้า */
+.fade-slide-in {
+    animation: fadeSlideIn 1s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
 }
-.progress-bar div {
-    height: 20px;
-    background: #26A69A;
-    text-align: center;
-    color: white;
-    line-height: 20px;
-}
-.fullscreen-btn, .back-btn {
-    position: fixed;
-    bottom: 15px;
-    width: 35px;
-    height: 35px;
-    color: white;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    transition: background 0.3s;
-}
-.fullscreen-btn {
-    right: 15px;
-    background: rgba(255, 152, 0, 0.3);
-}
-.fullscreen-btn:hover {
-    background: rgba(245, 124, 0, 0.6);
-}
-.back-btn {
-    left: 15px;
-    background: rgba(52, 152, 219, 0.3);
-}
-.back-btn:hover {
-    background: rgba(41, 128, 185, 0.6);
+
+@keyframes fadeSlideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
