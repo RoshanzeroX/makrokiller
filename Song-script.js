@@ -1,40 +1,50 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📦 โปรแกรมคำนวณ Order ที่ต้องจัด</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Song-style.css">
-</head>
-<body>
+function updateDateTime() {
+    let now = new Date();
+    document.getElementById("currentDateTime").innerHTML = `<strong>📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })} ⏳ ${now.toLocaleTimeString('th-TH')}</strong>`;
+    document.getElementById("yearCE").innerText = now.getFullYear();
+    document.getElementById("yearBE").innerText = now.getFullYear() + 543;
+}
 
-    <div class="background"></div>
+setInterval(updateDateTime, 1000);
+updateDateTime();
 
-    <div class="content-wrapper fade-slide-in">
-        <main>
-            <h1 class="title-resize">📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h1>
-            <p id="currentDateTime">⏳ กำลังโหลด...</p>
-            <p id="currentYear">📅 ค.ศ. <span id="yearCE"></span> | พ.ศ. <span id="yearBE"></span></p>
-            <p>📅 เดือน: <span id="currentMonth"></span> (มี <span id="totalDays"></span> วัน)</p>
+document.getElementById("currentMonth").innerText = new Date().toLocaleString('th-TH', { month: 'long' });
+let daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+document.getElementById("totalDays").innerText = daysInMonth;
 
-            <input type="number" id="totalSKUs" placeholder="✅ จำนวน SKU ที่ทำได้แล้ว" min="0">
-            <input type="number" id="totalMUs" placeholder="✅ จำนวน MU ที่ทำได้แล้ว" min="0">
-            <input type="number" id="holidays" placeholder="🚫 จำนวนวันหยุดในเดือนนี้" min="0">
-            
-            <button onclick="calculateTargets()">🔍 คำนวณ</button>
+function calculateTargets() {
+    let totalSKUs = parseInt(document.getElementById("totalSKUs").value) || 0;
+    let totalMUs = parseInt(document.getElementById("totalMUs").value) || 0;
+    let holidays = parseInt(document.getElementById("holidays").value) || 0;
 
-            <div id="results"></div>
-            <div class="progress-bar">
-                <div id="progressBar" style="width: 0%;">0%</div>
-            </div>
-        </main>
-    </div>
+    let today = new Date().getDate();
+    let workingDays = daysInMonth - holidays;
+    let remainingDays = Math.max(0, workingDays - today);
 
-    <button class="floating-button right" onclick="toggleFullscreen()">⛶</button>
-    <button class="floating-button left" onclick="goToIndex()">🏠</button>
+    let totalMonthlySKUs = 120 * daysInMonth;
+    let totalMonthlyMUs = 340 * daysInMonth;
 
-    <script src="Song-script.js"></script>
+    let remainingSKUsMonthly = Math.max(0, totalMonthlySKUs - totalSKUs);
+    let remainingMUsMonthly = Math.max(0, totalMonthlyMUs - totalMUs);
+    let remainingSKUsDaily = remainingDays > 0 ? (remainingSKUsMonthly / remainingDays).toFixed(2) : remainingSKUsMonthly;
+    let remainingMUsDaily = remainingDays > 0 ? (remainingMUsMonthly / remainingDays).toFixed(2) : remainingMUsMonthly;
 
-</body>
-</html>
+    let message = (totalSKUs >= totalMonthlySKUs && totalMUs >= totalMonthlyMUs) 
+        ? "🌟 เก่งค่ะลูกกกก" 
+        : "💪 ดีขึ้นให้ได้นะ";
+
+    document.getElementById("results").innerHTML = `
+        <p><strong>📅 จำนวนวันทำงานที่เหลือ:</strong> ${remainingDays} วัน</p>
+        <p><strong>📦 วันนี้ต้องจัด:</strong> ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
+        <p><strong>📦 เดือนนี้ต้องจัด:</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
+        <h3>${message}</h3>
+    `;
+}
+
+function toggleFullscreen() {
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+}
+
+function goToIndex() {
+    window.location.href = "index.html";
+}
