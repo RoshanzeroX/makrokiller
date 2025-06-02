@@ -23,58 +23,265 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .input-clear-wrapper input[type=number] {
-      width: 100%;
-      padding-right: 2.5em; /* เผื่อที่ให้ปุ่มกากบาท */
-      font-size: 1.1em;
-      box-sizing: border-box;
-    }
-    .clear-btn {
-      position: absolute;
-      right: 0.5em;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      font-size: 1.3em;
-      color: #888;
-      cursor: pointer;
-      user-select: none;
-      padding: 0;
-      line-height: 1;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-    .clear-btn:hover {
-      opacity: 1;
-      color: #f33;
-    }
-  </style>
-</head>
-<body>
-  <div class="background"></div>
 
-  <div class="content-wrapper fade-slide-in">
-    <main>
-      <h1 class="title-no-wrap">โปรแกรมคำนวนค่าเฉลี่ย Order Picker</h1>
-      <form id="averageForm" class="centered-form">
-        <div class="input-clear-wrapper">
-          <input type="number" id="sku" placeholder="SKU" required />
-          <button type="button" class="clear-btn" aria-label="ลบค่า SKU" data-target="sku">×</button>
-        </div>
-        <div class="input-clear-wrapper">
-          <input type="number" id="mu" placeholder="MU" required />
-          <button type="button" class="clear-btn" aria-label="ลบค่า MU" data-target="mu">×</button>
-        </div>
-        <div class="input-clear-wrapper">
-          <input type="number" id="days" placeholder="จำนวนวันทำงาน" required />
-          <button type="button" class="clear-btn" aria-label="ลบค่าจำนวนวันทำงาน" data-target="days">×</button>
-        </div>
-        <button type="submit">คำนวณค่าเฉลี่ย</button>
-      </form>
-    </main>
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { X, Music, Fullscreen } from 'lucide-react';
+import { toast } from 'sonner';
 
-    <footer>
+const OrderPickerCalculator = () => {
+  const [sku, setSku] = useState('');
+  const [mu, setMu] = useState('');
+  const [days, setDays] = useState('');
+  const [result, setResult] = useState<number | null>(null);
+
+  const clearField = (field: string) => {
+    switch (field) {
+      case 'sku':
+        setSku('');
+        break;
+      case 'mu':
+        setMu('');
+        break;
+      case 'days':
+        setDays('');
+        break;
+    }
+  };
+
+  // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรใหม่
+  const calculateAverage = (skuValue: number, muValue: number, daysValue: number) => {
+    return ((skuValue / 12) + (muValue / 34)) / (2 * daysValue);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const skuValue = parseFloat(sku);
+    const muValue = parseFloat(mu);
+    const daysValue = parseFloat(days);
+
+    if (isNaN(skuValue) || isNaN(muValue) || isNaN(daysValue)) {
+      toast.error('กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง');
+      return;
+    }
+
+    if (skuValue <= 0 || muValue <= 0 || daysValue <= 0) {
+      toast.error('กรุณากรอกข้อมูลเป็นตัวเลขบวกมากกว่า 0 ทุกช่อง');
+      return;
+    }
+
+    // ✅ บังคับ fullscreen และล็อกแนวนอนก่อนส่งข้อมูล (ถ้าเป็นมือถือ)
+    try {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+        if (screen.orientation && (screen.orientation as any).lock) {
+          await (screen.orientation as any).lock('landscape');
+        }
+      }
+    } catch (error) {
+      console.warn("Fullscreen หรือ ล็อกแนวนอน ไม่สำเร็จ:", error);
+    }
+
+    const average = calculateAverage(skuValue, muValue, daysValue);
+    setResult(average);
+    toast.success('คำนวณเสร็จเรียบร้อย!');
+  };
+
+  const handleDuckClick = () => {
+    toast.info('ฟีเจอร์เพลงจะพัฒนาในอนาคต');
+  };
+
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (err: any) {
+      toast.error(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.3),transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(99,102,241,0.2),transparent_50%)]"></div>
+      
+      <div className="relative z-10 container mx-auto px-4 py-8 min-h-screen flex flex-col">
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col items-center justify-center animate-fade-in">
+          <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+            <CardHeader className="text-center pb-6">
+              <CardTitle className="text-2xl font-bold text-gray-800 leading-tight">
+                โปรแกรมคำนวนค่าเฉลี่ย
+                <br />
+                Order Picker
+              </CardTitle>
+            </CardHeader>
+            
+            <CardContent className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* SKU Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="sku" className="text-sm font-medium text-gray-700">
+                    SKU
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="sku"
+                      type="number"
+                      placeholder="กรอก SKU"
+                      value={sku}
+                      onChange={(e) => setSku(e.target.value)}
+                      className="pr-10 text-lg border-2 focus:border-blue-500 transition-colors"
+                      required
+                    />
+                    {sku && (
+                      <button
+                        type="button"
+                        onClick={() => clearField('sku')}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 transition-colors"
+                        aria-label="ลบค่า SKU"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* MU Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="mu" className="text-sm font-medium text-gray-700">
+                    MU
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="mu"
+                      type="number"
+                      placeholder="กรอง MU"
+                      value={mu}
+                      onChange={(e) => setMu(e.target.value)}
+                      className="pr-10 text-lg border-2 focus:border-blue-500 transition-colors"
+                      required
+                    />
+                    {mu && (
+                      <button
+                        type="button"
+                        onClick={() => clearField('mu')}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 transition-colors"
+                        aria-label="ลบค่า MU"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Days Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="days" className="text-sm font-medium text-gray-700">
+                    จำนวนวันทำงาน
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="days"
+                      type="number"
+                      placeholder="กรอกจำนวนวันทำงาน"
+                      value={days}
+                      onChange={(e) => setDays(e.target.value)}
+                      className="pr-10 text-lg border-2 focus:border-blue-500 transition-colors"
+                      required
+                    />
+                    {days && (
+                      <button
+                        type="button"
+                        onClick={() => clearField('days')}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 transition-colors"
+                        aria-label="ลบค่าจำนวนวันทำงาน"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full text-lg py-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg transform hover:scale-[1.02] transition-all duration-200"
+                >
+                  คำนวณค่าเฉลี่ย
+                </Button>
+              </form>
+
+              {/* Result Display */}
+              {result !== null && (
+                <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border-2 border-green-200 animate-scale-in">
+                  <h3 className="text-lg font-semibold text-green-800 mb-2">ผลลัพธ์:</h3>
+                  <p className="text-2xl font-bold text-green-700">
+                    {result.toFixed(2)} ออเดอร์/วัน
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Footer */}
+        <footer className="mt-12 text-center space-y-3 text-sm text-gray-600 max-w-4xl mx-auto animate-fade-in">
+          <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
+          <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
+          <p>ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง</p>
+          <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว</p>
+          <p className="text-xs text-gray-500">
+            พัฒนาโดย Jack Makro © 2025 | ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX
+          </p>
+          <p className="text-xs text-gray-500">
+            ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้
+          </p>
+          <p className="text-xs text-gray-500">
+            หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12
+          </p>
+        </footer>
+
+        {/* Floating Action Buttons */}
+        <div className="fixed bottom-6 left-6">
+          <Button
+            onClick={handleDuckClick}
+            size="icon"
+            className="w-14 h-14 rounded-full bg-yellow-500 hover:bg-yellow-600 shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-200"
+            aria-label="ไปหน้าเลือกเพลง"
+          >
+            <Music size={24} />
+          </Button>
+        </div>
+
+        <div className="fixed bottom-6 right-6">
+          <Button
+            onClick={toggleFullscreen}
+            size="icon"
+            className="w-14 h-14 rounded-full bg-blue-500 hover:bg-blue-600 shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-200"
+            aria-label="เปิด/ปิดเต็มจอ"
+          >
+            <Fullscreen size={24} />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OrderPickerCalculator;
+
       <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
       <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
       <p>ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง</p>
@@ -86,9 +293,4 @@
     </footer>
   </div>
 
-  <button id="duckButton" class="floating-button left" aria-label="ไปหน้าเลือกเพลง">🦆</button>
-  <button id="fullscreenButton" class="floating-button right" aria-label="เปิด/ปิดเต็มจอ">📱</button>
-
-  <script src="script.js"></script>
-</body>
 </html>
