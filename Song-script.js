@@ -19,7 +19,7 @@ function calculateTargets() {
 
     let today = new Date().getDate();
     let workingDays = daysInMonth - holidays;
-    let remainingDays = workingDays - today;
+    let remainingDays = Math.max(0, workingDays - today);
 
     let totalMonthlySKUs = 120 * daysInMonth;
     let totalMonthlyMUs = 340 * daysInMonth;
