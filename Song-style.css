@@ -1,4 +1,8 @@
-@import url('index-style.css'); /* นำเข้าสไตล์จาก index */
+@import url("style.css"); /* นำเข้าจาก index.css */
+
+body, input, button, p, h1, h2, h3 {
+    font-family: 'Kanit', sans-serif;
+}
 
 h1.title-no-wrap {
     font-size: 2em;
@@ -15,7 +19,6 @@ input, button {
     font-size: 1em;
     border-radius: 12px;
     border: none;
-    text-shadow: none;
 }
 
 input {
@@ -42,7 +45,6 @@ button {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
@@ -57,7 +59,7 @@ button:hover {
     color: #E0E0E0;
 }
 
-/* ใช้เอฟเฟกต์เลื่อนเข้า */
+/* เอฟเฟกต์เลื่อนเข้า */
 .fade-slide-in {
     animation: fadeSlideIn 1s ease forwards;
     opacity: 0;
