@@ -7,13 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ตั้งฟอนต์ให้ทั้งหน้าใช้ Kanit */
     body, input, button, p, h1, h2, h3 {
       font-family: 'Kanit', sans-serif;
       font-weight: 400;
       line-height: 1.5;
     }
-    /* ปรับขนาด input ให้พอดีกับมือถือ */
     .input-wrapper {
       width: 100%;
       max-width: 350px;
@@ -50,18 +48,32 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
-    /* สไตล์ใหม่สำหรับ footer */
+    /* ปรับ Footer ให้พอดีกับหน้าจอ */
     footer {
       margin-top: 3em;
       padding: 1.5em;
       text-align: center;
-      font-size: 1em;
+      font-size: 0.95em;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
+      max-width: 85%;
+      margin-left: auto;
+      margin-right: auto;
     }
     footer p {
-      margin: 0.8em 0;
+      margin: 0.6em 0;
       color: #ddd;
+    }
+    /* ให้ footer เลื่อนตามหน้าจอมือถือ */
+    @media (max-width: 480px) {
+      footer {
+        font-size: 0.85em;
+        padding: 1em;
+        max-width: 95%;
+      }
+      footer p {
+        margin: 0.5em 0;
+      }
     }
   </style>
 </head>
@@ -85,14 +97,12 @@
       </form>
     </main>
 
-   <footer> <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p> 
+   <footer> 
+     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณค่าเฉลี่ยออเดอร์ต่อวัน</p> 
      <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
-     <p>ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง</p> 
-     <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว</p>
-     <p>พัฒนาโดย Jack Makro © 2025</p>
-     <p>ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX</p>
-     <p>ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้</p>
-     <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
+     <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์</p>
+     <p>พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Jack Makro, Team Dev RoshanzeroX</p>
+     <p>หากพบปัญหาหรือข้อเสนอแนะ ติดต่อ: P'Jack OCS Lock 12</p>
    </footer>
   </div>
 
