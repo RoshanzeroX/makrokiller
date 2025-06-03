@@ -53,26 +53,33 @@
       margin-top: 3em;
       padding: 1.5em;
       text-align: center;
-      font-size: 2em;
+      font-size: 0.75em; /* ลดขนาดลง 30% */
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       max-width: 85%;
       margin-left: auto;
       margin-right: auto;
+      position: relative;
     }
     footer p {
-      margin: 0.6em 0;
+      margin: 0.5em 0;
       color: #ddd;
     }
-    /* ให้ footer เลื่อนตามหน้าจอมือถือ */
+    /* เพิ่มลูกเล่นตกแต่ง */
+    .footer-icon {
+      display: inline-block;
+      font-size: 1.2em;
+      margin: 0 6px;
+    }
+    /* ให้ footer ปรับตามมือถือ */
     @media (max-width: 480px) {
       footer {
-        font-size: 0.85em;
+        font-size: 0.65em;
         padding: 1em;
         max-width: 95%;
       }
       footer p {
-        margin: 0.5em 0;
+        margin: 0.4em 0;
       }
     }
   </style>
@@ -82,27 +89,27 @@
 
   <div class="content-wrapper fade-slide-in">
     <main>
-      <h1 class="title-no-wrap">โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
+      <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
       <form id="averageForm" class="centered-form">
         <div class="input-wrapper">
-          <input type="number" id="sku" placeholder="SKU ที่ทำได้แล้ว" required />
+          <input type="number" id="sku" placeholder="✅ SKU ที่ทำได้แล้ว" required />
         </div>
         <div class="input-wrapper">
-          <input type="number" id="mu" placeholder="MU ที่ทำได้แล้ว" required />
+          <input type="number" id="mu" placeholder="✅ MU ที่ทำได้แล้ว" required />
         </div>
         <div class="input-wrapper">
-          <input type="number" id="days" placeholder="จำนวนวันทำงาน" required />
+          <input type="number" id="days" placeholder="📅 จำนวนวันทำงาน" required />
         </div>
         <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
       </form>
     </main>
 
    <footer> 
-     <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณค่าเฉลี่ยออเดอร์ต่อวัน</p> 
-     <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
-     <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์</p>
-     <p>พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Jack Makro, Team Dev RoshanzeroX</p>
-     <p>หากพบปัญหาหรือข้อเสนอแนะ ติดต่อ: P'Jack OCS Lock 12</p>
+     <p><span class="footer-icon">💡</span> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p> 
+     <p><span class="footer-icon">🚀</span> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+     <p><span class="footer-icon">💻</span> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+     <p><span class="footer-icon">👨‍💻</span> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+     <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
    </footer>
   </div>
 
