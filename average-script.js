@@ -20,20 +20,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- 2. ดึงค่าผลลัพธ์จาก URL Parameters ---
     const urlParams = new URLSearchParams(window.location.search);
-    const sku = urlParams.get('sku'); // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
-    const mu = urlParams.get('mu');    // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
-    const days = urlParams.get('days'); // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
-    const average = parseFloat(urlParams.get('average')); // แปลงค่าเฉลี่ยเป็นตัวเลข
+    const sku = urlParams.get('sku');
+    const mu = urlParams.get('mu');
+    const days = urlParams.get('days');
+    const average = parseFloat(urlParams.get('average'));
 
     const resultDisplay = document.getElementById("result-display");
 
-    if (resultDisplay && !isNaN(average)) { // ตรวจสอบว่ามีส่วนแสดงผลและค่าเฉลี่ยเป็นตัวเลขที่ถูกต้อง
+    if (resultDisplay && !isNaN(average)) {
         let selectedImage = '';
         let messageText = '';
 
         // --- 3. กำหนดรูปภาพและข้อความตามค่าเฉลี่ย ---
         if (average > 12.00) {
-            // รายการรูปภาพสำหรับค่าเฉลี่ยที่ดี
             const randomPositiveImages = [
                 "1 (4).png", "1 (3).png", "1 (5).png", "1 (6).png",
                 "1 (7).png", "1 (8).png", "1 (9).png"
@@ -42,12 +41,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             selectedImage = randomPositiveImages[randomIndex];
 
             messageText = "🌟 ยอดเยี่ยมมาก! คุณทำผลงานได้ดีเยี่ยม!";
-        } else { // ค่าเฉลี่ย ≤ 12.00
+        } else {
             selectedImage = "1 (1).png";
             messageText = "💪 ดีขึ้นให้ได้นะ";
         }
 
-        // --- 4. แสดงผลลัพธ์แบบไดนามิก (ไม่แสดง SKU, MU, Days แล้ว) ---
+        // --- 4. แสดงผลลัพธ์แบบไดนามิก ---
         resultDisplay.innerHTML = `
             <img src="${selectedImage}" alt="ผลลัพธ์" class="result-image" />
             <p class="result-message">${messageText}</p>
@@ -56,7 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
         `;
     } else if (resultDisplay) {
-        // กรณีไม่พบข้อมูลที่ถูกต้องใน URL (เช่น เข้าหน้าโดยตรง)
         resultDisplay.innerHTML = `
             <p class="result-message">ไม่พบข้อมูลค่าเฉลี่ย</p>
             <p class="result-details">กรุณากลับไปที่หน้าหลักและคำนวณใหม่</p>
@@ -64,8 +62,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- 5. การทำงานของปุ่มต่างๆ ---
-    // ไม่ต้องเพิ่มการอ้างอิงปุ่มอีกครั้ง เพราะเราจะเรียกใช้จาก DOM โดยตรงด้านล่าง
-    // แต่ควรเพิ่มการตรวจสอบว่าปุ่มมีอยู่จริงเพื่อป้องกัน error
     const homeButton = document.getElementById("homeButton");
     const duckButton = document.getElementById("duckButton");
     const dailyAverageButton = document.getElementById("dailyAverageButton");
@@ -73,19 +69,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (homeButton) {
         homeButton.addEventListener("click", () => {
-            window.location.href = "index.html"; // กลับหน้าแรก
+            window.location.href = "index.html";
         });
     }
 
     if (duckButton) {
         duckButton.addEventListener("click", () => {
-            window.location.href = "songs.html"; // ไปหน้า songs.html
+            window.location.href = "songs.html";
         });
     }
 
     if (dailyAverageButton) {
         dailyAverageButton.addEventListener("click", () => {
-            window.location.href = "daily_average.html"; // ไปหน้า daily_average.html
+            window.location.href = "daily_average.html";
         });
     }
 
