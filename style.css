@@ -8,27 +8,18 @@ html, body {
     font-family: 'Kanit', sans-serif;
     color: #fff; /* Initial text color */
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.85); /* Text shadow for readability */
-    background: transparent; /* ตั้งเป็น transparent เพื่อให้พื้นหลังของ .background แสดงผล */
+    background: transparent;
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-/* *** ส่วนสำคัญ: กำหนดพื้นหลังที่นี่เท่านั้น *** */
 .background {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    /* Path ของรูปภาพ: "bg.webp" เนื่องจากทุกไฟล์อยู่รวมกัน */
     background: url("bg.webp") center/cover no-repeat; 
     background-attachment: fixed;
-    filter: brightness(40%) blur(2px); /* ทำให้มืดลงและเบลอเล็กน้อย */
+    filter: brightness(40%) blur(2px);
     z-index: -1;
 }
-
-/*
-    *** ลบสไตล์ที่ซ้ำซ้อนออกไปจากไฟล์นี้ (style.css) ***
-    สไตล์สำหรับ input, button, .results-container, footer, .floating-button
-    เหล่านี้จะถูกกำหนดใน Song-style.css หรือกำหนดในโค้ดด้านล่างนี้เลย
-    เพื่อให้ Song-style.css เป็นตัวควบคุมรูปลักษณ์หลักของ index.html
-*/
 
 /* --- สไตล์เฉพาะสำหรับ daily_average.html หรือหน้าอื่นๆ ที่ไม่ได้ใช้ Song-style.css --- */
 /* หากคุณมีสไตล์เหล่านี้ใน style.css เดิม ให้คงไว้ได้ */
@@ -125,12 +116,106 @@ html, body {
     transform: translateY(-2px);
 }
 
-/* Media Queries สำหรับสไตล์ทั่วไป (ที่ไม่ซ้ำกับ Song-style.css) */
+/* --- ปรับแต่ง Footer --- */
+footer {
+    margin-top: 3em;
+    padding: 1.5em;
+    text-align: center; /* จัดให้อยู่ตรงกลาง */
+    font-size: 0.7em; /* ปรับขนาดตัวหนังสือให้เล็กลง (จาก 0.75em) */
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    color: #ddd;
+}
+footer p {
+    margin: 0.4em 0; /* ลดระยะห่างระหว่างบรรทัดใน footer ลงเล็กน้อย */
+    color: #ddd;
+}
+.footer-icon {
+    display: inline-block;
+    font-size: 1.2em;
+    margin: 0 6px;
+}
+
+/* --- ปรับแต่ง Floating Buttons (ใช้แบบเก่าที่ฟังก์ชันลอยๆ ยังอยู่) --- */
+.floating-button {
+    position: fixed;
+    right: 20px; /* ทุกปุ่มอยู่ทางขวา */
+    width: 60px; /* ขนาดกว้าง */
+    height: 60px; /* ขนาดสูง */
+    font-size: 28px;
+    border-radius: 50%; /* ทำให้ปุ่มกลม */
+    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: floaty 2.5s ease-in-out infinite; /* ใส่ animation กลับมา */
+}
+
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* ตำแหน่งปุ่มลอยตัวบน PC: จัดเรียงให้สวยงามและเว้นช่องว่าง */
+/* เราจะให้ปุ่มอยู่ตรงกลางของความสูงหน้าจอ และกระจายออกไป */
+#homeButton { top: 50%; margin-top: -160px; } /* ปุ่มแรก */
+#dailyAverageButton { top: 50%; margin-top: -80px; } /* ปุ่มสอง */
+#duckButton { top: 50%; margin-top: 0px; } /* ปุ่มกลาง */
+#fullscreenButton { top: 50%; margin-top: 80px; } /* ปุ่มสุดท้าย */
+
+/* Media Queries สำหรับสไตล์ทั่วไปและ Floating Buttons */
 @media (max-width: 768px) {
     .info-card { padding: 1em; }
+
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือ (จัดเรียงใหม่ทั้งหมด) */
+    .floating-button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        right: 10px; /* ชิดขอบ 10px บนมือถือ */
+    }
+    #homeButton { top: 50%; margin-top: -120px; }
+    #dailyAverageButton { top: 50%; margin-top: -60px; }
+    #duckButton { top: 50%; margin-top: 0px; }
+    #fullscreenButton { top: 50%; margin-top: 60px; }
+
+    footer {
+        font-size: 0.65em; /* ปรับขนาดเล็กบนมือถือ */
+        padding: 1em;
+        margin-top: 2em;
+        max-width: 90%;
+    }
 }
 
 @media (max-width: 480px) {
     .info-card { padding: 0.8em; }
     .info-card p { font-size: 0.9em; }
+
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก */
+    .floating-button {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
+    }
+    #homeButton { margin-top: -105px; }
+    #dailyAverageButton { margin-top: -50px; }
+    #duckButton { margin-top: 5px; } /* ปรับให้ตำแหน่งกลางอยู่ตรงกลางจริงๆ */
+    #fullscreenButton { margin-top: 60px; }
+
+    footer {
+        font-size: 0.6em; /* เล็กลงอีกบนมือถือเล็ก */
+        padding: 0.8em;
+        margin-top: 1.5em;
+    }
 }
