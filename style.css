@@ -1,387 +1,152 @@
-/*
- * style.css
- */
-
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Kanit', sans-serif;
-    color: #fff;
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
-    background: transparent;
-    overflow-x: hidden;
-}
-
-.background {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url("bg.webp") center/cover no-repeat;
-    background-attachment: fixed;
-    filter: brightness(40%) blur(2px);
-    z-index: -1;
-}
-
-.content-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 3vh 2em 2em;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-    min-height: 90vh; /* เพื่อให้ footer อยู่ด้านล่าง */
-    justify-content: center; /* จัดให้อยู่ตรงกลางแนวตั้งบน PC */
-}
-
-.fade-slide-in {
-    animation: fadeSlideIn 1s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-@keyframes fadeSlideIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>โปรแกรมคำนวณค่าเฉลี่ย Order Picker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body, input, button, p, h1, h2, h3 {
+      font-family: 'Kanit', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
     }
-}
-
-main {
-    text-align: center;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%; /* เพิ่ม width เพื่อให้ responsive มากขึ้น */
-}
-
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 1em;
-    color: #ffd700;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-}
-
-h1.title-no-wrap {
-    font-size: 2.2em;
-    white-space: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* ลบ .input, .button ใน style.css ออกเพื่อไม่ให้ทับกับโค้ดใน <style> ของ daily_average.html */
-/* โดยใช้ input, button จากโค้ดที่คุณให้มาใน daily_average.html แทน */
-
-.centered-form {
-    width: 100%;
-    max-width: 400px; /* เพิ่ม max-width ให้ form */
-    margin: 0 auto; /* จัดกึ่งกลาง */
-}
-
-.floating-button {
-    position: fixed;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: floaty 2.5s ease-in-out infinite;
-}
-
-@keyframes floaty {
-    0%, 100% {
-        transform: translateY(0);
+    .input-wrapper {
+      width: 100%;
+      max-width: 350px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    50% {
-        transform: translateY(-8px);
+    input {
+      width: 100%;
+      font-size: 1.1em;
+      box-sizing: border-box;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
     }
-}
-
-/* กำหนดตำแหน่งปุ่มลอยสำหรับ PC (ค่าเริ่มต้น) */
-/* สำหรับ daily_average.html (4 ปุ่ม) */
-#homeButton {
-    top: 50%;
-    margin-top: -160px; /* (60px + 20px margin) * 2 = 160px */
-    transform: translateY(-50%);
-}
-#duckButton {
-    top: 50%;
-    margin-top: -80px; /* (60px + 20px margin) * 1 = 80px */
-    transform: translateY(-50%);
-}
-#fullscreenButton {
-    top: 50%;
-    margin-top: 0px; /* ตำแหน่งกลาง */
-    transform: translateY(-50%);
-}
-#cameraButton {
-    top: 50%;
-    margin-top: 80px; /* (60px + 20px margin) * 1 = 80px */
-    transform: translateY(-50%);
-}
-
-/* สำหรับ index.html (เมื่อคุณเพิ่มปุ่ม Camera และ Daily Average เข้าไป 4 ปุ่ม) */
-/* หมายเหตุ: ตอนนี้เราโฟกัสที่ daily_average.html ก่อน ถ้า index.html มี 4 ปุ่มเช่นกัน จะใช้โค้ดคล้ายกัน */
-/* หากคุณต้องการให้ index.html มี 3 ปุ่ม (เป็ด, เต็มจอ, กล้อง) ให้ใช้โค้ดจากก่อนหน้านี้
-   แต่ถ้าจะให้ index.html มี 4 ปุ่ม (เป็ด, กล้อง, เต็มจอ, ถุงเงิน) ก็ใช้โครงสร้างนี้ได้เลย
-   เพียงแค่เปลี่ยน #homeButton เป็น #dailyAverageButton ใน index.html */
-
-
-footer {
-    text-align: center;
-    font-size: 0.75em;
-    padding: 1.5em;
-    color: #eee;
-    line-height: 1.8em;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    box-sizing: border-box;
-    margin-top: 3em; /* เพิ่ม margin-top เพื่อแยกจาก main */
-    position: relative;
-    max-width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%; /* ให้เต็มความกว้าง */
-}
-
-footer p {
-    margin: 0.5em 0;
-}
-
-h1.title-no-wrap::-webkit-scrollbar {
-    height: 6px;
-}
-
-h1.title-no-wrap::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.4);
-    border-radius: 3px;
-}
-
-
-.info-card {
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 1.5em;
-    border-radius: 15px;
-    margin-bottom: 2em;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    width: 90%;
-    max-width: 500px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.info-card h2 {
-    font-size: 1.8em;
-    margin-top: 0;
-    margin-bottom: 0.8em;
-    color: #ffd700;
-    text-shadow: none;
-}
-.info-card p {
-    font-size: 1.2em;
-    margin: 0.5em 0;
-    color: #eee;
-    text-shadow: none;
-}
-
-/* เพิ่มสไตล์สำหรับ card รูปภาพโดยเฉพาะ */
-.photo-card {
-    margin-top: 2em; /* เพิ่มระยะห่างจาก card ด้านบน */
-    padding-bottom: 2em; /* เพิ่มพื้นที่ด้านล่าง */
-}
-.photo-card img {
-    display: block; /* ทำให้รูปภาพอยู่บรรทัดใหม่ */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-.input-group { /* อาจไม่ได้ใช้แล้ว ถ้าใช้ input-wrapper แทน */
-    margin-bottom: 1em;
-    text-align: left;
-    width: 100%;
-}
-
-.input-group input[type="number"] { /* อาจไม่ได้ใช้แล้ว ถ้าใช้ input-wrapper แทน */
-    width: calc(100% - 2em);
-    padding: 1em;
-    color: white;
-    font-size: 1em;
-    box-sizing: border-box;
-}
-.input-group input[type="number"]::placeholder { /* อาจไม่ได้ใช้แล้ว ถ้าใช้ input-wrapper แทน */
-    color: #ddd;
-}
-
-
-.progress-bar-container { /* อันนี้ไม่ได้ใช้ใน daily_average.html แต่ยังคงอยู่ใน style.css เดิมของคุณ */
-    width: 100%;
-    background-color: rgba(255,255,255,0.1);
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 1em;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.progress-bar { /* อันนี้ไม่ได้ใช้ใน daily_average.html แต่ยังคงอยู่ใน style.css เดิมของคุณ */
-    height: 100%;
-    background-color: #007bff;
-    width: 0%;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 35px;
-    color: white;
-    transition: width 0.5s ease-in-out;
-    font-size: 0.9em;
-    font-weight: bold;
-    white-space: nowrap;
-    padding: 0 0.5em;
-    box-sizing: border-box;
-}
-
-/* ปุ่มเคลียร์ข้อมูล */
-.clear-button {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.clear-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-/* ปุ่มสำหรับ Action อื่นๆ (เช่น ถ่ายรูป) */
-.action-button { /* อันนี้ไม่ได้ใช้ใน daily_average.html แต่ยังคงอยู่ใน style.css เดิมของคุณ */
-    background: linear-gradient(135deg, #28a745, #218838); /* สีเขียว */
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.action-button:hover { /* อันนี้ไม่ได้ใช้ใน daily_average.html แต่ยังคงอยู่ใน style.css เดิมของคุณ */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-
-@media (max-width: 768px) { /* ปรับ media query ให้ครอบคลุมแท็บเล็ตด้วย */
-    h1 {
-        font-size: 2em;
+    input::placeholder {
+      color: #ddd;
     }
-    h1.title-no-wrap {
-        font-size: 1.6em;
-        overflow-x: hidden;
+    button {
+      width: 100%;
+      max-width: 350px;
+      font-size: 1.2em;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .content-wrapper {
-        padding: 2vh 1em;
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
-    /* input, button ในส่วนหลักของหน้าจะถูกจัดการโดย <style> ใน HTML โดยตรง */
-    
-    .info-card {
-        padding: 1em;
-        margin-bottom: 1.5em;
-        width: 95%;
-    }
-    .info-card h2 {
-        font-size: 1.5em;
-    }
-    .info-card p {
-        font-size: 1em;
-    }
-    .progress-bar-container { /* อันนี้ไม่ได้ใช้ใน daily_average.html แต่ยังคงอยู่ใน style.css เดิมของคุณ */
-        height: 30px;
-    }
-    .progress-bar { /* อันนี้ไม่ได้ใช้ใน daily_average.html แต่ยังคงอยู่ใน style.css เดิมของคุณ */
-        line-height: 30px;
-        font-size: 0.8em;
-    }
-
+    /* Floating Buttons */
     .floating-button {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        right: 10px;
+      position: fixed;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: floaty 2.5s ease-in-out infinite;
     }
-
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือ */
-    /* สำหรับ daily_average.html (4 ปุ่ม) */
-    #homeButton {
-        top: 50%;
-        margin-top: -110px;
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0);}
+      50%      { transform: translateY(-8px);}
+    }
+    #moneyBagButton {
+      top: 50%;
+      margin-top: -80px;
+      transform: translateY(-50%);
     }
     #duckButton {
-        top: 50%;
-        margin-top: -30px;
+      top: 50%;
+      margin-top: 0px;
+      transform: translateY(-50%);
     }
     #fullscreenButton {
-        top: 50%;
-        margin-top: 50px;
+      top: 50%;
+      margin-top: 80px;
+      transform: translateY(-50%);
     }
-    #cameraButton {
-        top: 50%;
-        margin-top: 130px;
-    }
-
-    footer {
-        padding: 1em;
-        font-size: 0.65em;
-        max-width: 90%;
-        margin-top: 2em;
-    }
-}
-
-/* เพิ่ม media query สำหรับมือถือขนาดเล็กมาก */
-@media (max-width: 400px) {
-    h1 {
-        font-size: 1.8em;
-    }
-    .info-card h2 {
-        font-size: 1.3em;
-    }
-    .info-card p {
-        font-size: 0.9em;
-    }
-    /* input, button ในส่วนหลักของหน้าจะถูกจัดการโดย <style> ใน HTML โดยตรง */
-
-    .floating-button {
+    @media (max-width: 480px) {
+      .floating-button {
         width: 45px;
         height: 45px;
         font-size: 20px;
         right: 5px;
+      }
+      #moneyBagButton { margin-top: -60px; }
+      #duckButton     { margin-top: 0; }
+      #fullscreenButton { margin-top: 60px; }
     }
+    footer {
+      margin-top: 3em;
+      padding: 1.5em;
+      text-align: center;
+      font-size: 0.75em;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      max-width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+    footer p {
+      margin: 0.5em 0;
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="content-wrapper fade-slide-in">
+    <main>
+      <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
+      <form id="averageForm" class="centered-form">
+        <div class="input-wrapper">
+          <input type="number" id="sku" placeholder="✅ SKU ที่ทำได้แล้ว" required />
+        </div>
+        <div class="input-wrapper">
+          <input type="number" id="mu" placeholder="✅ MU ที่ทำได้แล้ว" required />
+        </div>
+        <div class="input-wrapper">
+          <input type="number" id="days" placeholder="📅 จำนวนวันทำงาน" required />
+        </div>
+        <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
+      </form>
+    </main>
+    <footer>
+      <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
+      <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+      <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+      <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+      <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
+    </footer>
+  </div>
 
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือขนาดเล็กมาก */
-    /* สำหรับ daily_average.html (4 ปุ่ม) */
-    #homeButton { margin-top: -100px; }
-    #duckButton { margin-top: -20px; }
-    #fullscreenButton { margin-top: 60px; }
-    #cameraButton { margin-top: 140px; }
-}
+  <!-- Floating Buttons -->
+  <button id="moneyBagButton" class="floating-button" aria-label="ไปหน้ารายการเพลง">💰</button>
+  <button id="duckButton" class="floating-button" aria-label="ไปหน้าเป็ด">🦆</button>
+  <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ">📱</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
