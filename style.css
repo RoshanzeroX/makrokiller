@@ -6,10 +6,12 @@ html, body {
     padding: 0;
     height: 100%;
     font-family: 'Kanit', sans-serif;
-    color: #fff; /* Initial text color */
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85); /* Text shadow for readability */
+    color: #fff; /* สีข้อความเริ่มต้นสำหรับ body, จะถูก overrides ด้วย Song-style.css ในส่วนที่เกี่ยวข้อง */
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
     background: transparent;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+    line-height: 1.6; /* ปรับ line-height เพื่อความอ่านง่าย */
+    font-size: 16px; /* กำหนด base font-size, ค่าอื่นๆ จะเป็น em/rem เทียบกับค่านี้ */
 }
 
 .background {
@@ -141,14 +143,14 @@ footer p {
     margin: 0 6px;
 }
 
-/* --- ปรับแต่ง Floating Buttons (ใช้แบบเก่าที่ฟังก์ชันลอยๆ ยังอยู่) --- */
+/* --- ปรับแต่ง Floating Buttons (แก้ปัญหาซ้อนกัน + จัดระยะห่าง + ฟังก์ชันลอยๆ) --- */
 .floating-button {
     position: fixed;
-    right: 20px; /* ทุกปุ่มอยู่ทางขวา */
-    width: 60px; /* ขนาดกว้าง */
-    height: 60px; /* ขนาดสูง */
+    right: 20px;
+    width: 60px;
+    height: 60px;
     font-size: 28px;
-    border-radius: 50%; /* ทำให้ปุ่มกลม */
+    border-radius: 50%;
     background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     cursor: pointer;
@@ -168,10 +170,12 @@ footer p {
 
 /* ตำแหน่งปุ่มลอยตัวบน PC: จัดเรียงให้สวยงามและเว้นช่องว่าง */
 /* เราจะให้ปุ่มอยู่ตรงกลางของความสูงหน้าจอ และกระจายออกไป */
-#homeButton { top: 50%; margin-top: -160px; } /* ปุ่มแรก */
-#dailyAverageButton { top: 50%; margin-top: -80px; } /* ปุ่มสอง */
+/* ปรับระยะห่างให้มากขึ้น เพื่อไม่ให้ซ้อนกัน */
+#homeButton { top: 50%; margin-top: -180px; } /* ปุ่มแรก */
+#dailyAverageButton { top: 50%; margin-top: -90px; } /* ปุ่มสอง */
 #duckButton { top: 50%; margin-top: 0px; } /* ปุ่มกลาง */
-#fullscreenButton { top: 50%; margin-top: 80px; } /* ปุ่มสุดท้าย */
+#fullscreenButton { top: 50%; margin-top: 90px; } /* ปุ่มสุดท้าย */
+
 
 /* Media Queries สำหรับสไตล์ทั่วไปและ Floating Buttons */
 @media (max-width: 768px) {
@@ -184,10 +188,11 @@ footer p {
         font-size: 24px;
         right: 10px; /* ชิดขอบ 10px บนมือถือ */
     }
-    #homeButton { top: 50%; margin-top: -120px; }
-    #dailyAverageButton { top: 50%; margin-top: -60px; }
+    /* ปรับระยะห่างบนมือถือให้เหมาะสม */
+    #homeButton { top: 50%; margin-top: -140px; }
+    #dailyAverageButton { top: 50%; margin-top: -70px; }
     #duckButton { top: 50%; margin-top: 0px; }
-    #fullscreenButton { top: 50%; margin-top: 60px; }
+    #fullscreenButton { top: 50%; margin-top: 70px; }
 
     footer {
         font-size: 0.65em; /* ปรับขนาดเล็กบนมือถือ */
@@ -208,9 +213,10 @@ footer p {
         font-size: 20px;
         right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
     }
-    #homeButton { margin-top: -105px; }
-    #dailyAverageButton { margin-top: -50px; }
-    #duckButton { margin-top: 5px; } /* ปรับให้ตำแหน่งกลางอยู่ตรงกลางจริงๆ */
+    /* ปรับระยะห่างบนมือถือเล็กให้เหมาะสม */
+    #homeButton { margin-top: -120px; }
+    #dailyAverageButton { margin-top: -60px; }
+    #duckButton { margin-top: 0px; } 
     #fullscreenButton { margin-top: 60px; }
 
     footer {
