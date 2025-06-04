@@ -220,7 +220,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     font-size: 1.8em;
     margin-top: 0;
     margin-bottom: 0.8em;
-    color: #00c6ff;
+    color: #ffd700; /* เปลี่ยนสีตรงนี้ */
     text-shadow: none;
 }
 .info-card p {
