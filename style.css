@@ -1,328 +1,377 @@
-/*
- * style.css (ปรับปรุงใหม่)
- */
+/* Reset */
 
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Kanit', sans-serif;
-    color: #fff;
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
-    background: transparent;
-    overflow-x: hidden;
-    display: flex; /* ใช้ flexbox จัดหน้าหลัก */
-    flex-direction: column;
-    min-height: 100vh;
+
+  margin: 0;
+
+  padding: 0;
+
+  height: 100%;
+
+  font-family: 'Segoe UI', sans-serif;
+
+  color: #fff;
+
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
+
+  background: transparent;
+
+  overflow-x: hidden;
+
 }
+
+
 
 .background {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url("bg.webp") center/cover no-repeat; /* ตรวจสอบให้แน่ใจว่ามีไฟล์ bg.webp */
-    background-attachment: fixed;
-    filter: brightness(40%) blur(2px);
-    z-index: -1;
+
+  position: fixed;
+
+  top: 0; left: 0; right: 0; bottom: 0;
+
+  background: url("bg.webp") center/cover no-repeat;
+
+  filter: brightness(40%) blur(2px);
+
+  z-index: -1;
+
+  background-attachment: fixed;
+
 }
 
-/* ปรับปรุง .container ให้ไม่มีกรอบ */
-.container {
-    flex: 1; /* ทำให้ container ขยายเต็มพื้นที่ที่เหลือ */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
-    align-items: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
-    padding: 2vh 1em; /* ยังคงมี padding ภายใน */
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-    min-height: 90vh; /* เพื่อรองรับเนื้อหาที่อาจจะยาว */
-    width: 100%; /* ให้เต็มความกว้าง */
-    /* ลบสไตล์กรอบออก */
-    /* background-color: rgba(255, 255, 255, 0.25); */
-    /* border-radius: 15px; */
-    /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); */
-    /* backdrop-filter: blur(5px); */
-    /* -webkit-backdrop-filter: blur(5px); */
-    /* border: 1px solid rgba(255, 255, 255, 0.4); */
-    max-width: 500px; /* จำกัดความกว้างเหมือนเดิม */
-    margin: auto; /* จัดให้อยู่กึ่งกลางใน container */
+
+
+/* Layout wrapper for sticky footer */
+
+.content-wrapper {
+
+  display: flex;
+
+  flex-direction: column;
+
+  min-height: 100vh;
+
+  padding: 3vh 2em 2em;
+
+  box-sizing: border-box;
+
 }
 
+
+
+/* Fade and slide in effect */
 
 .fade-slide-in {
-    animation: fadeSlideIn 1s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
+
+  animation: fadeSlideIn 1s ease forwards;
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
 }
+
+
 
 @keyframes fadeSlideIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
 }
 
-h1.title-resize {
-    font-size: 2.2em;
-    margin-bottom: 1em;
-    color: #ffd700;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+
+
+/* Main */
+
+main {
+
+  text-align: center;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
+
+  align-items: center;
+
+  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
+
 }
 
-h1.title-resize::-webkit-scrollbar {
-    height: 6px;
+
+
+h1.title-no-wrap {
+
+  font-size: 2.2em;
+
+  margin-bottom: 1em;
+
+  white-space: nowrap;
+
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+
 }
 
-h1.title-resize::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.4);
-    border-radius: 3px;
+
+
+/* Responsive font adjustment for the title */
+
+@media (max-width: 480px) {
+
+  h1.title-no-wrap {
+
+    font-size: 1.3em;
+
+    white-space: nowrap;
+
+    overflow-x: hidden;
+
+  }
+
 }
 
-input, button[type="submit"] {
-    display: block;
-    width: calc(100% - 2em);
-    margin: 1em auto;
-    padding: 1em;
-    font-size: 1em;
-    border-radius: 12px;
-    border: none;
-    text-shadow: none;
-    box-sizing: border-box;
+
+
+/* Form */
+
+input, button {
+
+  display: block;
+
+  width: 80%;
+
+  max-width: 400px;
+
+  margin: 1em auto;
+
+  padding: 1em;
+
+  font-size: 1em;
+
+  border-radius: 12px;
+
+  border: none;
+
+  text-shadow: none;
+
 }
+
+
 
 input {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    border: 1px solid #ccc;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  color: #fff;
+
+  border: 1px solid #ccc;
+
+
+
+  /* เพิ่ม animation ตอน focus */
+
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+
 }
+
+
 
 input::placeholder {
-    color: #ddd;
+
+  color: #ddd;
+
 }
+
+
 
 input:focus {
-    outline: none;
-    border-color: #00aaff;
-    box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.3);
-}
 
-button[type="submit"] {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+  outline: none;
 
-button[type="submit"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
+  border-color: #00aaff;
 
-/* ปรับ #results ให้ไม่มีกรอบ */
-#results {
-    /* ลบสไตล์กรอบออก */
-    /* background-color: rgba(255, 255, 255, 0.25); */
-    /* padding: 1.5em; */
-    /* border-radius: 15px; */
-    /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); */
-    /* backdrop-filter: blur(5px); */
-    /* -webkit-backdrop-filter: blur(5px); */
-    /* border: 1px solid rgba(255, 255, 255, 0.4); */
+  box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
 
-    text-align: center;
-    width: calc(100% - 2em); /* ให้พอดีกับ container */
-    box-sizing: border-box;
-    margin-top: 2em; /* เพิ่ม margin-top เพื่อแยกจากปุ่มคำนวณ */
-}
+  background-color: rgba(255, 255, 255, 0.3);
 
-#results h2 {
-    font-size: 1.8em;
-    margin-top: 0;
-    margin-bottom: 0.8em;
-    color: #ffd700;
-    text-shadow: none;
-}
-#results p {
-    font-size: 1.2em;
-    margin: 0.5em 0;
-    color: #eee;
-    text-shadow: none;
 }
 
 
-/* Floating Buttons */
+
+button {
+
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+}
+
+
+
+button:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+
+}
+
+
+
+/* Floating buttons */
+
 .floating-button {
-    position: fixed;
-    right: 20px;
-    left: auto;
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: floaty 2.5s ease-in-out infinite;
+
+  position: fixed;
+
+  bottom: 20px;
+
+  width: 60px;
+
+  height: 60px;
+
+  font-size: 28px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: none;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  animation: floaty 2.5s ease-in-out infinite;
+
 }
+
+
 
 @keyframes floaty {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
+
+  0%, 100% { transform: translateY(0); }
+
+  50% { transform: translateY(-8px); }
+
 }
 
-/* ตำแหน่งสำหรับปุ่มเป็ด (🦆) ให้อยู่มุมขวาบน */
-.floating-button.top-right {
-    top: 20px; /* ห่างจากขอบบน 20px */
-    right: 20px; /* ห่างจากขอบขวา 20px */
-    transform: none; /* ลบ transform: translateY(-50%) ออก */
-    margin-top: 0; /* ลบ margin-top เดิมออก */
+
+
+.floating-button.left {
+
+  left: 20px;
+
 }
 
-/* ตำแหน่งปุ่ม Fullscreen และปุ่มถุงเงิน ให้อยู่กลางขวา */
+
+
 .floating-button.right {
-    top: 50%; /* จัดให้อยู่กลางแนวตั้ง */
-    right: 20px; /* ห่างจากขอบขวา 20px */
-    transform: translateY(-50%); /* จัดให้อยู่กลางแนวตั้งจริงๆ */
+
+  right: 20px;
+
 }
 
-#fullscreenBtn {
-    margin-top: -35px; /* ปุ่ม Fullscreen อยู่เหนือปุ่มถุงเงินเล็กน้อย */
-}
 
-#calculateDailySalesBtn {
-    margin-top: 35px; /* ปุ่มถุงเงินอยู่ใต้ปุ่ม Fullscreen เล็กน้อย */
-}
+
+/* Footer */
 
 footer {
-    text-align: center;
-    font-size: 0.6em;
-    padding: 1.5em;
-    color: #eee;
-    line-height: 1.8em;
-    background: transparent;
-    border-radius: 0;
-    box-sizing: border-box;
-    margin-top: 3em;
-    position: relative;
-    max-width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    border: none;
-    box-shadow: none;
+
+  text-align: center;
+
+  font-size: 0.1em; /* 10% */
+
+  padding: 1em 1em 1.5em;
+
+  color: #eee;
+
+  line-height: 2.0em;
+
+  background: none !important;
+
+  box-sizing: border-box;
+
+  margin-top: auto;
+
+  position: sticky;
+
+  bottom: 0;
+
+  max-width: 100vw;
+
+  word-break: break-word;
+
 }
+
+
+
+/* Footer paragraphs */
 
 footer p {
-    margin: 0.5em 0;
-    font-size: 1em;
+
+  margin: 2em 0;
+
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .container {
-        padding: 1.5em;
-        width: 95%;
-    }
-    h1.title-resize {
-        font-size: 1.8em;
-    }
-    input, button[type="submit"] {
-        width: calc(100% - 1.5em);
-        font-size: 0.9em;
-    }
-    #results {
-        padding: 1em;
-        width: calc(100% - 1.5em);
-    }
-    #results h2 {
-        font-size: 1.5em;
-    }
-    #results p {
-        font-size: 1em;
-    }
 
-    .floating-button {
-        width: 45px;
-        height: 45px;
-        font-size: 22px;
-        right: 10px;
-    }
 
-    /* ตำแหน่งสำหรับปุ่มเป็ด (🦆) บนมือถือ */
-    .floating-button.top-right {
-        top: 10px; /* ห่างจากขอบบน 10px */
-        right: 10px; /* ห่างจากขอบขวา 10px */
-    }
+/* ปรับระยะห่าง footer บน PC */
 
-    /* ตำแหน่งปุ่ม Fullscreen และปุ่มถุงเงิน บนมือถือ */
-    #fullscreenBtn {
-        margin-top: -25px; /* ปรับลดลงเล็กน้อย */
-    }
-    #calculateDailySalesBtn {
-        margin-top: 25px; /* ปรับลดลงเล็กน้อย */
-    }
+@media (min-width: 481px) {
 
-    footer {
-        font-size: 0.55em;
-        max-width: 90%;
-    }
+  footer p {
+
+    margin: 3.5em 0;
+
+  }
+
 }
 
-@media (max-width: 400px) {
-    .container {
-        padding: 1em;
-    }
-    h1.title-resize {
-        font-size: 1.5em;
-    }
-    input, button[type="submit"] {
-        font-size: 0.85em;
-    }
-    #results h2 {
-        font-size: 1.3em;
-    }
-    #results p {
-        font-size: 0.9em;
-    }
 
-    .floating-button {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        right: 5px;
-    }
-    /* ตำแหน่งสำหรับปุ่มเป็ด (🦆) บนจอที่เล็กที่สุด */
-    .floating-button.top-right {
-        top: 5px;
-        right: 5px;
-    }
-    /* ตำแหน่งปุ่ม Fullscreen และปุ่มถุงเงิน บนจอที่เล็กที่สุด */
-    #fullscreenBtn {
-        margin-top: -20px;
-    }
-    #calculateDailySalesBtn {
-        margin-top: 20px;
-    }
 
-    footer {
-        font-size: 0.5em;
-    }
+/* Scrollbar style for the title if overflow */
+
+h1.title-no-wrap::-webkit-scrollbar {
+
+  height: 6px;
+
+}
+
+
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+
+  background-color: rgba(255,255,255,0.4);
+
+  border-radius: 3px;
+
 }
