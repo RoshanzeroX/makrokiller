@@ -4,91 +4,320 @@
  * It's also imported by Song-style.css.
  */
 
-/* --- General Body and Font Styles --- */
-body {
+/* --- Reset & Base Styles --- */
+html, body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    font-family: 'Kanit', sans-serif; /* Set default font to Kanit */
-    color: #fff; /* Default text color to white */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Subtle text shadow for readability on gradients */
-}
-
-/* --- Background Animation --- */
-.background {
-    position: fixed; /* Fixes the background to the viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 100%;
-    /* Example vibrant gradient (you can change colors here) */
-    background: linear-gradient(135deg, #4CAF50, #2196F3, #9C27B0);
-    background-size: 400% 400%; /* Makes the gradient larger than the viewport for animation */
-    animation: gradientAnimation 15s ease infinite; /* Apply gradient animation */
-    z-index: -1; /* Sends the background behind other content */
+    /* ใช้ Kanit font สำหรับทุกหน้า */
+    font-family: 'Kanit', sans-serif;
+    color: #fff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
+    background: transparent; /* พื้นหลังโปร่งใสเพราะ .background จะรับหน้าที่พื้นหลังหลัก */
+    overflow-x: hidden; /* ป้องกัน scrollbar แนวนอน */
 }
 
-@keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }    /* Start position */
-    50% { background-position: 100% 50%; }  /* Middle position */
-    100% { background-position: 0% 50%; }  /* End position (loops back to start) */
+/* --- Background Image & Effect --- */
+.background {
+    position: fixed; /* ตรึงพื้นหลังให้อยู่กับที่ */
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* **สำคัญ:** ตรวจสอบ Path รูปภาพตรงนี้ให้ถูกต้อง */
+    background: url("images/bg.webp") center/cover no-repeat; /* ควรอยู่ในโฟลเดอร์ images */
+    background-attachment: fixed; /* ทำให้พื้นหลังอยู่กับที่เมื่อ scroll */
+    filter: brightness(40%) blur(2px); /* ปรับความสว่างและความเบลอของภาพพื้นหลัง */
+    z-index: -1; /* ส่งไปอยู่ด้านหลังสุด */
 }
 
-/* --- Content Wrapper for Centering and Animation --- */
+/* --- Layout Wrapper for Content --- */
 .content-wrapper {
     display: flex;
-    flex-direction: column; /* Stacks children vertically */
-    align-items: center;    /* Centers children horizontally */
-    justify-content: center; /* Centers children vertically */
-    min-height: 90vh; /* Ensures content takes up most of the viewport height */
-    padding: 5vh 2em; /* Padding around the content (top/bottom, left/right) */
-    box-sizing: border-box; /* Includes padding in element's total width/height */
-    position: relative; /* Needed for z-index to work correctly */
-    z-index: 1; /* Ensures content is above the background */
-    text-align: center; /* Default text alignment for content inside */
+    flex-direction: column;
+    /* min-height: 100vh; */ /* นำออก, ใช้ min-height ในแต่ละหน้าแทน (เช่น 90vh) */
+    padding: 3vh 2em 2em; /* Padding โดยรวมของเนื้อหา */
+    box-sizing: border-box;
+    position: relative; /* สำคัญสำหรับ z-index */
+    z-index: 1; /* ทำให้เนื้อหาอยู่บนพื้นหลัง */
 }
 
-/* Fade and Slide-in Animation for content */
+/* --- Fade and Slide in Animation for Content --- */
 .fade-slide-in {
-    animation: fadeInSlideIn 1s ease-out forwards;
+    animation: fadeSlideIn 1s ease forwards;
+    opacity: 0; /* เริ่มต้นซ่อน */
+    transform: translateY(20px); /* เริ่มต้นเลื่อนลงมาเล็กน้อย */
 }
 
-@keyframes fadeInSlideIn {
-    from {
-        opacity: 0;          /* Start completely transparent */
-        transform: translateY(20px); /* Start slightly below final position */
-    }
+@keyframes fadeSlideIn {
     to {
-        opacity: 1;          /* End fully opaque */
-        transform: translateY(0);    /* End at final position */
+        opacity: 1; /* แสดงผลเต็มที่ */
+        transform: translateY(0); /* กลับสู่ตำแหน่งปกติ */
     }
 }
 
-/* --- Common Text Styles --- */
+/* --- Main Content Container (for centering elements within the page) --- */
+main {
+    text-align: center;
+    flex: 1; /* ทำให้ main ขยายเต็มพื้นที่ที่เหลือ */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* จัดเนื้อหาตรงกลางแนวตั้ง */
+    align-items: center; /* จัดเนื้อหาตรงกลางแนวนอน */
+    min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
+    max-width: 600px; /* จำกัดความกว้างบน desktop */
+    margin: 0 auto; /* จัดให้อยู่ตรงกลางหน้า */
+}
+
+/* --- Heading Styles --- */
 h1 {
-    font-size: 2.5em;
+    font-size: 2.5em; /* ขนาดฟอนต์สำหรับ H1 ทั่วไป */
     margin-bottom: 1em;
-    color: #ffd700; /* Gold color for main headings */
+    color: #ffd700; /* สีทอง */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
 
-p {
-    font-size: 1.1em;
-    margin-bottom: 0.8em;
-    color: #e0e0e0;
+/* Specific H1 for no-wrap (e.g., in index.html) */
+h1.title-no-wrap {
+    font-size: 2.2em; /* ขนาดที่เล็กลงเล็กน้อยสำหรับชื่อที่ยาว */
+    white-space: nowrap; /* ไม่ขึ้นบรรทัดใหม่ */
+    overflow-x: auto; /* อนุญาตให้ scrollbar แนวนอนถ้าเกิน */
+    -webkit-overflow-scrolling: touch; /* เพื่อการ scroll ที่ลื่นไหลบน iOS */
 }
 
-/* --- Buttons Group (for multiple buttons like clear) --- */
-.buttons-group {
-    margin-top: 2em;
+/* --- Form Inputs & Buttons --- */
+input, button {
+    display: block;
+    width: 80%;
+    max-width: 400px;
+    margin: 1em auto;
+    padding: 1em;
+    font-size: 1em;
+    border-radius: 12px;
+    border: none;
+    text-shadow: none; /* ลบ shadow ที่เคยตั้งไว้ */
+}
+
+input {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid #ccc;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+input:focus {
+    outline: none;
+    border-color: #00aaff;
+    box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+button {
+    background: linear-gradient(135deg, #00c6ff, #0072ff); /* Gradient Blue */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Floating Buttons (General Styles) --- */
+.floating-button {
+    position: fixed;
+    right: 20px; /* ปุ่มทั้งหมดอยู่ทางขวา */
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 10;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 1em; /* Space between buttons if multiple */
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* แอนิเมชันลอยตัว - ใช้ translateY(0) เพื่อให้เข้ากับการจัดตำแหน่งปุ่ม */
+    animation: floaty 2.5s ease-in-out infinite;
 }
 
-/* Clear Data Button Specific Style */
-button.clear-button {
-    background: linear-gradient(135deg, #dc3545, #c82333); /* Red gradient */
+/* Keyframes สำหรับแอนิเมชันลอยตัว */
+@keyframes floaty {
+    0%, 100% {
+        transform: translateY(0); /* เริ่มและจบที่ตำแหน่งเดิม */
+    }
+    50% {
+        transform: translateY(-8px); /* เลื่อนขึ้นเล็กน้อย */
+    }
+}
+
+/* --- Floating Buttons (Specific Positioning for multiple buttons) --- */
+/* ใช้ในหน้าที่มีหลายปุ่ม เช่น index.html หรือ songs.html (ถ้ามีการนำเข้า Song-style.css) */
+/* **สำคัญ:** ตำแหน่งเหล่านี้จะใช้งานได้ดีเมื่อ `.floating-button` ทั่วไปไม่มี `top` และ `transform` */
+
+/* ปุ่มบ้าน 🏠 - อยู่บนสุด */
+#homeButton {
+    top: 50%;
+    margin-top: -120px; /* เลื่อนขึ้นจากกึ่งกลาง */
+    transform: translateY(-50%); /* จัดกึ่งกลางแนวตั้งของปุ่ม */
+}
+
+/* ปุ่มเป็ด 🦆 - ถัดลงมา */
+#duckButton {
+    top: 50%;
+    margin-top: -40px; /* เลื่อนลงมาเล็กน้อย */
+    transform: translateY(-50%);
+}
+
+/* ปุ่มเต็มจอ 📱 - ถัดลงมา */
+#fullscreenButton {
+    top: 50%;
+    margin-top: 40px; /* เลื่อนลงมาอีก */
+    transform: translateY(-50%);
+}
+
+/* ปุ่มเฉลี่ยรายวัน 💰 - ล่างสุด */
+#dailyAverageButton {
+    top: 50%;
+    margin-top: 120px; /* เลื่อนลงมาอีก */
+    transform: translateY(-50%);
+}
+
+
+/* --- Footer Styles (primarily for index.html) --- */
+footer {
+    text-align: center;
+    font-size: 0.75em;
+    padding: 1.5em;
+    color: #eee;
+    line-height: 1.8em;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-sizing: border-box;
+    margin-top: auto; /* ดัน footer ไปด้านล่าง */
+    position: relative;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer p {
+    margin: 0.5em 0;
+}
+
+/* --- Scrollbar Style for long titles --- */
+h1.title-no-wrap::-webkit-scrollbar {
+    height: 6px;
+}
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 3px;
+}
+
+/* --- Styles specific to daily_average.html (Override/Additions) --- */
+/* Adjust main content wrapper height for daily_average.html */
+/* ถ้า content-wrapper ใน daily_average.html ใช้คลาส content-wrapper นี้ */
+.content-wrapper {
+    min-height: 90vh; /* เพื่อให้เนื้อหาดูเต็มพื้นที่มากขึ้น */
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+
+/* Info cards for daily_average.html - ทับสไตล์ info-card ทั่วไปบางส่วนเพื่อให้ทึบขึ้น */
+.info-card {
+    background-color: rgba(255, 255, 255, 0.25); /* ทึบขึ้น */
+    padding: 1.5em;
+    border-radius: 15px;
+    margin-bottom: 2em; /* เพิ่มระยะห่างระหว่างการ์ด */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 90%; /* ความกว้างที่ปรับได้ */
+    max-width: 500px; /* ความกว้างสูงสุด */
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.info-card h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 0.8em;
+    color: #00c6ff; /* สีฟ้าสดใส */
+    text-shadow: none; /* ลบ shadow ที่เคยตั้งไว้ */
+}
+.info-card p {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: #eee;
+    text-shadow: none; /* ลบ shadow ที่เคยตั้งไว้ */
+}
+
+/* Input groups for daily_average.html */
+.input-group {
+    margin-bottom: 1em;
+    text-align: left;
+    width: 100%; /* เต็มความกว้างของการ์ด */
+}
+.input-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.input-group input[type="number"] {
+    width: calc(100% - 24px); /* Full width minus padding */
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.1em;
+    box-sizing: border-box;
+}
+.input-group input[type="number"]::placeholder {
+    color: #ddd;
+}
+
+/* Progress bar styles for daily_average.html */
+.progress-bar-container {
+    width: 100%; /* เต็มความกว้างของการ์ด */
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 1em;
+    height: 35px; /* ความสูงของ progress bar */
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.progress-bar {
+    height: 100%;
+    background-color: #007bff; /* สีเริ่มต้น */
+    width: 0%;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 35px; /* จัด text กลางแนวตั้ง */
+    color: white;
+    transition: width 0.5s ease-in-out;
+    font-size: 0.9em;
+    font-weight: bold;
+    white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
+    padding: 0 0.5em; /* Padding สำหรับข้อความ */
+    box-sizing: border-box;
+}
+
+/* Specific button for daily_average.html */
+.clear-button {
+    background: linear-gradient(135deg, #dc3545, #c82333); /* ใช้ gradient สำหรับปุ่ม clear */
     color: white;
     font-weight: bold;
     border: none;
@@ -98,169 +327,87 @@ button.clear-button {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-
-button.clear-button:hover {
+.clear-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
 
-/* --- Info Card Styling (for daily_average.html and similar data boxes) --- */
-.info-card {
-    background-color: rgba(255, 255, 255, 0.25); /* Semi-transparent white background */
-    padding: 1.5em; /* Padding inside the card */
-    border-radius: 15px; /* Rounded corners */
-    margin-bottom: 2em; /* Space below each info card */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-    backdrop-filter: blur(5px); /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(5px); /* For Safari */
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Light border */
-    width: 90%; /* Default width (responsive) */
-    max-width: 500px; /* Maximum width on larger screens */
-    box-sizing: border-box; /* Include padding and border in width calculation */
-    text-align: center; /* Center text content inside the card */
-}
-
-.info-card h2 {
-    color: #f0f0f0; /* Heading color inside cards */
-    margin-top: 0;
-    margin-bottom: 1em;
-    font-size: 1.5em;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-.info-card p {
-    color: #e0e0e0; /* Paragraph text color inside cards */
-    font-size: 1.1em;
-    margin-bottom: 0.5em;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
-}
-
-.info-card p span {
-    color: #00aaff; /* Highlight color for numbers/important text */
-    font-weight: bold;
-}
-
-/* Input Group within info-card for better alignment */
-.info-card .input-group {
-    margin-bottom: 1em; /* Space below each input group */
-    text-align: left; /* Align label and input to the left */
-}
-
-.info-card .input-group label {
-    display: block; /* Make label take its own line */
-    color: #e0e0e0;
-    margin-bottom: 0.5em;
-}
-
-/* --- Progress Bar General Styles --- */
-.progress-bar-container {
-    width: 100%; /* Take full width of parent */
-    background-color: rgba(255, 255, 255, 0.1); /* Light transparent background */
-    border-radius: 12px;
-    margin: 1em 0; /* Margin top/bottom */
-    overflow: hidden; /* Hides parts of inner bar that exceed container */
-    height: 35px; /* Height of the progress bar */
-    display: flex;
-    align-items: center; /* Vertically center text */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
-}
-
-.progress-bar { /* Used for SKU/MU progress bars in daily_average.html */
-    height: 100%;
-    background-color: #00c6ff; /* Default progress color (blue) */
-    width: 0%; /* Start at 0% width */
-    border-radius: 12px; /* Rounded ends */
-    text-align: center;
-    line-height: 35px; /* Vertically center text */
-    color: white;
-    font-weight: bold;
-    transition: width 0.5s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transitions */
-    white-space: nowrap; /* Prevent text wrapping */
-    padding: 0 0.5em; /* Padding for text inside bar */
-    box-sizing: border-box; /* Ensures padding doesn't push content outside */
-}
-
-/* --- Floating Buttons (General Styles) --- */
-.floating-button {
-    position: fixed; /* Fixed position relative to the viewport */
-    right: 20px; /* Distance from the right edge */
-    width: 60px;
-    height: 60px;
-    font-size: 28px; /* Icon/text size */
-    border-radius: 50%; /* Makes it a circle */
-    background: radial-gradient(circle at center, #ffffffee, #ddddddcc); /* Gradient background */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow for floating effect */
-    cursor: pointer; /* Changes cursor on hover */
-    z-index: 10; /* Ensures button is above other content */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
-    animation: floaty 2.5s ease-in-out infinite; /* Apply floating animation */
-    /* For single button, it can be centered directly */
-    top: 50%;
-    transform: translateY(-50%); /* Centers the button vertically */
-}
-
-/* Animation for the floating effect */
-@keyframes floaty {
-    0% { transform: translateY(-50%) translateX(0); }
-    50% { transform: translateY(-50%) translateX(5px); } /* Moves slightly right */
-    100% { transform: translateY(-50%) translateX(0); }
-}
-
-
-/* --- Responsive Adjustments --- */
+/* --- Responsive Adjustments (General) --- */
 @media (max-width: 480px) {
-    /* Adjustments for smaller screens (e.g., mobile phones) */
-    h1 {
-        font-size: 2em; /* Smaller heading size */
-    }
-    p {
-        font-size: 1em; /* Smaller paragraph text */
-    }
-    .content-wrapper {
-        padding: 3vh 1em; /* Less padding on small screens */
-        min-height: 90vh; /* Ensure it still takes up space */
-    }
-
-    /* Info card adjustments */
-    .info-card {
-        padding: 1em;
-        margin-bottom: 1.5em;
-        width: 95%; /* Make it take more width */
-    }
-    .info-card h2 {
+    /* ปรับขนาดฟอนต์ของชื่อหลักสำหรับมือถือ */
+    h1.title-no-wrap {
         font-size: 1.3em;
-    }
-    .info-card p {
-        font-size: 1em;
+        overflow-x: hidden; /* ซ่อน scrollbar แนวนอนบนมือถือ */
     }
 
-    /* Progress bar adjustments */
-    .progress-bar-container {
-        height: 30px; /* Smaller height for progress bar */
+    h1 {
+        font-size: 2em; /* ขนาด H1 ทั่วไปบนมือถือ */
     }
-    .progress-bar {
-        line-height: 30px; /* Adjust line-height for smaller text */
+
+    /* ปรับขนาด padding ของ content wrapper */
+    .content-wrapper {
+        padding: 3vh 1em;
+        min-height: 90vh;
+    }
+
+    /* Input & Button general adjustments */
+    input, button {
+        width: 90%;
+        padding: 0.8em;
         font-size: 0.9em;
     }
 
-    /* Floating button adjustments for mobile */
+    /* Floating buttons adjustments for mobile */
     .floating-button {
         width: 50px;
         height: 50px;
         font-size: 24px;
-        right: 10px; /* Less distance from right edge */
+        right: 10px; /* ใกล้ขอบมากขึ้น */
     }
 
-    /* Ensure specific button positioning in Song-style.css is also adjusted for mobile
-       if Song-style.css imports this file and overrides these specific rules.
-       Example (if applicable for Song-style.css which overrides individual button positions):
-       #homeButton { margin-top: -70px; }
-       #fullscreenButton { margin-top: 0px; }
-       #dailyAverageButton { margin-top: 70px; }
-    */
+    /* ปรับตำแหน่งปุ่มลอยบนมือถือ */
+    #homeButton {
+        margin-top: -100px; /* ปรับขึ้นเล็กน้อย */
+    }
+    #duckButton {
+        margin-top: -30px;
+    }
+    #fullscreenButton {
+        margin-top: 40px;
+    }
+    #dailyAverageButton {
+        margin-top: 110px;
+    }
+
+    /* Footer adjustments for mobile */
+    footer {
+        padding: 1em;
+        font-size: 0.7em;
+        max-width: 90%;
+    }
+
+    /* daily_average.html specific adjustments on mobile */
+    .info-card {
+        padding: 1em;
+        margin-bottom: 1.5em;
+        width: 95%;
+    }
+    .info-card h2 {
+        font-size: 1.3em;
+    }
+    .info-card p, .input-group label, .input-group input[type="number"] {
+        font-size: 1em;
+    }
+    .progress-bar-container {
+        height: 30px;
+    }
+    .progress-bar {
+        line-height: 30px;
+        font-size: 0.8em;
+    }
+    .buttons-group {
+        flex-direction: column;
+        align-items: center;
+    }
 }
