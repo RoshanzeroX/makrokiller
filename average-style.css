@@ -1,129 +1,158 @@
-let daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Sarabun&display=swap');
 
-// ตัวแปรสำหรับเก็บค่าเฉลี่ยรายวันที่คำนวณได้ เพื่อส่งไปยัง daily_average.html
-let calculatedDailySKU = 0;
-let calculatedDailyMU = 0;
-
-function updateDateTime() {
-    let now = new Date();
-    document.getElementById("currentDateTime").innerHTML = `<strong>📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })} ⏳ ${now.toLocaleTimeString('th-TH')}</strong>`;
-    document.getElementById("yearCE").innerText = now.getFullYear();
-    document.getElementById("yearBE").innerText = now.getFullYear() + 543;
+/* พาร์ติเคิลพื้นหลัง */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('particles.webp');
+  background-size: cover;
+  opacity: 0.3;
+  z-index: -2;
+  animation: floatParticles 60s linear infinite;
 }
 
-setInterval(updateDateTime, 1000);
-updateDateTime();
-
-document.getElementById("currentMonth").innerText = new Date().toLocaleString('th-TH', { month: 'long' });
-document.getElementById("totalDays").innerText = daysInMonth; // แสดงวันในเดือนทั้งหมด
-
-function calculateTargets() {
-    let totalSKUs = parseInt(document.getElementById("totalSKUs").value) || 0;
-    let totalMUs = parseInt(document.getElementById("totalMUs").value) || 0;
-    let holidays = parseInt(document.getElementById("holidays").value) || 0; // ยังคงรับค่า holidays แต่ไม่นำมาใช้ในเป้าหมาย
-
-    let today = new Date().getDate();
-    // ใช้ daysInMonth ทั้งหมดในการคำนวณวันทั้งหมดในเดือน
-    let totalDaysInMonth = daysInMonth; 
-    let remainingDaysInMonth = Math.max(0, totalDaysInMonth - today); // จำนวนวันทั้งหมดที่เหลือในเดือน (ไม่หักวันหยุด)
-
-    // เป้าหมาย SKU/MU ที่ต้องจัดต่อวัน (ค่าคงที่)
-    let targetSKUPerDayFixed = 120;
-    let targetMUPerDayFixed = 340;   
-
-    // คำนวณเป้าหมายรวมของเดือนโดยใช้ "วันในเดือนทั้งหมด" (30 วัน)
-    // นี่คือค่า 120 * 30 = 3600 SKU และ 340 * 30 = 10200 MU
-    let totalMonthlySKUsTarget = targetSKUPerDayFixed * totalDaysInMonth;
-    let totalMonthlyMUsTarget = targetMUPerDayFixed * totalDaysInMonth;
-
-    // คำนวณจำนวนที่เหลือที่ต้องจัดในเดือนนี้
-    // ใช้ Math.max(0, ...) เพื่อไม่ให้ค่าเป็นลบหากทำเกินเป้าแล้ว
-    let remainingSKUsMonthly = Math.max(0, totalMonthlySKUsTarget - totalSKUs);
-    let remainingMUsMonthly = Math.max(0, totalMonthlyMUsTarget - totalMUs);
-
-    // คำนวณ "วันนี้ต้องจัด (เฉลี่ย)" โดยใช้ "วันทั้งหมดที่เหลือในเดือน"
-    let calculatedSKUsDaily_temp = 0;
-    let calculatedMUsDaily_temp = 0;
-
-    if (remainingDaysInMonth > 0) {
-        calculatedSKUsDaily_temp = remainingSKUsMonthly / remainingDaysInMonth;
-        calculatedMUsDaily_temp = remainingMUsMonthly / remainingDaysInMonth;
-    } else {
-        // หากไม่มีวันเหลือ แต่ยังไม่ครบเป้าหมาย ให้แสดงยอดที่เหลือทั้งหมด
-        calculatedSKUsDaily_temp = remainingSKUsMonthly;
-        calculatedMUsDaily_temp = remainingMUsMonthly;
-    }
-
-    // เก็บค่าที่คำนวณได้ลงในตัวแปร global เพื่อให้ปุ่มถุงเงินนำไปใช้
-    calculatedDailySKU = calculatedSKUsDaily_temp;
-    calculatedDailyMU = calculatedMUsDaily_temp;
-
-    // คำนวณความคืบหน้าโดยรวม (นำกลับมา)
-    let totalProgressPoints = (totalMonthlySKUsTarget + totalMonthlyMUsTarget);
-    let currentProgressPoints = (totalSKUs + totalMUs);
-    let progress = (currentProgressPoints / totalProgressPoints) * 100;
-    progress = Math.min(progress, 100); 
-
-    let message = "";
-    if (totalSKUs >= totalMonthlySKUsTarget && totalMUs >= totalMonthlyMUsTarget) {
-        message = "🌟 เก่งค่ะลูกกกก";
-    } else if (progress >= 80) { // เพิ่มเงื่อนไขสำหรับความคืบหน้าสูง
-        message = "👍 ใกล้ถึงเป้าหมายแล้ว! สู้ๆ";
-    }
-    else {
-        message = "💪 ดีขึ้นให้ได้นะ";
-    }
-
-    document.getElementById("results").innerHTML = `
-        <p><strong>📅 จำนวนวันที่เหลือในเดือน:</strong> ${remainingDaysInMonth} วัน</p>
-        <p><strong>📦 วันนี้ต้องจัด (เฉลี่ย):</strong> ${calculatedDailySKU.toFixed(0)} SKU / ${calculatedDailyMU.toFixed(0)} MU</p>
-        <p><strong>📦 เดือนนี้ต้องจัด (รวม):</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
-        <h3>${message}</h3>
-        <p>📊 ความคืบหน้า: <strong>${progress.toFixed(2)}%</strong></p>
-    `;
-
-    // ส่วน Progress Bar (นำกลับมา)
-    let progressBar = document.getElementById("progressBar");
-    progressBar.style.width = `${progress.toFixed(2)}%`;
-    progressBar.innerText = `${progress.toFixed(2)}%`;
-
-    if (progress >= 100) {
-        progressBar.style.backgroundColor = '#28a745'; // เขียวเข้ม
-    } else if (progress >= 80) {
-        progressBar.style.backgroundColor = '#ffc107'; // ส้ม
-    } else {
-        progressBar.style.backgroundColor = '#00c6ff'; // ฟ้าเริ่มต้น
-    }
+@keyframes floatParticles {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100px); }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    // กำหนดฟังก์ชันให้กับปุ่มต่างๆ
-    document.getElementById("homeButton").addEventListener("click", () => {
-        window.location.href = "index.html";
-    });
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('bg.webp');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.4) blur(5px);
+  z-index: -1;
+}
 
-    document.getElementById("fullscreenButton").addEventListener("click", () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch((err) => {
-                console.error(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
-            });
-        } else {
-            document.exitFullscreen();
-        }
-    });
+.content-wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 1em 1.5em;
+  font-family: 'Kanit', 'Sarabun', 'Noto Sans Thai', sans-serif;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  color: #222;
+}
 
-    document.getElementById("dailyAverageButton").addEventListener("click", () => {
-        // **สำคัญ:** เรียก calculateTargets() อีกครั้ง เพื่อให้แน่ใจว่าค่า calculatedDailySKU และ calculatedDailyMU เป็นค่าล่าสุด
-        calculateTargets();
+/* ✅ fade-in slide-in เมื่อโหลด */
+.fade-slide-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-slide-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-        // ส่งค่าเฉลี่ยรายวันที่คำนวณได้แล้วไปยัง daily_average.html
-        const params = new URLSearchParams({
-            skuDaily: calculatedDailySKU.toFixed(0), // ส่งเป็น string ที่ปัดเศษแล้ว
-            muDaily: calculatedDailyMU.toFixed(0)    // ส่งเป็น string ที่ปัดเศษแล้ว
-        });
-        window.location.href = `daily_average.html?${params.toString()}`;
-    });
+.title-no-wrap {
+  white-space: nowrap;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
 
-    // เรียก calculateTargets() ครั้งแรกเมื่อโหลดหน้า เพื่อแสดงผลเบื้องต้น
-    calculateTargets();
-});
+.result-container {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ✅ bounce-in animation */
+@keyframes bounceIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  80% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.result-container img,
+.result-text-and-average {
+  animation: bounceIn 0.8s ease-out;
+}
+
+.result-container img {
+  max-width: 140px;
+  height: auto;
+  margin-bottom: 1em;
+}
+
+.result-text-and-average {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 1em;
+  font-weight: 600;
+  font-size: 2.2rem;
+  max-width: 90vw;
+  word-break: break-word;
+  color: #222;
+}
+
+.average-value {
+  font-weight: 900;
+  font-size: 3rem;
+  user-select: text;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    color: #b3d4ff;
+  }
+  .result-text-and-average {
+    font-size: 2rem;
+    color: #b3d4ff;
+  }
+  .average-value {
+    font-size: 2.5rem;
+    color: #b3d4ff;
+  }
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 15px;
+  background-color: #3A86FF;
+  border: none;
+  color: white;
+  font-size: 2em;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  user-select: none;
+  z-index: 1000;
+  animation: floatUpDown 3s ease-in-out infinite;
+}
+
+.floating-button:hover {
+  transform: translateY(-6px);
+}
+
+.floating-button.right {
+  right: 15px;
+}
+
+.floating-button.left {
+  left: 15px;
+}
+
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
