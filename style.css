@@ -13,6 +13,12 @@ html, body {
     overflow-x: hidden;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .background {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -48,11 +54,12 @@ html, body {
 
 .container {
     text-align: center;
-    margin: 0 auto;
+    margin: auto; /* Centers horizontally and vertically within flex parent */
     max-width: 600px;
     width: 100%;
     padding: 3vh 1em 2em;
     box-sizing: border-box;
+    flex: 1; /* Allows container to grow and push footer down */
 }
 
 h1 {
@@ -157,36 +164,31 @@ button:hover {
     }
 }
 
-#homeButton {
+/* ตำแหน่งปุ่มลอยสำหรับ PC */
+#duckButton { /* ปุ่มเป็ดอยู่ซ้าย */
     top: 50%;
-    margin-top: -120px;
+    margin-top: 0px;
+    transform: translateY(-50%);
+    left: 20px;
+    right: auto;
+}
+
+#fullscreenBtn { /* ปุ่ม Fullscreen อยู่ขวา บน */
+    top: 50%;
+    margin-top: -35px;
     transform: translateY(-50%);
 }
 
-#duckButton {
+#calculateDailySalesBtn { /* ปุ่มถุงเงินอยู่ขวา ล่าง */
     top: 50%;
-    margin-top: -40px;
+    margin-top: 35px;
     transform: translateY(-50%);
 }
 
-#fullscreenButton {
-    top: 50%;
-    margin-top: 40px;
-    transform: translateY(-50%);
+#homeButton, #dailyAverageButton { /* ซ่อนปุ่มที่ไม่ใช้ในหน้าปัจจุบัน หรือมีการจัดตำแหน่งใหม่ไปแล้ว */
+    display: none;
 }
 
-#dailyAverageButton {
-    top: 50%;
-    margin-top: 120px;
-    transform: translateY(-50%);
-}
-
-/* ตำแหน่งสำหรับปุ่มไอคอนถุงเงิน */
-#calculateDailySalesBtn {
-    top: 50%;
-    margin-top: 100px;
-    transform: translateY(-50%);
-}
 
 footer {
     text-align: center;
@@ -355,31 +357,26 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         max-width: 300px;
     }
     .floating-button {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
         right: 10px;
     }
 
     /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือ */
-    #homeButton {
-        top: 50%;
-        margin-top: -80px;
-    }
-    #duckButton {
+    #duckButton { /* ปุ่มเป็ดอยู่ซ้าย */
         top: 50%;
         margin-top: 0px;
+        left: 10px;
+        right: auto;
     }
-    #fullscreenBtn { /* เปลี่ยนจาก fullscreenButton เป็น fullscreenBtn */
+    #fullscreenBtn { /* ปุ่ม Fullscreen อยู่ขวา บน */
         top: 50%;
         margin-top: -30px;
     }
-    #calculateDailySalesBtn {
+    #calculateDailySalesBtn { /* ปุ่มถุงเงินอยู่ขวา ล่าง */
         top: 50%;
-        margin-top: 40px;
-    }
-    #dailyAverageButton {
-        display: none;
+        margin-top: 30px;
     }
 
     footer {
@@ -404,15 +401,14 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         font-size: 0.85em;
     }
     .floating-button {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
         font-size: 20px;
         right: 5px;
     }
-    #homeButton { margin-top: -70px; }
-    #duckButton { margin-top: 0px; }
-    #fullscreenBtn { margin-top: -30px; }
-    #calculateDailySalesBtn { margin-top: 40px; }
+    #duckButton { left: 5px; } /* ปุ่มเป็ดชิดซ้ายมากขึ้น */
+    #fullscreenBtn { margin-top: -25px; } /* ปุ่ม Fullscreen ชิดบนมากขึ้น */
+    #calculateDailySalesBtn { margin-top: 25px; } /* ปุ่มถุงเงินชิดล่างมากขึ้น */
 
     footer {
         font-size: 0.5em;
