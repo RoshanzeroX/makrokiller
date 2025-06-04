@@ -98,6 +98,32 @@ button:hover {
     color: #4CAF50;
 }
 
+/* Progress Bar Specific Styles (นำกลับมา) */
+.progress-bar-container {
+    width: 80%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    margin: 1em auto;
+    overflow: hidden;
+    height: 40px; /* ความสูงของ progress bar */
+    display: flex;
+    align-items: center;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    background-color: #00c6ff; /* สีเริ่มต้นของ progress bar */
+    width: 0%;
+    border-radius: 12px; /* ต้องปรับให้รับกับ container */
+    text-align: center;
+    line-height: 40px; /* จัด text กลางแนวตั้ง */
+    color: white;
+    font-weight: bold;
+    transition: width 0.5s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+
 /* Floating Buttons - จัดเรียงใหม่ให้เป็นระเบียบและไม่ห่างกันเกินไป */
 .floating-button {
   position: fixed;
@@ -158,6 +184,15 @@ button:hover {
   }
   /* ปรับตำแหน่งปุ่มบนมือถือ */
   #homeButton { margin-top: -70px; } /* -50px for button size + 20px gap */
-  #fullscreenButton { margin-top: 0px; }
-  #dailyAverageButton { margin-top: 70px; }
+  #fullscreenButton { margin-top: -10px; } /* ปรับให้ชิดขึ้นอีกหน่อย */
+  #dailyAverageButton { margin-top: 50px; } /* ปรับให้ชิดขึ้นอีกหน่อย */
+
+  .progress-bar-container {
+    width: 90%;
+    height: 30px;
+  }
+  .progress-bar-inner {
+    line-height: 30px;
+    font-size: 0.8em;
+  }
 }
