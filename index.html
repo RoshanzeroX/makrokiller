@@ -1,241 +1,121 @@
 <!DOCTYPE html>
-
 <html lang="th">
-
 <head>
-
-  <meta charset="UTF-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>โปรแกรมคำนวณค่าเฉลี่ย Order Picker</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="style.css" />
-
-  <style>
-
-    body, input, button, p, h1, h2, h3 {
-
-      font-family: 'Kanit', sans-serif;
-
-      font-weight: 400;
-
-      line-height: 1.5;
-
-    }
-
-    .input-wrapper {
-
-      width: 100%;
-
-      max-width: 350px;
-
-      margin-left: auto;
-
-      margin-right: auto;
-
-    }
-
-    input {
-
-      width: 100%;
-
-      font-size: 1.1em;
-
-      box-sizing: border-box;
-
-      padding: 12px;
-
-      border-radius: 8px;
-
-      border: 1px solid #ccc;
-
-      background: rgba(255, 255, 255, 0.2);
-
-      color: white;
-
-    }
-
-    input::placeholder {
-
-      color: #ddd;
-
-    }
-
-    button {
-
-      width: 100%;
-
-      max-width: 350px;
-
-      font-size: 1.2em;
-
-      padding: 12px;
-
-      border-radius: 8px;
-
-      border: none;
-
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-
-      color: white;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-    }
-
-    button:hover {
-
-      transform: translateY(-2px);
-
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-
-    }
-
-    /* ปรับ Footer ให้พอดีกับหน้าจอ */
-
-    footer {
-
-      margin-top: 3em;
-
-      padding: 1.5em;
-
-      text-align: center;
-
-      font-size: 0.75em; /* ลดขนาดลง 30% */
-
-      background: rgba(255, 255, 255, 0.1);
-
-      border-radius: 12px;
-
-      max-width: 85%;
-
-      margin-left: auto;
-
-      margin-right: auto;
-
-      position: relative;
-
-    }
-
-    footer p {
-
-      margin: 0.5em 0;
-
-      color: #ddd;
-
-    }
-
-    /* เพิ่มลูกเล่นตกแต่ง */
-
-    .footer-icon {
-
-      display: inline-block;
-
-      font-size: 1.2em;
-
-      margin: 0 6px;
-
-    }
-
-    /* ให้ footer ปรับตามมือถือ */
-
-    @media (max-width: 480px) {
-
-      footer {
-
-        font-size: 0.65em;
-
-        padding: 1em;
-
-        max-width: 95%;
-
-      }
-
-      footer p {
-
-        margin: 0.4em 0;
-
-      }
-
-    }
-
-  </style>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>โปรแกรมคำนวณค่าเฉลี่ย Order Picker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body, input, button, p, h1, h2, h3 {
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        .input-wrapper {
+            width: 100%;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        input {
+            width: 100%;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        input::placeholder {
+            color: #ddd;
+        }
+        button {
+            width: 100%;
+            max-width: 350px;
+            font-size: 1.2em;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        }
+        /* ปรับ Footer ให้พอดีกับหน้าจอ */
+        footer {
+            margin-top: 3em;
+            padding: 1.5em;
+            text-align: center;
+            font-size: 0.75em; /* ลดขนาดลง 30% */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            max-width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+        footer p {
+            margin: 0.5em 0;
+            color: #ddd;
+        }
+        /* เพิ่มลูกเล่นตกแต่ง */
+        .footer-icon {
+            display: inline-block;
+            font-size: 1.2em;
+            margin: 0 6px;
+        }
+        /* ให้ footer ปรับตามมือถือ */
+        @media (max-width: 480px) {
+            footer {
+                font-size: 0.65em;
+                padding: 1em;
+                max-width: 95%;
+            }
+            footer p {
+                margin: 0.4em 0;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="background"></div>
 
-  <div class="background"></div>
+    <div class="content-wrapper fade-slide-in">
+        <main>
+            <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
+            <form id="averageForm" class="centered-form">
+                <div class="input-wrapper">
+                    <input type="number" id="sku" placeholder="✅ SKU ที่ทำได้แล้ว" required />
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="mu" placeholder="✅ MU ที่ทำได้แล้ว" required />
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="days" placeholder="📅 จำนวนวันทำงาน" required />
+                </div>
+                <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
+            </form>
+        </main>
 
+        <footer>    
+            <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>    
+            <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+            <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+            <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+            <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
+        </footer>
+    </div>
 
+    <button id="duckButton" class="floating-button left" aria-label="ไปหน้าเลือกเพลง">🦆</button>
+    <button id="fullscreenButton" class="floating-button right" aria-label="เปิด/ปิดเต็มจอ">📱</button>
 
-  <div class="content-wrapper fade-slide-in">
-
-    <main>
-
-      <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
-
-      <form id="averageForm" class="centered-form">
-
-        <div class="input-wrapper">
-
-          <input type="number" id="sku" placeholder="✅ SKU ที่ทำได้แล้ว" required />
-
-        </div>
-
-        <div class="input-wrapper">
-
-          <input type="number" id="mu" placeholder="✅ MU ที่ทำได้แล้ว" required />
-
-        </div>
-
-        <div class="input-wrapper">
-
-          <input type="number" id="days" placeholder="📅 จำนวนวันทำงาน" required />
-
-        </div>
-
-        <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
-
-      </form>
-
-    </main>
-
-
-
-   <footer> 
-
-     <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p> 
-
-     <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
-
-     <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
-
-     <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
-
-     <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
-
-   </footer>
-
-  </div>
-
-
-
-  <button id="duckButton" class="floating-button left" aria-label="ไปหน้าเลือกเพลง">🦆</button>
-
-  <button id="fullscreenButton" class="floating-button right" aria-label="เปิด/ปิดเต็มจอ">📱</button>
-
-
-
-  <script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
