@@ -66,17 +66,20 @@
             const savedCurrentSku = localStorage.getItem('dailySku');
             const savedCurrentMu = localStorage.getItem('dailyMu');
             
-            if (savedCurrentSku !== null && savedCurrentSku !== "") {
-                currentSkuInput.value = savedCurrentSku;
+            // แก้ไขเงื่อนไขตรงนี้: ถ้าค่าเป็น null หรือสตริงว่าง ให้กำหนดเป็นค่าว่าง
+            // ถ้าเป็น '0' หรือตัวเลขอื่น ให้แสดงตัวเลขนั้น
+            if (savedCurrentSku === null || savedCurrentSku === "") {
+                currentSkuInput.value = ""; 
             } else {
-                currentSkuInput.value = "";
+                currentSkuInput.value = savedCurrentSku;
             }
 
-            if (savedCurrentMu !== null && savedCurrentMu !== "") {
-                currentMuInput.value = savedCurrentMu;
-            } else {
+            if (savedCurrentMu === null || savedCurrentMu === "") {
                 currentMuInput.value = "";
+            } else {
+                currentMuInput.value = savedCurrentMu;
             }
+
 
             function updateProgress() {
                 const currentSku = parseFloat(currentSkuInput.value) || 0;
@@ -119,7 +122,7 @@
             currentMuInput.addEventListener('input', updateProgress);
 
             clearDataButton.addEventListener('click', () => {
-                currentSkuInput.value = "";
+                currentSkuInput.value = ""; 
                 currentMuInput.value = "";
                 localStorage.removeItem('dailySku');
                 localStorage.removeItem('dailyMu');
@@ -145,7 +148,7 @@
                 }
             });
 
-            updateProgress();
+            updateProgress(); // เรียกใช้ครั้งแรกเพื่อแสดงสถานะเริ่มต้น
         });
     </script>
 </body>
