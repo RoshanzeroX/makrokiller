@@ -1,127 +1,223 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โปรแกรมจัดสินค้า by Suneii</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>โปรแกรมคำนวณค่าเฉลี่ย Order Picker</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body, input, button, p, h1, h2, h3 {
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        .input-wrapper {
+            width: 100%;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 1em; /* Add some spacing between inputs */
+        }
+        input {
+            width: 100%;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        input::placeholder {
+            color: #ddd;
+        }
+        button[type="submit"] { /* Specific selector for submit button */
+            width: 100%;
+            max-width: 350px;
+            font-size: 1.2em;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 1em; /* Spacing above the button */
+            margin-bottom: 2em; /* Spacing below the button */
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        }
+        /* Custom footer styling from your original code */
+        footer {
+            margin-top: 3em;
+            padding: 1.5em;
+            text-align: center;
+            font-size: 0.75em; /* ลดขนาดลง 30% */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            max-width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+        footer p {
+            margin: 0.5em 0;
+            color: #ddd;
+        }
+        /* เพิ่มลูกเล่นตกแต่ง */
+        .footer-icon {
+            display: inline-block;
+            font-size: 1.2em;
+            margin: 0 6px;
+        }
+        /* ให้ footer ปรับตามมือถือ */
+        @media (max-width: 480px) {
+            footer {
+                font-size: 0.65em;
+                padding: 1em;
+                max-width: 95%;
+            }
+            footer p {
+                margin: 0.4em 0;
+            }
+        }
+        /* Styles for the photo card, similar to daily_average.html */
+        .info-card {
+            background-color: rgba(255, 255, 255, 0.25);
+            padding: 1.5em;
+            border-radius: 15px;
+            margin-bottom: 2em;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 90%;
+            max-width: 500px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .info-card h2 {
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 0.8em;
+            color: #ffd700;
+            text-shadow: none;
+        }
+        .photo-card img {
+            display: block; /* Makes image a block element */
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
     <div class="background"></div>
+
     <div class="content-wrapper fade-slide-in">
         <main>
-            <h1 class="title-no-wrap">✨ ยินดีต้อนรับสู่โปรแกรมจัดสินค้า ✨</h1>
-            
-            <input type="number" id="dailyGoalInput" placeholder="เป้าหมาย SKU/วัน">
-            <input type="number" id="muGoalInput" placeholder="เป้าหมาย MU/วัน">
-            <button id="calculateButton">📊 คำนวณ</button>
-            
+            <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
+            <form id="averageForm" class="centered-form">
+                <div class="input-wrapper">
+                    <input type="number" id="sku" placeholder="✅ SKU ที่ทำได้แล้ว" required />
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="mu" placeholder="✅ MU ที่ทำได้แล้ว" required />
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="days" placeholder="📅 จำนวนวันทำงาน" required />
+                </div>
+                <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
+            </form>
+
             <div class="info-card photo-card" style="margin-top: 2em;">
-                <h2>📸 รูปภาพประจำวัน</h2>
+                <h2>📸 รูปภาพงาน Order Picker</h2>
                 <div id="photoPreviewContainer" style="display: none;">
-                    <img id="dailyPhotoPreview" alt="รูปภาพประจำวัน" style="max-width: 100%; height: auto; border-radius: 10px; margin-top: 15px; border: 2px solid rgba(255, 255, 255, 0.5);">
+                    <img id="dailyPhotoPreview" alt="รูปภาพงาน Order Picker" style="max-width: 100%; height: auto; border-radius: 10px; margin-top: 15px; border: 2px solid rgba(255, 255, 255, 0.5);">
                     <button id="clearPhotoButton" class="clear-button" style="margin-top: 15px;">🗑️ ลบรูปภาพ</button>
                 </div>
             </div>
-
         </main>
 
         <footer>
-            <p>💖 ขอให้จัดของได้เยอะๆ ยอดปังๆ ครับ! 💖</p>
-            <p>สร้างสรรค์โดย Suneii Dev.</p>
+            <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
+            <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+            <p>โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+            <p>พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+            <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
         </footer>
     </div>
 
-    <button id="duckButton" class="floating-button" aria-label="ไปหน้าเป็ด">🦆</button>
+    <button id="duckButton" class="floating-button" aria-label="ไปหน้าเลือกเพลง">🦆</button>
     <button id="cameraButton" class="floating-button" aria-label="ถ่ายรูป">📸</button>
     <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ">📱</button>
-    <button id="dailyAverageButton" class="floating-button" aria-label="ไปหน้าค่าเฉลี่ย">💰</button>
+    <button id="dailyAverageButton" class="floating-button" aria-label="ไปหน้าเฉลี่ยรายวัน">💰</button>
 
     <input type="file" id="photoInput" accept="image/*" capture="environment" style="display: none;">
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const dailyGoalInput = document.getElementById('dailyGoalInput');
-            const muGoalInput = document.getElementById('muGoalInput');
-            const calculateButton = document.getElementById('calculateButton');
+            const skuInput = document.getElementById('sku');
+            const muInput = document.getElementById('mu');
+            const daysInput = document.getElementById('days');
+            const averageForm = document.getElementById('averageForm');
+
+            // Floating buttons
             const duckButton = document.getElementById('duckButton');
             const fullscreenButton = document.getElementById('fullscreenButton');
             const dailyAverageButton = document.getElementById('dailyAverageButton');
-            
-            // สำหรับฟีเจอร์ถ่ายรูปในหน้า Index
+            const cameraButton = document.getElementById('cameraButton'); // New camera button
+
+            // Photo functionality elements
             const photoInput = document.getElementById('photoInput');
-            const cameraButton = document.getElementById('cameraButton');
             const dailyPhotoPreview = document.getElementById('dailyPhotoPreview');
             const photoPreviewContainer = document.getElementById('photoPreviewContainer');
             const clearPhotoButton = document.getElementById('clearPhotoButton');
 
-
-            // โหลดค่าที่บันทึกไว้ใน Local Storage (เป้าหมาย SKU/MU)
-            const savedSkuGoal = localStorage.getItem('skuDailyGoal');
-            const savedMuGoal = localStorage.getItem('muDailyGoal');
-
-            if (savedSkuGoal) {
-                dailyGoalInput.value = savedSkuGoal;
-            }
-            if (savedMuGoal) {
-                muGoalInput.value = savedMuGoal;
-            }
-
-            calculateButton.addEventListener('click', () => {
-                const skuDaily = dailyGoalInput.value;
-                const muDaily = muGoalInput.value;
-
-                // บันทึกค่าลง Local Storage
-                localStorage.setItem('skuDailyGoal', skuDaily);
-                localStorage.setItem('muDailyGoal', muDaily);
-
-                // ส่งค่าไปยัง daily_average.html
-                window.location.href = `daily_average.html?skuDaily=${skuDaily}&muDaily=${muDaily}`;
-            });
-
-            // --- ส่วนของฟีเจอร์ถ่ายรูปในหน้า Index ---
-
-            // โหลดรูปภาพที่บันทึกไว้ใน Local Storage ตอนโหลดหน้า
-            const savedPhotoDataUrl = localStorage.getItem('dailyPhotoIndex'); // ใช้ key แยกกันสำหรับรูปในหน้า index
+            // Load saved photo from localStorage for this page
+            const savedPhotoDataUrl = localStorage.getItem('orderPickerPhoto'); // Unique key for this page
             if (savedPhotoDataUrl) {
                 dailyPhotoPreview.src = savedPhotoDataUrl;
                 photoPreviewContainer.style.display = 'block';
             }
 
-            // เมื่อกดปุ่มกล้อง (Floating Button) ให้คลิก input type="file" ที่ซ่อนไว้
-            cameraButton.addEventListener('click', () => {
-                photoInput.click();
-            });
+            // Load saved input values from localStorage
+            skuInput.value = localStorage.getItem('orderPickerSku') || '';
+            muInput.value = localStorage.getItem('orderPickerMu') || '';
+            daysInput.value = localStorage.getItem('orderPickerDays') || '';
 
-            // เมื่อเลือกไฟล์รูปภาพ (จากการถ่ายหรือเลือกในเครื่อง)
-            photoInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const imageDataUrl = e.target.result;
-                        dailyPhotoPreview.src = imageDataUrl;
-                        photoPreviewContainer.style.display = 'block';
-                        localStorage.setItem('dailyPhotoIndex', imageDataUrl); // บันทึกรูปใหม่ทับของเก่า
-                    };
-                    reader.readAsDataURL(file); // อ่านไฟล์เป็น Data URL
+            averageForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                const sku = parseFloat(skuInput.value);
+                const mu = parseFloat(muInput.value);
+                const days = parseFloat(daysInput.value);
+
+                if (isNaN(sku) || isNaN(mu) || isNaN(days) || days === 0) {
+                    alert("กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง (จำนวนวันทำงานต้องไม่เป็น 0)");
+                    return;
                 }
+
+                const averageSku = sku / days;
+                const averageMu = mu / days;
+
+                alert(`ค่าเฉลี่ย SKU ต่อวัน: ${averageSku.toFixed(2)}\nค่าเฉลี่ย MU ต่อวัน: ${averageMu.toFixed(2)}`);
+
+                // Save current input values to localStorage
+                localStorage.setItem('orderPickerSku', skuInput.value);
+                localStorage.setItem('orderPickerMu', muInput.value);
+                localStorage.setItem('orderPickerDays', daysInput.value);
             });
 
-            // ปุ่มลบรูปภาพ
-            clearPhotoButton.addEventListener('click', () => {
-                dailyPhotoPreview.src = '';
-                photoPreviewContainer.style.display = 'none';
-                localStorage.removeItem('dailyPhotoIndex'); // ลบรูปภาพออกจาก Local Storage
-            });
-
-            // --- สิ้นสุดส่วนของฟีเจอร์ถ่ายรูป ---
-
+            // Event listener for duck button
             duckButton.addEventListener('click', () => {
-                window.location.href = "songs.html";
+                window.location.href = "songs.html"; // Assuming 'songs.html' is your duck page
             });
 
+            // Event listener for fullscreen button
             fullscreenButton.addEventListener('click', () => {
                 if (!document.fullscreenElement) {
                     document.documentElement.requestFullscreen().catch((err) => {
@@ -132,12 +228,41 @@
                 }
             });
 
+            // Event listener for daily average button (money bag)
             dailyAverageButton.addEventListener('click', () => {
-                const skuDaily = dailyGoalInput.value;
-                const muDaily = muGoalInput.value;
+                // If 'daily_average.html' needs initial SKU/MU from here, pass them
+                const skuDaily = localStorage.getItem('skuDailyGoal') || 0; // Use stored goals if they exist
+                const muDaily = localStorage.getItem('muDailyGoal') || 0;
                 window.location.href = `daily_average.html?skuDaily=${skuDaily}&muDaily=${muDaily}`;
             });
+
+            // --- Camera functionality ---
+            cameraButton.addEventListener('click', () => {
+                photoInput.click(); // Trigger the hidden file input
+            });
+
+            photoInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const imageDataUrl = e.target.result;
+                        dailyPhotoPreview.src = imageDataUrl;
+                        photoPreviewContainer.style.display = 'block';
+                        localStorage.setItem('orderPickerPhoto', imageDataUrl); // Save image with unique key
+                    };
+                    reader.readAsDataURL(file); // Read file as Data URL
+                }
+            });
+
+            clearPhotoButton.addEventListener('click', () => {
+                dailyPhotoPreview.src = '';
+                photoPreviewContainer.style.display = 'none';
+                localStorage.removeItem('orderPickerPhoto'); // Remove from localStorage
+            });
+            // --- End Camera functionality ---
         });
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
