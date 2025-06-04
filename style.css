@@ -73,7 +73,8 @@ h1.title-no-wrap {
     -webkit-overflow-scrolling: touch;
 }
 
-input, button {
+/* Base style for inputs and general buttons */
+input, button:not(.floating-button) { /* Apply to regular buttons, not floating ones */
     display: block;
     width: 80%;
     max-width: 400px;
@@ -103,7 +104,8 @@ input:focus {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-button {
+/* Ensure common button styles apply to non-floating buttons */
+button:not(.floating-button) {
     background: linear-gradient(135deg, #00c6ff, #0072ff);
     color: white;
     font-weight: bold;
@@ -112,26 +114,26 @@ button {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-button:hover {
+button:not(.floating-button):hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* เพิ่ม styles สำหรับ buttons-group เพื่อจัดปุ่มให้เป็นบรรทัดเดียวกัน */
+/* Adjust for buttons-group */
 .buttons-group {
-    display: flex; /* ใช้ flexbox */
-    justify-content: center; /* จัดกึ่งกลางแนวนอน */
-    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
-    width: 100%; /* ให้เต็มความกว้าง */
-    margin-top: 2em; /* เพิ่มระยะห่างด้านบน */
-    flex-wrap: wrap; /* ให้ปุ่มขึ้นบรรทัดใหม่ได้ถ้าหน้าจอเล็ก */
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 100%; /* Take full width */
+    margin-top: 2em; /* Add top margin */
+    flex-wrap: wrap; /* Allow buttons to wrap to next line on small screens */
 }
 
 .buttons-group button {
-    margin: 0.5em; /* ให้ปุ่มมีระยะห่างกันเล็กน้อย */
-    width: auto; /* ให้ปุ่มปรับขนาดตามเนื้อหา */
-    max-width: none; /* ยกเลิก max-width เพื่อให้จัดเรียงได้ */
-    display: inline-block; /* ทำให้ปุ่มอยู่ในบรรทัดเดียวกัน */
+    margin: 0.5em; /* Small margin between buttons */
+    width: auto; /* Buttons adjust to content width */
+    max-width: none; /* Remove max-width to allow flexible arrangement */
+    display: inline-block; /* Keep buttons inline */
 }
 
 
@@ -163,8 +165,9 @@ button:hover {
     }
 }
 
-/* กำหนดตำแหน่งปุ่มลอยสำหรับ PC (ค่าเริ่มต้น) */
-/* สำหรับ daily_average.html (4 ปุ่ม) */
+/* Positioning for Floating Buttons (PC - default) */
+
+/* For daily_average.html (has #homeButton) - 4 buttons */
 body:has(#homeButton) #homeButton {
     top: 50%;
     margin-top: -160px;
@@ -185,27 +188,32 @@ body:has(#homeButton) #cameraButton {
     margin-top: 80px;
     transform: translateY(-50%);
 }
-
-/* สำหรับ index.html (3 ปุ่ม) */
-body:not(:has(#homeButton)) #duckButton { /* ถ้าไม่มี #homeButton (คือหน้า index) */
-    top: 50%;
-    margin-top: -120px; /* เลื่อนขึ้นให้มีที่สำหรับปุ่ม camera */
-    transform: translateY(-50%);
-}
-body:not(:has(#homeButton)) #cameraButton { /* ถ้าไม่มี #homeButton (คือหน้า index) */
-    top: 50%;
-    margin-top: -40px; /* ตำแหน่งกลาง */
-    transform: translateY(-50%);
-}
-body:not(:has(#homeButton)) #fullscreenButton { /* ถ้าไม่มี #homeButton (คือหน้า index) */
-    top: 50%;
-    margin-top: 40px; /* เลื่อนลงมา */
-    transform: translateY(-50%);
+/* Ensure #dailyAverageButton is not shown if #homeButton exists (on daily_average.html) */
+body:has(#homeButton) #dailyAverageButton {
+    display: none;
 }
 
 
-#dailyAverageButton { /* ปุ่มนี้จะถูกซ่อนใน daily_average.html แต่ยังคงอยู่ */
-    /* display: none; */ /* จะถูกจัดการโดย CSS ทั่วไป หรือ JS ตามโครงสร้าง */
+/* For index.html (does NOT have #homeButton) - 4 buttons */
+body:not(:has(#homeButton)) #duckButton {
+    top: 50%;
+    margin-top: -160px; /* Topmost position */
+    transform: translateY(-50%);
+}
+body:not(:has(#homeButton)) #cameraButton {
+    top: 50%;
+    margin-top: -80px; /* Upper middle position */
+    transform: translateY(-50%);
+}
+body:not(:has(#homeButton)) #fullscreenButton {
+    top: 50%;
+    margin-top: 0px; /* Lower middle position */
+    transform: translateY(-50%);
+}
+body:not(:has(#homeButton)) #dailyAverageButton { /* Money bag button on index.html */
+    top: 50%;
+    margin-top: 80px; /* Bottommost position */
+    transform: translateY(-50%);
 }
 
 
@@ -218,12 +226,12 @@ footer {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-sizing: border-box;
-    margin-top: 3em; /* เพิ่ม margin-top เพื่อแยกจาก main */
+    margin-top: 3em; /* Add top margin to separate from main */
     position: relative;
     max-width: 85%;
     margin-left: auto;
     margin-right: auto;
-    width: 100%; /* ให้เต็มความกว้าง */
+    width: 100%; /* Take full width */
 }
 
 footer p {
@@ -269,13 +277,13 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     text-shadow: none;
 }
 
-/* เพิ่มสไตล์สำหรับ card รูปภาพโดยเฉพาะ */
+/* Styles for the photo card specifically */
 .photo-card {
-    margin-top: 2em; /* เพิ่มระยะห่างจาก card ด้านบน */
-    padding-bottom: 2em; /* เพิ่มพื้นที่ด้านล่าง */
+    margin-top: 2em; /* Add space from card above */
+    padding-bottom: 2em; /* Add space below */
 }
 .photo-card img {
-    display: block; /* ทำให้รูปภาพอยู่บรรทัดใหม่ */
+    display: block; /* Make image a block element */
     margin-left: auto;
     margin-right: auto;
 }
@@ -326,7 +334,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     box-sizing: border-box;
 }
 
-/* ปุ่มเคลียร์ข้อมูล */
+/* Clear data button */
 .clear-button {
     background: linear-gradient(135deg, #dc3545, #c82333);
     color: white;
@@ -343,9 +351,9 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* ปุ่มสำหรับ Action อื่นๆ (เช่น ถ่ายรูป) */
+/* Action buttons (e.g., for daily_average.html's capture button) */
 .action-button {
-    background: linear-gradient(135deg, #28a745, #218838); /* สีเขียว */
+    background: linear-gradient(135deg, #28a745, #218838); /* Green color */
     color: white;
     font-weight: bold;
     border: none;
@@ -361,7 +369,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
 }
 
 
-@media (max-width: 768px) { /* ปรับ media query ให้ครอบคลุมแท็บเล็ตด้วย */
+@media (max-width: 768px) { /* Adjust media query to cover tablets too */
     h1 {
         font-size: 2em;
     }
@@ -372,12 +380,12 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     .content-wrapper {
         padding: 2vh 1em;
     }
-    input[type="number"], button { /* ให้ input type="number" และ button ใช้สไตล์เดียวกัน */
+    input, button:not(.floating-button) { /* Apply to regular buttons, not floating ones */
         width: 90%;
         padding: 0.8em;
         font-size: 0.9em;
     }
-    /* ปรับให้ input type="file" ที่ซ่อนไว้ ไม่กระทบ */
+    /* Adjust hidden file input */
     input[type="file"] {
         width: 0;
         height: 0;
@@ -403,12 +411,12 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         font-size: 0.8em;
     }
     .buttons-group {
-        flex-direction: column; /* บนมือถือให้ปุ่มเรียงกันลงมา */
+        flex-direction: column; /* On mobile, stack buttons vertically */
         margin-top: 1.5em;
     }
     .buttons-group button {
-        margin: 0.5em 0; /* เพิ่มระยะห่างแนวตั้ง */
-        width: 80%; /* ให้ปุ่มกว้างขึ้นบนมือถือ */
+        margin: 0.5em 0; /* Add vertical spacing */
+        width: 80%; /* Make buttons wider on mobile */
         max-width: 300px;
     }
     .floating-button {
@@ -418,8 +426,8 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         right: 10px;
     }
 
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือ */
-    /* สำหรับ daily_average.html (4 ปุ่ม) */
+    /* Positioning for Floating Buttons (Mobile) */
+    /* For daily_average.html (4 buttons) */
     body:has(#homeButton) #homeButton {
         top: 50%;
         margin-top: -110px;
@@ -437,19 +445,24 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         margin-top: 130px;
     }
 
-    /* สำหรับ index.html (3 ปุ่ม) */
+    /* For index.html (4 buttons) */
     body:not(:has(#homeButton)) #duckButton {
         top: 50%;
-        margin-top: -80px; /* ปรับใหม่ให้เหมาะสม */
+        margin-top: -110px;
     }
     body:not(:has(#homeButton)) #cameraButton {
         top: 50%;
-        margin-top: 0px; /* ปรับใหม่ให้เหมาะสม */
+        margin-top: -30px;
     }
     body:not(:has(#homeButton)) #fullscreenButton {
         top: 50%;
-        margin-top: 80px; /* ปรับใหม่ให้เหมาะสม */
+        margin-top: 50px;
     }
+    body:not(:has(#homeButton)) #dailyAverageButton {
+        top: 50%;
+        margin-top: 130px;
+    }
+
 
     footer {
         padding: 1em;
@@ -459,7 +472,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     }
 }
 
-/* เพิ่ม media query สำหรับมือถือขนาดเล็กมาก */
+/* Adjust for very small mobile screens */
 @media (max-width: 400px) {
     h1 {
         font-size: 1.8em;
@@ -470,7 +483,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     .info-card p {
         font-size: 0.9em;
     }
-    input[type="number"], button {
+    input, button:not(.floating-button) {
         font-size: 0.85em;
     }
     .floating-button {
@@ -480,15 +493,16 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         right: 5px;
     }
 
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือขนาดเล็กมาก */
-    /* สำหรับ daily_average.html (4 ปุ่ม) */
+    /* Adjust floating button positions for very small mobile screens */
+    /* For daily_average.html (4 buttons) */
     body:has(#homeButton) #homeButton { margin-top: -100px; }
     body:has(#homeButton) #duckButton { margin-top: -20px; }
     body:has(#homeButton) #fullscreenButton { margin-top: 60px; }
     body:has(#homeButton) #cameraButton { margin-top: 140px; }
     
-    /* สำหรับ index.html (3 ปุ่ม) */
-    body:not(:has(#homeButton)) #duckButton { margin-top: -70px; }
-    body:not(:has(#homeButton)) #cameraButton { margin-top: 0px; }
-    body:not(:has(#homeButton)) #fullscreenButton { margin-top: 70px; }
+    /* For index.html (4 buttons) */
+    body:not(:has(#homeButton)) #duckButton { margin-top: -100px; }
+    body:not(:has(#homeButton)) #cameraButton { margin-top: -20px; }
+    body:not(:has(#homeButton)) #fullscreenButton { margin-top: 60px; }
+    body:not(:has(#homeButton)) #dailyAverageButton { margin-top: 140px; }
 }
