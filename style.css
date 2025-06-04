@@ -1,88 +1,75 @@
 /*
  * style.css
- * This file contains general styling rules used across multiple pages (e.g., index.html, daily_average.html).
- * It's also imported by Song-style.css.
  */
 
-/* --- Reset & Base Styles --- */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    /* ใช้ Kanit font สำหรับทุกหน้า */
     font-family: 'Kanit', sans-serif;
     color: #fff;
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
-    background: transparent; /* พื้นหลังโปร่งใสเพราะ .background จะรับหน้าที่พื้นหลังหลัก */
-    overflow-x: hidden; /* ป้องกัน scrollbar แนวนอน */
+    background: transparent;
+    overflow-x: hidden;
 }
 
-/* --- Background Image & Effect --- */
 .background {
-    position: fixed; /* ตรึงพื้นหลังให้อยู่กับที่ */
+    position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    /* **สำคัญ:** ตรวจสอบ Path รูปภาพตรงนี้ให้ถูกต้อง */
-    background: url("images/bg.webp") center/cover no-repeat; /* ควรอยู่ในโฟลเดอร์ images */
-    background-attachment: fixed; /* ทำให้พื้นหลังอยู่กับที่เมื่อ scroll */
-    filter: brightness(40%) blur(2px); /* ปรับความสว่างและความเบลอของภาพพื้นหลัง */
-    z-index: -1; /* ส่งไปอยู่ด้านหลังสุด */
+    background: url("images/bg.webp") center/cover no-repeat;
+    background-attachment: fixed;
+    filter: brightness(40%) blur(2px);
+    z-index: -1;
 }
 
-/* --- Layout Wrapper for Content --- */
 .content-wrapper {
     display: flex;
     flex-direction: column;
-    /* min-height: 100vh; */ /* นำออก, ใช้ min-height ในแต่ละหน้าแทน (เช่น 90vh) */
-    padding: 3vh 2em 2em; /* Padding โดยรวมของเนื้อหา */
+    padding: 3vh 2em 2em;
     box-sizing: border-box;
-    position: relative; /* สำคัญสำหรับ z-index */
-    z-index: 1; /* ทำให้เนื้อหาอยู่บนพื้นหลัง */
+    position: relative;
+    z-index: 1;
 }
 
-/* --- Fade and Slide in Animation for Content --- */
 .fade-slide-in {
     animation: fadeSlideIn 1s ease forwards;
-    opacity: 0; /* เริ่มต้นซ่อน */
-    transform: translateY(20px); /* เริ่มต้นเลื่อนลงมาเล็กน้อย */
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 @keyframes fadeSlideIn {
     to {
-        opacity: 1; /* แสดงผลเต็มที่ */
-        transform: translateY(0); /* กลับสู่ตำแหน่งปกติ */
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* --- Main Content Container (for centering elements within the page) --- */
 main {
     text-align: center;
-    flex: 1; /* ทำให้ main ขยายเต็มพื้นที่ที่เหลือ */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* จัดเนื้อหาตรงกลางแนวตั้ง */
-    align-items: center; /* จัดเนื้อหาตรงกลางแนวนอน */
-    min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
-    max-width: 600px; /* จำกัดความกว้างบน desktop */
-    margin: 0 auto; /* จัดให้อยู่ตรงกลางหน้า */
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* --- Heading Styles --- */
 h1 {
-    font-size: 2.5em; /* ขนาดฟอนต์สำหรับ H1 ทั่วไป */
+    font-size: 2.5em;
     margin-bottom: 1em;
-    color: #ffd700; /* สีทอง */
+    color: #ffd700;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
 
-/* Specific H1 for no-wrap (e.g., in index.html) */
 h1.title-no-wrap {
-    font-size: 2.2em; /* ขนาดที่เล็กลงเล็กน้อยสำหรับชื่อที่ยาว */
-    white-space: nowrap; /* ไม่ขึ้นบรรทัดใหม่ */
-    overflow-x: auto; /* อนุญาตให้ scrollbar แนวนอนถ้าเกิน */
-    -webkit-overflow-scrolling: touch; /* เพื่อการ scroll ที่ลื่นไหลบน iOS */
+    font-size: 2.2em;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* --- Form Inputs & Buttons --- */
 input, button {
     display: block;
     width: 80%;
@@ -92,7 +79,7 @@ input, button {
     font-size: 1em;
     border-radius: 12px;
     border: none;
-    text-shadow: none; /* ลบ shadow ที่เคยตั้งไว้ */
+    text-shadow: none;
 }
 
 input {
@@ -114,7 +101,7 @@ input:focus {
 }
 
 button {
-    background: linear-gradient(135deg, #00c6ff, #0072ff); /* Gradient Blue */
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
     color: white;
     font-weight: bold;
     cursor: pointer;
@@ -127,10 +114,9 @@ button:hover {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* --- Floating Buttons (General Styles) --- */
 .floating-button {
     position: fixed;
-    right: 20px; /* ปุ่มทั้งหมดอยู่ทางขวา */
+    right: 20px;
     width: 60px;
     height: 60px;
     font-size: 28px;
@@ -144,54 +130,42 @@ button:hover {
     justify-content: center;
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* แอนิเมชันลอยตัว - ใช้ translateY(0) เพื่อให้เข้ากับการจัดตำแหน่งปุ่ม */
     animation: floaty 2.5s ease-in-out infinite;
 }
 
-/* Keyframes สำหรับแอนิเมชันลอยตัว */
 @keyframes floaty {
     0%, 100% {
-        transform: translateY(0); /* เริ่มและจบที่ตำแหน่งเดิม */
+        transform: translateY(0);
     }
     50% {
-        transform: translateY(-8px); /* เลื่อนขึ้นเล็กน้อย */
+        transform: translateY(-8px);
     }
 }
 
-/* --- Floating Buttons (Specific Positioning for multiple buttons) --- */
-/* ใช้ในหน้าที่มีหลายปุ่ม เช่น index.html หรือ songs.html (ถ้ามีการนำเข้า Song-style.css) */
-/* **สำคัญ:** ตำแหน่งเหล่านี้จะใช้งานได้ดีเมื่อ `.floating-button` ทั่วไปไม่มี `top` และ `transform` */
-
-/* ปุ่มบ้าน 🏠 - อยู่บนสุด */
 #homeButton {
     top: 50%;
-    margin-top: -120px; /* เลื่อนขึ้นจากกึ่งกลาง */
-    transform: translateY(-50%); /* จัดกึ่งกลางแนวตั้งของปุ่ม */
+    margin-top: -120px;
+    transform: translateY(-50%);
 }
 
-/* ปุ่มเป็ด 🦆 - ถัดลงมา */
 #duckButton {
     top: 50%;
-    margin-top: -40px; /* เลื่อนลงมาเล็กน้อย */
+    margin-top: -40px;
     transform: translateY(-50%);
 }
 
-/* ปุ่มเต็มจอ 📱 - ถัดลงมา */
 #fullscreenButton {
     top: 50%;
-    margin-top: 40px; /* เลื่อนลงมาอีก */
+    margin-top: 40px;
     transform: translateY(-50%);
 }
 
-/* ปุ่มเฉลี่ยรายวัน 💰 - ล่างสุด */
 #dailyAverageButton {
     top: 50%;
-    margin-top: 120px; /* เลื่อนลงมาอีก */
+    margin-top: 120px;
     transform: translateY(-50%);
 }
 
-
-/* --- Footer Styles (primarily for index.html) --- */
 footer {
     text-align: center;
     font-size: 0.75em;
@@ -201,7 +175,7 @@ footer {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-sizing: border-box;
-    margin-top: auto; /* ดัน footer ไปด้านล่าง */
+    margin-top: auto;
     position: relative;
     max-width: 85%;
     margin-left: auto;
@@ -212,7 +186,6 @@ footer p {
     margin: 0.5em 0;
 }
 
-/* --- Scrollbar Style for long titles --- */
 h1.title-no-wrap::-webkit-scrollbar {
     height: 6px;
 }
@@ -222,27 +195,23 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     border-radius: 3px;
 }
 
-/* --- Styles specific to daily_average.html (Override/Additions) --- */
-/* Adjust main content wrapper height for daily_average.html */
-/* ถ้า content-wrapper ใน daily_average.html ใช้คลาส content-wrapper นี้ */
 .content-wrapper {
-    min-height: 90vh; /* เพื่อให้เนื้อหาดูเต็มพื้นที่มากขึ้น */
+    min-height: 90vh;
     padding-top: 5vh;
     padding-bottom: 5vh;
 }
 
-/* Info cards for daily_average.html - ทับสไตล์ info-card ทั่วไปบางส่วนเพื่อให้ทึบขึ้น */
 .info-card {
-    background-color: rgba(255, 255, 255, 0.25); /* ทึบขึ้น */
+    background-color: rgba(255, 255, 255, 0.25);
     padding: 1.5em;
     border-radius: 15px;
-    margin-bottom: 2em; /* เพิ่มระยะห่างระหว่างการ์ด */
+    margin-bottom: 2em;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    width: 90%; /* ความกว้างที่ปรับได้ */
-    max-width: 500px; /* ความกว้างสูงสุด */
+    width: 90%;
+    max-width: 500px;
     box-sizing: border-box;
     text-align: center;
 }
@@ -251,21 +220,20 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     font-size: 1.8em;
     margin-top: 0;
     margin-bottom: 0.8em;
-    color: #00c6ff; /* สีฟ้าสดใส */
-    text-shadow: none; /* ลบ shadow ที่เคยตั้งไว้ */
+    color: #00c6ff;
+    text-shadow: none;
 }
 .info-card p {
     font-size: 1.2em;
     margin: 0.5em 0;
     color: #eee;
-    text-shadow: none; /* ลบ shadow ที่เคยตั้งไว้ */
+    text-shadow: none;
 }
 
-/* Input groups for daily_average.html */
 .input-group {
     margin-bottom: 1em;
     text-align: left;
-    width: 100%; /* เต็มความกว้างของการ์ด */
+    width: 100%;
 }
 .input-group label {
     display: block;
@@ -274,7 +242,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     font-weight: bold;
 }
 .input-group input[type="number"] {
-    width: calc(100% - 24px); /* Full width minus padding */
+    width: calc(100% - 24px);
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -287,37 +255,35 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     color: #ddd;
 }
 
-/* Progress bar styles for daily_average.html */
 .progress-bar-container {
-    width: 100%; /* เต็มความกว้างของการ์ด */
+    width: 100%;
     background-color: rgba(255,255,255,0.1);
     border-radius: 5px;
     overflow: hidden;
     margin-top: 1em;
-    height: 35px; /* ความสูงของ progress bar */
+    height: 35px;
     display: flex;
     align-items: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .progress-bar {
     height: 100%;
-    background-color: #007bff; /* สีเริ่มต้น */
+    background-color: #007bff;
     width: 0%;
     border-radius: 5px;
     text-align: center;
-    line-height: 35px; /* จัด text กลางแนวตั้ง */
+    line-height: 35px;
     color: white;
     transition: width 0.5s ease-in-out;
     font-size: 0.9em;
     font-weight: bold;
-    white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
-    padding: 0 0.5em; /* Padding สำหรับข้อความ */
+    white-space: nowrap;
+    padding: 0 0.5em;
     box-sizing: border-box;
 }
 
-/* Specific button for daily_average.html */
 .clear-button {
-    background: linear-gradient(135deg, #dc3545, #c82333); /* ใช้ gradient สำหรับปุ่ม clear */
+    background: linear-gradient(135deg, #dc3545, #c82333);
     color: white;
     font-weight: bold;
     border: none;
@@ -332,62 +298,50 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-
-/* --- Responsive Adjustments (General) --- */
 @media (max-width: 480px) {
-    /* ปรับขนาดฟอนต์ของชื่อหลักสำหรับมือถือ */
     h1.title-no-wrap {
         font-size: 1.3em;
-        overflow-x: hidden; /* ซ่อน scrollbar แนวนอนบนมือถือ */
+        overflow-x: hidden;
     }
 
     h1 {
-        font-size: 2em; /* ขนาด H1 ทั่วไปบนมือถือ */
+        font-size: 2em;
     }
 
-    /* ปรับขนาด padding ของ content wrapper */
     .content-wrapper {
         padding: 3vh 1em;
         min-height: 90vh;
     }
 
-    /* Input & Button general adjustments */
     input, button {
         width: 90%;
         padding: 0.8em;
         font-size: 0.9em;
     }
 
-    /* Floating buttons adjustments for mobile */
     .floating-button {
         width: 50px;
         height: 50px;
         font-size: 24px;
-        right: 10px; /* ใกล้ขอบมากขึ้น */
+        right: 10px;
     }
 
-    /* ปรับตำแหน่งปุ่มลอยบนมือถือ */
-    /* เนื่องจาก daily_average.html ตอนนี้มี 3 ปุ่ม */
     #homeButton {
-        margin-top: -80px; /* เลื่อนขึ้นจากกึ่งกลาง */
+        margin-top: -80px;
     }
     #duckButton {
-        margin-top: 0px; /* อยู่ตรงกลาง */
+        margin-top: 0px;
     }
     #fullscreenButton {
-        margin-top: 80px; /* เลื่อนลงมา */
+        margin-top: 80px;
     }
-    /* #dailyAverageButton ไม่จำเป็นต้องปรับสำหรับ daily_average.html เพราะไม่มีปุ่มนี้ */
 
-
-    /* Footer adjustments for mobile */
     footer {
         padding: 1em;
         font-size: 0.7em;
         max-width: 90%;
     }
 
-    /* daily_average.html specific adjustments on mobile */
     .info-card {
         padding: 1em;
         margin-bottom: 1.5em;
