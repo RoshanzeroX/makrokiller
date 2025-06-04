@@ -120,7 +120,8 @@ button:hover {
 /* Floating buttons */
 .floating-button {
   position: fixed;
-  bottom: 20px;
+  top: 50%; /* Position at 50% from the top */
+  transform: translateY(-50%); /* Adjust for vertical centering */
   width: 60px;
   height: 60px;
   font-size: 28px;
@@ -138,8 +139,12 @@ button:hover {
 }
 
 @keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% {
+    transform: translateY(-50%) translateY(0); /* Maintain vertical centering */
+  }
+  50% {
+    transform: translateY(-50%) translateY(-8px); /* Maintain vertical centering */
+  }
 }
 
 .floating-button.left {
@@ -147,7 +152,22 @@ button:hover {
 }
 
 .floating-button.right {
+  right: 20px; /* Keep this on the right edge */
+}
+
+/* Specific positioning for duck and fullscreen buttons on the right */
+#duckButton {
   right: 20px;
+  left: auto; /* Ensure it's not fighting with left: 20px */
+  top: calc(50% - 70px); /* Adjust vertical position for the duck button */
+  transform: translateY(-50%);
+}
+
+#fullscreenButton {
+  right: 20px;
+  left: auto; /* Ensure it's not fighting with left: 20px */
+  top: calc(50% + 10px); /* Adjust vertical position for the fullscreen button (below duck) */
+  transform: translateY(-50%);
 }
 
 /* Footer */
