@@ -1,5 +1,5 @@
 /*
- * style.css
+ * style.css (รวมสไตล์จาก Song-style.css)
  */
 
 html, body {
@@ -11,10 +11,7 @@ html, body {
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
     background: transparent;
     overflow-x: hidden;
-}
-
-body {
-    display: flex;
+    display: flex; /* ใช้ flexbox จัดหน้าหลัก */
     flex-direction: column;
     min-height: 100vh;
 }
@@ -22,22 +19,41 @@ body {
 .background {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url("bg.webp") center/cover no-repeat;
+    background: url("bg.webp") center/cover no-repeat; /* ตรวจสอบให้แน่ใจว่ามีไฟล์ bg.webp */
     background-attachment: fixed;
     filter: brightness(40%) blur(2px);
     z-index: -1;
 }
 
 .content-wrapper {
+    flex: 1; /* ทำให้ content-wrapper ขยายเต็มพื้นที่ที่เหลือ */
     display: flex;
     flex-direction: column;
-    padding: 3vh 2em 2em;
+    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    align-items: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
+    padding: 2vh 1em;
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-    min-height: 90vh;
-    justify-content: center;
+    min-height: 90vh; /* เพื่อรองรับเนื้อหาที่อาจจะยาว */
+    width: 100%; /* ให้เต็มความกว้าง */
 }
+
+main {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 2em;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    max-width: 500px;
+    width: 90%; /* ใช้ 90% ของพื้นที่ wrapper */
+    box-sizing: border-box;
+    margin: auto; /* จัดให้อยู่กึ่งกลางใน main */
+}
+
 
 .fade-slide-in {
     animation: fadeSlideIn 1s ease forwards;
@@ -52,40 +68,35 @@ body {
     }
 }
 
-.container {
-    text-align: center;
-    margin: auto; /* Centers horizontally and vertically within flex parent */
-    max-width: 600px;
-    width: 100%;
-    padding: 3vh 1em 2em;
-    box-sizing: border-box;
-    flex: 1; /* Allows container to grow and push footer down */
-}
-
-h1 {
-    font-size: 2.5em;
+h1.title-resize { /* ชื่อคลาสที่ใช้ใน songs.html */
+    font-size: 2.2em;
     margin-bottom: 1em;
     color: #ffd700;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-}
-
-h1.title-no-wrap {
-    font-size: 2.2em;
-    white-space: nowrap;
-    overflow-x: auto;
+    white-space: nowrap; /* ป้องกันการขึ้นบรรทัดใหม่ */
+    overflow-x: auto; /* ให้ scrollbar ในแนวนอนถ้าข้อความยาวเกิน */
     -webkit-overflow-scrolling: touch;
 }
 
-input, button {
+h1.title-resize::-webkit-scrollbar {
+    height: 6px;
+}
+
+h1.title-resize::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 3px;
+}
+
+input, button[type="submit"] {
     display: block;
-    width: 80%;
-    max-width: 400px;
+    width: calc(100% - 2em); /* ปรับความกว้างให้พอดีกับ padding ของ main */
     margin: 1em auto;
     padding: 1em;
     font-size: 1em;
     border-radius: 12px;
     border: none;
     text-shadow: none;
+    box-sizing: border-box; /* สำคัญเพื่อให้ padding ไม่เกินความกว้าง */
 }
 
 input {
@@ -106,7 +117,7 @@ input:focus {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-button {
+button[type="submit"] {
     background: linear-gradient(135deg, #00c6ff, #0072ff);
     color: white;
     font-weight: bold;
@@ -115,30 +126,44 @@ button {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-button:hover {
+button[type="submit"]:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-.buttons-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 2em;
+/* Info Card / Results Div */
+#results {
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 1.5em;
+    border-radius: 15px;
+    margin-top: 2em; /* เพิ่ม margin-top เพื่อแยกจากปุ่มคำนวณ */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    text-align: center;
+    width: calc(100% - 2em); /* ให้พอดีกับ main */
+    box-sizing: border-box;
 }
 
-.buttons-group button {
-    margin: 0 0.5em;
-    width: auto;
-    max-width: none;
-    display: inline-block;
+#results h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 0.8em;
+    color: #ffd700;
+    text-shadow: none;
+}
+#results p {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: #eee;
+    text-shadow: none;
 }
 
 
+/* Floating Buttons */
 .floating-button {
     position: fixed;
-    right: 20px;
     width: 60px;
     height: 60px;
     font-size: 28px;
@@ -153,42 +178,39 @@ button:hover {
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: floaty 2.5s ease-in-out infinite;
+    transform: translateY(-50%); /* เพื่อให้ top: 50% กึ่งกลางจริงๆ */
 }
 
 @keyframes floaty {
     0%, 100% {
-        transform: translateY(0);
+        transform: translateY(-50%);
     }
     50% {
-        transform: translateY(-8px);
+        transform: translateY(-58px); /* 50% + 8px */
     }
 }
 
-/* ตำแหน่งปุ่มลอยสำหรับ PC */
-#duckButton { /* ปุ่มเป็ดอยู่ซ้าย */
-    top: 50%;
-    margin-top: 0px;
-    transform: translateY(-50%);
+/* Desktop Floating Button Positions */
+.floating-button.left {
     left: 20px;
     right: auto;
+    top: 50%;
+    margin-top: 0; /* Centered vertically on left */
 }
 
-#fullscreenBtn { /* ปุ่ม Fullscreen อยู่ขวา บน */
+.floating-button.right {
+    right: 20px;
+    left: auto;
     top: 50%;
+}
+
+#fullscreenBtn { /* Right side, top of pair */
     margin-top: -35px;
-    transform: translateY(-50%);
 }
 
-#calculateDailySalesBtn { /* ปุ่มถุงเงินอยู่ขวา ล่าง */
-    top: 50%;
+#calculateDailySalesBtn { /* Right side, bottom of pair */
     margin-top: 35px;
-    transform: translateY(-50%);
 }
-
-#homeButton, #dailyAverageButton { /* ซ่อนปุ่มที่ไม่ใช้ในหน้าปัจจุบัน หรือมีการจัดตำแหน่งใหม่ไปแล้ว */
-    display: none;
-}
-
 
 footer {
     text-align: center;
@@ -199,7 +221,7 @@ footer {
     background: transparent;
     border-radius: 0;
     box-sizing: border-box;
-    margin-top: 3em;
+    margin-top: 3em; /* ดัน Footer ลงมา */
     position: relative;
     max-width: 85%;
     margin-left: auto;
@@ -214,148 +236,30 @@ footer p {
     font-size: 1em;
 }
 
-h1.title-no-wrap::-webkit-scrollbar {
-    height: 6px;
-}
-
-h1.title-no-wrap::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.4);
-    border-radius: 3px;
-}
-
-.info-card {
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 1.5em;
-    border-radius: 15px;
-    margin-bottom: 2em;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    width: 90%;
-    max-width: 500px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.info-card h2 {
-    font-size: 1.8em;
-    margin-top: 0;
-    margin-bottom: 0.8em;
-    color: #ffd700;
-    text-shadow: none;
-}
-.info-card p {
-    font-size: 1.2em;
-    margin: 0.5em 0;
-    color: #eee;
-    text-shadow: none;
-}
-
-.input-group {
-    margin-bottom: 1em;
-    text-align: left;
-    width: 100%;
-}
-
-.input-group input[type="number"] {
-    width: calc(100% - 2em);
-    padding: 1em;
-    color: white;
-    font-size: 1em;
-    box-sizing: border-box;
-}
-.input-group input[type="number"]::placeholder {
-    color: #ddd;
-}
-
-
-.progress-bar-container {
-    width: 100%;
-    background-color: rgba(255,255,255,0.1);
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 1em;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.progress-bar {
-    height: 100%;
-    background-color: #007bff;
-    width: 0%;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 35px;
-    color: white;
-    transition: width 0.5s ease-in-out;
-    font-size: 0.9em;
-    font-weight: bold;
-    white-space: nowrap;
-    padding: 0 0.5em;
-    box-sizing: border-box;
-}
-
-.clear-button {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.clear-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 2em;
-    }
-    h1.title-no-wrap {
-        font-size: 1.6em;
-        overflow-x: hidden;
-    }
-    .content-wrapper {
-        padding: 2vh 1em;
-    }
-    input, button {
-        width: 90%;
-        padding: 0.8em;
-        font-size: 0.9em;
-    }
-    .info-card {
-        padding: 1em;
-        margin-bottom: 1.5em;
+    main {
+        padding: 1.5em;
         width: 95%;
     }
-    .info-card h2 {
+    h1.title-resize {
+        font-size: 1.8em;
+    }
+    input, button[type="submit"] {
+        width: calc(100% - 1.5em);
+        font-size: 0.9em;
+    }
+    #results {
+        padding: 1em;
+        width: calc(100% - 1.5em);
+    }
+    #results h2 {
         font-size: 1.5em;
     }
-    .info-card p, .input-group label, .input-group input[type="number"] {
+    #results p {
         font-size: 1em;
     }
-    .progress-bar-container {
-        height: 30px;
-    }
-    .progress-bar {
-        line-height: 30px;
-        font-size: 0.8em;
-    }
-    .buttons-group {
-        flex-direction: column;
-        margin-top: 1.5em;
-    }
-    .buttons-group button {
-        margin: 0.5em 0;
-        width: 80%;
-        max-width: 300px;
-    }
+
     .floating-button {
         width: 45px;
         height: 45px;
@@ -363,52 +267,55 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         right: 10px;
     }
 
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือ */
-    #duckButton { /* ปุ่มเป็ดอยู่ซ้าย */
-        top: 50%;
-        margin-top: 0px;
+    .floating-button.left {
         left: 10px;
-        right: auto;
     }
-    #fullscreenBtn { /* ปุ่ม Fullscreen อยู่ขวา บน */
-        top: 50%;
+
+    #fullscreenBtn {
         margin-top: -30px;
     }
-    #calculateDailySalesBtn { /* ปุ่มถุงเงินอยู่ขวา ล่าง */
-        top: 50%;
+    #calculateDailySalesBtn {
         margin-top: 30px;
     }
 
     footer {
-        padding: 1em;
         font-size: 0.55em;
         max-width: 90%;
-        margin-top: 2em;
     }
 }
 
 @media (max-width: 400px) {
-    h1 {
-        font-size: 1.8em;
+    main {
+        padding: 1em;
     }
-    .info-card h2 {
-        font-size: 1.3em;
+    h1.title-resize {
+        font-size: 1.5em;
     }
-    .info-card p {
-        font-size: 0.9em;
-    }
-    input, button {
+    input, button[type="submit"] {
         font-size: 0.85em;
     }
+    #results h2 {
+        font-size: 1.3em;
+    }
+    #results p {
+        font-size: 0.9em;
+    }
+
     .floating-button {
         width: 40px;
         height: 40px;
         font-size: 20px;
         right: 5px;
     }
-    #duckButton { left: 5px; } /* ปุ่มเป็ดชิดซ้ายมากขึ้น */
-    #fullscreenBtn { margin-top: -25px; } /* ปุ่ม Fullscreen ชิดบนมากขึ้น */
-    #calculateDailySalesBtn { margin-top: 25px; } /* ปุ่มถุงเงินชิดล่างมากขึ้น */
+    .floating-button.left {
+        left: 5px;
+    }
+    #fullscreenBtn {
+        margin-top: -25px;
+    }
+    #calculateDailySalesBtn {
+        margin-top: 25px;
+    }
 
     footer {
         font-size: 0.5em;
