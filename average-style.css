@@ -150,14 +150,14 @@ h1 {
     50% { transform: translateY(-8px); }
 }
 
-/* ตำแหน่งปุ่มลอยตัวบน PC (มาจาก style.css ของ index.html) */
+/* ตำแหน่งปุ่มลอยตัวบน PC */
 #homeButton { top: 50%; margin-top: -120px; transform: translateY(-50%); }
 #duckButton { top: 50%; margin-top: -40px; transform: translateY(-50%); }
 #dailyAverageButton { top: 50%; margin-top: 40px; transform: translateY(-50%); }
 #fullscreenButton { top: 50%; margin-top: 120px; transform: translateY(-50%); }
 
 
-/* Media Queries สำหรับการตอบสนองบนมือถือ (มาจาก style.css ของ index.html) */
+/* Media Queries สำหรับการตอบสนองบนมือถือ */
 @media (max-width: 768px) {
     .content-wrapper { padding: 2vh 1em; }
     main {
