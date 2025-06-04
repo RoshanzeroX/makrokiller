@@ -57,7 +57,6 @@ main {
     width: 100%;
     margin: auto; /* จัดกึ่งกลางอัตโนมัติ */
     padding: 2em;
-    /* main ไม่ต้องมีพื้นหลังโปร่งแสงแล้ว เพราะ info-card จะมีแทน */
 }
 
 h1 {
@@ -70,119 +69,114 @@ h1 {
     overflow-x: hidden; /* ซ่อนส่วนที่เกินขอบไป */
 }
 
-/* --- ส่วนของ Card ข้อมูล (คล้าย daily_average.html) --- */
-.info-card {
-    background-color: rgba(255, 255, 255, 0.25); /* พื้นหลังโปร่งแสง */
-    padding: 1.5em;
-    border-radius: 15px;
-    margin-bottom: 1.5em; /* ระยะห่างระหว่าง card */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    width: 90%; /* ความกว้างที่ตอบสนอง */
-    max-width: 450px; /* ความกว้างสูงสุด */
-    box-sizing: border-box;
-    text-align: center;
-    color: #eee;
-    text-shadow: none; /* ไม่มีเงาข้อความภายใน card */
-}
-
-.info-card h2 {
-    font-size: 1.8em;
-    color: #00c6ff; /* สีฟ้าสำหรับหัวข้อย่อย */
-    margin-top: 0;
+.title-resize {
+    font-size: clamp(1.8em, 5vw, 2.8em); /* ปรับขนาดตัวอักษรตาม viewport */
     margin-bottom: 1em;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.info-card p {
-    font-size: 1.1em;
-    margin: 0.5em 0;
-}
-
-.info-card p span {
-    font-weight: bold;
-    color: #ffd700; /* สีทองสำหรับค่าตัวเลข */
-}
-
-/* Input Group ใน Card (ปรับปรุงสไตล์) */
-.input-group {
-    margin-bottom: 1em;
-    width: 100%;
-    text-align: left;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 0.5em;
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #eee;
-}
-
-.input-group input[type="number"],
-.input-group input[type="text"] { /* เพิ่ม input type text ด้วยเผื่อมีใช้ */
-    width: 100%;
-    padding: 0.8em 1em;
+/* --- Input และ Button (คล้าย Song-style.css) --- */
+input[type="number"],
+input[type="text"] {
+    width: calc(100% - 2em); /* ลบ padding ออกจาก width */
+    padding: 1em;
+    margin-bottom: 1.2em;
     border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px; /* โค้งมนมากขึ้น */
+    background-color: rgba(255, 255, 255, 0.15); /* โปร่งแสงขึ้น */
     color: #fff;
-    font-size: 1em;
+    font-size: 1.2em;
     box-sizing: border-box;
-    text-shadow: none;
-    -webkit-appearance: none; /* ลบลูกศรขึ้นลงใน Safari/Chrome */
-    margin: 0; /* แก้ปัญหา margin ใน Firefox */
+    text-align: center; /* จัดตัวเลขไว้ตรงกลาง */
+    outline: none;
+    transition: all 0.3s ease;
+    text-shadow: none; /* ไม่มีเงาข้อความใน input */
 }
 
-.input-group input[type="number"]::-webkit-inner-spin-button,
-.input-group input[type="number"]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Placeholder Styling */
-.input-group input::placeholder {
-    color: rgba(255, 255, 255, 0.6); /* สี placeholder */
-    opacity: 1; /* ทำให้มองเห็นได้ชัดเจนขึ้น */
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 1;
 }
 
-.input-group input:focus {
-    outline: none;
+input:focus {
     border-color: #00c6ff;
-    box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.5);
-}
-
-/* ปุ่มคำนวณและกลุ่มปุ่ม */
-.buttons-group {
-    margin-top: 2em;
-    width: 90%;
-    max-width: 450px;
-    box-sizing: border-box;
+    box-shadow: 0 0 0 4px rgba(0, 198, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 button {
-    padding: 1em 2em;
-    font-size: 1.3em;
+    padding: 1.2em 2.5em;
+    font-size: 1.4em;
     font-weight: bold;
     color: #0d2e3d;
     background: linear-gradient(145deg, #00c6ff, #007bff);
     border: none;
-    border-radius: 10px;
+    border-radius: 12px; /* โค้งมนมากขึ้น */
     cursor: pointer;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
-    width: 100%; /* ให้ปุ่มเต็มความกว้างของ buttons-group */
+    width: calc(100% - 2em); /* เต็มความกว้างของ main */
+    max-width: 460px; /* จำกัดความกว้างสูงสุด */
+    margin-top: 1em; /* เพิ่มระยะห่างจาก input */
 }
 
 button:hover {
     background: linear-gradient(145deg, #00aaff, #0056b3);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
-/* Footer Styling (ไม่มีกรอบ) */
+/* Results container (สำหรับแสดงผลลัพธ์) */
+.results-container {
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 1.5em;
+    border-radius: 15px;
+    margin-top: 2em;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 90%;
+    max-width: 450px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #eee;
+    text-shadow: none;
+    line-height: 1.6; /* ปรับระยะห่างระหว่างบรรทัด */
+    animation: fadeIn 1s ease forwards;
+    opacity: 0; /* ซ่อนไว้ก่อนแสดงผลลัพธ์ */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.results-container h2 {
+    font-size: 1.8em;
+    color: #00c6ff;
+    margin-top: 0;
+    margin-bottom: 0.8em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.results-container p {
+    font-size: 1.1em;
+    margin: 0.5em 0;
+}
+
+.results-container p span {
+    font-weight: bold;
+    color: #ffd700;
+}
+
+/* Footer Styling */
 footer {
     margin-top: 3em;
     padding: 1.5em;
@@ -253,30 +247,30 @@ footer p {
         font-size: 2em;
         margin-bottom: 0.8em;
     }
-    .info-card {
-        padding: 1em;
-        width: 95%;
+    .title-resize {
+        font-size: clamp(1.6em, 5vw, 2.5em);
     }
-    .info-card h2 {
-        font-size: 1.5em;
-    }
-    .info-card p {
-        font-size: 1em;
-    }
-    .input-group label {
-        font-size: 1em;
-    }
-    .input-group input[type="number"],
-    .input-group input[type="text"] {
-        padding: 0.7em 0.8em;
-        font-size: 1em;
-    }
-    .buttons-group {
-        width: 95%;
+    input[type="number"],
+    input[type="text"] {
+        padding: 0.8em;
+        font-size: 1.1em;
+        margin-bottom: 1em;
     }
     button {
-        padding: 0.8em 1.5em;
-        font-size: 1.2em;
+        padding: 1em 2em;
+        font-size: 1.3em;
+        width: calc(100% - 1.5em); /* ปรับ width ให้พอดีกับ padding */
+    }
+    .results-container {
+        padding: 1em;
+        width: 95%;
+        margin-top: 1.5em;
+    }
+    .results-container h2 {
+        font-size: 1.5em;
+    }
+    .results-container p {
+        font-size: 1em;
     }
     footer {
         font-size: 0.7em;
@@ -303,29 +297,30 @@ footer p {
     h1 {
         font-size: 1.8em;
     }
+    .title-resize {
+        font-size: clamp(1.4em, 5vw, 2.2em);
+    }
     main {
         padding: 1em;
     }
-    .info-card {
-        padding: 0.8em;
-    }
-    .info-card h2 {
-        font-size: 1.3em;
-    }
-    .info-card p {
-        font-size: 0.9em;
-    }
-    .input-group label {
-        font-size: 0.9em;
-    }
-    .input-group input[type="number"],
-    .input-group input[type="text"] {
-        padding: 0.6em 0.7em;
-        font-size: 0.9em;
+    input[type="number"],
+    input[type="text"] {
+        padding: 0.7em;
+        font-size: 1em;
+        margin-bottom: 0.8em;
     }
     button {
-        padding: 0.7em 1.2em;
-        font-size: 1.1em;
+        padding: 0.8em 1.5em;
+        font-size: 1.2em;
+    }
+    .results-container {
+        padding: 0.8em;
+    }
+    .results-container h2 {
+        font-size: 1.3em;
+    }
+    .results-container p {
+        font-size: 0.9em;
     }
     footer {
         font-size: 0.6em;
