@@ -1,9 +1,12 @@
-/* Reset */
+/*
+ * style.css
+ */
+
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Kanit', sans-serif;
     color: #fff;
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
     background: transparent;
@@ -14,21 +17,20 @@ html, body {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: url("bg.webp") center/cover no-repeat;
+    background-attachment: fixed;
     filter: brightness(40%) blur(2px);
     z-index: -1;
-    background-attachment: fixed;
 }
 
-/* Layout wrapper for sticky footer */
 .content-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     padding: 3vh 2em 2em;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 
-/* Fade and slide in effect */
 .fade-slide-in {
     animation: fadeSlideIn 1s ease forwards;
     opacity: 0;
@@ -42,35 +44,32 @@ html, body {
     }
 }
 
-/* Main */
 main {
     text-align: center;
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* เลื่อน content กลางแนวตั้ง */
+    justify-content: center;
     align-items: center;
-    min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
+    min-height: 50vh;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 1em;
+    color: #ffd700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
 
 h1.title-no-wrap {
     font-size: 2.2em;
-    margin-bottom: 1em;
     white-space: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-/* Responsive font adjustment for the title */
-@media (max-width: 480px) {
-    h1.title-no-wrap {
-        font-size: 1.3em;
-        white-space: nowrap;
-        overflow-x: hidden;
-    }
-}
-
-/* Form */
 input, button {
     display: block;
     width: 80%;
@@ -87,8 +86,6 @@ input {
     background: rgba(255, 255, 255, 0.15);
     color: #fff;
     border: 1px solid #ccc;
-
-    /* เพิ่ม animation ตอน focus */
     transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -117,10 +114,9 @@ button:hover {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* Floating buttons */
 .floating-button {
     position: fixed;
-    bottom: 20px;
+    right: 20px;
     width: 60px;
     height: 60px;
     font-size: 28px;
@@ -138,47 +134,58 @@ button:hover {
 }
 
 @keyframes floaty {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
-
-.floating-button.left {
-    left: 20px;
-}
-
-.floating-button.right {
-    right: 20px;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    font-size: 0.1em; /* 10% */
-    padding: 1em 1em 1.5em;
-    color: #eee;
-    line-height: 2.0em;
-    background: none !important;
-    box-sizing: border-box;
-    margin-top: auto;
-    position: sticky;
-    bottom: 0;
-    max-width: 100vw;
-    word-break: break-word;
-}
-
-/* Footer paragraphs */
-footer p {
-    margin: 2em 0;
-}
-
-/* ปรับระยะห่าง footer บน PC */
-@media (min-width: 481px) {
-    footer p {
-        margin: 3.5em 0;
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
     }
 }
 
-/* Scrollbar style for the title if overflow */
+#homeButton {
+    top: 50%;
+    margin-top: -120px;
+    transform: translateY(-50%);
+}
+
+#duckButton {
+    top: 50%;
+    margin-top: -40px;
+    transform: translateY(-50%);
+}
+
+#fullscreenButton {
+    top: 50%;
+    margin-top: 40px;
+    transform: translateY(-50%);
+}
+
+#dailyAverageButton {
+    top: 50%;
+    margin-top: 120px;
+    transform: translateY(-50%);
+}
+
+footer {
+    text-align: center;
+    font-size: 0.75em;
+    padding: 1.5em;
+    color: #eee;
+    line-height: 1.8em;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-sizing: border-box;
+    margin-top: auto;
+    position: relative;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer p {
+    margin: 0.5em 0;
+}
+
 h1.title-no-wrap::-webkit-scrollbar {
     height: 6px;
 }
@@ -186,4 +193,175 @@ h1.title-no-wrap::-webkit-scrollbar {
 h1.title-no-wrap::-webkit-scrollbar-thumb {
     background-color: rgba(255,255,255,0.4);
     border-radius: 3px;
+}
+
+.content-wrapper {
+    min-height: 90vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+
+.info-card {
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 1.5em;
+    border-radius: 15px;
+    margin-bottom: 2em;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 90%;
+    max-width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.info-card h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 0.8em;
+    color: #00c6ff;
+    text-shadow: none;
+}
+.info-card p {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: #eee;
+    text-shadow: none;
+}
+
+.input-group {
+    margin-bottom: 1em;
+    text-align: left;
+    width: 100%;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.input-group input[type="number"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.1em;
+    box-sizing: border-box;
+}
+.input-group input[type="number"]::placeholder {
+    color: #ddd;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 1em;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.progress-bar {
+    height: 100%;
+    background-color: #007bff;
+    width: 0%;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 35px;
+    color: white;
+    transition: width 0.5s ease-in-out;
+    font-size: 0.9em;
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 0 0.5em;
+    box-sizing: border-box;
+}
+
+.clear-button {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.clear-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 480px) {
+    h1.title-no-wrap {
+        font-size: 1.3em;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .content-wrapper {
+        padding: 3vh 1em;
+        min-height: 90vh;
+    }
+
+    input, button {
+        width: 90%;
+        padding: 0.8em;
+        font-size: 0.9em;
+    }
+
+    .floating-button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        right: 10px;
+    }
+
+    #homeButton {
+        margin-top: -80px;
+    }
+    #duckButton {
+        margin-top: 0px;
+    }
+    #fullscreenButton {
+        margin-top: 80px;
+    }
+
+    footer {
+        padding: 1em;
+        font-size: 0.7em;
+        max-width: 90%;
+    }
+
+    .info-card {
+        padding: 1em;
+        margin-bottom: 1.5em;
+        width: 95%;
+    }
+    .info-card h2 {
+        font-size: 1.3em;
+    }
+    .info-card p, .input-group label, .input-group input[type="number"] {
+        font-size: 1em;
+    }
+    .progress-bar-container {
+        height: 30px;
+    }
+    .progress-bar {
+        line-height: 30px;
+        font-size: 0.8em;
+    }
+    .buttons-group {
+        flex-direction: column;
+        align-items: center;
+    }
 }
