@@ -1,42 +1,89 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>คำนวณค่าเฉลี่ย Order Picker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรแกรมจัดสินค้า by Suneii</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="Song-style.css" /> 
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="background"></div>
     <div class="content-wrapper fade-slide-in">
         <main>
-            <h1 class="title-resize">📊 คำนวณค่าเฉลี่ย Order Picker</h1>
+            <h1 class="title-no-wrap">✨ ยินดีต้อนรับสู่โปรแกรมจัดสินค้า ✨</h1>
             
-            <input type="number" id="sku" placeholder="📦 กรอกจำนวน SKU ทั้งหมด" min="0">
-            <input type="number" id="mu" placeholder="📏 กรอกจำนวน MU ทั้งหมด" min="0">
-            <input type="number" id="days" placeholder="🗓️ กรอกจำนวนวันทำงาน" min="1">
+            <input type="number" id="dailyGoalInput" placeholder="เป้าหมาย SKU/วัน">
+            <input type="number" id="muGoalInput" placeholder="เป้าหมาย MU/วัน">
+            <button id="calculateButton">📊 คำนวณ</button>
             
-            <button onclick="calculateTargets()">🔍 คำนวณค่าเฉลี่ย</button>
+            <button id="dailyAverageButton" class="action-button" style="margin-top: 2em;">📈 ค่าเฉลี่ยยอดจัดรายวัน</button>
 
-            <div id="results" class="results-container">
-                </div>
-
-            <footer>
-                <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
-                <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
-                <p>โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
-                <p>พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
-                <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
-            </footer>
         </main>
+
+        <footer>
+            <p>💖 ขอให้จัดของได้เยอะๆ ยอดปังๆ ครับ! 💖</p>
+            <p>สร้างสรรค์โดย Suneii Dev.</p>
+        </footer>
     </div>
 
-    <button id="homeButton" class="floating-button" aria-label="กลับหน้าหลัก">🏠</button>
-    <button id="dailyAverageButton" class="floating-button" aria-label="ไปหน้าเฉลี่ยรายวัน">💰</button>
-    <button id="duckButton" class="floating-button" aria-label="ไปหน้าเลือกเพลง">🦆</button>
-    <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ">📱</button>
+    <button id="duckButton" class="floating-button" aria-label="ไปหน้าเป็ด">🦆</button>
+    <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ" style="margin-top: 80px;">📱</button>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const dailyGoalInput = document.getElementById('dailyGoalInput');
+            const muGoalInput = document.getElementById('muGoalInput');
+            const calculateButton = document.getElementById('calculateButton');
+            const duckButton = document.getElementById('duckButton');
+            const fullscreenButton = document.getElementById('fullscreenButton');
+            const dailyAverageButton = document.getElementById('dailyAverageButton'); // เพิ่ม Element ของปุ่มใหม่
+
+            // โหลดค่าที่บันทึกไว้ใน Local Storage
+            const savedSkuGoal = localStorage.getItem('skuDailyGoal');
+            const savedMuGoal = localStorage.getItem('muDailyGoal');
+
+            if (savedSkuGoal) {
+                dailyGoalInput.value = savedSkuGoal;
+            }
+            if (savedMuGoal) {
+                muGoalInput.value = savedMuGoal;
+            }
+
+            calculateButton.addEventListener('click', () => {
+                const skuDaily = dailyGoalInput.value;
+                const muDaily = muGoalInput.value;
+
+                // บันทึกค่าลง Local Storage
+                localStorage.setItem('skuDailyGoal', skuDaily);
+                localStorage.setItem('muDailyGoal', muDaily);
+
+                // ส่งค่าไปยัง daily_average.html
+                window.location.href = `daily_average.html?skuDaily=${skuDaily}&muDaily=${muDaily}`;
+            });
+
+            duckButton.addEventListener('click', () => {
+                window.location.href = "songs.html";
+            });
+
+            fullscreenButton.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch((err) => {
+                        console.error(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            // เพิ่ม Event Listener สำหรับปุ่ม "ค่าเฉลี่ยยอดจัดรายวัน"
+            dailyAverageButton.addEventListener('click', () => {
+                // ดึงค่าเป้าหมายปัจจุบันจาก input เพื่อส่งไปหน้า daily_average.html
+                const skuDaily = dailyGoalInput.value;
+                const muDaily = muGoalInput.value;
+                window.location.href = `daily_average.html?skuDaily=${skuDaily}&muDaily=${muDaily}`;
+            });
+        });
+    </script>
 </body>
 </html>
