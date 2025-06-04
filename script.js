@@ -1,86 +1,71 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("averageForm");
-  const duckButton = document.getElementById("duckButton");
-  const fullscreenButton = document.getElementById("fullscreenButton");
-  const dailyAverageButton = document.getElementById("dailyAverageButton"); // เพิ่มตัวแปรสำหรับปุ่มใหม่
+    // --- 1. การทำงานของปุ่มคำนวณหลัก ---
+    const calculateButton = document.getElementById("calculateButton");
+    if (calculateButton) { // ตรวจสอบให้แน่ใจว่าปุ่มคำนวณมีอยู่
+        calculateButton.addEventListener("click", () => {
+            const skuInput = document.getElementById("sku");
+            const muInput = document.getElementById("mu");
+            const daysInput = document.getElementById("days");
 
-  // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรใหม่
-  function calculateAverage(sku, mu, days) {
-    return ((sku / 12) + (mu / 34)) / (2 * days);
-  }
+            // ตรวจสอบว่า input elements มีอยู่จริง
+            if (!skuInput || !muInput || !daysInput) {
+                console.error("ไม่พบ input elements (SKU, MU, Days)");
+                alert("เกิดข้อผิดพลาดในการดึงข้อมูล กรุณาลองใหม่อีกครั้ง");
+                return;
+            }
 
-  // Submit form เพื่อไป average.html พร้อมส่งค่าเฉลี่ย
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+            const sku = parseFloat(skuInput.value);
+            const mu = parseFloat(muInput.value);
+            const days = parseFloat(daysInput.value);
 
-    const sku = Number(document.getElementById("sku").value);
-    const mu = Number(document.getElementById("mu").value);
-    const days = Number(document.getElementById("days").value);
+            // ตรวจสอบค่าที่รับมา
+            if (isNaN(sku) || isNaN(mu) || isNaN(days) || days === 0) {
+                alert("กรุณากรอกข้อมูล SKU, MU และจำนวนวันทำงานให้ถูกต้อง (จำนวนวันทำงานต้องไม่เป็นศูนย์)");
+                return;
+            }
 
-    if (sku <= 0 || mu <= 0 || days <= 0) {
-      alert("กรุณากรอกข้อมูลเป็นตัวเลขบวกมากกว่า 0 ทุกช่อง");
-      return;
-    }
+            const totalOrders = sku + mu;
+            const average = totalOrders / days;
 
-    // ✅ บังคับ fullscreen และล็อกแนวนอนก่อนส่งข้อมูล (ถ้าเป็นมือถือ)
-    try {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-      if (isMobile) {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-        }
-        if (screen.orientation && screen.orientation.lock) {
-          await screen.orientation.lock('landscape');
-        }
-      }
-    } catch (error) {
-      console.warn("Fullscreen หรือ ล็อกแนวนอน ไม่สำเร็จ:", error);
-    }
-
-    const avg = calculateAverage(sku, mu, days);
-
-    // ส่งค่าเฉลี่ยเป็น query param ไป average.html
-    const params = new URLSearchParams({
-      sku,
-      mu,
-      days,
-      average: avg.toFixed(2)
-    });
-
-    window.location.href = `average.html?${params.toString()}`;
-  });
-
-  // ปุ่มเป็ด ไปหน้า songs.html
-  duckButton.addEventListener("click", () => {
-    window.location.href = "songs.html";
-  });
-
-  // ปุ่ม fullscreen toggle
-  fullscreenButton.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch((err) => {
-        alert(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
-      });
+            // นำทางไปยังหน้า average.html พร้อมส่งค่าผ่าน URL parameters
+            window.location.href = `average.html?sku=${sku}&mu=${mu}&days=${days}&average=${average.toFixed(2)}`;
+        });
     } else {
-      document.exitFullscreen();
+        console.warn("ไม่พบปุ่ม 'calculateButton' ในหน้า index.html");
     }
-  });
 
-  // เพิ่ม Event Listener สำหรับปุ่ม Daily Average
-  dailyAverageButton.addEventListener("click", () => {
-    window.location.href = "daily_average.html"; // เปลี่ยนชื่อไฟล์ตามที่คุณต้องการ
-  });
+    // --- 2. การทำงานของปุ่มลอยตัว (Floating Buttons) ---
 
-  // เพิ่มฟังก์ชันเคลียร์ค่า input เมื่อกดปุ่มกากบาท (ถ้ามี)
-  document.querySelectorAll('.clear-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-target');
-      const input = document.getElementById(targetId);
-      if (input) {
-        input.value = "";
-        input.focus();
-      }
-    });
-  });
+    // ฟังก์ชันสำหรับผูก Event Listener กับปุ่ม
+    function setupFloatingButton(buttonId, targetPage) {
+        const button = document.getElementById(buttonId);
+        if (button) {
+            button.addEventListener("click", () => {
+                window.location.href = targetPage;
+            });
+        } else {
+            console.warn(`ไม่พบปุ่ม '${buttonId}' ในหน้า index.html`);
+        }
+    }
+
+    // ผูก Event Listener ให้กับปุ่มต่างๆ
+    setupFloatingButton("homeButton", "index.html"); // ปุ่มบ้าน
+    setupFloatingButton("dailyAverageButton", "daily_average.html"); // ปุ่มถุงเงิน
+    setupFloatingButton("duckButton", "songs.html"); // ปุ่มเป็ด
+
+    // ปุ่มเปิด/ปิดเต็มจอ (Fullscreen Button)
+    const fullscreenButton = document.getElementById("fullscreenButton");
+    if (fullscreenButton) {
+        fullscreenButton.addEventListener("click", () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.error(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    } else {
+        console.warn("ไม่พบปุ่ม 'fullscreenButton' ในหน้า index.html");
+    }
 });
