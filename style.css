@@ -1,36 +1,36 @@
-/*
- * style.css
- */
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Kanit', sans-serif;
-    color: #fff;
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
+    color: #fff; /* สีข้อความเริ่มต้น */
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85); /* เงาข้อความเพื่อให้อ่านง่ายบนพื้นหลัง */
     background: transparent;
-    overflow-x: hidden;
+    overflow-x: hidden; /* ป้องกันการเลื่อนแนวนอน */
 }
 
 .background {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url("bg.webp") center/cover no-repeat;
+    background: url("bg.webp") center/cover no-repeat; /* ตรวจสอบ path ของ bg.webp */
     background-attachment: fixed;
-    filter: brightness(40%) blur(2px);
+    filter: brightness(40%) blur(2px); /* ทำให้มืดลงและเบลอเล็กน้อย */
     z-index: -1;
 }
 
 .content-wrapper {
     display: flex;
     flex-direction: column;
-    padding: 3vh 2em 2em;
+    padding: 3vh 2em 2em; /* เพิ่ม padding ด้านล่างเพื่อให้มีที่ว่างสำหรับ footer */
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-    min-height: 90vh; /* เพื่อให้ footer อยู่ด้านล่าง */
-    justify-content: center; /* จัดให้อยู่ตรงกลางแนวตั้งบน PC */
+    min-height: 100vh; /* ทำให้สูงเต็มจอเพื่อรองรับ content และ footer */
+    justify-content: center; /* จัดเนื้อหาหลัก (main) ตรงกลางแนวตั้ง */
+    align-items: center; /* จัดเนื้อหาหลัก (main) ตรงกลางแนวนอน */
 }
 
 .fade-slide-in {
@@ -48,364 +48,170 @@ html, body {
 
 main {
     text-align: center;
-    flex: 1;
+    flex: 0 0 auto; /* ไม่ให้ขยายเต็มที่, จัดตามเนื้อหา */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 50vh;
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%; /* เพิ่ม width เพื่อให้ responsive มากขึ้น */
+    max-width: 500px; /* จำกัดความกว้างของ main content */
+    width: 100%;
+    margin: auto; /* จัดกึ่งกลางอัตโนมัติ */
+    padding: 2em;
+    background-color: rgba(255, 255, 255, 0.2); /* พื้นหลังโปร่งแสงสำหรับส่วน input */
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 h1 {
     font-size: 2.5em;
     margin-bottom: 1em;
-    color: #ffd700;
+    color: #ffd700; /* สีทองสำหรับหัวข้อ */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-}
-
-h1.title-no-wrap {
-    font-size: 2.2em;
-    white-space: nowrap;
-    overflow-x: auto;
+    white-space: nowrap; /* ป้องกันหัวข้อขึ้นบรรทัดใหม่ */
+    overflow-x: auto; /* อนุญาตให้เลื่อนแนวนอนสำหรับหัวข้อที่ยาวบนจอมือถือ */
     -webkit-overflow-scrolling: touch;
 }
-
-input, button {
-    display: block;
-    width: 80%;
-    max-width: 400px;
-    margin: 1em auto;
-    padding: 1em;
-    font-size: 1em;
-    border-radius: 12px;
-    border: none;
-    text-shadow: none;
-}
-
-input {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    border: 1px solid #ccc;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-}
-
-input::placeholder {
-    color: #ddd;
-}
-
-input:focus {
-    outline: none;
-    border-color: #00aaff;
-    box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-button {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-/* เพิ่ม styles สำหรับ buttons-group เพื่อจัดปุ่มให้เป็นบรรทัดเดียวกัน */
-.buttons-group {
-    display: flex; /* ใช้ flexbox */
-    justify-content: center; /* จัดกึ่งกลางแนวนอน */
-    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
-    width: 100%; /* ให้เต็มความกว้าง */
-    margin-top: 2em; /* เพิ่มระยะห่างด้านบน */
-}
-
-.buttons-group button {
-    margin: 0 0.5em; /* ให้ปุ่มมีระยะห่างกันเล็กน้อย */
-    width: auto; /* ให้ปุ่มปรับขนาดตามเนื้อหา */
-    max-width: none; /* ยกเลิก max-width เพื่อให้จัดเรียงได้ */
-    display: inline-block; /* ทำให้ปุ่มอยู่ในบรรทัดเดียวกัน */
-}
-
-
-.floating-button {
-    position: fixed;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: floaty 2.5s ease-in-out infinite;
-}
-
-@keyframes floaty {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-/* กำหนดตำแหน่งปุ่มลอยสำหรับ PC */
-#homeButton {
-    top: 50%;
-    margin-top: -120px;
-    transform: translateY(-50%);
-}
-
-#duckButton {
-    top: 50%;
-    margin-top: -40px;
-    transform: translateY(-50%);
-}
-
-#fullscreenButton {
-    top: 50%;
-    margin-top: 40px;
-    transform: translateY(-50%);
-}
-
-#dailyAverageButton {
-    top: 50%;
-    margin-top: 120px;
-    transform: translateY(-50%);
-}
-
-footer {
-    text-align: center;
-    font-size: 0.75em;
-    padding: 1.5em;
-    color: #eee;
-    line-height: 1.8em;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    box-sizing: border-box;
-    margin-top: 3em; /* เพิ่ม margin-top เพื่อแยกจาก main */
-    position: relative;
-    max-width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%; /* ให้เต็มความกว้าง */
-}
-
-footer p {
-    margin: 0.5em 0;
-}
-
-h1.title-no-wrap::-webkit-scrollbar {
-    height: 6px;
-}
-
-h1.title-no-wrap::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.4);
-    border-radius: 3px;
-}
-
-/* ลบ min-height ออกจาก content-wrapper ที่นี่เพราะย้ายไปด้านบน */
-
-
-.info-card {
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 1.5em;
-    border-radius: 15px;
-    margin-bottom: 2em;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    width: 90%;
-    max-width: 500px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.info-card h2 {
-    font-size: 1.8em;
-    margin-top: 0;
-    margin-bottom: 0.8em;
-    color: #ffd700;
-    text-shadow: none;
-}
-.info-card p {
-    font-size: 1.2em;
-    margin: 0.5em 0;
-    color: #eee;
-    text-shadow: none;
-}
+h1::-webkit-scrollbar { height: 6px; }
+h1::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.4); border-radius: 3px; }
 
 .input-group {
-    margin-bottom: 1em;
-    text-align: left;
+    margin-bottom: 1.5em;
     width: 100%;
+    max-width: 300px; /* กำหนดความกว้างสูงสุดของ input group */
+    text-align: left; /* จัดข้อความ label ชิดซ้าย */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #eee;
 }
 
 .input-group input[type="number"] {
-    width: calc(100% - 2em);
-    padding: 1em;
-    color: white;
-    font-size: 1em;
-    box-sizing: border-box;
+    width: 100%;
+    padding: 0.8em 1em;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1.1em;
+    box-sizing: border-box; /* รวม padding และ border ใน width */
+    text-shadow: none; /* ไม่มีเงาข้อความใน input */
 }
-.input-group input[type="number"]::placeholder {
+
+.input-group input[type="number"]:focus {
+    outline: none;
+    border-color: #00c6ff;
+    box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.5);
+}
+
+button {
+    padding: 1em 2em;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #0d2e3d;
+    background: linear-gradient(145deg, #00c6ff, #007bff);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 1em;
+}
+
+button:hover {
+    background: linear-gradient(145deg, #00aaff, #0056b3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 3em;
+    padding: 1.5em;
+    text-align: center;
+    font-size: 0.75em;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
     color: #ddd;
 }
-
-
-.progress-bar-container {
-    width: 100%;
-    background-color: rgba(255,255,255,0.1);
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 1em;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+footer p {
+    margin: 0.5em 0;
+    color: #ddd;
 }
-.progress-bar {
-    height: 100%;
-    background-color: #007bff;
-    width: 0%;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 35px;
-    color: white;
-    transition: width 0.5s ease-in-out;
-    font-size: 0.9em;
-    font-weight: bold;
-    white-space: nowrap;
-    padding: 0 0.5em;
-    box-sizing: border-box;
+.footer-icon {
+    display: inline-block;
+    font-size: 1.2em;
+    margin: 0 6px;
 }
 
-.clear-button {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.clear-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 768px) { /* ปรับ media query ให้ครอบคลุมแท็บเล็ตด้วย */
+/* Media Queries สำหรับการตอบสนองบนมือถือ */
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding: 2vh 1em 1em; /* ปรับ padding บนมือถือ */
+    }
+    main {
+        padding: 1.5em;
+        width: 95%; /* ขยาย main ให้กว้างขึ้นบนมือถือ */
+        max-width: unset; /* ยกเลิก max-width */
+    }
     h1 {
         font-size: 2em;
+        margin-bottom: 0.8em;
     }
-    h1.title-no-wrap {
-        font-size: 1.6em;
-        overflow-x: hidden;
+    .input-group {
+        margin-bottom: 1em;
+        max-width: unset; /* ยกเลิก max-width */
     }
-    .content-wrapper {
-        padding: 2vh 1em;
+    .input-group label {
+        font-size: 1.1em;
     }
-    input, button {
-        width: 90%;
-        padding: 0.8em;
-        font-size: 0.9em;
-    }
-    .info-card {
-        padding: 1em;
-        margin-bottom: 1.5em;
-        width: 95%;
-    }
-    .info-card h2 {
-        font-size: 1.5em;
-    }
-    .info-card p, .input-group label, .input-group input[type="number"] {
+    .input-group input[type="number"] {
+        padding: 0.7em 0.8em;
         font-size: 1em;
     }
-    .progress-bar-container {
-        height: 30px;
+    button {
+        padding: 0.8em 1.5em;
+        font-size: 1.2em;
     }
-    .progress-bar {
-        line-height: 30px;
-        font-size: 0.8em;
-    }
-    .buttons-group {
-        flex-direction: column; /* บนมือถือให้ปุ่มเรียงกันลงมา */
-        margin-top: 1.5em;
-    }
-    .buttons-group button {
-        margin: 0.5em 0; /* เพิ่มระยะห่างแนวตั้ง */
-        width: 80%; /* ให้ปุ่มกว้างขึ้นบนมือถือ */
-        max-width: 300px;
-    }
-    .floating-button {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        right: 10px;
-    }
-
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือที่มี 3 ปุ่ม */
-    #homeButton {
-        top: 50%;
-        margin-top: -80px;
-    }
-    #duckButton {
-        top: 50%;
-        margin-top: 0px;
-    }
-    #fullscreenButton {
-        top: 50%;
-        margin-top: 80px;
-    }
-    #dailyAverageButton { /* ปุ่มนี้จะถูกซ่อนใน daily_average.html แต่ยังคงอยู่ */
-        display: none;
-    }
-
     footer {
+        font-size: 0.7em;
         padding: 1em;
-        font-size: 0.65em;
-        max-width: 90%;
         margin-top: 2em;
+        max-width: 90%;
     }
 }
 
-/* เพิ่ม media query สำหรับมือถือขนาดเล็กมาก */
-@media (max-width: 400px) {
+@media (max-width: 480px) {
     h1 {
         font-size: 1.8em;
     }
-    .info-card h2 {
-        font-size: 1.3em;
+    main {
+        padding: 1em;
     }
-    .info-card p {
+    .input-group label {
+        font-size: 1em;
+    }
+    .input-group input[type="number"] {
+        padding: 0.6em 0.7em;
         font-size: 0.9em;
     }
-    input, button {
-        font-size: 0.85em;
+    button {
+        padding: 0.7em 1.2em;
+        font-size: 1.1em;
     }
-    .floating-button {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-        right: 5px;
+    footer {
+        font-size: 0.6em;
+        padding: 0.8em;
+        margin-top: 1.5em;
     }
-    #homeButton { margin-top: -70px; }
-    #duckButton { margin-top: 0px; }
-    #fullscreenButton { margin-top: 70px; }
 }
