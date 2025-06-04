@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คำนวณค่าเฉลี่ยและยอดจัด</title>
+    <title>โปรแกรมคำนวนการจัดออเดอร์ OCS</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,27 +12,24 @@
 <body>
     <div class="background"></div>
     <div class="container">
-        <h1>กรอกข้อมูล</h1>
+        <h1>โปรแกรมคำนวนการจัดออเดอร์ OCS</h1>
         <form id="averageForm">
             <div class="form-group">
-                <label for="sku">SKU</label>
-                <input type="number" id="sku" name="sku" required>
+                <input type="number" id="sku" name="sku" required placeholder="SKU">
             </div>
             <div class="form-group">
-                <label for="mu">MU</label>
-                <input type="number" id="mu" name="mu" required>
+                <input type="number" id="mu" name="mu" required placeholder="MU">
             </div>
             <div class="form-group">
-                <label for="days">จำนวนวันทำงาน</label>
-                <input type="number" id="days" name="days" required>
+                <input type="number" id="days" name="days" required placeholder="จำนวนวันทำงาน">
             </div>
             <button type="submit">คำนวณค่าเฉลี่ย</button>
-            <button type="button" id="calculateDailySalesBtn" class="daily-sales-button">คำนวณยอดจัดรายวัน 💰</button>
         </form>
-        </div>
+    </div>
 
     <a href="songs.html" class="floating-button left">🦆</a>
     <button id="fullscreenBtn" class="floating-button right">📱</button>
+    <button id="calculateDailySalesBtn" class="floating-button right">💰</button>
 
     <footer>
         <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
