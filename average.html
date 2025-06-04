@@ -7,60 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="average-style.css" />
     <style>
-        /* จัดวางตำแหน่งปุ่มลอยตัวเฉพาะหน้า average.html */
-        .floating-button {
-            position: fixed;
-            right: 20px; /* ให้ปุ่มทั้งหมดอยู่ทางขวา */
-            width: 60px;
-            height: 60px;
-            font-size: 28px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: floaty 2.5s ease-in-out infinite;
-        }
-        @keyframes floaty {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        /* กำหนดตำแหน่งของแต่ละปุ่ม */
-        #homeButton { top: 20px; } /* ปุ่มแรก */
-        #duckButton { top: 100px; } /* ปุ่มสอง */
-        #dailyAverageButton { top: 180px; } /* ปุ่มสาม (ปุ่มถุงเงิน) */
-        #fullscreenButton { bottom: 20px; right: 20px; top: unset; animation: none; /* ไม่ให้ลอย */ }
-
-        /* ปรับขนาดและตำแหน่งปุ่มบนมือถือ */
-        @media (max-width: 768px) {
-            .floating-button {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-                right: 10px;
-            }
-            #homeButton { top: 10px; }
-            #duckButton { top: 70px; }
-            #dailyAverageButton { top: 130px; }
-            #fullscreenButton { bottom: 10px; right: 10px; }
-        }
-        @media (max-width: 400px) {
-            .floating-button {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
-                right: 5px;
-            }
-            #homeButton { top: 5px; }
-            #duckButton { top: 60px; }
-            #dailyAverageButton { top: 115px; }
-            #fullscreenButton { bottom: 5px; right: 5px; }
-        }
+        /* ควรจะไม่มีโค้ดใดๆ เหลืออยู่ภายใน <style>...</style> แล้ว */
+        /* หรือถ้ามีเฉพาะ CSS อื่นๆ ที่ไม่ใช่ปุ่มลอยก็คงไว้ได้ */
     </style>
 </head>
 <body>
@@ -70,9 +18,9 @@
         <main>
             <h1 class="title-no-wrap">📊 ผลลัพธ์ค่าเฉลี่ย Order Picker</h1>
             <div id="result-display" class="result-display">
-                </div>
+            </div>
         </main>
-        </div>
+    </div>
 
     <button id="homeButton" class="floating-button" aria-label="กลับหน้าแรก">🏠</button>
     <button id="duckButton" class="floating-button" aria-label="ไปหน้าเลือกเพลง">🦆</button>
