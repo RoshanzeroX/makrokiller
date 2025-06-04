@@ -124,11 +124,10 @@ button:hover {
     align-items: center; /* จัดกึ่งกลางแนวตั้ง */
     width: 100%; /* ให้เต็มความกว้าง */
     margin-top: 2em; /* เพิ่มระยะห่างด้านบน */
-    flex-wrap: wrap; /* ให้ปุ่มขึ้นบรรทัดใหม่ได้ถ้าหน้าจอเล็ก */
 }
 
 .buttons-group button {
-    margin: 0.5em; /* ให้ปุ่มมีระยะห่างกันเล็กน้อย */
+    margin: 0 0.5em; /* ให้ปุ่มมีระยะห่างกันเล็กน้อย */
     width: auto; /* ให้ปุ่มปรับขนาดตามเนื้อหา */
     max-width: none; /* ยกเลิก max-width เพื่อให้จัดเรียงได้ */
     display: inline-block; /* ทำให้ปุ่มอยู่ในบรรทัดเดียวกัน */
@@ -166,32 +165,27 @@ button:hover {
 /* กำหนดตำแหน่งปุ่มลอยสำหรับ PC */
 #homeButton {
     top: 50%;
-    margin-top: -160px; /* ลดลงมาอีก 40px เพื่อให้มีที่สำหรับปุ่มกล้อง */
+    margin-top: -120px;
     transform: translateY(-50%);
 }
 
 #duckButton {
     top: 50%;
-    margin-top: -80px; /* ลดลงมาอีก 40px */
+    margin-top: -40px;
     transform: translateY(-50%);
 }
 
 #fullscreenButton {
     top: 50%;
-    margin-top: 0px; /* ลดลงมาอีก 40px */
+    margin-top: 40px;
     transform: translateY(-50%);
 }
 
-#cameraButton { /* ปุ่มกล้องใหม่ */
+#dailyAverageButton {
     top: 50%;
-    margin-top: 80px; /* เพิ่มปุ่มใหม่เข้ามา */
+    margin-top: 120px;
     transform: translateY(-50%);
 }
-
-#dailyAverageButton { /* ปุ่มนี้จะถูกซ่อนใน daily_average.html แต่ยังคงอยู่ */
-    display: none;
-}
-
 
 footer {
     text-align: center;
@@ -223,6 +217,8 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     border-radius: 3px;
 }
 
+/* ลบ min-height ออกจาก content-wrapper ที่นี่เพราะย้ายไปด้านบน */
+
 
 .info-card {
     background-color: rgba(255, 255, 255, 0.25);
@@ -252,18 +248,6 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     color: #eee;
     text-shadow: none;
 }
-
-/* เพิ่มสไตล์สำหรับ card รูปภาพโดยเฉพาะ */
-.photo-card {
-    margin-top: 2em; /* เพิ่มระยะห่างจาก card ด้านบน */
-    padding-bottom: 2em; /* เพิ่มพื้นที่ด้านล่าง */
-}
-.photo-card img {
-    display: block; /* ทำให้รูปภาพอยู่บรรทัดใหม่ */
-    margin-left: auto;
-    margin-right: auto;
-}
-
 
 .input-group {
     margin-bottom: 1em;
@@ -310,7 +294,6 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     box-sizing: border-box;
 }
 
-/* ปุ่มเคลียร์ข้อมูล */
 .clear-button {
     background: linear-gradient(135deg, #dc3545, #c82333);
     color: white;
@@ -327,24 +310,6 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* ปุ่มสำหรับ Action อื่นๆ (เช่น ถ่ายรูป) */
-.action-button {
-    background: linear-gradient(135deg, #28a745, #218838); /* สีเขียว */
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.action-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-
 @media (max-width: 768px) { /* ปรับ media query ให้ครอบคลุมแท็บเล็ตด้วย */
     h1 {
         font-size: 2em;
@@ -356,18 +321,11 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     .content-wrapper {
         padding: 2vh 1em;
     }
-    input[type="number"], button { /* ให้ input type="number" และ button ใช้สไตล์เดียวกัน */
+    input, button {
         width: 90%;
         padding: 0.8em;
         font-size: 0.9em;
     }
-    /* ปรับให้ input type="file" ที่ซ่อนไว้ ไม่กระทบ */
-    input[type="file"] {
-        width: 0;
-        height: 0;
-        overflow: hidden;
-    }
-
     .info-card {
         padding: 1em;
         margin-bottom: 1.5em;
@@ -402,24 +360,19 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         right: 10px;
     }
 
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือที่มี 4 ปุ่ม */
+    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือที่มี 3 ปุ่ม */
     #homeButton {
         top: 50%;
-        margin-top: -110px; /* ลดลงมาอีก 40px จากเดิม (-70-40) = -110 */
+        margin-top: -80px;
     }
     #duckButton {
         top: 50%;
-        margin-top: -30px; /* ลดลงมาอีก 40px จากเดิม (0-40) = -30 */
+        margin-top: 0px;
     }
     #fullscreenButton {
         top: 50%;
-        margin-top: 50px; /* ลดลงมาอีก 40px จากเดิม (80-30) = 50 */
+        margin-top: 80px;
     }
-    #cameraButton { /* ปุ่มกล้องใหม่ */
-        top: 50%;
-        margin-top: 130px; /* เพิ่มเข้ามา 80 + 50 = 130 */
-    }
-
     #dailyAverageButton { /* ปุ่มนี้จะถูกซ่อนใน daily_average.html แต่ยังคงอยู่ */
         display: none;
     }
@@ -443,7 +396,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     .info-card p {
         font-size: 0.9em;
     }
-    input[type="number"], button {
+    input, button {
         font-size: 0.85em;
     }
     .floating-button {
@@ -452,8 +405,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         font-size: 20px;
         right: 5px;
     }
-    #homeButton { margin-top: -100px; } /* ปรับตำแหน่งเล็กน้อย */
-    #duckButton { margin-top: -20px; }
-    #fullscreenButton { margin-top: 60px; }
-    #cameraButton { margin-top: 140px; } /* ปรับตำแหน่งเล็กน้อย */
+    #homeButton { margin-top: -70px; }
+    #duckButton { margin-top: 0px; }
+    #fullscreenButton { margin-top: 70px; }
 }
