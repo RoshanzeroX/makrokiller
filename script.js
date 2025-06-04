@@ -1,80 +1,97 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("averageForm");
-  const duckButton = document.getElementById("duckButton");
-  const fullscreenButton = document.getElementById("fullscreenButton");
+document.addEventListener('DOMContentLoaded', () => {
+    const averageForm = document.getElementById('averageForm');
+    const calculateDailySalesBtn = document.getElementById('calculateDailySalesBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const skuInput = document.getElementById('sku');
+    const muInput = document.getElementById('mu');
+    const daysInput = document.getElementById('days');
+    const dailySalesResultDiv = document.getElementById('dailySalesResult');
 
-  // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรใหม่
-  function calculateAverage(sku, mu, days) {
-    return ((sku / 12) + (mu / 34)) / (2 * days);
-  }
+    if (averageForm) {
+        averageForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-  // Submit form เพื่อไป average.html พร้อมส่งค่าเฉลี่ย
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+            const sku = parseFloat(skuInput.value);
+            const mu = parseFloat(muInput.value);
+            const days = parseFloat(daysInput.value);
 
-    const sku = Number(document.getElementById("sku").value);
-    const mu = Number(document.getElementById("mu").value);
-    const days = Number(document.getElementById("days").value);
+            if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
+                alert('กรุณากรอกข้อมูลตัวเลขให้ถูกต้อง และจำนวนวันต้องมากกว่า 0');
+                return;
+            }
 
-    if (sku <= 0 || mu <= 0 || days <= 0) {
-      alert("กรุณากรอกข้อมูลเป็นตัวเลขบวกมากกว่า 0 ทุกช่อง");
-      return;
+            // สูตรคำนวณค่าเฉลี่ย
+            const average = ((sku / 12) + (mu / 34)) / (2 * days);
+            window.location.href = `average.html?avg=${average.toFixed(2)}`;
+        });
     }
 
-    // ✅ บังคับ fullscreen และล็อกแนวนอนก่อนส่งข้อมูล (ถ้าเป็นมือถือ)
-    try {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (calculateDailySalesBtn) {
+        calculateDailySalesBtn.addEventListener('click', function() {
+            const sku = parseFloat(skuInput.value);
+            const mu = parseFloat(muInput.value);
+            const days = parseFloat(daysInput.value);
 
-      if (isMobile) {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
+            if (isNaN(sku) || isNaN(mu) || isNaN(days)) {
+                dailySalesResultDiv.textContent = 'กรุณากรอกข้อมูล SKU, MU และจำนวนวันให้ครบถ้วน';
+                dailySalesResultDiv.style.display = 'block';
+                dailySalesResultDiv.style.backgroundColor = 'rgba(255, 0, 0, 0.3)'; // สีแดงเตือน
+                dailySalesResultDiv.style.color = '#fff';
+                return;
+            }
+            if (days <= 0) {
+                 dailySalesResultDiv.textContent = 'จำนวนวันทำงานต้องมากกว่า 0';
+                 dailySalesResultDiv.style.display = 'block';
+                 dailySalesResultDiv.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+                 dailySalesResultDiv.style.color = '#fff';
+                return;
+            }
+
+            // --- ส่วนนี้คือ Placeholder ---
+            // !!! โปรดระบุสูตรคำนวณยอดจัดรายวันของคุณที่นี่ !!!
+            // ตัวอย่างสมมติ: ยอดจัดรายวัน = (SKU + MU) / จำนวนวัน
+            // const dailySales = (sku + mu) / days;
+            // dailySalesResultDiv.textContent = `ยอดจัดรายวัน (ตัวอย่าง): ${dailySales.toFixed(2)}`;
+            // dailySalesResultDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.2)'; // สีเขียวเมื่อสำเร็จ
+
+            dailySalesResultDiv.textContent = 'โปรดระบุสูตรคำนวณยอดจัดรายวัน';
+            dailySalesResultDiv.style.display = 'block';
+            dailySalesResultDiv.style.backgroundColor = 'rgba(255, 255, 0, 0.3)'; // สีเหลืองแจ้งเตือน
+            dailySalesResultDiv.style.color = '#333'; // สีตัวหนังสือเข้มขึ้นให้อ่านง่าย
+        });
+    }
+
+    if (fullscreenBtn) {
+        fullscreenBtn.addEventListener('click', () => {
+            const elem = document.documentElement;
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen().catch(err => console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`));
+                } else if (elem.mozRequestFullScreen) { /* Firefox */
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // ตรวจสอบว่า API Fullscreen รองรับหรือไม่
+        function checkFullscreenSupport() {
+            const canFullscreen = document.documentElement.requestFullscreen ||
+                                  document.documentElement.mozRequestFullScreen ||
+                                  document.documentElement.webkitRequestFullscreen ||
+                                  document.documentElement.msRequestFullscreen;
+
+            if (!canFullscreen) {
+                 fullscreenBtn.style.display = 'none'; // ซ่อนปุ่มถ้าไม่รองรับ Fullscreen
+            }
         }
-        if (screen.orientation && screen.orientation.lock) {
-          await screen.orientation.lock('landscape');
-        }
-      }
-    } catch (error) {
-      console.warn("Fullscreen หรือ ล็อกแนวนอน ไม่สำเร็จ:", error);
+        checkFullscreenSupport();
     }
-
-    const avg = calculateAverage(sku, mu, days);
-
-    // ส่งค่าเฉลี่ยเป็น query param ไป average.html
-    const params = new URLSearchParams({
-      sku,
-      mu,
-      days,
-      average: avg.toFixed(2)
-    });
-
-    window.location.href = `average.html?${params.toString()}`;
-  });
-
-  // ปุ่มเป็ด ไปหน้า songs.html
-  duckButton.addEventListener("click", () => {
-    window.location.href = "songs.html";
-  });
-
-  // ปุ่ม fullscreen toggle
-  fullscreenButton.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch((err) => {
-        alert(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
-      });
-    } else {
-      document.exitFullscreen();
-    }
-  });
-
-  // เพิ่มฟังก์ชันเคลียร์ค่า input เมื่อกดปุ่มกากบาท
-  document.querySelectorAll('.clear-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-target');
-      const input = document.getElementById(targetId);
-      if (input) {
-        input.value = "";
-        input.focus();
-      }
-    });
-  });
 });
