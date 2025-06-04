@@ -66,12 +66,10 @@ h1 {
     margin-bottom: 1em;
     color: #ffd700; /* สีทองสำหรับหัวข้อ */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap; /* ป้องกันหัวข้อขึ้นบรรทัดใหม่ */
-    overflow-x: auto; /* อนุญาตให้เลื่อนแนวนอนสำหรับหัวข้อที่ยาวบนจอมือถือ */
-    -webkit-overflow-scrolling: touch;
+    white-space: normal; /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
+    word-break: break-word; /* ให้ข้อความตัดคำได้ */
+    overflow-x: hidden; /* ซ่อนส่วนที่เกินขอบไป */
 }
-h1::-webkit-scrollbar { height: 6px; }
-h1::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.4); border-radius: 3px; }
 
 /* --- ส่วนแสดงผลลัพธ์ --- */
 .result-display {
@@ -128,10 +126,46 @@ h1::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.4); border-ra
     user-select: text;
 }
 
+/* --- สไตล์ปุ่มลอยตัว (Floating Buttons) --- */
+.floating-button {
+    position: fixed;
+    right: 20px; /* ทุกปุ่มอยู่ทางขวา */
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    border-radius: 50%; /* ทำให้ปุ่มกลม */
+    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: floaty 2.5s ease-in-out infinite;
+}
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* ตำแหน่งปุ่มลอยตัวบน PC */
+/* เรียงปุ่มให้ห่างกัน 80px จากกึ่งกลางหน้าจอ */
+#homeButton { top: 50%; margin-top: -120px; transform: translateY(-50%); }
+#duckButton { top: 50%; margin-top: -40px; transform: translateY(-50%); }
+#dailyAverageButton { top: 50%; margin-top: 40px; transform: translateY(-50%); }
+#fullscreenButton { top: 50%; margin-top: 120px; transform: translateY(-50%); }
+
+
 /* Media Queries สำหรับการตอบสนองบนมือถือ */
 @media (max-width: 768px) {
-    h1 { font-size: 2em; }
     .content-wrapper { padding: 2vh 1em; }
+    main {
+        padding: 1.5em;
+        width: 95%;
+    }
+    h1 { font-size: 2em; }
     .result-display {
         padding: 1em;
         width: 95%;
@@ -141,12 +175,39 @@ h1::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.4); border-ra
     .result-message { font-size: 1.5em; }
     .result-details p { font-size: 1em; }
     .result-value { font-size: 2em; }
+
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือ */
+    .floating-button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        right: 10px; /* ชิดขอบ 10px บนมือถือ */
+    }
+    /* เรียงปุ่มให้ห่างกัน 70px จากกึ่งกลางหน้าจอ */
+    #homeButton { top: 50%; margin-top: -105px; transform: translateY(-50%); }
+    #duckButton { top: 50%; margin-top: -35px; transform: translateY(-50%); }
+    #dailyAverageButton { top: 50%; margin-top: 35px; transform: translateY(-50%); }
+    #fullscreenButton { top: 50%; margin-top: 105px; transform: translateY(-50%); }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
     h1 { font-size: 1.8em; }
+    main { padding: 1em; }
     .result-display { padding: 0.8em; }
     .result-image { max-width: 80px; }
     .result-message { font-size: 1.3em; }
     .result-value { font-size: 1.8em; }
+
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก */
+    .floating-button {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
+    }
+    /* เรียงปุ่มให้ห่างกัน 60px จากกึ่งกลางหน้าจอ */
+    #homeButton { margin-top: -90px; }
+    #dailyAverageButton { margin-top: -30px; }
+    #duckButton { margin-top: 30px; }
+    #fullscreenButton { margin-top: 90px; }
 }
