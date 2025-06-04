@@ -1,22 +1,22 @@
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Kanit', sans-serif; /* ใช้ฟอนต์ที่ดูทันสมัย */
+    font-family: 'Kanit', sans-serif;
     height: 100%;
-    overflow: hidden; /* ป้องกัน scroll bar ที่ไม่จำเป็น */
+    overflow: hidden;
 }
 
 .background-image {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -10px; /* เพิ่มขอบเล็กน้อยเพื่อป้องกันขอบเบลอ */
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
     background-image: url('bg.webp');
     background-size: cover;
     background-position: center;
-    filter: blur(8px); /* เพิ่มความเบลอ */
-    -webkit-filter: blur(8px);
+    filter: blur(10px); /* เพิ่มความเบลอ */
+    -webkit-filter: blur(10px);
     z-index: -1;
 }
 
@@ -25,95 +25,111 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 150px); /* ปรับความสูงเพื่อให้ footer อยู่ด้านล่าง */
+    min-height: calc(100vh - 160px); /* ปรับให้พอดีกับ footer */
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 
 h1 {
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     margin-bottom: 30px;
 }
 
 form {
-    background-color: rgba(255, 255, 255, 0.1); /* พื้นหลังโปร่งใสเล็กน้อย */
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px); /* เพิ่มเอฟเฟกต์กระจกฝ้า */
+    background-color: rgba(0, 0, 0, 0.4); /* พื้นหลังโปร่งใสเข้มขึ้น */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
-    color: #fff;
-    font-weight: bold;
+    margin-bottom: 10px;
+    color: #eee;
+    font-weight: 500;
+    font-size: 1.1em;
 }
 
 input[type="number"] {
-    width: calc(100% - 20px);
+    width: calc(100% - 24px);
     padding: 12px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.15);
     font-size: 1em;
+    color: #fff;
     outline: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+input[type="number"]::placeholder {
+    color: #bbb;
 }
 
 input[type="number"]:focus {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: #4CAF50;
 }
 
 button[type="submit"] {
     width: 100%;
     padding: 15px;
-    background-color: #4CAF50; /* สีเขียว */
+    background: linear-gradient(45deg, #4CAF50, #81C784); /* ไล่สี */
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1.2em;
+    font-size: 1.3em;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
-    transform: scale(1.02);
+    background: linear-gradient(45deg, #45a049, #66BB6A);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Floating Buttons */
 .floating-button {
     position: fixed;
-    width: 60px;
-    height: 60px;
+    width: 65px; /* ขนาดใหญ่ขึ้นเล็กน้อย */
+    height: 65px;
     border-radius: 50%;
-    background-color: rgba(76, 175, 80, 0.8); /* สีเขียวโปร่งใส */
+    background: linear-gradient(135deg, #FFC107, #FF9800); /* ไล่สีเป็ด/บ้าน/จอ */
     color: white;
     text-align: center;
-    line-height: 60px;
-    font-size: 30px;
+    line-height: 65px;
+    font-size: 35px;
     text-decoration: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
     z-index: 1000;
     cursor: pointer;
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.5); /* เพิ่มขอบ */
     outline: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    animation: float 3s ease-in-out infinite; /* เอฟเฟกต์ลอย */
+    transition: all 0.3s ease;
+    animation: float 3.5s ease-in-out infinite; /* ปรับเวลาแอนิเมชั่น */
+    display: flex; /* ใช้ flex เพื่อจัดกลาง */
+    justify-content: center;
+    align-items: center;
 }
 
 .floating-button:hover {
-    background-color: #45a049;
-    transform: translateY(-5px) scale(1.05); /* ขยับขึ้นและขยายเล็กน้อยเมื่อโฮเวอร์ */
+    transform: translateY(-8px) scale(1.1); /* ขยับและขยายมากขึ้น */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .floating-button.left {
@@ -124,21 +140,25 @@ button[type="submit"]:hover {
 .floating-button.right {
     bottom: 30px;
     right: 30px;
+    background: linear-gradient(135deg, #2196F3, #64B5F6); /* สีฟ้าสำหรับ fullscreen */
+}
+.floating-button.right:hover {
+     background: linear-gradient(135deg, #1976D2, #42A5F5);
 }
 
-/* เอฟเฟกต์ลอยขึ้นลง */
+
+/* เอฟเฟกต์ลอยขึ้นลงเท่ๆ */
 @keyframes float {
     0% {
-        transform: translateY(0px);
+        transform: translateY(0px) rotate(-2deg);
     }
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-12px) rotate(2deg);
     }
     100% {
-        transform: translateY(0px);
+        transform: translateY(0px) rotate(-2deg);
     }
 }
-
 
 /* Footer */
 footer {
@@ -147,32 +167,32 @@ footer {
     left: 0;
     width: 100%;
     text-align: center;
-    padding: 10px 0;
-    background: none; /* ไม่มีพื้นหลัง */
+    padding: 5px 0; /* ลด padding */
+    background: none;
     z-index: 999;
 }
 
 footer p {
-    color: #ccc; /* สีเทาอ่อน */
-    font-size: 0.7em; /* ขนาดเล็ก */
-    margin: 2px 0; /* ลดระยะห่างแนวตั้ง */
-    line-height: 1.2; /* ปรับ line-height */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* เพิ่มเงาเล็กน้อย */
+    color: rgba(255, 255, 255, 0.7); /* สีขาวโปร่งแสง */
+    font-size: 0.65em; /* ขนาดเล็กมาก */
+    margin: 1px 0; /* ระยะห่างน้อยมาก */
+    line-height: 1.1; /* line-height ชิดๆ */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
-/* Media Queries for Responsiveness */
+/* Responsive */
 @media (max-width: 600px) {
     form {
-        padding: 20px;
+        padding: 25px;
     }
     h1 {
         font-size: 1.8em;
     }
     .floating-button {
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        font-size: 25px;
+        width: 55px;
+        height: 55px;
+        line-height: 55px;
+        font-size: 28px;
         bottom: 20px;
         left: 20px;
     }
@@ -182,5 +202,8 @@ footer p {
     }
     footer p {
         font-size: 0.6em;
+    }
+     .container {
+        min-height: calc(100vh - 130px);
     }
 }
