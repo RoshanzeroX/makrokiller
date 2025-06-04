@@ -13,7 +13,9 @@ html, body {
 .background {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: url("bg.webp") center/cover no-repeat;
+  /* **สำคัญ:** ตรวจสอบ Path รูปภาพตรงนี้ให้ถูกต้อง */
+  /* ถ้า bg.webp อยู่ในโฟลเดอร์ images */
+  background: url("images/bg.webp") center/cover no-repeat;
   /* ถ้า bg.webp ยังอยู่ที่ root directory (ระดับเดียวกับ index.html) ให้ใช้ "bg.webp" */
   /* ถ้า bg.webp อยู่ในโฟลเดอร์ assets ให้ใช้ "assets/bg.webp" */
   filter: brightness(40%) blur(2px);
@@ -44,7 +46,7 @@ html, body {
   }
 }
 
-/* Main */
+/* Main content container */
 main {
   text-align: center;
   flex: 1;
@@ -53,6 +55,8 @@ main {
   justify-content: center; /* เลื่อน content กลางแนวตั้ง */
   align-items: center; /* เลื่อน content กลางแนวนอน */
   min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
+  max-width: 600px; /* เพิ่ม max-width เพื่อควบคุมความกว้างบน desktop */
+  margin: 0 auto; /* จัดให้อยู่ตรงกลางหน้า */
 }
 
 h1.title-no-wrap {
@@ -72,7 +76,7 @@ h1.title-no-wrap {
   }
 }
 
-/* Form */
+/* Form inputs & general buttons */
 input, button {
   display: block;
   width: 80%;
@@ -168,45 +172,4 @@ button:hover {
   top: calc(50% + 10px); /* วางปุ่มเต็มจอไว้ถัดจากปุ่มเป็ด */
 }
 
-#dailyAverageButton {
-  top: calc(50% + 90px); /* วางปุ่มเฉลี่ยรายวันไว้ถัดจากปุ่มเต็มจอ */
-}
-
-
-/* Footer */
-footer {
-  text-align: center;
-  font-size: 0.1em; /* 10% */
-  padding: 1em 1em 1.5em;
-  color: #eee;
-  line-height: 2.0em;
-  background: none !important;
-  box-sizing: border-box;
-  margin-top: auto;
-  position: sticky;
-  bottom: 0;
-  max-width: 100vw;
-  word-break: break-word;
-}
-
-/* Footer paragraphs */
-footer p {
-  margin: 2em 0;
-}
-
-/* ปรับระยะห่าง footer บน PC */
-@media (min-width: 481px) {
-  footer p {
-    margin: 3.5em 0;
-  }
-}
-
-/* Scrollbar style for the title if overflow */
-h1.title-no-wrap::-webkit-scrollbar {
-  height: 6px;
-}
-
-h1.title-no-wrap::-webkit-scrollbar-thumb {
-  background-color: rgba(255,255,255,0.4);
-  border-radius: 3px;
-}
+#daily
