@@ -15,7 +15,7 @@ html, body {
   top: 0; left: 0; right: 0; bottom: 0;
   /* **สำคัญ:** ตรวจสอบ Path รูปภาพตรงนี้ให้ถูกต้อง */
   /* ถ้า bg.webp อยู่ในโฟลเดอร์ images */
-  background: url("bg.webp") center/cover no-repeat;
+  background: url("images/bg.webp") center/cover no-repeat;
   /* ถ้า bg.webp ยังอยู่ที่ root directory (ระดับเดียวกับ index.html) ให้ใช้ "bg.webp" */
   /* ถ้า bg.webp อยู่ในโฟลเดอร์ assets ให้ใช้ "assets/bg.webp" */
   filter: brightness(40%) blur(2px);
@@ -124,8 +124,7 @@ button:hover {
 /* Floating buttons */
 .floating-button {
   position: fixed;
-  top: 50%; /* กำหนดให้เริ่มจากกึ่งกลางแนวตั้ง */
-  transform: translateY(-50%); /* ชดเชยให้กึ่งกลางพอดี */
+  /* เราจะใช้ top และ transform ในแต่ละ ID แทน เพื่อการควบคุมที่ละเอียดกว่า */
   width: 60px;
   height: 60px;
   font-size: 28px;
@@ -144,32 +143,213 @@ button:hover {
 
 @keyframes floaty {
   0%, 100% {
-    transform: translateY(-50%) translateY(0); /* รักษาการจัดกึ่งกลางแนวตั้ง */
+    transform: translateY(0); /* เอา translateY(-50%) ออกจาก keyframes */
   }
   50% {
-    transform: translateY(-50%) translateY(-8px); /* รักษาการจัดกึ่งกลางแนวตั้ง */
+    transform: translateY(-8px);
   }
 }
 
 /* ปุ่มที่อยู่ทางซ้าย (ถ้ามีในอนาคต) */
-.floating-button.left {
-  left: 20px;
-}
+/* .floating-button.left { left: 20px; } */ /* ไม่ใช้แล้วเพราะปุ่มทั้งหมดอยู่ขวา */
 
-/* ปุ่มที่อยู่ทางขวา */
-.floating-button.right {
+/* ปุ่มที่อยู่ทางขวา - กำหนดให้ปุ่มทั้งหมดอยู่ทางขวา */
+.floating-button { /* ใช้คลาส .floating-button โดยตรง */
   right: 20px;
   left: auto; /* ให้แน่ใจว่าไม่มีการชนกับ left: 20px */
 }
 
-/* **ปรับตำแหน่งเฉพาะของแต่ละปุ่มทางขวา** */
-/* ลองปรับค่าตัวเลขเหล่านี้เพื่อให้ได้ตำแหน่งที่ต้องการ */
+/* **ปรับตำแหน่งเฉพาะของแต่ละปุ่มทางขวาเพื่อให้เรียงกันตรงกลาง** */
+/* เราจะใช้ top: 50%; และปรับ margin-top แทน translateY(-50%) เพื่อให้ floaty animation ทำงานได้ดีขึ้น */
+
+/* ปุ่มบ้าน 🏠 - อยู่บนสุด */
+#homeButton {
+  top: 50%;
+  margin-top: -120px; /* เลื่อนขึ้นจากกึ่งกลาง */
+  transform: translateY(-50%); /* จัดกึ่งกลางแนวตั้งของปุ่ม */
+}
+
+/* ปุ่มเป็ด 🦆 - ถัดลงมา */
 #duckButton {
-  top: calc(50% - 70px); /* เลื่อนปุ่มเป็ดขึ้นไปด้านบน */
+  top: 50%;
+  margin-top: -40px; /* เลื่อนลงมาเล็กน้อย */
+  transform: translateY(-50%);
 }
 
+/* ปุ่มเต็มจอ 📱 - ถัดลงมา */
 #fullscreenButton {
-  top: calc(50% + 10px); /* วางปุ่มเต็มจอไว้ถัดจากปุ่มเป็ด */
+  top: 50%;
+  margin-top: 40px; /* เลื่อนลงมาอีก */
+  transform: translateY(-50%);
 }
 
-#daily
+/* ปุ่มเฉลี่ยรายวัน 💰 - ล่างสุด */
+#dailyAverageButton {
+  top: 50%;
+  margin-top: 120px; /* เลื่อนลงมาอีก */
+  transform: translateY(-50%);
+}
+
+
+/* Footer (ยังคงอยู่ใน style.css สำหรับ index.html) */
+footer {
+  text-align: center;
+  font-size: 0.75em;
+  padding: 1.5em;
+  color: #eee;
+  line-height: 1.8em;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-sizing: border-box;
+  margin-top: auto;
+  position: relative;
+  max-width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer paragraphs */
+footer p {
+  margin: 0.5em 0;
+}
+
+/* ปรับระยะห่าง footer บน PC */
+@media (min-width: 481px) {
+  footer p {
+    margin: 0.5em 0;
+  }
+}
+
+/* Scrollbar style for the title if overflow */
+h1.title-no-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 3px;
+}
+
+/* --- ส่วนเพิ่มเติมสำหรับ daily_average.html (ที่ย้ายมาจาก <style> เดิม) --- */
+
+/* Base styles for text in daily_average.html */
+body, input, button, p, h1, h2, h3, label {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
+}
+
+/* H1 specific for daily_average.html (override if general h1 exists) */
+main h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.8em;
+}
+
+/* Info cards for daily_average.html */
+.info-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+}
+.info-card h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 0.8em;
+    color: #00c6ff;
+    text-shadow: none;
+}
+.info-card p {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: #eee;
+    text-shadow: none;
+}
+
+/* Input groups for daily_average.html */
+.input-group {
+    margin-bottom: 1em;
+    text-align: left;
+    width: 100%;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.input-group input[type="number"] {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.1em;
+    box-sizing: border-box;
+}
+.input-group input[type="number"]::placeholder {
+    color: #ddd;
+}
+
+/* Progress bar styles for daily_average.html */
+.progress-bar-container {
+    width: 100%;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 1em;
+}
+.progress-bar {
+    height: 25px;
+    background-color: #007bff;
+    width: 0%;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 25px;
+    color: white;
+    transition: width 0.5s ease-in-out;
+    font-size: 0.9em;
+}
+
+/* Buttons for daily_average.html */
+.buttons-group {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 2em;
+}
+
+/* .back-button, .clear-button (ถูกแทนที่ด้วยปุ่มลอย) */
+
+.clear-button {
+    background-color: #dc3545;
+}
+.clear-button:hover {
+    background-color: #c82333;
+}
+
+/* Responsive adjustments for smaller screens (daily_average.html specific) */
+@media (max-width: 480px) {
+    main h1 {
+        font-size: 2em;
+    }
+    .info-card p, .input-group label, .input-group input[type="number"] {
+        font-size: 1em;
+    }
+    .back-button, .clear-button { /* ควรจะไม่มีผลแล้วหากใช้ปุ่มลอยแทน */
+        font-size: 1em;
+        padding: 10px 15px;
+        max-width: unset;
+    }
+    .buttons-group {
+        flex-direction: column;
+        align-items: center;
+    }
+}
