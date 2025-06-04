@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("averageForm");
   const duckButton = document.getElementById("duckButton");
   const fullscreenButton = document.getElementById("fullscreenButton");
+  const dailyAverageButton = document.getElementById("dailyAverageButton"); // เพิ่มตัวแปรสำหรับปุ่มใหม่
 
   // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรใหม่
   function calculateAverage(sku, mu, days) {
@@ -66,7 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // เพิ่มฟังก์ชันเคลียร์ค่า input เมื่อกดปุ่มกากบาท
+  // เพิ่ม Event Listener สำหรับปุ่ม Daily Average
+  dailyAverageButton.addEventListener("click", () => {
+    window.location.href = "daily_average.html"; // เปลี่ยนชื่อไฟล์ตามที่คุณต้องการ
+  });
+
+  // เพิ่มฟังก์ชันเคลียร์ค่า input เมื่อกดปุ่มกากบาท (ถ้ามี)
   document.querySelectorAll('.clear-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const targetId = btn.getAttribute('data-target');
