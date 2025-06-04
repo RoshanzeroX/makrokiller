@@ -106,7 +106,7 @@ h1 {
     color: #ffd700; /* สีทองสำหรับค่าตัวเลข */
 }
 
-/* Input Group ใน Card */
+/* Input Group ใน Card (ปรับปรุงสไตล์) */
 .input-group {
     margin-bottom: 1em;
     width: 100%;
@@ -121,7 +121,8 @@ h1 {
     color: #eee;
 }
 
-.input-group input[type="number"] {
+.input-group input[type="number"],
+.input-group input[type="text"] { /* เพิ่ม input type text ด้วยเผื่อมีใช้ */
     width: 100%;
     padding: 0.8em 1em;
     border: 1px solid rgba(255, 255, 255, 0.4);
@@ -141,7 +142,13 @@ h1 {
     margin: 0;
 }
 
-.input-group input[type="number"]:focus {
+/* Placeholder Styling */
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6); /* สี placeholder */
+    opacity: 1; /* ทำให้มองเห็นได้ชัดเจนขึ้น */
+}
+
+.input-group input:focus {
     outline: none;
     border-color: #00c6ff;
     box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.5);
@@ -204,10 +211,10 @@ footer p {
 .floating-button {
     position: fixed;
     right: 20px; /* ทุกปุ่มอยู่ทางขวา */
-    width: 60px;
-    height: 60px;
+    width: 60px; /* ขนาดกว้าง */
+    height: 60px; /* ขนาดสูง */
     font-size: 28px;
-    border-radius: 50%;
+    border-radius: 50%; /* ทำให้ปุ่มกลม */
     background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
     cursor: pointer;
@@ -259,7 +266,8 @@ footer p {
     .input-group label {
         font-size: 1em;
     }
-    .input-group input[type="number"] {
+    .input-group input[type="number"],
+    .input-group input[type="text"] {
         padding: 0.7em 0.8em;
         font-size: 1em;
     }
@@ -310,7 +318,8 @@ footer p {
     .input-group label {
         font-size: 0.9em;
     }
-    .input-group input[type="number"] {
+    .input-group input[type="number"],
+    .input-group input[type="text"] {
         padding: 0.6em 0.7em;
         font-size: 0.9em;
     }
