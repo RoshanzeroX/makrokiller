@@ -20,34 +20,34 @@ document.getElementById("totalDays").innerText = daysInMonth;
 function calculateTargets() {
     let totalSKUs = parseInt(document.getElementById("totalSKUs").value) || 0;
     let totalMUs = parseInt(document.getElementById("totalMUs").value) || 0;
-    let holidays = parseInt(document.getElementById("holidays").value) || 0;
+    // let holidays = parseInt(document.getElementById("holidays").value) || 0; // ไม่ใช้แล้ว
 
     let today = new Date().getDate();
-    let workingDaysInMonth = daysInMonth - holidays; // จำนวนวันทำงานทั้งหมดในเดือน
-    let remainingDays = Math.max(0, workingDaysInMonth - today); // จำนวนวันทำงานที่เหลือในเดือน (นับจากวันนี้)
+    // ใช้ daysInMonth ทั้งหมด ไม่หักวันหยุด
+    let totalDaysInMonthActual = daysInMonth; 
+    let remainingDaysInMonth = Math.max(0, totalDaysInMonthActual - today); // จำนวนวันทั้งหมดที่เหลือในเดือน (ไม่หักวันหยุด)
 
-    // สมมติฐาน: เป้าหมาย SKU/MU ที่ต้องจัดต่อวัน (ถ้าไม่มีการระบุจากโจทย์ของคุณ)
-    // หรือค่าเฉลี่ยที่ใช้ในการคำนวณ TotalMonthly
-    let targetSKUPerDayFixed = 120; // อาจเป็นค่าคงที่ที่คุณใช้สำหรับเป้าหมาย
-    let targetMUPerDayFixed = 340;   // อาจเป็นค่าคงที่ที่คุณใช้สำหรับเป้าหมาย
+    // เป้าหมาย SKU/MU ต่อวัน (ค่าคงที่)
+    let targetSKUPerDayFixed = 120;
+    let targetMUPerDayFixed = 340;   
 
-    // คำนวณเป้าหมายรวมของเดือนตามจำนวนวันทำงาน
-    let totalMonthlySKUsTarget = targetSKUPerDayFixed * workingDaysInMonth;
-    let totalMonthlyMUsTarget = targetMUPerDayFixed * workingDaysInMonth;
+    // คำนวณเป้าหมายรวมของเดือนโดยใช้ "วันในเดือนทั้งหมด" ไม่หักวันหยุด
+    let totalMonthlySKUsTarget = targetSKUPerDayFixed * totalDaysInMonthActual;
+    let totalMonthlyMUsTarget = targetMUPerDayFixed * totalDaysInMonthActual;
 
     // คำนวณจำนวนที่เหลือที่ต้องจัดในเดือนนี้
     let remainingSKUsMonthly = Math.max(0, totalMonthlySKUsTarget - totalSKUs);
     let remainingMUsMonthly = Math.max(0, totalMonthlyMUsTarget - totalMUs);
 
-    // คำนวณ "วันนี้ต้องจัด (เฉลี่ย)"
+    // คำนวณ "วันนี้ต้องจัด (เฉลี่ย)" โดยใช้ "วันทั้งหมดที่เหลือในเดือน"
     let calculatedSKUsDaily_temp = 0;
     let calculatedMUsDaily_temp = 0;
 
-    if (remainingDays > 0) {
-        calculatedSKUsDaily_temp = remainingSKUsMonthly / remainingDays;
-        calculatedMUsDaily_temp = remainingMUsMonthly / remainingDays;
+    if (remainingDaysInMonth > 0) {
+        calculatedSKUsDaily_temp = remainingSKUsMonthly / remainingDaysInMonth;
+        calculatedMUsDaily_temp = remainingMUsMonthly / remainingDaysInMonth;
     } else {
-        // หากไม่มีวันทำงานเหลือ แต่ยังไม่ครบเป้าหมาย ให้แสดงยอดที่เหลือทั้งหมด
+        // หากไม่มีวันเหลือ แต่ยังไม่ครบเป้าหมาย ให้แสดงยอดที่เหลือทั้งหมด
         calculatedSKUsDaily_temp = remainingSKUsMonthly;
         calculatedMUsDaily_temp = remainingMUsMonthly;
     }
@@ -56,40 +56,38 @@ function calculateTargets() {
     calculatedDailySKU = calculatedSKUsDaily_temp;
     calculatedDailyMU = calculatedMUsDaily_temp;
 
-    // คำนวณความคืบหน้าโดยรวม
-    let totalProgressPoints = (totalMonthlySKUsTarget + totalMonthlyMUsTarget);
-    let currentProgressPoints = (totalSKUs + totalMUs);
-    let progress = (currentProgressPoints / totalProgressPoints) * 100;
-    progress = Math.min(progress, 100); // ไม่ให้เกิน 100%
+    // // ส่วนความคืบหน้าจะถูกนำออก (ตามความต้องการ)
+    // let totalProgressPoints = (totalMonthlySKUsTarget + totalMonthlyMUsTarget);
+    // let currentProgressPoints = (totalSKUs + totalMUs);
+    // let progress = (currentProgressPoints / totalProgressPoints) * 100;
+    // progress = Math.min(progress, 100); 
 
     let message = "";
     if (totalSKUs >= totalMonthlySKUsTarget && totalMUs >= totalMonthlyMUsTarget) {
         message = "🌟 เก่งค่ะลูกกกก";
-    } else if (progress >= 80) {
-        message = "👍 ใกล้ถึงเป้าหมายแล้ว! สู้ๆ";
     } else {
         message = "💪 ดีขึ้นให้ได้นะ";
     }
 
     document.getElementById("results").innerHTML = `
-        <p><strong>📅 จำนวนวันทำงานที่เหลือ:</strong> ${remainingDays} วัน</p>
+        <p><strong>📅 จำนวนวันที่เหลือในเดือน:</strong> ${remainingDaysInMonth} วัน</p>
         <p><strong>📦 วันนี้ต้องจัด (เฉลี่ย):</strong> ${calculatedDailySKU.toFixed(0)} SKU / ${calculatedDailyMU.toFixed(0)} MU</p>
         <p><strong>📦 เดือนนี้ต้องจัด (รวม):</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
         <h3>${message}</h3>
-        <p>📊 ความคืบหน้า: <strong>${progress.toFixed(2)}%</strong></p>
-    `;
+        `;
 
-    let progressBar = document.getElementById("progressBar");
-    progressBar.style.width = `${progress.toFixed(2)}%`;
-    progressBar.innerText = `${progress.toFixed(2)}%`;
+    // // ส่วน Progress Bar จะถูกนำออก (ตามความต้องการ)
+    // let progressBar = document.getElementById("progressBar");
+    // progressBar.style.width = `${progress.toFixed(2)}%`;
+    // progressBar.innerText = `${progress.toFixed(2)}%`;
 
-    if (progress >= 100) {
-        progressBar.style.backgroundColor = '#28a745'; // เขียวเข้ม
-    } else if (progress >= 80) {
-        progressBar.style.backgroundColor = '#ffc107'; // ส้ม
-    } else {
-        progressBar.style.backgroundColor = '#00c6ff'; // ฟ้าเริ่มต้น
-    }
+    // if (progress >= 100) {
+    //     progressBar.style.backgroundColor = '#28a745'; 
+    // } else if (progress >= 80) {
+    //     progressBar.style.backgroundColor = '#ffc107'; 
+    // } else {
+    //     progressBar.style.backgroundColor = '#00c6ff'; 
+    // }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
