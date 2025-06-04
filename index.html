@@ -48,12 +48,37 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
-    /* ปรับ Footer ให้พอดีกับหน้าจอ */
+    /* Floating button ถุงเงิน */
+    .floating-moneybag {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      width: 58px;
+      height: 58px;
+      font-size: 2.3em;
+      border-radius: 50%;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      background: linear-gradient(135deg, #ffd700, #ffb300);
+      color: #fff;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .floating-moneybag:hover {
+      background: linear-gradient(135deg, #ffe066, #ffb84d);
+      transform: scale(1.08);
+    }
+    /* Footer styling */
     footer {
       margin-top: 3em;
       padding: 1.5em;
       text-align: center;
-      font-size: 0.75em; /* ลดขนาดลง 30% */
+      font-size: 0.75em;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       max-width: 85%;
@@ -65,28 +90,24 @@
       margin: 0.5em 0;
       color: #ddd;
     }
-    /* เพิ่มลูกเล่นตกแต่ง */
-    .footer-icon {
-      display: inline-block;
-      font-size: 1.2em;
-      margin: 0 6px;
-    }
-    /* ให้ footer ปรับตามมือถือ */
     @media (max-width: 480px) {
+      .floating-moneybag {
+        bottom: 15px;
+        left: 15px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.7em;
+      }
       footer {
         font-size: 0.65em;
         padding: 1em;
         max-width: 95%;
-      }
-      footer p {
-        margin: 0.4em 0;
       }
     }
   </style>
 </head>
 <body>
   <div class="background"></div>
-
   <div class="content-wrapper fade-slide-in">
     <main>
       <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
@@ -103,19 +124,23 @@
         <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
       </form>
     </main>
-
-   <footer> 
-     <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p> 
-     <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
-     <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
-     <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
-     <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
-   </footer>
+    <footer> 
+      <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p> 
+      <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+      <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+      <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+      <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
+    </footer>
   </div>
 
-  <button id="duckButton" class="floating-button left" aria-label="ไปหน้าเลือกเพลง">🦆</button>
-  <button id="fullscreenButton" class="floating-button right" aria-label="เปิด/ปิดเต็มจอ">📱</button>
+  <!-- Floating moneybag button -->
+  <button id="moneyBagButton" class="floating-moneybag" aria-label="ไปหน้ารายการเพลง">💰</button>
 
   <script src="script.js"></script>
+  <script>
+    document.getElementById("moneyBagButton").addEventListener("click", function() {
+      window.location.href = "songs.html";
+    });
+  </script>
 </body>
 </html>
