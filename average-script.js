@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- 2. ดึงค่าผลลัพธ์จาก URL Parameters ---
     const urlParams = new URLSearchParams(window.location.search);
     const sku = urlParams.get('sku'); // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
-    const mu = urlParams.get('mu');   // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
+    const mu = urlParams.get('mu');    // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
     const days = urlParams.get('days'); // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
     const average = parseFloat(urlParams.get('average')); // แปลงค่าเฉลี่ยเป็นตัวเลข
 
@@ -64,25 +64,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- 5. การทำงานของปุ่มต่างๆ ---
-    document.getElementById("homeButton").addEventListener("click", () => {
-        window.location.href = "index.html"; // กลับหน้าแรก
-    });
+    // ไม่ต้องเพิ่มการอ้างอิงปุ่มอีกครั้ง เพราะเราจะเรียกใช้จาก DOM โดยตรงด้านล่าง
+    // แต่ควรเพิ่มการตรวจสอบว่าปุ่มมีอยู่จริงเพื่อป้องกัน error
+    const homeButton = document.getElementById("homeButton");
+    const duckButton = document.getElementById("duckButton");
+    const dailyAverageButton = document.getElementById("dailyAverageButton");
+    const fullscreenButton = document.getElementById("fullscreenButton");
 
-    document.getElementById("duckButton").addEventListener("click", () => {
-        window.location.href = "songs.html"; // ไปหน้า songs.html
-    });
+    if (homeButton) {
+        homeButton.addEventListener("click", () => {
+            window.location.href = "index.html"; // กลับหน้าแรก
+        });
+    }
 
-    document.getElementById("dailyAverageButton").addEventListener("click", () => {
-        window.location.href = "daily_average.html"; // ไปหน้า daily_average.html
-    });
+    if (duckButton) {
+        duckButton.addEventListener("click", () => {
+            window.location.href = "songs.html"; // ไปหน้า songs.html
+        });
+    }
 
-    document.getElementById("fullscreenButton").addEventListener("click", () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch((err) => {
-                console.error(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
-            });
-        } else {
-            document.exitFullscreen();
-        }
-    });
+    if (dailyAverageButton) {
+        dailyAverageButton.addEventListener("click", () => {
+            window.location.href = "daily_average.html"; // ไปหน้า daily_average.html
+        });
+    }
+
+    if (fullscreenButton) {
+        fullscreenButton.addEventListener("click", () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.error(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    }
 });
