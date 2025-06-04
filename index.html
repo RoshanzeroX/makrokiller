@@ -1,158 +1,121 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คำนวณค่าเฉลี่ยและยอดจัด</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        /* เพิ่มสไตล์สำหรับปุ่มใหม่และส่วนแสดงผลลัพธ์ */
-        .daily-sales-button {
-            background: linear-gradient(45deg, #FF9800, #FFC107); /* สีส้ม-เหลือง */
-            color: white;
-            margin-top: 15px; /* ระยะห่างจากปุ่มด้านบน */
-            padding: 12px; /* ลด padding เล็กน้อย */
-            font-size: 1.1em; /* ปรับขนาด font */
-        }
-
-        .daily-sales-button:hover {
-            background: linear-gradient(45deg, #f57c00, #ffb300);
-        }
-
-        #dailySalesResult {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            color: #fff;
-            font-size: 1.1em;
-            text-align: center;
-            display: none; /* ซ่อนไว้ก่อนจนกว่าจะมีผลลัพธ์ */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>โปรแกรมคำนวณค่าเฉลี่ย Order Picker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body, input, button, p, h1, h2, h3 {
+      font-family: 'Kanit', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    .input-wrapper {
+      width: 100%;
+      max-width: 350px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    input {
+      width: 100%;
+      font-size: 1.1em;
+      box-sizing: border-box;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    input::placeholder {
+      color: #ddd;
+    }
+    button {
+      width: 100%;
+      max-width: 350px;
+      font-size: 1.2em;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+    /* ปรับ Footer ให้พอดีกับหน้าจอ */
+    footer {
+      margin-top: 3em;
+      padding: 1.5em;
+      text-align: center;
+      font-size: 0.75em; /* ลดขนาดลง 30% */
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      max-width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+    footer p {
+      margin: 0.5em 0;
+      color: #ddd;
+    }
+    /* เพิ่มลูกเล่นตกแต่ง */
+    .footer-icon {
+      display: inline-block;
+      font-size: 1.2em;
+      margin: 0 6px;
+    }
+    /* ให้ footer ปรับตามมือถือ */
+    @media (max-width: 480px) {
+      footer {
+        font-size: 0.65em;
+        padding: 1em;
+        max-width: 95%;
+      }
+      footer p {
+        margin: 0.4em 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="background-image"></div>
-    <div class="container">
-        <h1>กรอกข้อมูล</h1>
-        <form id="averageForm">
-            <div class="form-group">
-                <label for="sku">SKU</label>
-                <input type="number" id="sku" name="sku" required>
-            </div>
-            <div class="form-group">
-                <label for="mu">MU</label>
-                <input type="number" id="mu" name="mu" required>
-            </div>
-            <div class="form-group">
-                <label for="days">จำนวนวันทำงาน</label>
-                <input type="number" id="days" name="days" required>
-            </div>
-            <button type="submit">คำนวณค่าเฉลี่ย</button>
-            <button type="button" id="calculateDailySalesBtn" class="daily-sales-button">คำนวณยอดจัดรายวัน 💰</button>
-        </form>
-        <div id="dailySalesResult"></div>
-    </div>
+  <div class="background"></div>
 
-    <a href="songs.html" class="floating-button left">🦆</a>
-    <button id="fullscreenBtn" class="floating-button right">📱</button>
+  <div class="content-wrapper fade-slide-in">
+    <main>
+      <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
+      <form id="averageForm" class="centered-form">
+        <div class="input-wrapper">
+          <input type="number" id="sku" placeholder="✅ SKU ที่ทำได้แล้ว" required />
+        </div>
+        <div class="input-wrapper">
+          <input type="number" id="mu" placeholder="✅ MU ที่ทำได้แล้ว" required />
+        </div>
+        <div class="input-wrapper">
+          <input type="number" id="days" placeholder="📅 จำนวนวันทำงาน" required />
+        </div>
+        <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
+      </form>
+    </main>
 
-    <footer>
-        <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อเป็นเครื่องมือช่วยในการคำนวณและแสดงผลค่าเฉลี่ยออเดอร์ต่อวันอย่างง่ายดาย</p>
-        <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้อย่างรวดเร็วและสะดวกสบาย</p>
-        <p>ตัวเว็บออกแบบ UI ให้ดูทันสมัย ใช้งานง่าย สีสันสบายตา และตอบโจทย์การใช้งานจริง</p>
-        <p>โค้ดถูกเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไวและทำงานได้บนทุกอุปกรณ์ รวมถึงฟีเจอร์เปิดเต็มจอ เพื่อเพิ่มความชัดเจนในการแสดงผล และการเข้าถึงข้อมูลอย่างรวดเร็ว</p>
-        <p>พัฒนาโดย Jack Makro © 2025</p>
-        <p>ทีมงานผู้ดูแลระบบ: Jack Makro, Team Dev RoshanzeroX</p>
-        <p>ขอบคุณทุกท่านที่สนับสนุนและใช้งานเว็บไซต์นี้</p>
-        <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
-    </footer>
+   <footer> 
+     <p><span class="footer-icon">💡</span> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p> 
+     <p><span class="footer-icon">🚀</span> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+     <p><span class="footer-icon">💻</span> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+     <p><span class="footer-icon">👨‍💻</span> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+     <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
+   </footer>
+  </div>
 
-    <script>
-        document.getElementById('averageForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+  <button id="duckButton" class="floating-button left" aria-label="ไปหน้าเลือกเพลง">🦆</button>
+  <button id="fullscreenButton" class="floating-button right" aria-label="เปิด/ปิดเต็มจอ">📱</button>
 
-            const sku = parseFloat(document.getElementById('sku').value);
-            const mu = parseFloat(document.getElementById('mu').value);
-            const days = parseFloat(document.getElementById('days').value);
-
-            if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
-                alert('กรุณากรอกข้อมูลตัวเลขให้ถูกต้อง และจำนวนวันต้องมากกว่า 0');
-                return;
-            }
-
-            const average = ((sku / 12) + (mu / 34)) / (2 * days);
-            window.location.href = `average.html?avg=${average.toFixed(2)}`;
-        });
-
-        // --- ฟังก์ชันใหม่สำหรับคำนวณยอดจัดรายวัน ---
-        document.getElementById('calculateDailySalesBtn').addEventListener('click', function() {
-            const sku = parseFloat(document.getElementById('sku').value);
-            const mu = parseFloat(document.getElementById('mu').value);
-            const days = parseFloat(document.getElementById('days').value);
-            const dailySalesResultDiv = document.getElementById('dailySalesResult');
-
-            if (isNaN(sku) || isNaN(mu) || isNaN(days)) {
-                dailySalesResultDiv.textContent = 'กรุณากรอกข้อมูล SKU, MU และจำนวนวันให้ครบถ้วน';
-                dailySalesResultDiv.style.display = 'block';
-                dailySalesResultDiv.style.backgroundColor = 'rgba(255, 0, 0, 0.3)'; // สีแดงเตือน
-                return;
-            }
-            if (days <= 0) {
-                 dailySalesResultDiv.textContent = 'จำนวนวันทำงานต้องมากกว่า 0';
-                 dailySalesResultDiv.style.display = 'block';
-                 dailySalesResultDiv.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
-                return;
-            }
-
-            // --- ส่วนนี้คือ Placeholder ---
-            // !!! โปรดระบุสูตรคำนวณยอดจัดรายวันของคุณที่นี่ !!!
-            // ตัวอย่างสมมติ: ยอดจัดรายวัน = (SKU + MU) / จำนวนวัน
-            // const dailySales = (sku + mu) / days;
-            // dailySalesResultDiv.textContent = `ยอดจัดรายวัน (ตัวอย่าง): ${dailySales.toFixed(2)}`;
-
-            dailySalesResultDiv.textContent = 'โปรดระบุสูตรคำนวณยอดจัดรายวัน';
-            dailySalesResultDiv.style.display = 'block';
-            dailySalesResultDiv.style.backgroundColor = 'rgba(255, 255, 0, 0.3)'; // สีเหลืองแจ้งเตือน
-        });
-        // --- สิ้นสุดฟังก์ชันใหม่ ---
-
-
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-        fullscreenBtn.addEventListener('click', () => {
-            const elem = document.documentElement;
-            if (!document.fullscreenElement) {
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.mozRequestFullScreen) { /* Firefox */
-                    elem.mozRequestFullScreen();
-                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { /* IE/Edge */
-                    elem.msRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        });
-
-        function checkSupport() {
-            const canFullscreen = document.documentElement.requestFullscreen ||
-                                  document.documentElement.mozRequestFullScreen ||
-                                  document.documentElement.webkitRequestFullscreen ||
-                                  document.documentElement.msRequestFullscreen;
-
-            if (!canFullscreen) {
-                 fullscreenBtn.style.display = 'none';
-            }
-        }
-        checkSupport();
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
