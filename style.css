@@ -70,12 +70,12 @@ h1 {
     margin-bottom: 1em;
     color: #ffd700; /* สีทองสำหรับหัวข้อ */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap; /* ป้องกันหัวข้อขึ้นบรรทัดใหม่ */
-    overflow-x: auto; /* อนุญาตให้เลื่อนแนวนอนสำหรับหัวข้อที่ยาวบนจอมือถือ */
-    -webkit-overflow-scrolling: touch;
+    /* ปรับหัวข้อไม่ให้หลุดจอ */
+    white-space: normal; /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
+    word-break: break-word; /* ให้ข้อความตัดคำได้ */
+    overflow-x: hidden; /* ซ่อนส่วนที่เกินขอบไป */
 }
-h1::-webkit-scrollbar { height: 6px; }
-h1::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.4); border-radius: 3px; }
+/* ไม่ต้องมี scrollbar สำหรับ h1 แล้ว */
 
 .input-group {
     margin-bottom: 1.5em;
@@ -130,19 +130,21 @@ button:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Footer Styling */
+/* Footer Styling (ไม่มีกรอบ) */
 footer {
     margin-top: 3em;
     padding: 1.5em;
     text-align: center;
     font-size: 0.75em;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    /* ลบพื้นหลังและกรอบออก */
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
     max-width: 85%;
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    color: #ddd;
+    color: #ddd; /* รักษาสีข้อความ */
 }
 footer p {
     margin: 0.5em 0;
