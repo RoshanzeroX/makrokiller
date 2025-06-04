@@ -48,32 +48,50 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
-    /* Floating button ถุงเงิน */
-    .floating-moneybag {
+    /* Floating Buttons */
+    .floating-button {
       position: fixed;
-      bottom: 28px;
-      left: 28px;
-      width: 58px;
-      height: 58px;
-      font-size: 2.3em;
+      width: 56px;
+      height: 56px;
+      font-size: 2.2em;
       border-radius: 50%;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-      background: linear-gradient(135deg, #ffd700, #ffb300);
-      color: #fff;
       border: none;
-      outline: none;
-      cursor: pointer;
-      z-index: 1000;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1000;
+      cursor: pointer;
       transition: background 0.2s, transform 0.2s;
     }
-    .floating-moneybag:hover {
+    .floating-button:hover {
       background: linear-gradient(135deg, #ffe066, #ffb84d);
       transform: scale(1.08);
     }
-    /* Footer styling */
+    #moneyBagButton {
+      bottom: 30px;
+      left: 30px;
+    }
+    #duckButton {
+      bottom: 100px;
+      left: 30px;
+    }
+    #fullscreenButton {
+      bottom: 170px;
+      left: 30px;
+    }
+    @media (max-width: 480px) {
+      .floating-button {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5em;
+      }
+      #moneyBagButton { left: 12px; bottom: 12px; }
+      #duckButton { left: 12px; bottom: 66px; }
+      #fullscreenButton { left: 12px; bottom: 120px; }
+    }
     footer {
       margin-top: 3em;
       padding: 1.5em;
@@ -89,20 +107,6 @@
     footer p {
       margin: 0.5em 0;
       color: #ddd;
-    }
-    @media (max-width: 480px) {
-      .floating-moneybag {
-        bottom: 15px;
-        left: 15px;
-        width: 48px;
-        height: 48px;
-        font-size: 1.7em;
-      }
-      footer {
-        font-size: 0.65em;
-        padding: 1em;
-        max-width: 95%;
-      }
     }
   </style>
 </head>
@@ -124,8 +128,8 @@
         <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
       </form>
     </main>
-    <footer> 
-      <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p> 
+    <footer>
+      <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
       <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
       <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
       <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
@@ -133,13 +137,25 @@
     </footer>
   </div>
 
-  <!-- Floating moneybag button -->
-  <button id="moneyBagButton" class="floating-moneybag" aria-label="ไปหน้ารายการเพลง">💰</button>
+  <!-- Floating Buttons -->
+  <button id="moneyBagButton" class="floating-button" aria-label="ไปหน้ารายการเพลง">💰</button>
+  <button id="duckButton" class="floating-button" aria-label="ไปหน้าเป็ด">🦆</button>
+  <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ">📱</button>
 
   <script src="script.js"></script>
   <script>
     document.getElementById("moneyBagButton").addEventListener("click", function() {
       window.location.href = "songs.html";
+    });
+    document.getElementById("duckButton").addEventListener("click", function() {
+      window.location.href = "songs.html"; // หรือเปลี่ยนเป็นหน้าเป็ดถ้ามี
+    });
+    document.getElementById("fullscreenButton").addEventListener("click", function() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
     });
   </script>
 </body>
