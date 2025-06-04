@@ -5,34 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>คำนวณค่าเฉลี่ย Order Picker</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    </head>
+    <link rel="stylesheet" href="style.css" /> </head>
 <body>
     <div class="background"></div>
     <div class="content-wrapper fade-slide-in">
         <main>
-            <h1>📊 คำนวณค่าเฉลี่ย Order Picker</h1>
+            <h1 class="title-resize">📊 คำนวณค่าเฉลี่ย Order Picker</h1>
+            <input type="number" id="sku" placeholder="กรอกจำนวน SKU ทั้งหมด" min="0">
+            <input type="number" id="mu" placeholder="กรอกจำนวน MU ทั้งหมด" min="0">
+            <input type="number" id="days" placeholder="กรอกจำนวนวันทำงาน" min="1"> <button onclick="calculateTargets()">🔍 คำนวณค่าเฉลี่ย</button> <div id="results" class="results-container">
+                </div>
 
-            <div class="info-card">
-                <h2>ข้อมูลสำหรับคำนวณ</h2>
-                <div class="input-group">
-                    <label for="sku">จำนวน SKU ทั้งหมด:</label>
-                    <input type="number" id="sku" placeholder="กรอกจำนวน SKU">
-                </div>
-                <div class="input-group">
-                    <label for="mu">จำนวน MU ทั้งหมด:</label>
-                    <input type="number" id="mu" placeholder="กรอกจำนวน MU">
-                </div>
-                <div class="input-group">
-                    <label for="days">จำนวนวันทำงาน:</label>
-                    <input type="number" id="days" placeholder="กรอกจำนวนวันทำงาน">
-                </div>
-            </div>
-
-            <div class="buttons-group">
-                <button id="calculateButton">🔍 คำนวณค่าเฉลี่ย</button>
-            </div>
-            
             <footer>
                 <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
                 <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
