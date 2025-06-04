@@ -46,7 +46,6 @@ html, body {
     }
 }
 
-/* ปรับ .container เพื่อให้เนื้อหาหลักอยู่กึ่งกลาง */
 .container {
     text-align: center;
     margin: 0 auto;
@@ -55,22 +54,6 @@ html, body {
     padding: 3vh 1em 2em;
     box-sizing: border-box;
 }
-
-/* ลบกฎ main ออกเนื่องจาก .container ทำหน้าที่แทนแล้ว */
-/*
-main {
-    text-align: center;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-    max-width: 600px;
-    margin: 0 auto;
-    width: 100%;
-}
-*/
 
 h1 {
     font-size: 2.5em;
@@ -198,15 +181,21 @@ button:hover {
     transform: translateY(-50%);
 }
 
-/* ปรับ Footer */
+/* ตำแหน่งสำหรับปุ่มไอคอนถุงเงิน */
+#calculateDailySalesBtn {
+    top: 50%;
+    margin-top: 100px;
+    transform: translateY(-50%);
+}
+
 footer {
     text-align: center;
-    font-size: 0.6em; /* ปรับขนาดตัวอักษรให้เล็กลง */
+    font-size: 0.6em;
     padding: 1.5em;
     color: #eee;
     line-height: 1.8em;
-    background: transparent; /* ไม่มีกรอบ (ไม่มีพื้นหลัง) */
-    border-radius: 0; /* ลบมุมโค้งมน */
+    background: transparent;
+    border-radius: 0;
     box-sizing: border-box;
     margin-top: 3em;
     position: relative;
@@ -214,13 +203,13 @@ footer {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    border: none; /* ไม่มีเส้นขอบ */
-    box-shadow: none; /* ไม่มีเงา */
+    border: none;
+    box-shadow: none;
 }
 
 footer p {
     margin: 0.5em 0;
-    font-size: 1em; /* ให้ p ใน footer มีขนาดตาม footer */
+    font-size: 1em;
 }
 
 h1.title-no-wrap::-webkit-scrollbar {
@@ -372,6 +361,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         right: 10px;
     }
 
+    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือ */
     #homeButton {
         top: 50%;
         margin-top: -80px;
@@ -380,9 +370,13 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         top: 50%;
         margin-top: 0px;
     }
-    #fullscreenButton {
+    #fullscreenBtn { /* เปลี่ยนจาก fullscreenButton เป็น fullscreenBtn */
         top: 50%;
-        margin-top: 80px;
+        margin-top: -30px;
+    }
+    #calculateDailySalesBtn {
+        top: 50%;
+        margin-top: 40px;
     }
     #dailyAverageButton {
         display: none;
@@ -390,7 +384,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
 
     footer {
         padding: 1em;
-        font-size: 0.55em; /* ปรับขนาดตัวอักษรให้เล็กลงสำหรับมือถือ */
+        font-size: 0.55em;
         max-width: 90%;
         margin-top: 2em;
     }
@@ -417,9 +411,10 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     }
     #homeButton { margin-top: -70px; }
     #duckButton { margin-top: 0px; }
-    #fullscreenButton { margin-top: 70px; }
+    #fullscreenBtn { margin-top: -30px; }
+    #calculateDailySalesBtn { margin-top: 40px; }
 
     footer {
-        font-size: 0.5em; /* ปรับขนาดตัวอักษรให้เล็กลงสำหรับมือถือขนาดเล็กมาก */
+        font-size: 0.5em;
     }
 }
