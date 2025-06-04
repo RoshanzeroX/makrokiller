@@ -1,122 +1,3 @@
-/* Reset */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Segoe UI', sans-serif;
-  color: #fff;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
-  background: transparent;
-  overflow-x: hidden;
-}
-
-.background {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url("bg.webp") center/cover no-repeat;
-  filter: brightness(40%) blur(2px);
-  z-index: -1;
-  background-attachment: fixed;
-}
-
-/* Layout wrapper for sticky footer */
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: 3vh 2em 2em;
-  box-sizing: border-box;
-}
-
-/* Fade and slide in effect */
-.fade-slide-in {
-  animation: fadeSlideIn 1s ease forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-@keyframes fadeSlideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Main */
-main {
-  text-align: center;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
-  align-items: center;
-  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
-}
-
-h1.title-no-wrap {
-  font-size: 2.2em;
-  margin-bottom: 1em;
-  white-space: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Responsive font adjustment for the title */
-@media (max-width: 480px) {
-  h1.title-no-wrap {
-    font-size: 1.3em;
-    white-space: nowrap;
-    overflow-x: hidden;
-  }
-}
-
-/* Form */
-input, button {
-  display: block;
-  width: 80%;
-  max-width: 400px;
-  margin: 1em auto;
-  padding: 1em;
-  font-size: 1em;
-  border-radius: 12px;
-  border: none;
-  text-shadow: none;
-}
-
-input {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  border: 1px solid #ccc;
-
-  /* เพิ่ม animation ตอน focus */
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-}
-
-input::placeholder {
-  color: #ddd;
-}
-
-input:focus {
-  outline: none;
-  border-color: #00aaff;
-  box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-button {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
 /* Floating buttons */
 .floating-button {
   position: fixed;
@@ -159,14 +40,22 @@ button:hover {
 #duckButton {
   right: 20px;
   left: auto; /* Ensure it's not fighting with left: 20px */
-  top: calc(50% - 70px); /* Adjust vertical position for the duck button */
+  top: calc(50% - 140px); /* เลื่อนปุ่มเป็ดขึ้นไปอีก */
   transform: translateY(-50%);
 }
 
 #fullscreenButton {
   right: 20px;
   left: auto; /* Ensure it's not fighting with left: 20px */
-  top: calc(50% + 10px); /* Adjust vertical position for the fullscreen button (below duck) */
+  top: calc(50% - 60px); /* เลื่อนปุ่มเต็มจอขึ้นไป */
+  transform: translateY(-50%);
+}
+
+/* ตำแหน่งปุ่มใหม่สำหรับ Daily Average */
+#dailyAverageButton {
+  right: 20px;
+  left: auto;
+  top: calc(50% + 20px); /* อยู่ต่ำกว่าปุ่มอื่น ๆ เล็กน้อย */
   transform: translateY(-50%);
 }
 
@@ -184,26 +73,4 @@ footer {
   bottom: 0;
   max-width: 100vw;
   word-break: break-word;
-}
-
-/* Footer paragraphs */
-footer p {
-  margin: 2em 0;
-}
-
-/* ปรับระยะห่าง footer บน PC */
-@media (min-width: 481px) {
-  footer p {
-    margin: 3.5em 0;
-  }
-}
-
-/* Scrollbar style for the title if overflow */
-h1.title-no-wrap::-webkit-scrollbar {
-  height: 6px;
-}
-
-h1.title-no-wrap::-webkit-scrollbar-thumb {
-  background-color: rgba(255,255,255,0.4);
-  border-radius: 3px;
 }
