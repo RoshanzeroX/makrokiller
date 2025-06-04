@@ -1,7 +1,11 @@
-@import url("style.css"); /* นำเข้าจาก index.css */
+@import url("style.css"); /* นำเข้า style.css หลักของคุณ */
 
+/* Overrides and additions for songs.html */
+
+/* Body, input, button, p, h1, h2, h3 - ใช้ Kanit font */
 body, input, button, p, h1, h2, h3 {
     font-family: 'Kanit', sans-serif;
+    /* สีและเงาข้อความจะถูกกำหนดโดย style.css หลัก */
 }
 
 /* ปรับขนาดหัวข้อให้พอดีกับหน้าจอ */
@@ -9,6 +13,9 @@ body, input, button, p, h1, h2, h3 {
     font-size: 1.8em;
     margin-bottom: 1em;
     text-align: center;
+    white-space: nowrap; /* ป้องกันการขึ้นบรรทัดใหม่ */
+    overflow-x: auto; /* ทำให้เลื่อนได้ถ้าข้อความยาวเกิน */
+    -webkit-overflow-scrolling: touch; /* เพื่อการเลื่อนที่ราบรื่นบน iOS */
 }
 
 @media (max-width: 480px) {
@@ -17,15 +24,18 @@ body, input, button, p, h1, h2, h3 {
     }
 }
 
-/* จัดเรียงให้อยู่กลางและปรับให้เข้ากับมือถือ */
+/* จัดเรียง content-wrapper ให้อยู่กลางและปรับให้เข้ากับมือถือ */
 .content-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 80vh;
+    min-height: 80vh; /* กำหนดความสูงขั้นต่ำให้ content-wrapper */
+    padding: 3vh 2em 2em; /* เพิ่ม padding ตาม style.css หลัก */
+    box-sizing: border-box; /* สำคัญสำหรับการคำนวณ padding */
 }
 
+/* Input & Button general styles */
 input, button {
     display: block;
     width: 80%;
@@ -35,13 +45,15 @@ input, button {
     font-size: 1em;
     border-radius: 12px;
     border: none;
+    text-shadow: none; /* ลบเงาข้อความสำหรับ input/button */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* เพิ่ม transition สำหรับ hover effect */
 }
 
 input {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
     border: 1px solid #ccc;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    /* transition properties จะถูกรวมจาก style.css หลัก */
 }
 
 input::placeholder {
@@ -61,6 +73,7 @@ button {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* transition properties จะถูกรวมจาก style.css หลัก */
 }
 
 button:hover {
@@ -68,9 +81,50 @@ button:hover {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
+/* Results display */
 #results {
     margin-top: 15px;
     font-size: 1.2em;
     font-weight: bold;
-    color: #E0E0E0;
+    color: #E0E0E0; /* สีข้อความผลลัพธ์ */
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.7); /* เพิ่มเงาข้อความให้ดูชัดขึ้น */
 }
+
+#results p { /* สไตล์สำหรับ p ภายใน results */
+    margin: 0.5em 0;
+    font-size: 1em; /* ปรับขนาดให้พอดีกับ context */
+}
+
+#results h3 { /* สไตล์สำหรับ h3 ภายใน results */
+    font-size: 1.4em;
+    margin-top: 1em;
+    color: #4CAF50; /* สีเขียวสำหรับข้อความแสดงสถานะ */
+}
+
+/* Progress Bar Specific Styles */
+.progress-bar-container {
+    width: 80%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    margin: 1em auto;
+    overflow: hidden;
+    height: 40px; /* ความสูงของ progress bar */
+    display: flex;
+    align-items: center;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    background-color: #00c6ff; /* สีเริ่มต้นของ progress bar */
+    width: 0%;
+    border-radius: 12px; /* ต้องปรับให้รับกับ container */
+    text-align: center;
+    line-height: 40px; /* จัด text กลางแนวตั้ง */
+    color: white;
+    font-weight: bold;
+    transition: width 0.5s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+/* Floating Buttons - จัดการตำแหน่งใน style.css หลัก */
+/* ดังนั้นใน Song-style.css ไม่จำเป็นต้องเขียนซ้ำ */
