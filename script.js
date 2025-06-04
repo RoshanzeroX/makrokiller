@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("averageForm");
-    const homeButton = document.getElementById("homeButton"); // เพิ่มการอ้างอิงถึงปุ่ม Home
+    const homeButton = document.getElementById("homeButton");
     const duckButton = document.getElementById("duckButton");
-    const dailyAverageButton = document.getElementById("dailyAverageButton"); // เพิ่มการอ้างอิงถึงปุ่ม Daily Average
+    const dailyAverageButton = document.getElementById("dailyAverageButton");
     const fullscreenButton = document.getElementById("fullscreenButton");
 
     // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรใหม่
@@ -53,29 +53,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- การทำงานของปุ่มลอยตัว (Floating Buttons) ---
-    // ปุ่ม Home ไปหน้า index.html (แม้จะอยู่หน้า index.html อยู่แล้ว)
-    if (homeButton) { // ตรวจสอบว่าปุ่มมีอยู่จริงก่อนเพิ่ม event listener
+    if (homeButton) {
         homeButton.addEventListener("click", () => {
             window.location.href = "index.html";
         });
     }
 
-    // ปุ่มเป็ด ไปหน้า songs.html
-    if (duckButton) { // ตรวจสอบว่าปุ่มมีอยู่จริงก่อนเพิ่ม event listener
+    if (duckButton) {
         duckButton.addEventListener("click", () => {
             window.location.href = "songs.html";
         });
     }
 
-    // ปุ่ม Daily Average ไปหน้า daily_average.html
-    if (dailyAverageButton) { // ตรวจสอบว่าปุ่มมีอยู่จริงก่อนเพิ่ม event listener
+    if (dailyAverageButton) {
         dailyAverageButton.addEventListener("click", () => {
             window.location.href = "daily_average.html";
         });
     }
 
-    // ปุ่ม fullscreen toggle
-    if (fullscreenButton) { // ตรวจสอบว่าปุ่มมีอยู่จริงก่อนเพิ่ม event listener
+    if (fullscreenButton) {
         fullscreenButton.addEventListener("click", () => {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch((err) => {
