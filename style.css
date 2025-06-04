@@ -241,19 +241,18 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     font-size: 1.1em;
     font-weight: bold;
 }
+
 .input-group input[type="number"] {
-    width: calc(100% - 24px);
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background: rgba(255, 255, 255, 0.2);
+    width: calc(100% - 2em);
+    padding: 1em;
     color: white;
-    font-size: 1.1em;
+    font-size: 1em;
     box-sizing: border-box;
 }
 .input-group input[type="number"]::placeholder {
     color: #ddd;
 }
+
 
 .progress-bar-container {
     width: 100%;
