@@ -1,94 +1,129 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const avg = Number(urlParams.get("average"));
+let daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
 
-  const resultContainer = document.getElementById("result-container");
-  const homeButton = document.getElementById("homeButton");
-  const fullscreenButton = document.getElementById("fullscreenButton");
+// ตัวแปรสำหรับเก็บค่าเฉลี่ยรายวันที่คำนวณได้ เพื่อส่งไปยัง daily_average.html
+let calculatedDailySKU = 0;
+let calculatedDailyMU = 0;
 
-  function randomHighImages() {
-    const images = [
-      "1 (3).png", "1 (4).png", "1 (5).png", "1 (6).png",
-      "1 (7).png", "1 (8).png", "1 (9).png"
-    ];
-    const index = Math.floor(Math.random() * images.length);
-    return images[index];
-  }
+function updateDateTime() {
+    let now = new Date();
+    document.getElementById("currentDateTime").innerHTML = `<strong>📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })} ⏳ ${now.toLocaleTimeString('th-TH')}</strong>`;
+    document.getElementById("yearCE").innerText = now.getFullYear();
+    document.getElementById("yearBE").innerText = now.getFullYear() + 543;
+}
 
-  function showResult() {
-    let imgSrc = "";
-    let text = "";
+setInterval(updateDateTime, 1000);
+updateDateTime();
 
-    if (avg > 12) {
-      imgSrc = randomHighImages();
-      text = "สุดยอดดด!! อย่างเท่";
+document.getElementById("currentMonth").innerText = new Date().toLocaleString('th-TH', { month: 'long' });
+document.getElementById("totalDays").innerText = daysInMonth; // แสดงวันในเดือนทั้งหมด
+
+function calculateTargets() {
+    let totalSKUs = parseInt(document.getElementById("totalSKUs").value) || 0;
+    let totalMUs = parseInt(document.getElementById("totalMUs").value) || 0;
+    let holidays = parseInt(document.getElementById("holidays").value) || 0; // ยังคงรับค่า holidays แต่ไม่นำมาใช้ในเป้าหมาย
+
+    let today = new Date().getDate();
+    // ใช้ daysInMonth ทั้งหมดในการคำนวณวันทั้งหมดในเดือน
+    let totalDaysInMonth = daysInMonth; 
+    let remainingDaysInMonth = Math.max(0, totalDaysInMonth - today); // จำนวนวันทั้งหมดที่เหลือในเดือน (ไม่หักวันหยุด)
+
+    // เป้าหมาย SKU/MU ที่ต้องจัดต่อวัน (ค่าคงที่)
+    let targetSKUPerDayFixed = 120;
+    let targetMUPerDayFixed = 340;   
+
+    // คำนวณเป้าหมายรวมของเดือนโดยใช้ "วันในเดือนทั้งหมด" (30 วัน)
+    // นี่คือค่า 120 * 30 = 3600 SKU และ 340 * 30 = 10200 MU
+    let totalMonthlySKUsTarget = targetSKUPerDayFixed * totalDaysInMonth;
+    let totalMonthlyMUsTarget = targetMUPerDayFixed * totalDaysInMonth;
+
+    // คำนวณจำนวนที่เหลือที่ต้องจัดในเดือนนี้
+    // ใช้ Math.max(0, ...) เพื่อไม่ให้ค่าเป็นลบหากทำเกินเป้าแล้ว
+    let remainingSKUsMonthly = Math.max(0, totalMonthlySKUsTarget - totalSKUs);
+    let remainingMUsMonthly = Math.max(0, totalMonthlyMUsTarget - totalMUs);
+
+    // คำนวณ "วันนี้ต้องจัด (เฉลี่ย)" โดยใช้ "วันทั้งหมดที่เหลือในเดือน"
+    let calculatedSKUsDaily_temp = 0;
+    let calculatedMUsDaily_temp = 0;
+
+    if (remainingDaysInMonth > 0) {
+        calculatedSKUsDaily_temp = remainingSKUsMonthly / remainingDaysInMonth;
+        calculatedMUsDaily_temp = remainingMUsMonthly / remainingDaysInMonth;
     } else {
-      imgSrc = "1 (1).png";
-      text = "ดีขึ้นให้ได้นะ";
+        // หากไม่มีวันเหลือ แต่ยังไม่ครบเป้าหมาย ให้แสดงยอดที่เหลือทั้งหมด
+        calculatedSKUsDaily_temp = remainingSKUsMonthly;
+        calculatedMUsDaily_temp = remainingMUsMonthly;
     }
 
-    resultContainer.innerHTML = `
-      <img src="${imgSrc}" alt="ผลลัพธ์" />
-      <div class="result-text-and-average fade-slide-in">
-        <div class="result-text">${text}</div>
-        <div class="average-value">ค่าเฉลี่ย: ${avg.toFixed(2)}</div>
-      </div>
+    // เก็บค่าที่คำนวณได้ลงในตัวแปร global เพื่อให้ปุ่มถุงเงินนำไปใช้
+    calculatedDailySKU = calculatedSKUsDaily_temp;
+    calculatedDailyMU = calculatedMUsDaily_temp;
+
+    // คำนวณความคืบหน้าโดยรวม (นำกลับมา)
+    let totalProgressPoints = (totalMonthlySKUsTarget + totalMonthlyMUsTarget);
+    let currentProgressPoints = (totalSKUs + totalMUs);
+    let progress = (currentProgressPoints / totalProgressPoints) * 100;
+    progress = Math.min(progress, 100); 
+
+    let message = "";
+    if (totalSKUs >= totalMonthlySKUsTarget && totalMUs >= totalMonthlyMUsTarget) {
+        message = "🌟 เก่งค่ะลูกกกก";
+    } else if (progress >= 80) { // เพิ่มเงื่อนไขสำหรับความคืบหน้าสูง
+        message = "👍 ใกล้ถึงเป้าหมายแล้ว! สู้ๆ";
+    }
+    else {
+        message = "💪 ดีขึ้นให้ได้นะ";
+    }
+
+    document.getElementById("results").innerHTML = `
+        <p><strong>📅 จำนวนวันที่เหลือในเดือน:</strong> ${remainingDaysInMonth} วัน</p>
+        <p><strong>📦 วันนี้ต้องจัด (เฉลี่ย):</strong> ${calculatedDailySKU.toFixed(0)} SKU / ${calculatedDailyMU.toFixed(0)} MU</p>
+        <p><strong>📦 เดือนนี้ต้องจัด (รวม):</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
+        <h3>${message}</h3>
+        <p>📊 ความคืบหน้า: <strong>${progress.toFixed(2)}%</strong></p>
     `;
-  }
 
-  showResult();
+    // ส่วน Progress Bar (นำกลับมา)
+    let progressBar = document.getElementById("progressBar");
+    progressBar.style.width = `${progress.toFixed(2)}%`;
+    progressBar.innerText = `${progress.toFixed(2)}%`;
 
-  homeButton.addEventListener("click", () => {
-    if (window.history.length > 1) {
-      window.history.back();
+    if (progress >= 100) {
+        progressBar.style.backgroundColor = '#28a745'; // เขียวเข้ม
+    } else if (progress >= 80) {
+        progressBar.style.backgroundColor = '#ffc107'; // ส้ม
     } else {
-      window.location.href = "index.html";
+        progressBar.style.backgroundColor = '#00c6ff'; // ฟ้าเริ่มต้น
     }
-  });
+}
 
-  // ✅ Toggle Fullscreen และล็อกแนวนอนเมื่อเข้า Fullscreen
-  async function toggleFullscreen() {
-    try {
-      if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
+document.addEventListener("DOMContentLoaded", () => {
+    // กำหนดฟังก์ชันให้กับปุ่มต่างๆ
+    document.getElementById("homeButton").addEventListener("click", () => {
+        window.location.href = "index.html";
+    });
 
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile && screen.orientation && screen.orientation.lock) {
-          await screen.orientation.lock('landscape');
-
-          window.addEventListener('resize', () => {
-            if (window.innerHeight > window.innerWidth) {
-              screen.orientation.lock('landscape').catch(() => {});
-            }
-          });
+    document.getElementById("fullscreenButton").addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch((err) => {
+                console.error(`ไม่สามารถเปิดโหมดเต็มจอได้: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
         }
-      } else {
-        await document.exitFullscreen();
-      }
-    } catch (err) {
-      console.warn("ไม่สามารถเข้าสู่/ออก fullscreen หรือเปลี่ยนแนวได้:", err);
-    }
-  }
+    });
 
-  if (fullscreenButton) {
-    fullscreenButton.addEventListener("click", toggleFullscreen);
-  }
+    document.getElementById("dailyAverageButton").addEventListener("click", () => {
+        // **สำคัญ:** เรียก calculateTargets() อีกครั้ง เพื่อให้แน่ใจว่าค่า calculatedDailySKU และ calculatedDailyMU เป็นค่าล่าสุด
+        calculateTargets();
 
-  // ✅ Fade-slide-in effect
-  const fadeElements = document.querySelectorAll('.fade-slide-in');
-  fadeElements.forEach(el => {
-    el.classList.add('visible');
-  });
+        // ส่งค่าเฉลี่ยรายวันที่คำนวณได้แล้วไปยัง daily_average.html
+        const params = new URLSearchParams({
+            skuDaily: calculatedDailySKU.toFixed(0), // ส่งเป็น string ที่ปัดเศษแล้ว
+            muDaily: calculatedDailyMU.toFixed(0)    // ส่งเป็น string ที่ปัดเศษแล้ว
+        });
+        window.location.href = `daily_average.html?${params.toString()}`;
+    });
 
-  // ✅ Background soft particles (ซ้อนกับ style.css/HTML class)
-  const particleContainer = document.querySelector('.background-particles');
-  if (particleContainer) {
-    for (let i = 0; i < 20; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'particle';
-      particle.style.left = `${Math.random() * 100}%`;
-      particle.style.animationDuration = `${4 + Math.random() * 6}s`;
-      particleContainer.appendChild(particle);
-    }
-  }
+    // เรียก calculateTargets() ครั้งแรกเมื่อโหลดหน้า เพื่อแสดงผลเบื้องต้น
+    calculateTargets();
 });
