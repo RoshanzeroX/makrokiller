@@ -60,34 +60,30 @@
             const muProgressBar = document.getElementById('muProgressBar');
             const clearDataButton = document.getElementById('clearDataButton');
 
+            // แสดงเป้าหมายประจำวัน
             targetSkuDisplay.textContent = targetSku.toFixed(0);
             targetMuDisplay.textContent = targetMu.toFixed(0);
 
-            const savedCurrentSku = localStorage.getItem('dailySku');
-            const savedCurrentMu = localStorage.getItem('dailyMu');
+            // โหลดค่าจาก Local Storage
+            const savedSku = localStorage.getItem('dailySku');
+            const savedMu = localStorage.getItem('dailyMu');
             
-            // แก้ไขเงื่อนไขตรงนี้: ถ้าค่าเป็น null หรือสตริงว่าง ให้กำหนดเป็นค่าว่าง
-            // ถ้าเป็น '0' หรือตัวเลขอื่น ให้แสดงตัวเลขนั้น
-            if (savedCurrentSku === null || savedCurrentSku === "") {
-                currentSkuInput.value = ""; 
-            } else {
-                currentSkuInput.value = savedCurrentSku;
-            }
+            // กำหนดค่าเริ่มต้นให้กับช่องกรอกข้อมูล
+            // ถ้าค่าที่โหลดมาเป็น null หรือ '0' ให้แสดงเป็นค่าว่าง เพื่อให้ placeholder ปรากฏ
+            // มิฉะนั้น ให้แสดงค่าที่โหลดมา
+            currentSkuInput.value = (savedSku === null || savedSku === '0') ? '' : savedSku;
+            currentMuInput.value = (savedMu === null || savedMu === '0') ? '' : savedMu;
 
-            if (savedCurrentMu === null || savedCurrentMu === "") {
-                currentMuInput.value = "";
-            } else {
-                currentMuInput.value = savedCurrentMu;
-            }
-
-
+            // ฟังก์ชันอัปเดตความคืบหน้า
             function updateProgress() {
+                // ใช้ parseFloat จากค่าใน input โดยตรง ถ้าว่างก็ถือว่าเป็น 0
                 const currentSku = parseFloat(currentSkuInput.value) || 0;
                 const currentMu = parseFloat(currentMuInput.value) || 0;
 
                 const targetSkuNum = targetSku;
                 const targetMuNum = targetMu;
 
+                // คำนวณเปอร์เซ็นต์ SKU
                 let skuPercentage = 0;
                 if (targetSkuNum > 0) {
                     skuPercentage = Math.min(100, (currentSku / targetSkuNum) * 100);
@@ -96,6 +92,7 @@
                 skuProgressBar.textContent = skuPercentage.toFixed(0) + '%';
                 skuProgressBar.style.backgroundColor = getProgressBarColor(skuPercentage);
 
+                // คำนวณเปอร์เซ็นต์ MU
                 let muPercentage = 0;
                 if (targetMuNum > 0) {
                     muPercentage = Math.min(100, (currentMu / targetMuNum) * 100);
@@ -104,32 +101,37 @@
                 muProgressBar.textContent = muPercentage.toFixed(0) + '%';
                 muProgressBar.style.backgroundColor = getProgressBarColor(muPercentage);
 
-                localStorage.setItem('dailySku', currentSku);
-                localStorage.setItem('dailyMu', currentMu);
+                // บันทึกค่าลง Local Storage
+                // ถ้าช่องว่าง (ไม่มีการกรอก) ให้บันทึกเป็น '0' เพื่อรักษาประเภทข้อมูล
+                localStorage.setItem('dailySku', currentSkuInput.value === '' ? '0' : currentSkuInput.value);
+                localStorage.setItem('dailyMu', currentMuInput.value === '' ? '0' : currentMuInput.value);
             }
 
+            // ฟังก์ชันกำหนดสี ProgressBar
             function getProgressBarColor(percentage) {
                 if (percentage >= 100) {
-                    return '#28a745'; // Green
+                    return '#28a745'; // เขียวเมื่อถึงเป้าหมาย
                 } else if (percentage >= 75) {
-                    return '#ffc107'; // Yellow
+                    return '#ffc107'; // เหลืองเมื่อใกล้ถึง
                 } else {
-                    return '#007bff'; // Blue
+                    return '#007bff'; // น้ำเงินเมื่อยังห่างไกล
                 }
             }
 
+            // เพิ่ม Event Listener สำหรับการเปลี่ยนแปลงข้อมูล
             currentSkuInput.addEventListener('input', updateProgress);
             currentMuInput.addEventListener('input', updateProgress);
 
+            // ปุ่มเคลียร์ข้อมูล
             clearDataButton.addEventListener('click', () => {
-                currentSkuInput.value = ""; 
-                currentMuInput.value = "";
-                localStorage.removeItem('dailySku');
+                currentSkuInput.value = ""; // เคลียร์เป็นค่าว่าง
+                currentMuInput.value = ""; // เคลียร์เป็นค่าว่าง
+                localStorage.removeItem('dailySku'); // ลบข้อมูลออกจาก Local Storage
                 localStorage.removeItem('dailyMu');
-                updateProgress();
+                updateProgress(); // อัปเดต Progress Bar และแสดง placeholder
             });
 
-            // Event Listeners for Floating Buttons
+            // Event Listeners สำหรับ Floating Buttons
             document.getElementById("homeButton").addEventListener("click", () => {
                 window.location.href = "index.html";
             });
@@ -148,7 +150,8 @@
                 }
             });
 
-            updateProgress(); // เรียกใช้ครั้งแรกเพื่อแสดงสถานะเริ่มต้น
+            // เรียกใช้ฟังก์ชันอัปเดตครั้งแรกเมื่อโหลดหน้าเว็บ
+            updateProgress();
         });
     </script>
 </body>
