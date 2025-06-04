@@ -1,149 +1,140 @@
-/* style.css */
-@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+/*
+ * style.css
+ */
 
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Kanit', sans-serif;
-    color: #fff; 
+    color: #fff;
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
     background: transparent;
     overflow-x: hidden;
-    line-height: 1.6;
-    font-size: 16px; 
 }
 
 .background {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url("bg.webp") center/cover no-repeat; 
+    background: url("bg.webp") center/cover no-repeat;
     background-attachment: fixed;
     filter: brightness(40%) blur(2px);
     z-index: -1;
 }
 
-/* --- สไตล์เฉพาะสำหรับ daily_average.html หรือหน้าอื่นๆ ที่ไม่ได้ใช้ Song-style.css --- */
-/* (คงเดิม) */
-.info-card {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 1em 1.5em;
-    border-radius: 12px;
-    margin-bottom: 1.5em;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(3px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    text-shadow: none;
-    color: #eee;
-}
-
-.info-card h2 {
-    color: #ffd700;
-    font-size: 1.5em;
-    margin-top: 0;
-    margin-bottom: 0.8em;
-}
-
-.info-card p {
-    font-size: 1.1em;
-    margin: 0.5em 0;
-}
-
-.info-card span {
-    font-weight: bold;
-    color: #00c6ff;
-}
-
-.input-group {
-    margin-bottom: 1em;
-}
-
-.info-card input[type="number"] {
-    width: calc(100% - 2em);
-    padding: 0.8em;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 1em;
-    text-align: center;
-    outline: none;
-}
-
-.progress-bar-container {
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 0.5em;
-    height: 30px;
+.content-wrapper {
     display: flex;
-    align-items: center;
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background-color: #007bff; /* Default blue */
-    text-align: center;
-    line-height: 30px;
-    color: white;
-    font-weight: bold;
-    transition: width 0.5s ease-in-out, background-color 0.3s ease;
-}
-
-.buttons-group {
-    margin-top: 2em;
-    display: flex;
-    justify-content: center;
-    gap: 1em;
-}
-
-.clear-button {
-    padding: 1em 2em;
-    font-size: 1em;
-    background-color: #dc3545; /* Red for clear */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.clear-button:hover {
-    background-color: #c82333;
-    transform: translateY(-2px);
-}
-
-/* --- ปรับแต่ง Footer ให้จัดกลาง --- */
-footer {
-    margin-top: 3em;
-    padding: 1.5em;
-    text-align: center; /* จัดให้อยู่ตรงกลาง */
-    font-size: 0.7em; 
-    background: transparent;
-    border-radius: 0;
-    box-shadow: none;
-    max-width: 85%;
-    margin-left: auto; /* จัดกลาง */
-    margin-right: auto; /* จัดกลาง */
+    flex-direction: column;
+    padding: 3vh 2em 2em;
+    box-sizing: border-box;
     position: relative;
-    color: #ddd;
-}
-footer p {
-    margin: 0.4em 0; 
-    color: #ddd;
-}
-.footer-icon {
-    display: inline-block;
-    font-size: 1.2em;
-    margin: 0 6px;
+    z-index: 1;
+    min-height: 90vh; /* เพื่อให้ footer อยู่ด้านล่าง */
+    justify-content: center; /* จัดให้อยู่ตรงกลางแนวตั้งบน PC */
 }
 
-/* --- ปรับแต่ง Floating Buttons (แก้ปัญหาซ้อนกัน + จัดระยะห่าง + ฟังก์ชันลอยๆ) --- */
+.fade-slide-in {
+    animation: fadeSlideIn 1s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeSlideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%; /* เพิ่ม width เพื่อให้ responsive มากขึ้น */
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 1em;
+    color: #ffd700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+h1.title-no-wrap {
+    font-size: 2.2em;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+input, button {
+    display: block;
+    width: 80%;
+    max-width: 400px;
+    margin: 1em auto;
+    padding: 1em;
+    font-size: 1em;
+    border-radius: 12px;
+    border: none;
+    text-shadow: none;
+}
+
+input {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid #ccc;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+input:focus {
+    outline: none;
+    border-color: #00aaff;
+    box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+button {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* เพิ่ม styles สำหรับ buttons-group เพื่อจัดปุ่มให้เป็นบรรทัดเดียวกัน */
+.buttons-group {
+    display: flex; /* ใช้ flexbox */
+    justify-content: center; /* จัดกึ่งกลางแนวนอน */
+    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+    width: 100%; /* ให้เต็มความกว้าง */
+    margin-top: 2em; /* เพิ่มระยะห่างด้านบน */
+    flex-wrap: wrap; /* ให้ปุ่มขึ้นบรรทัดใหม่ได้ถ้าหน้าจอเล็ก */
+}
+
+.buttons-group button {
+    margin: 0.5em; /* ให้ปุ่มมีระยะห่างกันเล็กน้อย */
+    width: auto; /* ให้ปุ่มปรับขนาดตามเนื้อหา */
+    max-width: none; /* ยกเลิก max-width เพื่อให้จัดเรียงได้ */
+    display: inline-block; /* ทำให้ปุ่มอยู่ในบรรทัดเดียวกัน */
+}
+
+
 .floating-button {
     position: fixed;
     right: 20px;
@@ -160,66 +151,309 @@ footer p {
     justify-content: center;
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: floaty 2.5s ease-in-out infinite; 
+    animation: floaty 2.5s ease-in-out infinite;
 }
 
 @keyframes floaty {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
-/* ตำแหน่งปุ่มลอยตัวบน PC: เพิ่มระยะห่างให้มากขึ้น */
-#homeButton { top: 50%; margin-top: -200px; } /* ปุ่มแรก */
-#dailyAverageButton { top: 50%; margin-top: -100px; } /* ปุ่มสอง */
-#duckButton { top: 50%; margin-top: 0px; } /* ปุ่มกลาง */
-#fullscreenButton { top: 50%; margin-top: 100px; } /* ปุ่มสุดท้าย */
+/* กำหนดตำแหน่งปุ่มลอยสำหรับ PC */
+#homeButton {
+    top: 50%;
+    margin-top: -160px; /* ลดลงมาอีก 40px เพื่อให้มีที่สำหรับปุ่มกล้อง */
+    transform: translateY(-50%);
+}
+
+#duckButton {
+    top: 50%;
+    margin-top: -80px; /* ลดลงมาอีก 40px */
+    transform: translateY(-50%);
+}
+
+#fullscreenButton {
+    top: 50%;
+    margin-top: 0px; /* ลดลงมาอีก 40px */
+    transform: translateY(-50%);
+}
+
+#cameraButton { /* ปุ่มกล้องใหม่ */
+    top: 50%;
+    margin-top: 80px; /* เพิ่มปุ่มใหม่เข้ามา */
+    transform: translateY(-50%);
+}
+
+#dailyAverageButton { /* ปุ่มนี้จะถูกซ่อนใน daily_average.html แต่ยังคงอยู่ */
+    display: none;
+}
 
 
-/* Media Queries สำหรับสไตล์ทั่วไปและ Floating Buttons */
-@media (max-width: 768px) {
-    .info-card { padding: 1em; }
+footer {
+    text-align: center;
+    font-size: 0.75em;
+    padding: 1.5em;
+    color: #eee;
+    line-height: 1.8em;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-sizing: border-box;
+    margin-top: 3em; /* เพิ่ม margin-top เพื่อแยกจาก main */
+    position: relative;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; /* ให้เต็มความกว้าง */
+}
 
-    /* ตำแหน่งปุ่มลอยตัวบนมือถือ (จัดเรียงใหม่ทั้งหมด) */
+footer p {
+    margin: 0.5em 0;
+}
+
+h1.title-no-wrap::-webkit-scrollbar {
+    height: 6px;
+}
+
+h1.title-no-wrap::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 3px;
+}
+
+
+.info-card {
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 1.5em;
+    border-radius: 15px;
+    margin-bottom: 2em;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 90%;
+    max-width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.info-card h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 0.8em;
+    color: #ffd700;
+    text-shadow: none;
+}
+.info-card p {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    color: #eee;
+    text-shadow: none;
+}
+
+/* เพิ่มสไตล์สำหรับ card รูปภาพโดยเฉพาะ */
+.photo-card {
+    margin-top: 2em; /* เพิ่มระยะห่างจาก card ด้านบน */
+    padding-bottom: 2em; /* เพิ่มพื้นที่ด้านล่าง */
+}
+.photo-card img {
+    display: block; /* ทำให้รูปภาพอยู่บรรทัดใหม่ */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.input-group {
+    margin-bottom: 1em;
+    text-align: left;
+    width: 100%;
+}
+
+.input-group input[type="number"] {
+    width: calc(100% - 2em);
+    padding: 1em;
+    color: white;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+.input-group input[type="number"]::placeholder {
+    color: #ddd;
+}
+
+
+.progress-bar-container {
+    width: 100%;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 1em;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.progress-bar {
+    height: 100%;
+    background-color: #007bff;
+    width: 0%;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 35px;
+    color: white;
+    transition: width 0.5s ease-in-out;
+    font-size: 0.9em;
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 0 0.5em;
+    box-sizing: border-box;
+}
+
+/* ปุ่มเคลียร์ข้อมูล */
+.clear-button {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.clear-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* ปุ่มสำหรับ Action อื่นๆ (เช่น ถ่ายรูป) */
+.action-button {
+    background: linear-gradient(135deg, #28a745, #218838); /* สีเขียว */
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+
+@media (max-width: 768px) { /* ปรับ media query ให้ครอบคลุมแท็บเล็ตด้วย */
+    h1 {
+        font-size: 2em;
+    }
+    h1.title-no-wrap {
+        font-size: 1.6em;
+        overflow-x: hidden;
+    }
+    .content-wrapper {
+        padding: 2vh 1em;
+    }
+    input[type="number"], button { /* ให้ input type="number" และ button ใช้สไตล์เดียวกัน */
+        width: 90%;
+        padding: 0.8em;
+        font-size: 0.9em;
+    }
+    /* ปรับให้ input type="file" ที่ซ่อนไว้ ไม่กระทบ */
+    input[type="file"] {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .info-card {
+        padding: 1em;
+        margin-bottom: 1.5em;
+        width: 95%;
+    }
+    .info-card h2 {
+        font-size: 1.5em;
+    }
+    .info-card p, .input-group label, .input-group input[type="number"] {
+        font-size: 1em;
+    }
+    .progress-bar-container {
+        height: 30px;
+    }
+    .progress-bar {
+        line-height: 30px;
+        font-size: 0.8em;
+    }
+    .buttons-group {
+        flex-direction: column; /* บนมือถือให้ปุ่มเรียงกันลงมา */
+        margin-top: 1.5em;
+    }
+    .buttons-group button {
+        margin: 0.5em 0; /* เพิ่มระยะห่างแนวตั้ง */
+        width: 80%; /* ให้ปุ่มกว้างขึ้นบนมือถือ */
+        max-width: 300px;
+    }
     .floating-button {
         width: 50px;
         height: 50px;
         font-size: 24px;
         right: 10px;
     }
-    /* ปรับระยะห่างบนมือถือให้เหมาะสม */
-    #homeButton { top: 50%; margin-top: -150px; }
-    #dailyAverageButton { top: 50%; margin-top: -75px; }
-    #duckButton { top: 50%; margin-top: 0px; }
-    #fullscreenButton { top: 50%; margin-top: 75px; }
+
+    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือที่มี 4 ปุ่ม */
+    #homeButton {
+        top: 50%;
+        margin-top: -110px; /* ลดลงมาอีก 40px จากเดิม (-70-40) = -110 */
+    }
+    #duckButton {
+        top: 50%;
+        margin-top: -30px; /* ลดลงมาอีก 40px จากเดิม (0-40) = -30 */
+    }
+    #fullscreenButton {
+        top: 50%;
+        margin-top: 50px; /* ลดลงมาอีก 40px จากเดิม (80-30) = 50 */
+    }
+    #cameraButton { /* ปุ่มกล้องใหม่ */
+        top: 50%;
+        margin-top: 130px; /* เพิ่มเข้ามา 80 + 50 = 130 */
+    }
+
+    #dailyAverageButton { /* ปุ่มนี้จะถูกซ่อนใน daily_average.html แต่ยังคงอยู่ */
+        display: none;
+    }
 
     footer {
-        font-size: 0.65em;
         padding: 1em;
-        margin-top: 2em;
+        font-size: 0.65em;
         max-width: 90%;
+        margin-top: 2em;
     }
 }
 
-@media (max-width: 480px) {
-    .info-card { padding: 0.8em; }
-    .info-card p { font-size: 0.9em; }
-
-    /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก */
+/* เพิ่ม media query สำหรับมือถือขนาดเล็กมาก */
+@media (max-width: 400px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    .info-card h2 {
+        font-size: 1.3em;
+    }
+    .info-card p {
+        font-size: 0.9em;
+    }
+    input[type="number"], button {
+        font-size: 0.85em;
+    }
     .floating-button {
         width: 45px;
         height: 45px;
         font-size: 20px;
         right: 5px;
     }
-    /* ปรับระยะห่างบนมือถือเล็กให้เหมาะสม */
-    #homeButton { margin-top: -130px; }
-    #dailyAverageButton { margin-top: -65px; }
-    #duckButton { margin-top: 0px; } 
-    #fullscreenButton { margin-top: 65px; }
-
-    footer {
-        font-size: 0.6em;
-        padding: 0.8em;
-        margin-top: 1.5em;
-    }
+    #homeButton { margin-top: -100px; } /* ปรับตำแหน่งเล็กน้อย */
+    #duckButton { margin-top: -20px; }
+    #fullscreenButton { margin-top: 60px; }
+    #cameraButton { margin-top: 140px; } /* ปรับตำแหน่งเล็กน้อย */
 }
