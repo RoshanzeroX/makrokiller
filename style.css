@@ -57,12 +57,7 @@ main {
     width: 100%;
     margin: auto; /* จัดกึ่งกลางอัตโนมัติ */
     padding: 2em;
-    background-color: rgba(255, 255, 255, 0.2); /* พื้นหลังโปร่งแสงสำหรับส่วน input */
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* main ไม่ต้องมีพื้นหลังโปร่งแสงแล้ว เพราะ info-card จะมีแทน */
 }
 
 h1 {
@@ -70,24 +65,58 @@ h1 {
     margin-bottom: 1em;
     color: #ffd700; /* สีทองสำหรับหัวข้อ */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-    /* ปรับหัวข้อไม่ให้หลุดจอ */
     white-space: normal; /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
     word-break: break-word; /* ให้ข้อความตัดคำได้ */
     overflow-x: hidden; /* ซ่อนส่วนที่เกินขอบไป */
 }
-/* ไม่ต้องมี scrollbar สำหรับ h1 แล้ว */
 
+/* --- ส่วนของ Card ข้อมูล (คล้าย daily_average.html) --- */
+.info-card {
+    background-color: rgba(255, 255, 255, 0.25); /* พื้นหลังโปร่งแสง */
+    padding: 1.5em;
+    border-radius: 15px;
+    margin-bottom: 1.5em; /* ระยะห่างระหว่าง card */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 90%; /* ความกว้างที่ตอบสนอง */
+    max-width: 450px; /* ความกว้างสูงสุด */
+    box-sizing: border-box;
+    text-align: center;
+    color: #eee;
+    text-shadow: none; /* ไม่มีเงาข้อความภายใน card */
+}
+
+.info-card h2 {
+    font-size: 1.8em;
+    color: #00c6ff; /* สีฟ้าสำหรับหัวข้อย่อย */
+    margin-top: 0;
+    margin-bottom: 1em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.info-card p {
+    font-size: 1.1em;
+    margin: 0.5em 0;
+}
+
+.info-card p span {
+    font-weight: bold;
+    color: #ffd700; /* สีทองสำหรับค่าตัวเลข */
+}
+
+/* Input Group ใน Card */
 .input-group {
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
     width: 100%;
-    max-width: 300px; /* กำหนดความกว้างสูงสุดของ input group */
-    text-align: left; /* จัดข้อความ label ชิดซ้าย */
+    text-align: left;
 }
 
 .input-group label {
     display: block;
     margin-bottom: 0.5em;
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: bold;
     color: #eee;
 }
@@ -99,15 +128,31 @@ h1 {
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
-    font-size: 1.1em;
-    box-sizing: border-box; /* รวม padding และ border ใน width */
-    text-shadow: none; /* ไม่มีเงาข้อความใน input */
+    font-size: 1em;
+    box-sizing: border-box;
+    text-shadow: none;
+    -webkit-appearance: none; /* ลบลูกศรขึ้นลงใน Safari/Chrome */
+    margin: 0; /* แก้ปัญหา margin ใน Firefox */
+}
+
+.input-group input[type="number"]::-webkit-inner-spin-button,
+.input-group input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .input-group input[type="number"]:focus {
     outline: none;
     border-color: #00c6ff;
     box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.5);
+}
+
+/* ปุ่มคำนวณและกลุ่มปุ่ม */
+.buttons-group {
+    margin-top: 2em;
+    width: 90%;
+    max-width: 450px;
+    box-sizing: border-box;
 }
 
 button {
@@ -121,7 +166,7 @@ button {
     cursor: pointer;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    margin-top: 1em;
+    width: 100%; /* ให้ปุ่มเต็มความกว้างของ buttons-group */
 }
 
 button:hover {
@@ -136,7 +181,6 @@ footer {
     padding: 1.5em;
     text-align: center;
     font-size: 0.75em;
-    /* ลบพื้นหลังและกรอบออก */
     background: transparent;
     border-radius: 0;
     box-shadow: none;
@@ -144,7 +188,7 @@ footer {
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    color: #ddd; /* รักษาสีข้อความ */
+    color: #ddd;
 }
 footer p {
     margin: 0.5em 0;
@@ -156,30 +200,71 @@ footer p {
     margin: 0 6px;
 }
 
+/* --- สไตล์ปุ่มลอยตัว (Floating Buttons) --- */
+.floating-button {
+    position: fixed;
+    right: 20px; /* ทุกปุ่มอยู่ทางขวา */
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: floaty 2.5s ease-in-out infinite;
+}
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* ตำแหน่งปุ่มลอยตัวบน PC */
+/* เรียงปุ่มให้ห่างกัน 80px จากกึ่งกลางหน้าจอ */
+#homeButton { top: 50%; margin-top: -120px; transform: translateY(-50%); }
+#dailyAverageButton { top: 50%; margin-top: -40px; transform: translateY(-50%); }
+#duckButton { top: 50%; margin-top: 40px; transform: translateY(-50%); }
+#fullscreenButton { top: 50%; margin-top: 120px; transform: translateY(-50%); }
+
+
 /* Media Queries สำหรับการตอบสนองบนมือถือ */
 @media (max-width: 768px) {
     .content-wrapper {
-        padding: 2vh 1em 1em; /* ปรับ padding บนมือถือ */
+        padding: 2vh 1em 1em;
     }
     main {
         padding: 1.5em;
-        width: 95%; /* ขยาย main ให้กว้างขึ้นบนมือถือ */
-        max-width: unset; /* ยกเลิก max-width */
+        width: 95%;
+        max-width: unset;
     }
     h1 {
         font-size: 2em;
         margin-bottom: 0.8em;
     }
-    .input-group {
-        margin-bottom: 1em;
-        max-width: unset; /* ยกเลิก max-width */
+    .info-card {
+        padding: 1em;
+        width: 95%;
+    }
+    .info-card h2 {
+        font-size: 1.5em;
+    }
+    .info-card p {
+        font-size: 1em;
     }
     .input-group label {
-        font-size: 1.1em;
+        font-size: 1em;
     }
     .input-group input[type="number"] {
         padding: 0.7em 0.8em;
         font-size: 1em;
+    }
+    .buttons-group {
+        width: 95%;
     }
     button {
         padding: 0.8em 1.5em;
@@ -191,6 +276,19 @@ footer p {
         margin-top: 2em;
         max-width: 90%;
     }
+
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือ */
+    .floating-button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        right: 10px; /* ชิดขอบ 10px บนมือถือ */
+    }
+    /* เรียงปุ่มให้ห่างกัน 70px จากกึ่งกลางหน้าจอ */
+    #homeButton { top: 50%; margin-top: -105px; transform: translateY(-50%); }
+    #dailyAverageButton { top: 50%; margin-top: -35px; transform: translateY(-50%); }
+    #duckButton { top: 50%; margin-top: 35px; transform: translateY(-50%); }
+    #fullscreenButton { top: 50%; margin-top: 105px; transform: translateY(-50%); }
 }
 
 @media (max-width: 480px) {
@@ -200,8 +298,17 @@ footer p {
     main {
         padding: 1em;
     }
+    .info-card {
+        padding: 0.8em;
+    }
+    .info-card h2 {
+        font-size: 1.3em;
+    }
+    .info-card p {
+        font-size: 0.9em;
+    }
     .input-group label {
-        font-size: 1em;
+        font-size: 0.9em;
     }
     .input-group input[type="number"] {
         padding: 0.6em 0.7em;
@@ -216,4 +323,17 @@ footer p {
         padding: 0.8em;
         margin-top: 1.5em;
     }
+
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก */
+    .floating-button {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
+    }
+    /* เรียงปุ่มให้ห่างกัน 60px จากกึ่งกลางหน้าจอ */
+    #homeButton { margin-top: -90px; }
+    #dailyAverageButton { margin-top: -30px; }
+    #duckButton { margin-top: 30px; }
+    #fullscreenButton { margin-top: 90px; }
 }
