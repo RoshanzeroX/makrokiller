@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ค่าเฉลี่ยยอดจัดรายวัน</title>
+    <title>💰 ค่าเฉลี่ยยอดจัดรายวัน</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,16 +11,16 @@
     <div class="background"></div>
     <div class="content-wrapper fade-slide-in">
         <main>
-            <h1>💰 ค่าเฉลี่ยยอดจัดรายวัน</h1>
+            <h1>📈 ค่าเฉลี่ยยอดจัดรายวัน</h1>
 
             <div class="info-card">
-                <h2>เป้าหมายประจำวัน</h2>
+                <h2>🎯 เป้าหมายประจำวัน</h2>
                 <p>เป้าหมาย SKU ต่อวัน: <span id="targetSku">0</span></p>
                 <p>เป้าหมาย MU ต่อวัน: <span id="targetMu">0</span></p>
             </div>
 
             <div class="info-card">
-                <h2>ความคืบหน้าการจัดวันนี้</h2>
+                <h2>📊 ความคืบหน้าการจัดวันนี้</h2>
                 <div class="input-group">
                     <input type="number" id="currentSku" placeholder="จำนวน SKU ที่จัดแล้ว">
                 </div>
@@ -28,7 +28,7 @@
                     <div id="skuProgressBar" class="progress-bar">0%</div>
                 </div>
 
-                <div class="input-group" style="margin-top: 1.5em;">
+                <div class="input-group">
                     <input type="number" id="currentMu" placeholder="จำนวน MU ที่จัดแล้ว">
                 </div>
                 <div class="progress-bar-container">
@@ -63,26 +63,22 @@
             targetSkuDisplay.textContent = targetSku.toFixed(0);
             targetMuDisplay.textContent = targetMu.toFixed(0);
 
-            // ดึงค่าจาก Local Storage และกำหนดให้ input
             const savedCurrentSku = localStorage.getItem('dailySku');
             const savedCurrentMu = localStorage.getItem('dailyMu');
             
-            // ตรวจสอบว่ามีค่าที่บันทึกไว้หรือไม่ ก่อนกำหนด
-            if (savedCurrentSku !== null) { // ตรวจสอบ null เพราะ "" ก็เป็นค่าที่ถูกต้อง
+            if (savedCurrentSku !== null && savedCurrentSku !== "") {
                 currentSkuInput.value = savedCurrentSku;
             } else {
-                currentSkuInput.value = ""; // กำหนดเป็นค่าว่างเพื่อให้ placeholder แสดง
+                currentSkuInput.value = "";
             }
 
-            if (savedCurrentMu !== null) { // ตรวจสอบ null เพราะ "" ก็เป็นค่าที่ถูกต้อง
+            if (savedCurrentMu !== null && savedCurrentMu !== "") {
                 currentMuInput.value = savedCurrentMu;
             } else {
-                currentMuInput.value = ""; // กำหนดเป็นค่าว่างเพื่อให้ placeholder แสดง
+                currentMuInput.value = "";
             }
 
-
             function updateProgress() {
-                // ใช้ parseFloat จากค่าใน input โดยตรง
                 const currentSku = parseFloat(currentSkuInput.value) || 0;
                 const currentMu = parseFloat(currentMuInput.value) || 0;
 
@@ -111,11 +107,11 @@
 
             function getProgressBarColor(percentage) {
                 if (percentage >= 100) {
-                    return '#28a745';
+                    return '#28a745'; // Green
                 } else if (percentage >= 75) {
-                    return '#ffc107';
+                    return '#ffc107'; // Yellow
                 } else {
-                    return '#007bff';
+                    return '#007bff'; // Blue
                 }
             }
 
@@ -123,8 +119,8 @@
             currentMuInput.addEventListener('input', updateProgress);
 
             clearDataButton.addEventListener('click', () => {
-                currentSkuInput.value = ""; // เคลียร์เป็นค่าว่างเพื่อให้ placeholder แสดง
-                currentMuInput.value = ""; // เคลียร์เป็นค่าว่างเพื่อให้ placeholder แสดง
+                currentSkuInput.value = "";
+                currentMuInput.value = "";
                 localStorage.removeItem('dailySku');
                 localStorage.removeItem('dailyMu');
                 updateProgress();
@@ -149,7 +145,6 @@
                 }
             });
 
-            // เรียกใช้ครั้งแรกเพื่อแสดงค่าที่โหลดมา (ถ้ามี) หรือแสดง placeholder
             updateProgress();
         });
     </script>
