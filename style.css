@@ -22,10 +22,10 @@ html, body {
     position: fixed; /* ตรึงพื้นหลังให้อยู่กับที่ */
     top: 0; left: 0; right: 0; bottom: 0;
     /* **สำคัญ:** ตรวจสอบ Path รูปภาพตรงนี้ให้ถูกต้อง */
-    background: url("images/bg.webp") center/cover no-repeat; /* ควรอยู่ในโฟลเดอร์ images */
-    background-attachment: fixed; /* ทำให้พื้นหลังอยู่กับที่เมื่อ scroll */
-    filter: brightness(40%) blur(2px); /* ปรับความสว่างและความเบลอของภาพพื้นหลัง */
-    z-index: -1; /* ส่งไปอยู่ด้านหลังสุด */
+    background: url("bg.webp") center/cover no-repeat; 
+    background-attachment: fixed; 
+    filter: brightness(40%) blur(2px); 
+    z-index: -1; 
 }
 
 /* --- Layout Wrapper for Content --- */
