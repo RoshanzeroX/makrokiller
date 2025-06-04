@@ -15,27 +15,29 @@ setInterval(updateDateTime, 1000);
 updateDateTime();
 
 document.getElementById("currentMonth").innerText = new Date().toLocaleString('th-TH', { month: 'long' });
-document.getElementById("totalDays").innerText = daysInMonth;
+document.getElementById("totalDays").innerText = daysInMonth; // แสดงวันในเดือนทั้งหมด
 
 function calculateTargets() {
     let totalSKUs = parseInt(document.getElementById("totalSKUs").value) || 0;
     let totalMUs = parseInt(document.getElementById("totalMUs").value) || 0;
-    // let holidays = parseInt(document.getElementById("holidays").value) || 0; // ไม่ใช้แล้ว
+    let holidays = parseInt(document.getElementById("holidays").value) || 0; // ยังคงรับค่า holidays แต่ไม่นำมาใช้ในเป้าหมาย
 
     let today = new Date().getDate();
-    // ใช้ daysInMonth ทั้งหมด ไม่หักวันหยุด
-    let totalDaysInMonthActual = daysInMonth; 
-    let remainingDaysInMonth = Math.max(0, totalDaysInMonthActual - today); // จำนวนวันทั้งหมดที่เหลือในเดือน (ไม่หักวันหยุด)
+    // ใช้ daysInMonth ทั้งหมดในการคำนวณวันทั้งหมดในเดือน
+    let totalDaysInMonth = daysInMonth; 
+    let remainingDaysInMonth = Math.max(0, totalDaysInMonth - today); // จำนวนวันทั้งหมดที่เหลือในเดือน (ไม่หักวันหยุด)
 
-    // เป้าหมาย SKU/MU ต่อวัน (ค่าคงที่)
+    // เป้าหมาย SKU/MU ที่ต้องจัดต่อวัน (ค่าคงที่)
     let targetSKUPerDayFixed = 120;
     let targetMUPerDayFixed = 340;   
 
-    // คำนวณเป้าหมายรวมของเดือนโดยใช้ "วันในเดือนทั้งหมด" ไม่หักวันหยุด
-    let totalMonthlySKUsTarget = targetSKUPerDayFixed * totalDaysInMonthActual;
-    let totalMonthlyMUsTarget = targetMUPerDayFixed * totalDaysInMonthActual;
+    // คำนวณเป้าหมายรวมของเดือนโดยใช้ "วันในเดือนทั้งหมด" (30 วัน)
+    // นี่คือค่า 120 * 30 = 3600 SKU และ 340 * 30 = 10200 MU
+    let totalMonthlySKUsTarget = targetSKUPerDayFixed * totalDaysInMonth;
+    let totalMonthlyMUsTarget = targetMUPerDayFixed * totalDaysInMonth;
 
     // คำนวณจำนวนที่เหลือที่ต้องจัดในเดือนนี้
+    // ใช้ Math.max(0, ...) เพื่อไม่ให้ค่าเป็นลบหากทำเกินเป้าแล้ว
     let remainingSKUsMonthly = Math.max(0, totalMonthlySKUsTarget - totalSKUs);
     let remainingMUsMonthly = Math.max(0, totalMonthlyMUsTarget - totalMUs);
 
@@ -56,16 +58,19 @@ function calculateTargets() {
     calculatedDailySKU = calculatedSKUsDaily_temp;
     calculatedDailyMU = calculatedMUsDaily_temp;
 
-    // // ส่วนความคืบหน้าจะถูกนำออก (ตามความต้องการ)
-    // let totalProgressPoints = (totalMonthlySKUsTarget + totalMonthlyMUsTarget);
-    // let currentProgressPoints = (totalSKUs + totalMUs);
-    // let progress = (currentProgressPoints / totalProgressPoints) * 100;
-    // progress = Math.min(progress, 100); 
+    // คำนวณความคืบหน้าโดยรวม (นำกลับมา)
+    let totalProgressPoints = (totalMonthlySKUsTarget + totalMonthlyMUsTarget);
+    let currentProgressPoints = (totalSKUs + totalMUs);
+    let progress = (currentProgressPoints / totalProgressPoints) * 100;
+    progress = Math.min(progress, 100); 
 
     let message = "";
     if (totalSKUs >= totalMonthlySKUsTarget && totalMUs >= totalMonthlyMUsTarget) {
         message = "🌟 เก่งค่ะลูกกกก";
-    } else {
+    } else if (progress >= 80) { // เพิ่มเงื่อนไขสำหรับความคืบหน้าสูง
+        message = "👍 ใกล้ถึงเป้าหมายแล้ว! สู้ๆ";
+    }
+    else {
         message = "💪 ดีขึ้นให้ได้นะ";
     }
 
@@ -74,20 +79,21 @@ function calculateTargets() {
         <p><strong>📦 วันนี้ต้องจัด (เฉลี่ย):</strong> ${calculatedDailySKU.toFixed(0)} SKU / ${calculatedDailyMU.toFixed(0)} MU</p>
         <p><strong>📦 เดือนนี้ต้องจัด (รวม):</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
         <h3>${message}</h3>
-        `;
+        <p>📊 ความคืบหน้า: <strong>${progress.toFixed(2)}%</strong></p>
+    `;
 
-    // // ส่วน Progress Bar จะถูกนำออก (ตามความต้องการ)
-    // let progressBar = document.getElementById("progressBar");
-    // progressBar.style.width = `${progress.toFixed(2)}%`;
-    // progressBar.innerText = `${progress.toFixed(2)}%`;
+    // ส่วน Progress Bar (นำกลับมา)
+    let progressBar = document.getElementById("progressBar");
+    progressBar.style.width = `${progress.toFixed(2)}%`;
+    progressBar.innerText = `${progress.toFixed(2)}%`;
 
-    // if (progress >= 100) {
-    //     progressBar.style.backgroundColor = '#28a745'; 
-    // } else if (progress >= 80) {
-    //     progressBar.style.backgroundColor = '#ffc107'; 
-    // } else {
-    //     progressBar.style.backgroundColor = '#00c6ff'; 
-    // }
+    if (progress >= 100) {
+        progressBar.style.backgroundColor = '#28a745'; // เขียวเข้ม
+    } else if (progress >= 80) {
+        progressBar.style.backgroundColor = '#ffc107'; // ส้ม
+    } else {
+        progressBar.style.backgroundColor = '#00c6ff'; // ฟ้าเริ่มต้น
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
