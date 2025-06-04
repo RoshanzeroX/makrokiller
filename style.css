@@ -1,22 +1,22 @@
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Kanit', sans-serif;
+    font-family: 'Kanit', sans-serif; /* ใช้ฟอนต์ที่ดูทันสมัย */
     height: 100%;
-    overflow: hidden;
+    overflow: hidden; /* ป้องกัน scroll bar ที่ไม่จำเป็น */
 }
 
 .background-image {
     position: fixed;
-    top: -10px;
-    left: -10px;
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url('bg.webp');
     background-size: cover;
     background-position: center;
-    filter: blur(10px);
-    -webkit-filter: blur(10px);
+    filter: blur(8px); /* เพิ่มความเบลอ */
+    -webkit-filter: blur(8px);
     z-index: -1;
 }
 
@@ -25,150 +25,95 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh - 150px); /* ปรับความสูงเพื่อให้ footer อยู่ด้านล่าง */
     padding: 20px;
     box-sizing: border-box;
-    position: relative;
-    z-index: 1;
 }
 
 h1 {
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     margin-bottom: 30px;
 }
 
 form {
-    background-color: rgba(0, 0, 0, 0.4);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.1); /* พื้นหลังโปร่งใสเล็กน้อย */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px); /* เพิ่มเอฟเฟกต์กระจกฝ้า */
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 10px;
-    color: #eee;
-    font-weight: 500;
-    font-size: 1.1em;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: bold;
 }
 
 input[type="number"] {
-    width: calc(100% - 24px);
+    width: calc(100% - 20px);
     padding: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: none;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.8);
     font-size: 1em;
-    color: #fff;
     outline: none;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-input[type="number"]::placeholder {
-    color: #bbb;
+    transition: background-color 0.3s ease;
 }
 
 input[type="number"]:focus {
-    background-color: rgba(255, 255, 255, 0.25);
-    border-color: #4CAF50;
+    background-color: #fff;
 }
 
 button[type="submit"] {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(45deg, #4CAF50, #81C784);
+    background-color: #4CAF50; /* สีเขียว */
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1.3em;
-    font-weight: 500;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button[type="submit"]:hover {
-    background: linear-gradient(45deg, #45a049, #66BB6A);
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    background-color: #45a049;
+    transform: scale(1.02);
 }
-
-/* สไตล์สำหรับปุ่มคำนวณยอดจัดรายวัน */
-.daily-sales-button {
-    width: 100%; /* ทำให้ปุ่มเต็มความกว้างเหมือนปุ่ม submit */
-    background: linear-gradient(45deg, #FF9800, #FFC107); /* สีส้ม-เหลือง */
-    color: white;
-    margin-top: 15px; /* ระยะห่างจากปุ่มด้านบน */
-    padding: 12px;
-    font-size: 1.1em;
-    font-weight: 500;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.daily-sales-button:hover {
-    background: linear-gradient(45deg, #f57c00, #ffb300);
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* สไตล์สำหรับส่วนแสดงผลลัพธ์ยอดจัดรายวัน */
-#dailySalesResult {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    color: #fff;
-    font-size: 1.1em;
-    text-align: center;
-    display: none; /* ซ่อนไว้ก่อนจนกว่าจะมีผลลัพธ์ */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 100%;
-    max-width: 400px; /* ให้ความกว้างเท่ากับ form */
-    box-sizing: border-box;
-}
-
 
 /* Floating Buttons */
 .floating-button {
     position: fixed;
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #FFC107, #FF9800);
+    background-color: rgba(76, 175, 80, 0.8); /* สีเขียวโปร่งใส */
     color: white;
     text-align: center;
-    /* line-height: 65px; */ /* Removed for flex alignment */
-    font-size: 35px;
+    line-height: 60px;
+    font-size: 30px;
     text-decoration: none;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: none;
     outline: none;
-    transition: all 0.3s ease;
-    animation: float 3.5s ease-in-out infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    animation: float 3s ease-in-out infinite; /* เอฟเฟกต์ลอย */
 }
 
 .floating-button:hover {
-    transform: translateY(-8px) scale(1.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    background-color: #45a049;
+    transform: translateY(-5px) scale(1.05); /* ขยับขึ้นและขยายเล็กน้อยเมื่อโฮเวอร์ */
 }
 
 .floating-button.left {
@@ -179,59 +124,55 @@ button[type="submit"]:hover {
 .floating-button.right {
     bottom: 30px;
     right: 30px;
-    background: linear-gradient(135deg, #2196F3, #64B5F6);
-}
-.floating-button.right:hover {
-     background: linear-gradient(135deg, #1976D2, #42A5F5);
 }
 
+/* เอฟเฟกต์ลอยขึ้นลง */
 @keyframes float {
     0% {
-        transform: translateY(0px) rotate(-2deg);
+        transform: translateY(0px);
     }
     50% {
-        transform: translateY(-12px) rotate(2deg);
+        transform: translateY(-10px);
     }
     100% {
-        transform: translateY(0px) rotate(-2deg);
+        transform: translateY(0px);
     }
 }
 
+
+/* Footer */
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
-    padding: 5px 0;
-    background: none;
+    padding: 10px 0;
+    background: none; /* ไม่มีพื้นหลัง */
     z-index: 999;
 }
 
 footer p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.65em;
-    margin: 1px 0;
-    line-height: 1.1;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+    color: #ccc; /* สีเทาอ่อน */
+    font-size: 0.7em; /* ขนาดเล็ก */
+    margin: 2px 0; /* ลดระยะห่างแนวตั้ง */
+    line-height: 1.2; /* ปรับ line-height */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* เพิ่มเงาเล็กน้อย */
 }
 
-/* Responsive */
+/* Media Queries for Responsiveness */
 @media (max-width: 600px) {
     form {
-        padding: 25px;
+        padding: 20px;
     }
     h1 {
         font-size: 1.8em;
     }
-    #dailySalesResult {
-        max-width: calc(100% - 40px); /* Adjust for smaller screens padding */
-    }
     .floating-button {
-        width: 55px;
-        height: 55px;
-        /* line-height: 55px; */ /* Removed for flex alignment */
-        font-size: 28px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 25px;
         bottom: 20px;
         left: 20px;
     }
@@ -241,8 +182,5 @@ footer p {
     }
     footer p {
         font-size: 0.6em;
-    }
-     .container {
-        min-height: calc(100vh - 130px);
     }
 }
