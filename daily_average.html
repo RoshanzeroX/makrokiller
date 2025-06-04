@@ -6,7 +6,7 @@
     <title>ค่าเฉลี่ยยอดจัดรายวัน</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
-    </head>
+</head>
 <body>
     <div class="background"></div>
     <div class="content-wrapper fade-slide-in">
@@ -40,21 +40,18 @@
 
             <div class="buttons-group">
                 <button id="clearDataButton" class="clear-button">🗑️ เคลียร์ข้อมูล</button>
-                </div>
+            </div>
         </main>
-        </div>
+    </div>
 
-    <button id="homeButton" class="floating-button left" aria-label="กลับหน้าหลัก">🏠</button>
+    <button id="homeButton" class="floating-button" aria-label="กลับหน้าหลัก">🏠</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const totalSku = parseFloat(urlParams.get('sku')) || 0;
-            const totalMu = parseFloat(urlParams.get('mu')) || 0;
-            const days = parseFloat(urlParams.get('days')) || 1;
-
-            const dailyTargetSku = (totalSku / days).toFixed(0);
-            const dailyTargetMu = (totalMu / days).toFixed(0);
+            // รับค่า 'skuDaily' และ 'muDaily' ซึ่งคือเป้าหมายเฉลี่ยรายวันโดยตรงจาก songs.html
+            const targetSku = parseFloat(urlParams.get('skuDaily')) || 0;
+            const targetMu = parseFloat(urlParams.get('muDaily')) || 0;
 
             const targetSkuDisplay = document.getElementById('targetSku');
             const targetMuDisplay = document.getElementById('targetMu');
@@ -63,11 +60,12 @@
             const skuProgressBar = document.getElementById('skuProgressBar');
             const muProgressBar = document.getElementById('muProgressBar');
             const clearDataButton = document.getElementById('clearDataButton');
-            const homeButton = document.getElementById('homeButton'); // เพิ่มตัวแปรสำหรับปุ่มบ้าน
 
-            targetSkuDisplay.textContent = dailyTargetSku;
-            targetMuDisplay.textContent = dailyTargetMu;
+            // แสดงเป้าหมายที่ได้รับมา
+            targetSkuDisplay.textContent = targetSku.toFixed(0);
+            targetMuDisplay.textContent = targetMu.toFixed(0);
 
+            // โหลดข้อมูลที่จัดไปแล้วจาก Local Storage (ถ้ามี)
             const savedCurrentSku = localStorage.getItem('dailySku');
             const savedCurrentMu = localStorage.getItem('dailyMu');
             if (savedCurrentSku) {
@@ -77,13 +75,16 @@
                 currentMuInput.value = savedCurrentMu;
             }
 
+            // ฟังก์ชันสำหรับอัปเดตความคืบหน้าของ Progress Bar
             function updateProgress() {
                 const currentSku = parseFloat(currentSkuInput.value) || 0;
                 const currentMu = parseFloat(currentMuInput.value) || 0;
 
-                const targetSkuNum = parseFloat(dailyTargetSku);
-                const targetMuNum = parseFloat(dailyTargetMu);
+                // ใช้ค่าเป้าหมายที่ได้รับมาโดยตรง
+                const targetSkuNum = targetSku;
+                const targetMuNum = targetMu;
 
+                // คำนวณเปอร์เซ็นต์และอัปเดต SKU Progress Bar
                 let skuPercentage = 0;
                 if (targetSkuNum > 0) {
                     skuPercentage = Math.min(100, (currentSku / targetSkuNum) * 100);
@@ -92,6 +93,7 @@
                 skuProgressBar.textContent = skuPercentage.toFixed(0) + '%';
                 skuProgressBar.style.backgroundColor = getProgressBarColor(skuPercentage);
 
+                // คำนวณเปอร์เซ็นต์และอัปเดต MU Progress Bar
                 let muPercentage = 0;
                 if (targetMuNum > 0) {
                     muPercentage = Math.min(100, (currentMu / targetMuNum) * 100);
@@ -100,36 +102,41 @@
                 muProgressBar.textContent = muPercentage.toFixed(0) + '%';
                 muProgressBar.style.backgroundColor = getProgressBarColor(muPercentage);
 
+                // บันทึกข้อมูลที่กรอกลง Local Storage เพื่อเก็บสถานะ
                 localStorage.setItem('dailySku', currentSku);
                 localStorage.setItem('dailyMu', currentMu);
             }
 
+            // ฟังก์ชันสำหรับกำหนดสีของ Progress Bar ตามเปอร์เซ็นต์
             function getProgressBarColor(percentage) {
                 if (percentage >= 100) {
-                    return '#28a745'; // เขียวเข้ม เมื่อครบ 100%
+                    return '#28a745'; // เขียวเข้ม (เป้าหมายบรรลุ)
                 } else if (percentage >= 75) {
-                    return '#ffc107'; // ส้ม เมื่อ 75% ขึ้นไป
+                    return '#ffc107'; // ส้ม (ใกล้บรรลุเป้าหมาย)
                 } else {
-                    return '#007bff'; // น้ำเงิน เริ่มต้น
+                    return '#007bff'; // น้ำเงิน (เริ่มต้น)
                 }
             }
 
+            // เพิ่ม Event Listener สำหรับการเปลี่ยนแปลงค่าในช่องกรอก
             currentSkuInput.addEventListener('input', updateProgress);
             currentMuInput.addEventListener('input', updateProgress);
 
+            // Event Listener สำหรับปุ่มเคลียร์ข้อมูล
             clearDataButton.addEventListener('click', () => {
                 currentSkuInput.value = 0;
                 currentMuInput.value = 0;
                 localStorage.removeItem('dailySku');
                 localStorage.removeItem('dailyMu');
-                updateProgress();
+                updateProgress(); // อัปเดต UI หลังจากเคลียร์ข้อมูล
             });
 
-            // เพิ่ม Event Listener สำหรับปุ่มบ้าน
-            homeButton.addEventListener('click', () => {
+            // Event Listener สำหรับปุ่มบ้าน (กลับหน้าหลัก)
+            document.getElementById("homeButton").addEventListener("click", () => {
                 window.location.href = "index.html";
             });
 
+            // เรียกฟังก์ชัน updateProgress ครั้งแรกเมื่อโหลดหน้า เพื่อแสดงสถานะปัจจุบัน
             updateProgress();
         });
     </script>
