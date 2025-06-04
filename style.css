@@ -16,7 +16,7 @@ html, body {
 .background {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url("images/bg.webp") center/cover no-repeat;
+    background: url("bg.webp") center/cover no-repeat;
     background-attachment: fixed;
     filter: brightness(40%) blur(2px);
     z-index: -1;
