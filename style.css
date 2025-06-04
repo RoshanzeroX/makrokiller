@@ -8,26 +8,30 @@ html, body {
     font-family: 'Kanit', sans-serif;
     color: #fff; /* Initial text color */
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.85); /* Text shadow for readability */
-    background: transparent;
+    background: transparent; /* ตั้งเป็น transparent เพื่อให้พื้นหลังของ .background แสดงผล */
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/* *** ส่วนสำคัญ: กำหนดพื้นหลังที่นี่เท่านั้น *** */
+.background {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* Path ของรูปภาพ: "bg.webp" เนื่องจากทุกไฟล์อยู่รวมกัน */
+    background: url("bg.webp") center/cover no-repeat; 
+    background-attachment: fixed;
+    filter: brightness(40%) blur(2px); /* ทำให้มืดลงและเบลอเล็กน้อย */
+    z-index: -1;
+}
+
 /*
-    IMPORTANT: All specific styles for input, button, .results-container,
-    footer, and .floating-button are now expected to be in Song-style.css.
-    Remove them from here if they exist to prevent conflicts.
+    *** ลบสไตล์ที่ซ้ำซ้อนออกไปจากไฟล์นี้ (style.css) ***
+    สไตล์สำหรับ input, button, .results-container, footer, .floating-button
+    เหล่านี้จะถูกกำหนดใน Song-style.css หรือกำหนดในโค้ดด้านล่างนี้เลย
+    เพื่อให้ Song-style.css เป็นตัวควบคุมรูปลักษณ์หลักของ index.html
 */
 
-/* Example: Basic styles for .background, .content-wrapper, main, h1, .title-resize
-   can remain here IF they are generally shared and imported by Song-style.css.
-   However, if Song-style.css defines them specifically, then this file should be even more minimal.
-   Based on the Song-style.css you provided earlier, it contains many of these,
-   so it's better to make this file only contain general typography or very basic resets.
-*/
-
-/* --- Styles specifically for daily_average.html or other pages that link ONLY to style.css --- */
-/* These styles should *not* be in Song-style.css unless they are meant for Song.html too. */
-
+/* --- สไตล์เฉพาะสำหรับ daily_average.html หรือหน้าอื่นๆ ที่ไม่ได้ใช้ Song-style.css --- */
+/* หากคุณมีสไตล์เหล่านี้ใน style.css เดิม ให้คงไว้ได้ */
 .info-card {
     background-color: rgba(255, 255, 255, 0.2);
     padding: 1em 1.5em;
@@ -63,7 +67,6 @@ html, body {
     margin-bottom: 1em;
 }
 
-/* Input styles for daily_average.html (if you want its inputs to look different from Song-style.css) */
 .info-card input[type="number"] {
     width: calc(100% - 2em);
     padding: 0.8em;
@@ -76,7 +79,6 @@ html, body {
     outline: none;
 }
 
-/* Progress bar styles for daily_average.html */
 .progress-bar-container {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.3);
@@ -123,7 +125,7 @@ html, body {
     transform: translateY(-2px);
 }
 
-/* Media Queries for general styles (that don't conflict with Song-style.css) */
+/* Media Queries สำหรับสไตล์ทั่วไป (ที่ไม่ซ้ำกับ Song-style.css) */
 @media (max-width: 768px) {
     .info-card { padding: 1em; }
 }
