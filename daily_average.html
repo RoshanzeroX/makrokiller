@@ -22,16 +22,14 @@
             <div class="info-card">
                 <h2>ความคืบหน้าการจัดวันนี้</h2>
                 <div class="input-group">
-                    <label for="currentSku">จำนวน SKU ที่จัดแล้ว:</label>
-                    <input type="number" id="currentSku" placeholder="กรอก SKU ที่จัดแล้ว" value="0">
+                    <input type="number" id="currentSku" placeholder="จำนวน SKU ที่จัดแล้ว" value="0">
                 </div>
                 <div class="progress-bar-container">
                     <div id="skuProgressBar" class="progress-bar">0%</div>
                 </div>
 
                 <div class="input-group" style="margin-top: 1.5em;">
-                    <label for="currentMu">จำนวน MU ที่จัดแล้ว:</label>
-                    <input type="number" id="currentMu" placeholder="กรอก MU ที่จัดแล้ว" value="0">
+                    <input type="number" id="currentMu" placeholder="จำนวน MU ที่จัดแล้ว" value="0">
                 </div>
                 <div class="progress-bar-container">
                     <div id="muProgressBar" class="progress-bar">0%</div>
@@ -128,7 +126,7 @@
             });
 
             document.getElementById("duckButton").addEventListener("click", () => {
-                window.location.href = "songs.html"; // แก้ไขตรงนี้ให้ไป songs.html
+                window.location.href = "songs.html";
             });
 
             document.getElementById("fullscreenButton").addEventListener("click", () => {
