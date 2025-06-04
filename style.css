@@ -217,8 +217,6 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     border-radius: 3px;
 }
 
-/* ลบ min-height ออกจาก content-wrapper ที่นี่เพราะย้ายไปด้านบน */
-
 
 .info-card {
     background-color: rgba(255, 255, 255, 0.25);
@@ -360,21 +358,27 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         right: 10px;
     }
 
-    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือที่มี 3 ปุ่ม */
+    /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือที่มี 4 ปุ่ม */
     #homeButton {
         top: 50%;
-        margin-top: -80px;
+        margin-top: -105px; /* Adjust for 4 buttons, equal spacing */
+        transform: translateY(-50%);
     }
     #duckButton {
         top: 50%;
-        margin-top: 0px;
+        margin-top: -35px; /* Adjust for 4 buttons, equal spacing */
+        transform: translateY(-50%);
+    }
+    #dailyAverageButton { /* This button should now show on mobile */
+        top: 50%;
+        margin-top: 35px; /* Adjust for 4 buttons, equal spacing */
+        transform: translateY(-50%);
+        display: flex; /* Ensure it's visible */
     }
     #fullscreenButton {
         top: 50%;
-        margin-top: 80px;
-    }
-    #dailyAverageButton { /* ปุ่มนี้จะถูกซ่อนใน daily_average.html แต่ยังคงอยู่ */
-        display: none;
+        margin-top: 105px; /* Adjust for 4 buttons, equal spacing */
+        transform: translateY(-50%);
     }
 
     footer {
@@ -405,7 +409,9 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         font-size: 20px;
         right: 5px;
     }
-    #homeButton { margin-top: -70px; }
-    #duckButton { margin-top: 0px; }
-    #fullscreenButton { margin-top: 70px; }
+    /* Adjusted for 4 buttons, smaller spacing */
+    #homeButton { margin-top: -90px; }
+    #duckButton { margin-top: -30px; }
+    #dailyAverageButton { margin-top: 30px; }
+    #fullscreenButton { margin-top: 90px; }
 }
