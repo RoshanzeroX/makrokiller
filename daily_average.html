@@ -22,14 +22,14 @@
             <div class="info-card">
                 <h2>ความคืบหน้าการจัดวันนี้</h2>
                 <div class="input-group">
-                    <input type="number" id="currentSku" placeholder="จำนวน SKU ที่จัดแล้ว" value="0">
+                    <input type="number" id="currentSku" placeholder="จำนวน SKU ที่จัดแล้ว">
                 </div>
                 <div class="progress-bar-container">
                     <div id="skuProgressBar" class="progress-bar">0%</div>
                 </div>
 
                 <div class="input-group" style="margin-top: 1.5em;">
-                    <input type="number" id="currentMu" placeholder="จำนวน MU ที่จัดแล้ว" value="0">
+                    <input type="number" id="currentMu" placeholder="จำนวน MU ที่จัดแล้ว">
                 </div>
                 <div class="progress-bar-container">
                     <div id="muProgressBar" class="progress-bar">0%</div>
@@ -63,16 +63,26 @@
             targetSkuDisplay.textContent = targetSku.toFixed(0);
             targetMuDisplay.textContent = targetMu.toFixed(0);
 
+            // ดึงค่าจาก Local Storage และกำหนดให้ input
             const savedCurrentSku = localStorage.getItem('dailySku');
             const savedCurrentMu = localStorage.getItem('dailyMu');
-            if (savedCurrentSku) {
+            
+            // ตรวจสอบว่ามีค่าที่บันทึกไว้หรือไม่ ก่อนกำหนด
+            if (savedCurrentSku !== null) { // ตรวจสอบ null เพราะ "" ก็เป็นค่าที่ถูกต้อง
                 currentSkuInput.value = savedCurrentSku;
-            }
-            if (savedCurrentMu) {
-                currentMuInput.value = savedCurrentMu;
+            } else {
+                currentSkuInput.value = ""; // กำหนดเป็นค่าว่างเพื่อให้ placeholder แสดง
             }
 
+            if (savedCurrentMu !== null) { // ตรวจสอบ null เพราะ "" ก็เป็นค่าที่ถูกต้อง
+                currentMuInput.value = savedCurrentMu;
+            } else {
+                currentMuInput.value = ""; // กำหนดเป็นค่าว่างเพื่อให้ placeholder แสดง
+            }
+
+
             function updateProgress() {
+                // ใช้ parseFloat จากค่าใน input โดยตรง
                 const currentSku = parseFloat(currentSkuInput.value) || 0;
                 const currentMu = parseFloat(currentMuInput.value) || 0;
 
@@ -113,8 +123,8 @@
             currentMuInput.addEventListener('input', updateProgress);
 
             clearDataButton.addEventListener('click', () => {
-                currentSkuInput.value = 0;
-                currentMuInput.value = 0;
+                currentSkuInput.value = ""; // เคลียร์เป็นค่าว่างเพื่อให้ placeholder แสดง
+                currentMuInput.value = ""; // เคลียร์เป็นค่าว่างเพื่อให้ placeholder แสดง
                 localStorage.removeItem('dailySku');
                 localStorage.removeItem('dailyMu');
                 updateProgress();
@@ -139,6 +149,7 @@
                 }
             });
 
+            // เรียกใช้ครั้งแรกเพื่อแสดงค่าที่โหลดมา (ถ้ามี) หรือแสดง placeholder
             updateProgress();
         });
     </script>
