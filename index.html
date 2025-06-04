@@ -13,32 +13,28 @@
 
     <div class="background"></div>
 
-    <div class="content-wrapper fade-slide-in">
-        <main>
-            <h1 class="title-resize">📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h1>
-            
-            <form id="averageForm">
-                <div class="form-group">
-                    <input type="number" id="sku" name="sku" required placeholder="✅ จำนวน SKU">
-                </div>
-                <div class="form-group">
-                    <input type="number" id="mu" name="mu" required placeholder="✅ จำนวน MU">
-                </div>
-                <div class="form-group">
-                    <input type="number" id="days" name="days" required placeholder="🗓️ จำนวนวันทำงาน">
-                </div>
-                
-                <button type="submit">🔍 คำนวณ</button>
-            </form>
-
-            <div id="results" class="info-card">
-                <h2>ผลลัพธ์</h2>
-                <p>กรุณากรอกข้อมูลเพื่อคำนวณ</p>
+    <div class="container fade-slide-in"> <h1 class="title-resize">📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h1>
+        
+        <form id="averageForm">
+            <div class="form-group">
+                <input type="number" id="sku" name="sku" required placeholder="✅ จำนวน SKU">
             </div>
-        </main>
+            <div class="form-group">
+                <input type="number" id="mu" name="mu" required placeholder="✅ จำนวน MU">
+            </div>
+            <div class="form-group">
+                <input type="number" id="days" name="days" required placeholder="🗓️ จำนวนวันทำงาน">
+            </div>
+            
+            <button type="submit">🔍 คำนวณ</button>
+        </form>
+
+        <div id="results"> <h2>ผลลัพธ์</h2>
+            <p>กรุณากรอกข้อมูลเพื่อคำนวณ</p>
+        </div>
     </div>
 
-    <a href="songs.html" class="floating-button right">🦆</a> <button id="fullscreenBtn" class="floating-button right">📱</button>
+    <a href="songs.html" class="floating-button top-right">🦆</a> <button id="fullscreenBtn" class="floating-button right">📱</button>
     <button id="calculateDailySalesBtn" class="floating-button right">💰</button>
 
     <footer>
