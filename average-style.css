@@ -27,13 +27,13 @@ html, body {
 .content-wrapper {
     display: flex;
     flex-direction: column;
-    padding: 3vh 2em 2em;
+    padding: 3vh 2em; /* ลด padding ด้านล่างเนื่องจากไม่มี footer */
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-    min-height: 90vh; /* เพื่อให้ footer อยู่ด้านล่างเสมอ */
-    justify-content: center; /* จัดเนื้อหาตรงกลางแนวตั้งบน PC */
-    align-items: center; /* จัดเนื้อหาตรงกลางแนวนอนบน PC */
+    min-height: 100vh; /* ทำให้สูงเต็มจอ */
+    justify-content: center; /* จัดเนื้อหาตรงกลางแนวตั้ง */
+    align-items: center; /* จัดเนื้อหาตรงกลางแนวนอน */
 }
 
 /* แอนิเมชัน Fade-slide-in */
@@ -52,14 +52,12 @@ html, body {
 /* ส่วน Main */
 main {
     text-align: center;
-    flex: 1;
+    flex: 0 0 auto; /* ไม่ให้ขยายเต็มที่, จัดตามเนื้อหา */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 50vh;
     max-width: 600px; /* กำหนดความกว้างสูงสุดคล้ายหน้า index */
-    margin: 0 auto;
     width: 100%;
 }
 
@@ -130,30 +128,6 @@ h1::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.4); border-ra
     user-select: text;
 }
 
-/* สไตล์ Footer */
-footer {
-    margin-top: 3em;
-    padding: 1.5em;
-    text-align: center;
-    font-size: 0.75em;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    max-width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    color: #ddd;
-}
-footer p {
-    margin: 0.5em 0;
-    color: #ddd;
-}
-.footer-icon {
-    display: inline-block;
-    font-size: 1.2em;
-    margin: 0 6px;
-}
-
 /* Media Queries สำหรับการตอบสนองบนมือถือ */
 @media (max-width: 768px) {
     h1 { font-size: 2em; }
@@ -175,6 +149,4 @@ footer p {
     .result-image { max-width: 80px; }
     .result-message { font-size: 1.3em; }
     .result-value { font-size: 1.8em; }
-    footer { font-size: 0.65em; padding: 1em; max-width: 95%; }
-    footer p { margin: 0.4em 0; }
 }
