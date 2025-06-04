@@ -1,5 +1,5 @@
 /*
- * style.css (รวมสไตล์จาก Song-style.css)
+ * style.css (ปรับปรุงใหม่)
  */
 
 html, body {
@@ -25,33 +25,28 @@ html, body {
     z-index: -1;
 }
 
-.content-wrapper {
-    flex: 1; /* ทำให้ content-wrapper ขยายเต็มพื้นที่ที่เหลือ */
+/* ปรับปรุง .container ให้ไม่มีกรอบ */
+.container {
+    flex: 1; /* ทำให้ container ขยายเต็มพื้นที่ที่เหลือ */
     display: flex;
     flex-direction: column;
     justify-content: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
     align-items: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
-    padding: 2vh 1em;
+    padding: 2vh 1em; /* ยังคงมี padding ภายใน */
     box-sizing: border-box;
     position: relative;
     z-index: 1;
     min-height: 90vh; /* เพื่อรองรับเนื้อหาที่อาจจะยาว */
     width: 100%; /* ให้เต็มความกว้าง */
-}
-
-main {
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 2em;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    max-width: 500px;
-    width: 90%; /* ใช้ 90% ของพื้นที่ wrapper */
-    box-sizing: border-box;
-    margin: auto; /* จัดให้อยู่กึ่งกลางใน main */
+    /* ลบสไตล์กรอบออก */
+    /* background-color: rgba(255, 255, 255, 0.25); */
+    /* border-radius: 15px; */
+    /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); */
+    /* backdrop-filter: blur(5px); */
+    /* -webkit-backdrop-filter: blur(5px); */
+    /* border: 1px solid rgba(255, 255, 255, 0.4); */
+    max-width: 500px; /* จำกัดความกว้างเหมือนเดิม */
+    margin: auto; /* จัดให้อยู่กึ่งกลางใน container */
 }
 
 
@@ -68,13 +63,13 @@ main {
     }
 }
 
-h1.title-resize { /* ชื่อคลาสที่ใช้ใน songs.html */
+h1.title-resize {
     font-size: 2.2em;
     margin-bottom: 1em;
     color: #ffd700;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-    white-space: nowrap; /* ป้องกันการขึ้นบรรทัดใหม่ */
-    overflow-x: auto; /* ให้ scrollbar ในแนวนอนถ้าข้อความยาวเกิน */
+    white-space: nowrap;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -89,14 +84,14 @@ h1.title-resize::-webkit-scrollbar-thumb {
 
 input, button[type="submit"] {
     display: block;
-    width: calc(100% - 2em); /* ปรับความกว้างให้พอดีกับ padding ของ main */
+    width: calc(100% - 2em);
     margin: 1em auto;
     padding: 1em;
     font-size: 1em;
     border-radius: 12px;
     border: none;
     text-shadow: none;
-    box-sizing: border-box; /* สำคัญเพื่อให้ padding ไม่เกินความกว้าง */
+    box-sizing: border-box;
 }
 
 input {
@@ -131,19 +126,21 @@ button[type="submit"]:hover {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* Info Card / Results Div */
+/* ปรับ #results ให้ไม่มีกรอบ */
 #results {
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 1.5em;
-    border-radius: 15px;
-    margin-top: 2em; /* เพิ่ม margin-top เพื่อแยกจากปุ่มคำนวณ */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* ลบสไตล์กรอบออก */
+    /* background-color: rgba(255, 255, 255, 0.25); */
+    /* padding: 1.5em; */
+    /* border-radius: 15px; */
+    /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); */
+    /* backdrop-filter: blur(5px); */
+    /* -webkit-backdrop-filter: blur(5px); */
+    /* border: 1px solid rgba(255, 255, 255, 0.4); */
+
     text-align: center;
-    width: calc(100% - 2em); /* ให้พอดีกับ main */
+    width: calc(100% - 2em); /* ให้พอดีกับ container */
     box-sizing: border-box;
+    margin-top: 2em; /* เพิ่ม margin-top เพื่อแยกจากปุ่มคำนวณ */
 }
 
 #results h2 {
@@ -164,8 +161,8 @@ button[type="submit"]:hover {
 /* Floating Buttons */
 .floating-button {
     position: fixed;
-    right: 20px; /* ย้ายมาอยู่ทางขวาเสมอ */
-    left: auto; /* ตรวจสอบให้แน่ใจว่าไม่ได้อยู่ทางซ้าย */
+    right: 20px;
+    left: auto;
     width: 60px;
     height: 60px;
     font-size: 28px;
@@ -180,46 +177,39 @@ button[type="submit"]:hover {
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: floaty 2.5s ease-in-out infinite;
-    top: 50%; /* จัดให้อยู่กลางแนวตั้ง */
-    transform: translateY(-50%); /* เพื่อให้ top: 50% กึ่งกลางจริงๆ */
 }
 
 @keyframes floaty {
     0%, 100% {
-        transform: translateY(-50%);
+        transform: translateY(0);
     }
     50% {
-        transform: translateY(-58px); /* 50% + 8px */
+        transform: translateY(-8px);
     }
 }
 
-/* จัดตำแหน่งปุ่มทั้งสามปุ่มบนด้านขวาให้เรียงกัน */
-/* ปุ่มด้านบนสุด (เช่น ปุ่มเป็ด) */
-.floating-button:nth-child(1) { /* หรือใช้ ID ของปุ่มเป็ด ถ้าลำดับไม่เปลี่ยนบ่อย */
-    margin-top: -80px; /* ปรับค่าตามความเหมาะสม */
+/* ตำแหน่งสำหรับปุ่มเป็ด (🦆) ให้อยู่มุมขวาบน */
+.floating-button.top-right {
+    top: 20px; /* ห่างจากขอบบน 20px */
+    right: 20px; /* ห่างจากขอบขวา 20px */
+    transform: none; /* ลบ transform: translateY(-50%) ออก */
+    margin-top: 0; /* ลบ margin-top เดิมออก */
 }
 
-/* ปุ่มกลาง (เช่น ปุ่ม Fullscreen) */
-.floating-button:nth-child(2) { /* หรือใช้ ID ของปุ่ม Fullscreen */
-    margin-top: 0px; /* อยู่กึ่งกลางแนวตั้ง */
+/* ตำแหน่งปุ่ม Fullscreen และปุ่มถุงเงิน ให้อยู่กลางขวา */
+.floating-button.right {
+    top: 50%; /* จัดให้อยู่กลางแนวตั้ง */
+    right: 20px; /* ห่างจากขอบขวา 20px */
+    transform: translateY(-50%); /* จัดให้อยู่กลางแนวตั้งจริงๆ */
 }
 
-/* ปุ่มล่างสุด (เช่น ปุ่มถุงเงิน) */
-.floating-button:nth-child(3) { /* หรือใช้ ID ของปุ่มถุงเงิน */
-    margin-top: 80px; /* ปรับค่าตามความเหมาะสม */
-}
-
-/* หากคุณต้องการใช้ ID เพื่อความแม่นยำ */
-#duckButton {
-    margin-top: -80px; /* ปุ่มเป็ดอยู่บนสุด */
-}
 #fullscreenBtn {
-    margin-top: 0px; /* ปุ่ม Fullscreen อยู่กลาง */
-}
-#calculateDailySalesBtn {
-    margin-top: 80px; /* ปุ่มถุงเงินอยู่ล่างสุด */
+    margin-top: -35px; /* ปุ่ม Fullscreen อยู่เหนือปุ่มถุงเงินเล็กน้อย */
 }
 
+#calculateDailySalesBtn {
+    margin-top: 35px; /* ปุ่มถุงเงินอยู่ใต้ปุ่ม Fullscreen เล็กน้อย */
+}
 
 footer {
     text-align: center;
@@ -230,7 +220,7 @@ footer {
     background: transparent;
     border-radius: 0;
     box-sizing: border-box;
-    margin-top: 3em; /* ดัน Footer ลงมา */
+    margin-top: 3em;
     position: relative;
     max-width: 85%;
     margin-left: auto;
@@ -247,7 +237,7 @@ footer p {
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    main {
+    .container {
         padding: 1.5em;
         width: 95%;
     }
@@ -273,18 +263,21 @@ footer p {
         width: 45px;
         height: 45px;
         font-size: 22px;
-        right: 10px; /* ชิดขวามากขึ้นบนมือถือ */
+        right: 10px;
     }
 
-    /* จัดตำแหน่งปุ่มทั้งสามปุ่มบนมือถือ */
-    #duckButton {
-        margin-top: -60px; /* ปุ่มเป็ดอยู่บนสุด */
+    /* ตำแหน่งสำหรับปุ่มเป็ด (🦆) บนมือถือ */
+    .floating-button.top-right {
+        top: 10px; /* ห่างจากขอบบน 10px */
+        right: 10px; /* ห่างจากขอบขวา 10px */
     }
+
+    /* ตำแหน่งปุ่ม Fullscreen และปุ่มถุงเงิน บนมือถือ */
     #fullscreenBtn {
-        margin-top: 0px; /* ปุ่ม Fullscreen อยู่กลาง */
+        margin-top: -25px; /* ปรับลดลงเล็กน้อย */
     }
     #calculateDailySalesBtn {
-        margin-top: 60px; /* ปุ่มถุงเงินอยู่ล่างสุด */
+        margin-top: 25px; /* ปรับลดลงเล็กน้อย */
     }
 
     footer {
@@ -294,7 +287,7 @@ footer p {
 }
 
 @media (max-width: 400px) {
-    main {
+    .container {
         padding: 1em;
     }
     h1.title-resize {
@@ -314,18 +307,22 @@ footer p {
         width: 40px;
         height: 40px;
         font-size: 20px;
-        right: 5px; /* ชิดขวามากที่สุดบนจอเล็ก */
+        right: 5px;
     }
-    /* จัดตำแหน่งปุ่มทั้งสามปุ่มบนจอที่เล็กที่สุด */
-    #duckButton {
-        margin-top: -50px;
+    /* ตำแหน่งสำหรับปุ่มเป็ด (🦆) บนจอที่เล็กที่สุด */
+    .floating-button.top-right {
+        top: 5px;
+        right: 5px;
     }
+    /* ตำแหน่งปุ่ม Fullscreen และปุ่มถุงเงิน บนจอที่เล็กที่สุด */
     #fullscreenBtn {
-        margin-top: 0px;
+        margin-top: -20px;
     }
     #calculateDailySalesBtn {
-        margin-top: 50px;
+        margin-top: 20px;
     }
 
     footer {
-        font-size:
+        font-size: 0.5em;
+    }
+}
