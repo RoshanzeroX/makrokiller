@@ -25,14 +25,14 @@
             <button onclick="calculateTargets()">🔍 คำนวณ</button>
 
             <div id="results"></div>
-            <div class="progress-bar">
-                <div id="progressBar" style="width: 0%;">0%</div>
+            <div class="progress-bar-container"> <div id="progressBar" class="progress-bar-inner" style="width: 0%;">0%</div>
             </div>
         </main>
     </div>
 
-    <button class="floating-button right" onclick="toggleFullscreen()">⛶</button>
-    <button class="floating-button left" onclick="goToIndex()">🏠</button>
+    <button id="homeButton" class="floating-button" aria-label="กลับหน้าหลัก">🏠</button>
+    <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ">📱</button>
+    <button id="dailyAverageButton" class="floating-button" aria-label="ไปหน้าเฉลี่ยรายวัน">💰</button>
 
     <script src="Song-script.js"></script>
 
