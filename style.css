@@ -1,355 +1,127 @@
-/* Reset */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Segoe UI', sans-serif;
-  color: #fff;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
-  background: transparent;
-  overflow-x: hidden;
-}
+/* เพิ่มส่วนนี้เข้าไปในไฟล์ style.css ของคุณ */
 
-.background {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  /* **สำคัญ:** ตรวจสอบ Path รูปภาพตรงนี้ให้ถูกต้อง */
-  /* ถ้า bg.webp อยู่ในโฟลเดอร์ images */
-  background: url("bg.webp") center/cover no-repeat;
-  /* ถ้า bg.webp ยังอยู่ที่ root directory (ระดับเดียวกับ index.html) ให้ใช้ "bg.webp" */
-  /* ถ้า bg.webp อยู่ในโฟลเดอร์ assets ให้ใช้ "assets/bg.webp" */
-  filter: brightness(40%) blur(2px);
-  z-index: -1;
-  background-attachment: fixed;
-}
-
-/* Layout wrapper for sticky footer */
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: 3vh 2em 2em;
-  box-sizing: border-box;
-}
-
-/* Fade and slide in effect */
-.fade-slide-in {
-  animation: fadeSlideIn 1s ease forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-@keyframes fadeSlideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Main content container */
-main {
-  text-align: center;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* เลื่อน content กลางแนวตั้ง */
-  align-items: center; /* เลื่อน content กลางแนวนอน */
-  min-height: 50vh; /* กำหนดพื้นที่ขั้นต่ำให้ main */
-  max-width: 600px; /* เพิ่ม max-width เพื่อควบคุมความกว้างบน desktop */
-  margin: 0 auto; /* จัดให้อยู่ตรงกลางหน้า */
-}
-
-h1.title-no-wrap {
-  font-size: 2.2em;
-  margin-bottom: 1em;
-  white-space: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Responsive font adjustment for the title */
-@media (max-width: 480px) {
-  h1.title-no-wrap {
-    font-size: 1.3em;
-    white-space: nowrap;
-    overflow-x: hidden;
-  }
-}
-
-/* Form inputs & general buttons */
-input, button {
-  display: block;
-  width: 80%;
-  max-width: 400px;
-  margin: 1em auto;
-  padding: 1em;
-  font-size: 1em;
-  border-radius: 12px;
-  border: none;
-  text-shadow: none;
-}
-
-input {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  border: 1px solid #ccc;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-}
-
-input::placeholder {
-  color: #ddd;
-}
-
-input:focus {
-  outline: none;
-  border-color: #00aaff;
-  box-shadow: 0 0 8px 2px rgba(0, 170, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-button {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-/* Floating buttons */
-.floating-button {
-  position: fixed;
-  /* เราจะใช้ top และ transform ในแต่ละ ID แทน เพื่อการควบคุมที่ละเอียดกว่า */
-  width: 60px;
-  height: 60px;
-  font-size: 28px;
-  border-radius: 50%;
-  background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: floaty 2.5s ease-in-out infinite;
-}
-
-@keyframes floaty {
-  0%, 100% {
-    transform: translateY(0); /* เอา translateY(-50%) ออกจาก keyframes */
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-/* ปุ่มที่อยู่ทางซ้าย (ถ้ามีในอนาคต) */
-/* .floating-button.left { left: 20px; } */ /* ไม่ใช้แล้วเพราะปุ่มทั้งหมดอยู่ขวา */
-
-/* ปุ่มที่อยู่ทางขวา - กำหนดให้ปุ่มทั้งหมดอยู่ทางขวา */
-.floating-button { /* ใช้คลาส .floating-button โดยตรง */
-  right: 20px;
-  left: auto; /* ให้แน่ใจว่าไม่มีการชนกับ left: 20px */
-}
-
-/* **ปรับตำแหน่งเฉพาะของแต่ละปุ่มทางขวาเพื่อให้เรียงกันตรงกลาง** */
-/* เราจะใช้ top: 50%; และปรับ margin-top แทน translateY(-50%) เพื่อให้ floaty animation ทำงานได้ดีขึ้น */
-
-/* ปุ่มบ้าน 🏠 - อยู่บนสุด */
-#homeButton {
-  top: 50%;
-  margin-top: -120px; /* เลื่อนขึ้นจากกึ่งกลาง */
-  transform: translateY(-50%); /* จัดกึ่งกลางแนวตั้งของปุ่ม */
-}
-
-/* ปุ่มเป็ด 🦆 - ถัดลงมา */
-#duckButton {
-  top: 50%;
-  margin-top: -40px; /* เลื่อนลงมาเล็กน้อย */
-  transform: translateY(-50%);
-}
-
-/* ปุ่มเต็มจอ 📱 - ถัดลงมา */
-#fullscreenButton {
-  top: 50%;
-  margin-top: 40px; /* เลื่อนลงมาอีก */
-  transform: translateY(-50%);
-}
-
-/* ปุ่มเฉลี่ยรายวัน 💰 - ล่างสุด */
-#dailyAverageButton {
-  top: 50%;
-  margin-top: 120px; /* เลื่อนลงมาอีก */
-  transform: translateY(-50%);
-}
-
-
-/* Footer (ยังคงอยู่ใน style.css สำหรับ index.html) */
-footer {
-  text-align: center;
-  font-size: 0.75em;
-  padding: 1.5em;
-  color: #eee;
-  line-height: 1.8em;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-sizing: border-box;
-  margin-top: auto;
-  position: relative;
-  max-width: 85%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Footer paragraphs */
-footer p {
-  margin: 0.5em 0;
-}
-
-/* ปรับระยะห่าง footer บน PC */
-@media (min-width: 481px) {
-  footer p {
-    margin: 0.5em 0;
-  }
-}
-
-/* Scrollbar style for the title if overflow */
-h1.title-no-wrap::-webkit-scrollbar {
-  height: 6px;
-}
-
-h1.title-no-wrap::-webkit-scrollbar-thumb {
-  background-color: rgba(255,255,255,0.4);
-  border-radius: 3px;
-}
-
-/* --- ส่วนเพิ่มเติมสำหรับ daily_average.html (ที่ย้ายมาจาก <style> เดิม) --- */
-
-/* Base styles for text in daily_average.html */
-body, input, button, p, h1, h2, h3, label {
-    font-family: 'Kanit', sans-serif;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #fff;
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
-}
-
-/* H1 specific for daily_average.html (override if general h1 exists) */
-main h1 {
-    font-size: 2.5em;
-    margin-bottom: 0.8em;
-}
-
-/* Info cards for daily_average.html */
+/* Info Card Styling: ทำให้กล่องข้อมูลทึบขึ้นและจัดรูปแบบให้สวยงาม */
 .info-card {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 15px;
-    padding: 1.5em;
-    margin-bottom: 1.5em;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 450px;
-    box-sizing: border-box;
-}
-.info-card h2 {
-    font-size: 1.8em;
-    margin-top: 0;
-    margin-bottom: 0.8em;
-    color: #00c6ff;
-    text-shadow: none;
-}
-.info-card p {
-    font-size: 1.2em;
-    margin: 0.5em 0;
-    color: #eee;
-    text-shadow: none;
+    background-color: rgba(255, 255, 255, 0.25); /* ปรับความทึบที่นี่ (0.0 - 1.0) */
+    padding: 1.5em; /* ระยะห่างด้านในกล่อง */
+    border-radius: 15px; /* มุมโค้งมน */
+    margin-bottom: 2em; /* ระยะห่างระหว่างกล่องข้อมูลแต่ละกล่อง */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* เพิ่มเงาให้ดูมีมิติ */
+    backdrop-filter: blur(5px); /* เพิ่มเอฟเฟกต์เบลอพื้นหลัง (Frosted Glass Effect) */
+    -webkit-backdrop-filter: blur(5px); /* สำหรับ Safari */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* เพิ่มเส้นขอบบางๆ */
+    width: 90%; /* ความกว้างของกล่อง */
+    max-width: 500px; /* ความกว้างสูงสุดบนหน้าจอใหญ่ */
+    box-sizing: border-box; /* สำคัญเพื่อให้ padding และ border ไม่ทำให้ความกว้างเกิน */
+    text-align: center; /* จัดข้อความกึ่งกลางภายในกล่อง */
 }
 
-/* Input groups for daily_average.html */
-.input-group {
+/* จัดสไตล์ข้อความภายใน info-card */
+.info-card h2 {
+    color: #f0f0f0; /* สีหัวข้อ */
+    margin-top: 0;
     margin-bottom: 1em;
-    text-align: left;
-    width: 100%;
+    font-size: 1.5em;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
-.input-group label {
-    display: block;
-    margin-bottom: 0.5em;
+
+.info-card p {
+    color: #e0e0e0; /* สีข้อความ */
     font-size: 1.1em;
+    margin-bottom: 0.5em;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.info-card p span {
+    color: #00aaff; /* สีเน้นสำหรับตัวเลข */
     font-weight: bold;
 }
-.input-group input[type="number"] {
-    width: calc(100% - 24px);
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    font-size: 1.1em;
-    box-sizing: border-box;
-}
-.input-group input[type="number"]::placeholder {
-    color: #ddd;
+
+/* ปรับระยะห่างของ input-group ภายใน info-card */
+.info-card .input-group {
+    margin-bottom: 1em;
+    text-align: left; /* จัดชิดซ้ายสำหรับ label/input */
 }
 
-/* Progress bar styles for daily_average.html */
-.progress-bar-container {
-    width: 100%;
-    background-color: rgba(255,255,255,0.2);
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 1em;
-}
-.progress-bar {
-    height: 25px;
-    background-color: #007bff;
-    width: 0%;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 25px;
-    color: white;
-    transition: width 0.5s ease-in-out;
-    font-size: 0.9em;
+.info-card .input-group label {
+    display: block;
+    color: #e0e0e0;
+    margin-bottom: 0.5em;
 }
 
-/* Buttons for daily_average.html */
-.buttons-group {
+/* ปรับ padding ของ content-wrapper เพื่อให้มีพื้นที่ว่างด้านบนและล่างมากขึ้น */
+.content-wrapper {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    min-height: 90vh; /* อาจปรับความสูงขั้นต่ำให้เหมาะสม */
+}
+
+
+/* Floating Button Adjustments (สำหรับปุ่มเดียวที่อยู่ตรงกลางด้านขวา) */
+/* ถ้าคุณมี floating-button styles ใน style.css อยู่แล้ว ตรวจสอบให้แน่ใจว่ามันถูก set ให้ top: 50% และ transform: translateY(-50%) */
+.floating-button {
+    position: fixed;
+    right: 20px; 
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    z-index: 10;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 1em;
-    margin-top: 2em;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: floaty 2.5s ease-in-out infinite;
+    /* การจัดตำแหน่งให้ปุ่มอยู่ตรงกลางแนวตั้ง */
+    top: 50%;
+    transform: translateY(-50%); 
 }
 
-/* .back-button, .clear-button (ถูกแทนที่ด้วยปุ่มลอย) */
-
-.clear-button {
-    background-color: #dc3545;
-}
-.clear-button:hover {
-    background-color: #c82333;
+/* Animation สำหรับการลอย */
+@keyframes floaty {
+    0% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-50%) translateX(5px); }
+    100% { transform: translateY(-50%) translateX(0); }
 }
 
-/* Responsive adjustments for smaller screens (daily_average.html specific) */
+/* Responsive adjustments สำหรับปุ่ม */
 @media (max-width: 480px) {
-    main h1 {
-        font-size: 2em;
+    .floating-button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        right: 10px;
     }
-    .info-card p, .input-group label, .input-group input[type="number"] {
-        font-size: 1em;
-    }
-    .back-button, .clear-button { /* ควรจะไม่มีผลแล้วหากใช้ปุ่มลอยแทน */
-        font-size: 1em;
-        padding: 10px 15px;
-        max-width: unset;
-    }
-    .buttons-group {
-        flex-direction: column;
-        align-items: center;
-    }
+    /* ไม่ต้องปรับ margin-top เพิ่มเติมเพราะ top: 50% และ transform: translateY(-50%) จะจัดให้อยู่กลางอยู่แล้ว */
+}
+
+/* Progress bar styles (ถ้ายังไม่มีใน style.css) */
+/* Assuming these are defined already or imported */
+.progress-bar-container {
+    width: 100%; /* เต็มความกว้างของ info-card */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin: 1em 0; /* ปรับ margin */
+    overflow: hidden;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #00c6ff;
+    width: 0%;
+    border-radius: 12px; /* ใช้มุมโค้งมนที่ปลาย */
+    text-align: center;
+    line-height: 35px;
+    color: white;
+    font-weight: bold;
+    transition: width 0.5s ease-in-out, background-color 0.3s ease-in-out;
+    white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
 }
