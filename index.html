@@ -6,98 +6,44 @@
     <title>คำนวณค่าเฉลี่ย Order Picker</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
-    <style>
-        /* สไตล์เพิ่มเติมสำหรับปุ่มลอยตัวใน index.html */
-        .floating-button {
-            position: fixed;
-            right: 20px; /* ทุกปุ่มอยู่ทางขวา */
-            width: 60px;
-            height: 60px;
-            font-size: 28px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: floaty 2.5s ease-in-out infinite;
-        }
-        @keyframes floaty {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        /* ตำแหน่งของปุ่มลอยตัวบน PC (จัดกลางขวา) */
-        #homeButton { top: 50%; margin-top: -120px; transform: translateY(-50%); }
-        #dailyAverageButton { top: 50%; margin-top: -40px; transform: translateY(-50%); }
-        #duckButton { top: 50%; margin-top: 40px; transform: translateY(-50%); }
-        #fullscreenButton { top: 50%; margin-top: 120px; transform: translateY(-50%); }
-
-        /* การปรับสำหรับมือถือ (Mobile Specific Styling) */
-        @media (max-width: 768px) {
-            .floating-button {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-                right: 10px; /* ชิดขอบ 10px บนมือถือ */
-            }
-            /* ตำแหน่งปุ่มลอยตัวบนมือถือ (จัดกลางขวา) */
-            #homeButton { top: 50%; margin-top: -105px; transform: translateY(-50%); }
-            #dailyAverageButton { top: 50%; margin-top: -35px; transform: translateY(-50%); }
-            #duckButton { top: 50%; margin-top: 35px; transform: translateY(-50%); }
-            #fullscreenButton { top: 50%; margin-top: 105px; transform: translateY(-50%); }
-        }
-
-        @media (max-width: 400px) {
-            .floating-button {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
-                right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
-            }
-            /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก (จัดกลางขวา) */
-            #homeButton { margin-top: -90px; }
-            #dailyAverageButton { margin-top: -30px; }
-            #duckButton { margin-top: 30px; }
-            #fullscreenButton { margin-top: 90px; }
-        }
-    </style>
-</head>
+    </head>
 <body>
     <div class="background"></div>
-
     <div class="content-wrapper fade-slide-in">
         <main>
-            <h1 class="title-no-wrap">คำนวณค่าเฉลี่ย Order Picker</h1>
-            <div class="input-group">
-                <label for="sku">จำนวน SKU ทั้งหมด:</label>
-                <input type="number" id="sku" value="0" />
-            </div>
-            <div class="input-group">
-                <label for="mu">จำนวน MU ทั้งหมด:</label>
-                <input type="number" id="mu" value="0" />
-            </div>
-            <div class="input-group">
-                <label for="days">จำนวนวันทำงาน:</label>
-                <input type="number" id="days" value="0" />
-            </div>
-            <button id="calculateButton">🔍 คำนวณค่าเฉลี่ย</button>
-        </main>
+            <h1>📊 คำนวณค่าเฉลี่ย Order Picker</h1>
 
-        <footer>
-            <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
-            <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
-            <p>โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
-            <p>พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
-            <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
-        </footer>
+            <div class="info-card">
+                <h2>ข้อมูลสำหรับคำนวณ</h2>
+                <div class="input-group">
+                    <label for="sku">จำนวน SKU ทั้งหมด:</label>
+                    <input type="number" id="sku" placeholder="กรอกจำนวน SKU">
+                </div>
+                <div class="input-group">
+                    <label for="mu">จำนวน MU ทั้งหมด:</label>
+                    <input type="number" id="mu" placeholder="กรอกจำนวน MU">
+                </div>
+                <div class="input-group">
+                    <label for="days">จำนวนวันทำงาน:</label>
+                    <input type="number" id="days" placeholder="กรอกจำนวนวันทำงาน">
+                </div>
+            </div>
+
+            <div class="buttons-group">
+                <button id="calculateButton">🔍 คำนวณค่าเฉลี่ย</button>
+            </div>
+            
+            <footer>
+                <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
+                <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+                <p>โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+                <p>พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+                <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
+            </footer>
+        </main>
     </div>
 
-    <button id="homeButton" class="floating-button" aria-label="กลับหน้าแรก">🏠</button>
+    <button id="homeButton" class="floating-button" aria-label="กลับหน้าหลัก">🏠</button>
     <button id="dailyAverageButton" class="floating-button" aria-label="ไปหน้าเฉลี่ยรายวัน">💰</button>
     <button id="duckButton" class="floating-button" aria-label="ไปหน้าเลือกเพลง">🦆</button>
     <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ">📱</button>
