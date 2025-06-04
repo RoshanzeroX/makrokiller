@@ -3,28 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>โปรแกรมคำนวนการจัดออเดอร์ OCS</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>📦 โปรแกรมคำนวณ Order ที่ต้องจัด</title>
+    <link rel="stylesheet" href="style.css"> <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <div class="background"></div>
-    <div class="container">
-        <h1>โปรแกรมคำนวนการจัดออเดอร์ OCS</h1>
-        <form id="averageForm">
-            <div class="form-group">
-                <input type="number" id="sku" name="sku" required placeholder="SKU">
+
+    <div class="content-wrapper fade-slide-in">
+        <main>
+            <h1 class="title-resize">📦 โปรแกรมคำนวณ Order ที่ต้องจัด</h1>
+            
+            <form id="averageForm">
+                <div class="form-group">
+                    <input type="number" id="sku" name="sku" required placeholder="✅ จำนวน SKU">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="mu" name="mu" required placeholder="✅ จำนวน MU">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="days" name="days" required placeholder="🗓️ จำนวนวันทำงาน">
+                </div>
+                
+                <button type="submit">🔍 คำนวณ</button>
+            </form>
+
+            <div id="results" class="info-card">
+                <h2>ผลลัพธ์</h2>
+                <p>กรุณากรอกข้อมูลเพื่อคำนวณ</p>
             </div>
-            <div class="form-group">
-                <input type="number" id="mu" name="mu" required placeholder="MU">
-            </div>
-            <div class="form-group">
-                <input type="number" id="days" name="days" required placeholder="จำนวนวันทำงาน">
-            </div>
-            <button type="submit">คำนวณค่าเฉลี่ย</button>
-        </form>
+        </main>
     </div>
 
     <a href="songs.html" class="floating-button left">🦆</a>
