@@ -74,62 +74,10 @@ h1 {
     margin-bottom: 1em;
 }
 
-/* --- Input และ Button (คล้าย Song-style.css) --- */
-input[type="number"],
-input[type="text"] {
-    width: calc(100% - 2em); /* ลบ padding ออกจาก width */
-    padding: 1em;
-    margin-bottom: 1.2em;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 12px; /* โค้งมนมากขึ้น */
-    background-color: rgba(255, 255, 255, 0.15); /* โปร่งแสงขึ้น */
-    color: #fff;
-    font-size: 1.2em;
-    box-sizing: border-box;
-    text-align: center; /* จัดตัวเลขไว้ตรงกลาง */
-    outline: none;
-    transition: all 0.3s ease;
-    text-shadow: none; /* ไม่มีเงาข้อความใน input */
-}
+/* *** สไตล์ input และ button ถูกย้ายไป Song-style.css หรือกำหนดใน Song-style.css แทน ***
+   *** สไตล์นี้จะไม่ใช้แล้วในไฟล์นี้ (style.css) สำหรับ input/button ของ index.html ***
+*/
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-    opacity: 1;
-}
-
-input:focus {
-    border-color: #00c6ff;
-    box-shadow: 0 0 0 4px rgba(0, 198, 255, 0.4);
-    background-color: rgba(255, 255, 255, 0.25);
-}
-
-button {
-    padding: 1.2em 2.5em;
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #0d2e3d;
-    background: linear-gradient(145deg, #00c6ff, #007bff);
-    border: none;
-    border-radius: 12px; /* โค้งมนมากขึ้น */
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease;
-    width: calc(100% - 2em); /* เต็มความกว้างของ main */
-    max-width: 460px; /* จำกัดความกว้างสูงสุด */
-    margin-top: 1em; /* เพิ่มระยะห่างจาก input */
-}
-
-button:hover {
-    background: linear-gradient(145deg, #00aaff, #0056b3);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-}
 
 /* Results container (สำหรับแสดงผลลัพธ์) */
 .results-container {
@@ -250,17 +198,10 @@ footer p {
     .title-resize {
         font-size: clamp(1.6em, 5vw, 2.5em);
     }
-    input[type="number"],
-    input[type="text"] {
-        padding: 0.8em;
-        font-size: 1.1em;
-        margin-bottom: 1em;
-    }
-    button {
-        padding: 1em 2em;
-        font-size: 1.3em;
-        width: calc(100% - 1.5em); /* ปรับ width ให้พอดีกับ padding */
-    }
+    /*
+       *** สไตล์ input และ button ถูกย้ายไป Song-style.css หรือกำหนดใน Song-style.css แทน ***
+       *** สไตล์นี้จะไม่ใช้แล้วในไฟล์นี้ (style.css) สำหรับ input/button ของ index.html ***
+    */
     .results-container {
         padding: 1em;
         width: 95%;
@@ -303,16 +244,10 @@ footer p {
     main {
         padding: 1em;
     }
-    input[type="number"],
-    input[type="text"] {
-        padding: 0.7em;
-        font-size: 1em;
-        margin-bottom: 0.8em;
-    }
-    button {
-        padding: 0.8em 1.5em;
-        font-size: 1.2em;
-    }
+    /*
+       *** สไตล์ input และ button ถูกย้ายไป Song-style.css หรือกำหนดใน Song-style.css แทน ***
+       *** สไตล์นี้จะไม่ใช้แล้วในไฟล์นี้ (style.css) สำหรับ input/button ของ index.html ***
+    */
     .results-container {
         padding: 0.8em;
     }
