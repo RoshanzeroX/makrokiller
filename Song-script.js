@@ -1,3 +1,9 @@
+let daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+
+// ตัวแปรสำหรับเก็บค่าเฉลี่ยรายวันที่คำนวณได้ เพื่อส่งไปยัง daily_average.html
+let calculatedDailySKU = 0;
+let calculatedDailyMU = 0;
+
 function updateDateTime() {
     let now = new Date();
     document.getElementById("currentDateTime").innerHTML = `<strong>📅 ${now.toLocaleString('th-TH', { weekday: 'long', day: 'numeric', month: 'long' })} ⏳ ${now.toLocaleTimeString('th-TH')}</strong>`;
@@ -9,7 +15,6 @@ setInterval(updateDateTime, 1000);
 updateDateTime();
 
 document.getElementById("currentMonth").innerText = new Date().toLocaleString('th-TH', { month: 'long' });
-let daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
 document.getElementById("totalDays").innerText = daysInMonth;
 
 function calculateTargets() {
@@ -18,52 +23,62 @@ function calculateTargets() {
     let holidays = parseInt(document.getElementById("holidays").value) || 0;
 
     let today = new Date().getDate();
-    let workingDays = daysInMonth - holidays;
-    let remainingDays = Math.max(0, workingDays - today);
+    let workingDaysInMonth = daysInMonth - holidays; // จำนวนวันทำงานทั้งหมดในเดือน
+    let remainingDays = Math.max(0, workingDaysInMonth - today); // จำนวนวันทำงานที่เหลือในเดือน (นับจากวันนี้)
 
-    // สมมติฐาน: เป้าหมายรายวันคือ 120 SKU และ 340 MU
-    let targetSKUPerDay = 120;
-    let targetMUPerDay = 340;
+    // สมมติฐาน: เป้าหมาย SKU/MU ที่ต้องจัดต่อวัน (ถ้าไม่มีการระบุจากโจทย์ของคุณ)
+    // หรือค่าเฉลี่ยที่ใช้ในการคำนวณ TotalMonthly
+    let targetSKUPerDayFixed = 120; // อาจเป็นค่าคงที่ที่คุณใช้สำหรับเป้าหมาย
+    let targetMUPerDayFixed = 340;   // อาจเป็นค่าคงที่ที่คุณใช้สำหรับเป้าหมาย
 
-    let totalMonthlySKUs = targetSKUPerDay * workingDays; // ใช้ workingDays แทน daysInMonth
-    let totalMonthlyMUs = targetMUPerDay * workingDays;   // ใช้ workingDays แทน daysInMonth
+    // คำนวณเป้าหมายรวมของเดือนตามจำนวนวันทำงาน
+    let totalMonthlySKUsTarget = targetSKUPerDayFixed * workingDaysInMonth;
+    let totalMonthlyMUsTarget = targetMUPerDayFixed * workingDaysInMonth;
 
-    let remainingSKUsMonthly = Math.max(0, totalMonthlySKUs - totalSKUs);
-    let remainingMUsMonthly = Math.max(0, totalMonthlyMUs - totalMUs);
+    // คำนวณจำนวนที่เหลือที่ต้องจัดในเดือนนี้
+    let remainingSKUsMonthly = Math.max(0, totalMonthlySKUsTarget - totalSKUs);
+    let remainingMUsMonthly = Math.max(0, totalMonthlyMUsTarget - totalMUs);
 
-    let remainingSKUsDaily = remainingDays > 0 ? (remainingSKUsMonthly / remainingDays).toFixed(2) : 0;
-    let remainingMUsDaily = remainingDays > 0 ? (remainingMUsMonthly / remainingDays).toFixed(2) : 0;
-    // หากเหลือวันทำงานเป็น 0 และยังไม่ครบเป้าหมาย ให้แสดงยอดที่เหลือทั้งหมด
-    if (remainingDays === 0 && (remainingSKUsMonthly > 0 || remainingMUsMonthly > 0)) {
-        remainingSKUsDaily = remainingSKUsMonthly;
-        remainingMUsDaily = remainingMUsMonthly;
+    // คำนวณ "วันนี้ต้องจัด (เฉลี่ย)"
+    let calculatedSKUsDaily_temp = 0;
+    let calculatedMUsDaily_temp = 0;
+
+    if (remainingDays > 0) {
+        calculatedSKUsDaily_temp = remainingSKUsMonthly / remainingDays;
+        calculatedMUsDaily_temp = remainingMUsMonthly / remainingDays;
+    } else {
+        // หากไม่มีวันทำงานเหลือ แต่ยังไม่ครบเป้าหมาย ให้แสดงยอดที่เหลือทั้งหมด
+        calculatedSKUsDaily_temp = remainingSKUsMonthly;
+        calculatedMUsDaily_temp = remainingMUsMonthly;
     }
 
+    // เก็บค่าที่คำนวณได้ลงในตัวแปร global เพื่อให้ปุ่มถุงเงินนำไปใช้
+    calculatedDailySKU = calculatedSKUsDaily_temp;
+    calculatedDailyMU = calculatedMUsDaily_temp;
 
-    let totalProgressPoints = (totalMonthlySKUs + totalMonthlyMUs);
+    // คำนวณความคืบหน้าโดยรวม
+    let totalProgressPoints = (totalMonthlySKUsTarget + totalMonthlyMUsTarget);
     let currentProgressPoints = (totalSKUs + totalMUs);
     let progress = (currentProgressPoints / totalProgressPoints) * 100;
     progress = Math.min(progress, 100); // ไม่ให้เกิน 100%
 
     let message = "";
-    if (totalSKUs >= totalMonthlySKUs && totalMUs >= totalMonthlyMUs) {
+    if (totalSKUs >= totalMonthlySKUsTarget && totalMUs >= totalMonthlyMUsTarget) {
         message = "🌟 เก่งค่ะลูกกกก";
-    } else if (progress >= 80) { // เพิ่มเงื่อนไขสำหรับความคืบหน้าสูง
+    } else if (progress >= 80) {
         message = "👍 ใกล้ถึงเป้าหมายแล้ว! สู้ๆ";
-    }
-    else {
+    } else {
         message = "💪 ดีขึ้นให้ได้นะ";
     }
 
     document.getElementById("results").innerHTML = `
         <p><strong>📅 จำนวนวันทำงานที่เหลือ:</strong> ${remainingDays} วัน</p>
-        <p><strong>📦 วันนี้ต้องจัด (เฉลี่ย):</strong> ${remainingSKUsDaily} SKU / ${remainingMUsDaily} MU</p>
+        <p><strong>📦 วันนี้ต้องจัด (เฉลี่ย):</strong> ${calculatedDailySKU.toFixed(0)} SKU / ${calculatedDailyMU.toFixed(0)} MU</p>
         <p><strong>📦 เดือนนี้ต้องจัด (รวม):</strong> ${remainingSKUsMonthly} SKU / ${remainingMUsMonthly} MU</p>
         <h3>${message}</h3>
         <p>📊 ความคืบหน้า: <strong>${progress.toFixed(2)}%</strong></p>
     `;
 
-    // เปลี่ยนสีของ Progress Bar ตามความคืบหน้า
     let progressBar = document.getElementById("progressBar");
     progressBar.style.width = `${progress.toFixed(2)}%`;
     progressBar.innerText = `${progress.toFixed(2)}%`;
@@ -77,7 +92,6 @@ function calculateTargets() {
     }
 }
 
-// Event Listeners สำหรับปุ่มลอย
 document.addEventListener("DOMContentLoaded", () => {
     // กำหนดฟังก์ชันให้กับปุ่มต่างๆ
     document.getElementById("homeButton").addEventListener("click", () => {
@@ -95,16 +109,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("dailyAverageButton").addEventListener("click", () => {
-        // เมื่อกดปุ่มถุงเงิน เราจะส่งค่า SKU, MU, Days ไปยัง daily_average.html
-        let totalSKUs = parseInt(document.getElementById("totalSKUs").value) || 0;
-        let totalMUs = parseInt(document.getElementById("totalMUs").value) || 0;
-        let holidays = parseInt(document.getElementById("holidays").value) || 0;
-        let workingDays = daysInMonth - holidays; // ใช้ workingDays ในการคำนวณวันทำงาน
+        // **สำคัญ:** เรียก calculateTargets() อีกครั้ง เพื่อให้แน่ใจว่าค่า calculatedDailySKU และ calculatedDailyMU เป็นค่าล่าสุด
+        calculateTargets();
 
+        // ส่งค่าเฉลี่ยรายวันที่คำนวณได้แล้วไปยัง daily_average.html
         const params = new URLSearchParams({
-            sku: totalSKUs,
-            mu: totalMUs,
-            days: workingDays // ส่งจำนวนวันทำงานที่เหลือไป
+            skuDaily: calculatedDailySKU.toFixed(0), // ส่งเป็น string ที่ปัดเศษแล้ว
+            muDaily: calculatedDailyMU.toFixed(0)    // ส่งเป็น string ที่ปัดเศษแล้ว
         });
         window.location.href = `daily_average.html?${params.toString()}`;
     });
