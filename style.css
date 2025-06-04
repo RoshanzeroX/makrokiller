@@ -164,6 +164,8 @@ button[type="submit"]:hover {
 /* Floating Buttons */
 .floating-button {
     position: fixed;
+    right: 20px; /* ย้ายมาอยู่ทางขวาเสมอ */
+    left: auto; /* ตรวจสอบให้แน่ใจว่าไม่ได้อยู่ทางซ้าย */
     width: 60px;
     height: 60px;
     font-size: 28px;
@@ -178,6 +180,7 @@ button[type="submit"]:hover {
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: floaty 2.5s ease-in-out infinite;
+    top: 50%; /* จัดให้อยู่กลางแนวตั้ง */
     transform: translateY(-50%); /* เพื่อให้ top: 50% กึ่งกลางจริงๆ */
 }
 
@@ -190,27 +193,33 @@ button[type="submit"]:hover {
     }
 }
 
-/* Desktop Floating Button Positions */
-.floating-button.left {
-    left: 20px;
-    right: auto;
-    top: 50%;
-    margin-top: 0; /* Centered vertically on left */
+/* จัดตำแหน่งปุ่มทั้งสามปุ่มบนด้านขวาให้เรียงกัน */
+/* ปุ่มด้านบนสุด (เช่น ปุ่มเป็ด) */
+.floating-button:nth-child(1) { /* หรือใช้ ID ของปุ่มเป็ด ถ้าลำดับไม่เปลี่ยนบ่อย */
+    margin-top: -80px; /* ปรับค่าตามความเหมาะสม */
 }
 
-.floating-button.right {
-    right: 20px;
-    left: auto;
-    top: 50%;
+/* ปุ่มกลาง (เช่น ปุ่ม Fullscreen) */
+.floating-button:nth-child(2) { /* หรือใช้ ID ของปุ่ม Fullscreen */
+    margin-top: 0px; /* อยู่กึ่งกลางแนวตั้ง */
 }
 
-#fullscreenBtn { /* Right side, top of pair */
-    margin-top: -35px;
+/* ปุ่มล่างสุด (เช่น ปุ่มถุงเงิน) */
+.floating-button:nth-child(3) { /* หรือใช้ ID ของปุ่มถุงเงิน */
+    margin-top: 80px; /* ปรับค่าตามความเหมาะสม */
 }
 
-#calculateDailySalesBtn { /* Right side, bottom of pair */
-    margin-top: 35px;
+/* หากคุณต้องการใช้ ID เพื่อความแม่นยำ */
+#duckButton {
+    margin-top: -80px; /* ปุ่มเป็ดอยู่บนสุด */
 }
+#fullscreenBtn {
+    margin-top: 0px; /* ปุ่ม Fullscreen อยู่กลาง */
+}
+#calculateDailySalesBtn {
+    margin-top: 80px; /* ปุ่มถุงเงินอยู่ล่างสุด */
+}
+
 
 footer {
     text-align: center;
@@ -264,18 +273,18 @@ footer p {
         width: 45px;
         height: 45px;
         font-size: 22px;
-        right: 10px;
+        right: 10px; /* ชิดขวามากขึ้นบนมือถือ */
     }
 
-    .floating-button.left {
-        left: 10px;
+    /* จัดตำแหน่งปุ่มทั้งสามปุ่มบนมือถือ */
+    #duckButton {
+        margin-top: -60px; /* ปุ่มเป็ดอยู่บนสุด */
     }
-
     #fullscreenBtn {
-        margin-top: -30px;
+        margin-top: 0px; /* ปุ่ม Fullscreen อยู่กลาง */
     }
     #calculateDailySalesBtn {
-        margin-top: 30px;
+        margin-top: 60px; /* ปุ่มถุงเงินอยู่ล่างสุด */
     }
 
     footer {
@@ -305,19 +314,18 @@ footer p {
         width: 40px;
         height: 40px;
         font-size: 20px;
-        right: 5px;
+        right: 5px; /* ชิดขวามากที่สุดบนจอเล็ก */
     }
-    .floating-button.left {
-        left: 5px;
+    /* จัดตำแหน่งปุ่มทั้งสามปุ่มบนจอที่เล็กที่สุด */
+    #duckButton {
+        margin-top: -50px;
     }
     #fullscreenBtn {
-        margin-top: -25px;
+        margin-top: 0px;
     }
     #calculateDailySalesBtn {
-        margin-top: 25px;
+        margin-top: 50px;
     }
 
     footer {
-        font-size: 0.5em;
-    }
-}
+        font-size:
