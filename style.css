@@ -6,273 +6,129 @@ html, body {
     padding: 0;
     height: 100%;
     font-family: 'Kanit', sans-serif;
-    color: #fff; /* สีข้อความเริ่มต้น */
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85); /* เงาข้อความเพื่อให้อ่านง่ายบนพื้นหลัง */
+    color: #fff; /* Initial text color */
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.85); /* Text shadow for readability */
     background: transparent;
-    overflow-x: hidden; /* ป้องกันการเลื่อนแนวนอน */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-.background {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url("bg.webp") center/cover no-repeat; /* ตรวจสอบ path ของ bg.webp */
-    background-attachment: fixed;
-    filter: brightness(40%) blur(2px); /* ทำให้มืดลงและเบลอเล็กน้อย */
-    z-index: -1;
-}
-
-.content-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 3vh 2em 2em; /* เพิ่ม padding ด้านล่างเพื่อให้มีที่ว่างสำหรับ footer */
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-    min-height: 100vh; /* ทำให้สูงเต็มจอเพื่อรองรับ content และ footer */
-    justify-content: center; /* จัดเนื้อหาหลัก (main) ตรงกลางแนวตั้ง */
-    align-items: center; /* จัดเนื้อหาหลัก (main) ตรงกลางแนวนอน */
-}
-
-.fade-slide-in {
-    animation: fadeSlideIn 1s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-@keyframes fadeSlideIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-main {
-    text-align: center;
-    flex: 0 0 auto; /* ไม่ให้ขยายเต็มที่, จัดตามเนื้อหา */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 500px; /* จำกัดความกว้างของ main content */
-    width: 100%;
-    margin: auto; /* จัดกึ่งกลางอัตโนมัติ */
-    padding: 2em;
-}
-
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 1em;
-    color: #ffd700; /* สีทองสำหรับหัวข้อ */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-    white-space: normal; /* อนุญาตให้ข้อความขึ้นบรรทัดใหม่ */
-    word-break: break-word; /* ให้ข้อความตัดคำได้ */
-    overflow-x: hidden; /* ซ่อนส่วนที่เกินขอบไป */
-}
-
-.title-resize {
-    font-size: clamp(1.8em, 5vw, 2.8em); /* ปรับขนาดตัวอักษรตาม viewport */
-    margin-bottom: 1em;
-}
-
-/* *** สไตล์ input และ button ถูกย้ายไป Song-style.css หรือกำหนดใน Song-style.css แทน ***
-   *** สไตล์นี้จะไม่ใช้แล้วในไฟล์นี้ (style.css) สำหรับ input/button ของ index.html ***
+/*
+    IMPORTANT: All specific styles for input, button, .results-container,
+    footer, and .floating-button are now expected to be in Song-style.css.
+    Remove them from here if they exist to prevent conflicts.
 */
 
+/* Example: Basic styles for .background, .content-wrapper, main, h1, .title-resize
+   can remain here IF they are generally shared and imported by Song-style.css.
+   However, if Song-style.css defines them specifically, then this file should be even more minimal.
+   Based on the Song-style.css you provided earlier, it contains many of these,
+   so it's better to make this file only contain general typography or very basic resets.
+*/
 
-/* Results container (สำหรับแสดงผลลัพธ์) */
-.results-container {
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 1.5em;
-    border-radius: 15px;
-    margin-top: 2em;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+/* --- Styles specifically for daily_average.html or other pages that link ONLY to style.css --- */
+/* These styles should *not* be in Song-style.css unless they are meant for Song.html too. */
+
+.info-card {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 1em 1.5em;
+    border-radius: 12px;
+    margin-bottom: 1.5em;
     width: 90%;
-    max-width: 450px;
-    box-sizing: border-box;
-    text-align: center;
-    color: #eee;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     text-shadow: none;
-    line-height: 1.6; /* ปรับระยะห่างระหว่างบรรทัด */
-    animation: fadeIn 1s ease forwards;
-    opacity: 0; /* ซ่อนไว้ก่อนแสดงผลลัพธ์ */
+    color: #eee;
 }
 
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
-}
-
-.results-container h2 {
-    font-size: 1.8em;
-    color: #00c6ff;
+.info-card h2 {
+    color: #ffd700;
+    font-size: 1.5em;
     margin-top: 0;
     margin-bottom: 0.8em;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.results-container p {
+.info-card p {
     font-size: 1.1em;
     margin: 0.5em 0;
 }
 
-.results-container p span {
+.info-card span {
     font-weight: bold;
-    color: #ffd700;
+    color: #00c6ff;
 }
 
-/* Footer Styling */
-footer {
-    margin-top: 3em;
-    padding: 1.5em;
+.input-group {
+    margin-bottom: 1em;
+}
+
+/* Input styles for daily_average.html (if you want its inputs to look different from Song-style.css) */
+.info-card input[type="number"] {
+    width: calc(100% - 2em);
+    padding: 0.8em;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1em;
     text-align: center;
-    font-size: 0.75em;
-    background: transparent;
-    border-radius: 0;
-    box-shadow: none;
-    max-width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    color: #ddd;
-}
-footer p {
-    margin: 0.5em 0;
-    color: #ddd;
-}
-.footer-icon {
-    display: inline-block;
-    font-size: 1.2em;
-    margin: 0 6px;
+    outline: none;
 }
 
-/* --- สไตล์ปุ่มลอยตัว (Floating Buttons) --- */
-.floating-button {
-    position: fixed;
-    right: 20px; /* ทุกปุ่มอยู่ทางขวา */
-    width: 60px; /* ขนาดกว้าง */
-    height: 60px; /* ขนาดสูง */
-    font-size: 28px;
-    border-radius: 50%; /* ทำให้ปุ่มกลม */
-    background: radial-gradient(circle at center, #ffffffee, #ddddddcc);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    z-index: 10;
+/* Progress bar styles for daily_average.html */
+.progress-bar-container {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 0.5em;
+    height: 30px;
     display: flex;
     align-items: center;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #007bff; /* Default blue */
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+    transition: width 0.5s ease-in-out, background-color 0.3s ease;
+}
+
+.buttons-group {
+    margin-top: 2em;
+    display: flex;
     justify-content: center;
+    gap: 1em;
+}
+
+.clear-button {
+    padding: 1em 2em;
+    font-size: 1em;
+    background-color: #dc3545; /* Red for clear */
+    color: white;
     border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: floaty 2.5s ease-in-out infinite;
-}
-@keyframes floaty {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* ตำแหน่งปุ่มลอยตัวบน PC */
-/* เรียงปุ่มให้ห่างกัน 80px จากกึ่งกลางหน้าจอ */
-#homeButton { top: 50%; margin-top: -120px; transform: translateY(-50%); }
-#dailyAverageButton { top: 50%; margin-top: -40px; transform: translateY(-50%); }
-#duckButton { top: 50%; margin-top: 40px; transform: translateY(-50%); }
-#fullscreenButton { top: 50%; margin-top: 120px; transform: translateY(-50%); }
+.clear-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
 
-
-/* Media Queries สำหรับการตอบสนองบนมือถือ */
+/* Media Queries for general styles (that don't conflict with Song-style.css) */
 @media (max-width: 768px) {
-    .content-wrapper {
-        padding: 2vh 1em 1em;
-    }
-    main {
-        padding: 1.5em;
-        width: 95%;
-        max-width: unset;
-    }
-    h1 {
-        font-size: 2em;
-        margin-bottom: 0.8em;
-    }
-    .title-resize {
-        font-size: clamp(1.6em, 5vw, 2.5em);
-    }
-    /*
-       *** สไตล์ input และ button ถูกย้ายไป Song-style.css หรือกำหนดใน Song-style.css แทน ***
-       *** สไตล์นี้จะไม่ใช้แล้วในไฟล์นี้ (style.css) สำหรับ input/button ของ index.html ***
-    */
-    .results-container {
-        padding: 1em;
-        width: 95%;
-        margin-top: 1.5em;
-    }
-    .results-container h2 {
-        font-size: 1.5em;
-    }
-    .results-container p {
-        font-size: 1em;
-    }
-    footer {
-        font-size: 0.7em;
-        padding: 1em;
-        margin-top: 2em;
-        max-width: 90%;
-    }
-
-    /* ตำแหน่งปุ่มลอยตัวบนมือถือ */
-    .floating-button {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        right: 10px; /* ชิดขอบ 10px บนมือถือ */
-    }
-    /* เรียงปุ่มให้ห่างกัน 70px จากกึ่งกลางหน้าจอ */
-    #homeButton { top: 50%; margin-top: -105px; transform: translateY(-50%); }
-    #dailyAverageButton { top: 50%; margin-top: -35px; transform: translateY(-50%); }
-    #duckButton { top: 50%; margin-top: 35px; transform: translateY(-50%); }
-    #fullscreenButton { top: 50%; margin-top: 105px; transform: translateY(-50%); }
+    .info-card { padding: 1em; }
 }
 
 @media (max-width: 480px) {
-    h1 {
-        font-size: 1.8em;
-    }
-    .title-resize {
-        font-size: clamp(1.4em, 5vw, 2.2em);
-    }
-    main {
-        padding: 1em;
-    }
-    /*
-       *** สไตล์ input และ button ถูกย้ายไป Song-style.css หรือกำหนดใน Song-style.css แทน ***
-       *** สไตล์นี้จะไม่ใช้แล้วในไฟล์นี้ (style.css) สำหรับ input/button ของ index.html ***
-    */
-    .results-container {
-        padding: 0.8em;
-    }
-    .results-container h2 {
-        font-size: 1.3em;
-    }
-    .results-container p {
-        font-size: 0.9em;
-    }
-    footer {
-        font-size: 0.6em;
-        padding: 0.8em;
-        margin-top: 1.5em;
-    }
-
-    /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก */
-    .floating-button {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-        right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
-    }
-    /* เรียงปุ่มให้ห่างกัน 60px จากกึ่งกลางหน้าจอ */
-    #homeButton { margin-top: -90px; }
-    #dailyAverageButton { margin-top: -30px; }
-    #duckButton { margin-top: 30px; }
-    #fullscreenButton { margin-top: 90px; }
+    .info-card { padding: 0.8em; }
+    .info-card p { font-size: 0.9em; }
 }
