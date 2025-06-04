@@ -6,12 +6,12 @@ html, body {
     padding: 0;
     height: 100%;
     font-family: 'Kanit', sans-serif;
-    color: #fff; /* สีข้อความเริ่มต้นสำหรับ body, จะถูก overrides ด้วย Song-style.css ในส่วนที่เกี่ยวข้อง */
+    color: #fff; 
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.85);
     background: transparent;
     overflow-x: hidden;
-    line-height: 1.6; /* ปรับ line-height เพื่อความอ่านง่าย */
-    font-size: 16px; /* กำหนด base font-size, ค่าอื่นๆ จะเป็น em/rem เทียบกับค่านี้ */
+    line-height: 1.6;
+    font-size: 16px; 
 }
 
 .background {
@@ -24,7 +24,7 @@ html, body {
 }
 
 /* --- สไตล์เฉพาะสำหรับ daily_average.html หรือหน้าอื่นๆ ที่ไม่ได้ใช้ Song-style.css --- */
-/* หากคุณมีสไตล์เหล่านี้ใน style.css เดิม ให้คงไว้ได้ */
+/* (คงเดิม) */
 .info-card {
     background-color: rgba(255, 255, 255, 0.2);
     padding: 1em 1.5em;
@@ -118,23 +118,23 @@ html, body {
     transform: translateY(-2px);
 }
 
-/* --- ปรับแต่ง Footer --- */
+/* --- ปรับแต่ง Footer ให้จัดกลาง --- */
 footer {
     margin-top: 3em;
     padding: 1.5em;
     text-align: center; /* จัดให้อยู่ตรงกลาง */
-    font-size: 0.7em; /* ปรับขนาดตัวหนังสือให้เล็กลง (จาก 0.75em) */
+    font-size: 0.7em; 
     background: transparent;
     border-radius: 0;
     box-shadow: none;
     max-width: 85%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: auto; /* จัดกลาง */
+    margin-right: auto; /* จัดกลาง */
     position: relative;
     color: #ddd;
 }
 footer p {
-    margin: 0.4em 0; /* ลดระยะห่างระหว่างบรรทัดใน footer ลงเล็กน้อย */
+    margin: 0.4em 0; 
     color: #ddd;
 }
 .footer-icon {
@@ -160,7 +160,7 @@ footer p {
     justify-content: center;
     border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: floaty 2.5s ease-in-out infinite; /* ใส่ animation กลับมา */
+    animation: floaty 2.5s ease-in-out infinite; 
 }
 
 @keyframes floaty {
@@ -168,13 +168,11 @@ footer p {
     50% { transform: translateY(-8px); }
 }
 
-/* ตำแหน่งปุ่มลอยตัวบน PC: จัดเรียงให้สวยงามและเว้นช่องว่าง */
-/* เราจะให้ปุ่มอยู่ตรงกลางของความสูงหน้าจอ และกระจายออกไป */
-/* ปรับระยะห่างให้มากขึ้น เพื่อไม่ให้ซ้อนกัน */
-#homeButton { top: 50%; margin-top: -180px; } /* ปุ่มแรก */
-#dailyAverageButton { top: 50%; margin-top: -90px; } /* ปุ่มสอง */
+/* ตำแหน่งปุ่มลอยตัวบน PC: เพิ่มระยะห่างให้มากขึ้น */
+#homeButton { top: 50%; margin-top: -200px; } /* ปุ่มแรก */
+#dailyAverageButton { top: 50%; margin-top: -100px; } /* ปุ่มสอง */
 #duckButton { top: 50%; margin-top: 0px; } /* ปุ่มกลาง */
-#fullscreenButton { top: 50%; margin-top: 90px; } /* ปุ่มสุดท้าย */
+#fullscreenButton { top: 50%; margin-top: 100px; } /* ปุ่มสุดท้าย */
 
 
 /* Media Queries สำหรับสไตล์ทั่วไปและ Floating Buttons */
@@ -186,16 +184,16 @@ footer p {
         width: 50px;
         height: 50px;
         font-size: 24px;
-        right: 10px; /* ชิดขอบ 10px บนมือถือ */
+        right: 10px;
     }
     /* ปรับระยะห่างบนมือถือให้เหมาะสม */
-    #homeButton { top: 50%; margin-top: -140px; }
-    #dailyAverageButton { top: 50%; margin-top: -70px; }
+    #homeButton { top: 50%; margin-top: -150px; }
+    #dailyAverageButton { top: 50%; margin-top: -75px; }
     #duckButton { top: 50%; margin-top: 0px; }
-    #fullscreenButton { top: 50%; margin-top: 70px; }
+    #fullscreenButton { top: 50%; margin-top: 75px; }
 
     footer {
-        font-size: 0.65em; /* ปรับขนาดเล็กบนมือถือ */
+        font-size: 0.65em;
         padding: 1em;
         margin-top: 2em;
         max-width: 90%;
@@ -211,16 +209,16 @@ footer p {
         width: 45px;
         height: 45px;
         font-size: 20px;
-        right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
+        right: 5px;
     }
     /* ปรับระยะห่างบนมือถือเล็กให้เหมาะสม */
-    #homeButton { margin-top: -120px; }
-    #dailyAverageButton { margin-top: -60px; }
+    #homeButton { margin-top: -130px; }
+    #dailyAverageButton { margin-top: -65px; }
     #duckButton { margin-top: 0px; } 
-    #fullscreenButton { margin-top: 60px; }
+    #fullscreenButton { margin-top: 65px; }
 
     footer {
-        font-size: 0.6em; /* เล็กลงอีกบนมือถือเล็ก */
+        font-size: 0.6em;
         padding: 0.8em;
         margin-top: 1.5em;
     }
