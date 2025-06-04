@@ -15,7 +15,7 @@ html, body {
   top: 0; left: 0; right: 0; bottom: 0;
   /* **สำคัญ:** ตรวจสอบ Path รูปภาพตรงนี้ให้ถูกต้อง */
   /* ถ้า bg.webp อยู่ในโฟลเดอร์ images */
-  background: url("images/bg.webp") center/cover no-repeat;
+  background: url("bg.webp") center/cover no-repeat;
   /* ถ้า bg.webp ยังอยู่ที่ root directory (ระดับเดียวกับ index.html) ให้ใช้ "bg.webp" */
   /* ถ้า bg.webp อยู่ในโฟลเดอร์ assets ให้ใช้ "assets/bg.webp" */
   filter: brightness(40%) blur(2px);
