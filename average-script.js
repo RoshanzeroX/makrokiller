@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- 2. ดึงค่าผลลัพธ์จาก URL Parameters ---
     const urlParams = new URLSearchParams(window.location.search);
-    const sku = urlParams.get('sku');
-    const mu = urlParams.get('mu');
-    const days = urlParams.get('days');
+    const sku = urlParams.get('sku'); // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
+    const mu = urlParams.get('mu');   // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
+    const days = urlParams.get('days'); // ยังคงดึงค่ามา แต่จะไม่นำไปแสดงผล
     const average = parseFloat(urlParams.get('average')); // แปลงค่าเฉลี่ยเป็นตัวเลข
 
     const resultDisplay = document.getElementById("result-display");
@@ -47,14 +47,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             messageText = "💪 ดีขึ้นให้ได้นะ";
         }
 
-        // --- 4. แสดงผลลัพธ์แบบไดนามิก ---
+        // --- 4. แสดงผลลัพธ์แบบไดนามิก (ไม่แสดง SKU, MU, Days แล้ว) ---
         resultDisplay.innerHTML = `
             <img src="${selectedImage}" alt="ผลลัพธ์" class="result-image" />
             <p class="result-message">${messageText}</p>
             <div class="result-details">
-                <p>SKU: ${sku}</p>
-                <p>MU: ${mu}</p>
-                <p>จำนวนวันทำงาน: ${days} วัน</p>
                 <p>ค่าเฉลี่ย: <span class="result-value">${average.toFixed(2)}</span></p>
             </div>
         `;
@@ -76,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     document.getElementById("dailyAverageButton").addEventListener("click", () => {
-        window.location.href = "daily_average.html"; // ไปหน้า daily_average.html (ไม่มีการส่งค่าพารามิเตอร์จากหน้านี้)
+        window.location.href = "daily_average.html"; // ไปหน้า daily_average.html
     });
 
     document.getElementById("fullscreenButton").addEventListener("click", () => {
