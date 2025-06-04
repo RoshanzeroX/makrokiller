@@ -6,47 +6,42 @@
     <title>ค่าเฉลี่ยยอดจัดรายวัน</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
-    <style>
-        body, input, button, p, h1, h2, h3 {
-            font-family: 'Kanit', sans-serif;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        main {
-            padding: 2em;
-            color: white;
-            text-align: center;
-        }
-        .back-button {
-            display: inline-block;
-            margin-top: 2em;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .back-button:hover {
-            background-color: #0056b3;
-        }
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 1em;
-        }
-        p {
-            font-size: 1.2em;
-        }
-    </style>
-</head>
+    </head>
 <body>
     <div class="background"></div>
     <div class="content-wrapper fade-slide-in">
         <main>
             <h1>💰 ค่าเฉลี่ยยอดจัดรายวัน</h1>
-            <p>หน้านี้จะแสดงข้อมูลและกราฟค่าเฉลี่ยยอดจัดรายวันของคุณ</p>
-            <p>คุณสามารถเพิ่มฟังก์ชันการบันทึกข้อมูลและแสดงผลที่นี่ได้ในอนาคต</p>
-            <a href="index.html" class="back-button">กลับหน้าหลัก</a>
+
+            <div class="info-card">
+                <h2>เป้าหมายประจำวัน (จากหน้าคำนวณ)</h2>
+                <p>เป้าหมาย SKU ต่อวัน: <span id="targetSku">0</span></p>
+                <p>เป้าหมาย MU ต่อวัน: <span id="targetMu">0</span></p>
+            </div>
+
+            <div class="info-card">
+                <h2>ความคืบหน้าการจัดวันนี้</h2>
+                <div class="input-group">
+                    <label for="currentSku">จำนวน SKU ที่จัดแล้ว:</label>
+                    <input type="number" id="currentSku" placeholder="กรอก SKU ที่จัดแล้ว" value="0">
+                </div>
+                <div class="progress-bar-container">
+                    <div id="skuProgressBar" class="progress-bar">0%</div>
+                </div>
+
+                <div class="input-group" style="margin-top: 1.5em;">
+                    <label for="currentMu">จำนวน MU ที่จัดแล้ว:</label>
+                    <input type="number" id="currentMu" placeholder="กรอก MU ที่จัดแล้ว" value="0">
+                </div>
+                <div class="progress-bar-container">
+                    <div id="muProgressBar" class="progress-bar">0%</div>
+                </div>
+            </div>
+
+            <div class="buttons-group">
+                <button id="clearDataButton" class="clear-button">🗑️ เคลียร์ข้อมูล</button>
+                <a href="index.html" class="back-button">↩️ กลับหน้าหลัก</a>
+            </div>
         </main>
         <footer>
             <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
@@ -56,5 +51,100 @@
             <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
         </footer>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            // ค่า SKU และ MU ที่ส่งมาจาก index.html
+            const totalSku = parseFloat(urlParams.get('sku')) || 0;
+            const totalMu = parseFloat(urlParams.get('mu')) || 0;
+            const days = parseFloat(urlParams.get('days')) || 1; // Default to 1 to avoid division by zero
+
+            // *** สำคัญ: ตรวจสอบการคำนวณค่าเป้าหมายต่อวันตรงนี้ ***
+            // ถ้าคุณต้องการให้ "เป้าหมาย SKU ต่อวัน" และ "เป้าหมาย MU ต่อวัน"
+            // คือค่าเฉลี่ยของ SKU/MU ที่ทำได้ (totalSku/totalMu) หารด้วยจำนวนวัน (days)
+            const dailyTargetSku = (totalSku / days).toFixed(0); // SKU ที่ควรจัดได้ต่อวันโดยเฉลี่ย
+            const dailyTargetMu = (totalMu / days).toFixed(0);   // MU ที่ควรจัดได้ต่อวันโดยเฉลี่ย
+
+
+            const targetSkuDisplay = document.getElementById('targetSku');
+            const targetMuDisplay = document.getElementById('targetMu');
+            const currentSkuInput = document.getElementById('currentSku');
+            const currentMuInput = document.getElementById('currentMu');
+            const skuProgressBar = document.getElementById('skuProgressBar');
+            const muProgressBar = document.getElementById('muProgressBar');
+            const clearDataButton = document.getElementById('clearDataButton');
+
+            targetSkuDisplay.textContent = dailyTargetSku;
+            targetMuDisplay.textContent = dailyTargetMu;
+
+            // โหลดข้อมูลที่จัดไปแล้วจาก Local Storage (ถ้ามี)
+            const savedCurrentSku = localStorage.getItem('dailySku');
+            const savedCurrentMu = localStorage.getItem('dailyMu');
+            if (savedCurrentSku) {
+                currentSkuInput.value = savedCurrentSku;
+            }
+            if (savedCurrentMu) {
+                currentMuInput.value = savedCurrentMu;
+            }
+
+            function updateProgress() {
+                const currentSku = parseFloat(currentSkuInput.value) || 0;
+                const currentMu = parseFloat(currentMuInput.value) || 0;
+
+                const targetSkuNum = parseFloat(dailyTargetSku);
+                const targetMuNum = parseFloat(dailyTargetMu);
+
+                // คำนวณเปอร์เซ็นต์ความคืบหน้า SKU
+                let skuPercentage = 0;
+                if (targetSkuNum > 0) {
+                    skuPercentage = Math.min(100, (currentSku / targetSkuNum) * 100);
+                }
+                skuProgressBar.style.width = skuPercentage + '%';
+                skuProgressBar.textContent = skuPercentage.toFixed(0) + '%';
+                skuProgressBar.style.backgroundColor = getProgressBarColor(skuPercentage);
+
+
+                // คำนวณเปอร์เซ็นต์ความคืบหน้า MU
+                let muPercentage = 0;
+                if (targetMuNum > 0) {
+                    muPercentage = Math.min(100, (currentMu / targetMuNum) * 100);
+                }
+                muProgressBar.style.width = muPercentage + '%';
+                muProgressBar.textContent = muPercentage.toFixed(0) + '%';
+                muProgressBar.style.backgroundColor = getProgressBarColor(muPercentage);
+
+                // บันทึกข้อมูลที่กรอกลง Local Storage
+                localStorage.setItem('dailySku', currentSku);
+                localStorage.setItem('dailyMu', currentMu);
+            }
+
+            function getProgressBarColor(percentage) {
+                if (percentage >= 100) {
+                    return '#28a745'; // เขียวเข้ม เมื่อครบ 100%
+                } else if (percentage >= 75) {
+                    return '#ffc107'; // ส้ม เมื่อ 75% ขึ้นไป
+                } else {
+                    return '#007bff'; // น้ำเงิน เริ่มต้น
+                }
+            }
+
+            // อัปเดตเมื่อมีการเปลี่ยนแปลงค่าในช่องกรอก
+            currentSkuInput.addEventListener('input', updateProgress);
+            currentMuInput.addEventListener('input', updateProgress);
+
+            // ปุ่มเคลียร์ข้อมูล
+            clearDataButton.addEventListener('click', () => {
+                currentSkuInput.value = 0;
+                currentMuInput.value = 0;
+                localStorage.removeItem('dailySku');
+                localStorage.removeItem('dailyMu');
+                updateProgress(); // อัปเดต UI หลังจากเคลียร์
+            });
+
+            // เรียกใช้ครั้งแรกเมื่อโหลดหน้า
+            updateProgress();
+        });
+    </script>
 </body>
 </html>
