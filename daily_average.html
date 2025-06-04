@@ -44,12 +44,11 @@
         </main>
     </div>
 
-    <button id="homeButton" class="floating-button" aria-label="กลับหน้าหลัก">🏠</button>
+    <button id="homeButton" class="floating-button" aria-label="กลับหน้าหลัก (หน้าเป็ด)">🏠</button>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const urlParams = new URLSearchParams(window.location.search);
-            // รับค่า 'skuDaily' และ 'muDaily' ซึ่งคือเป้าหมายเฉลี่ยรายวันโดยตรงจาก songs.html
             const targetSku = parseFloat(urlParams.get('skuDaily')) || 0;
             const targetMu = parseFloat(urlParams.get('muDaily')) || 0;
 
@@ -61,11 +60,9 @@
             const muProgressBar = document.getElementById('muProgressBar');
             const clearDataButton = document.getElementById('clearDataButton');
 
-            // แสดงเป้าหมายที่ได้รับมา
             targetSkuDisplay.textContent = targetSku.toFixed(0);
             targetMuDisplay.textContent = targetMu.toFixed(0);
 
-            // โหลดข้อมูลที่จัดไปแล้วจาก Local Storage (ถ้ามี)
             const savedCurrentSku = localStorage.getItem('dailySku');
             const savedCurrentMu = localStorage.getItem('dailyMu');
             if (savedCurrentSku) {
@@ -75,16 +72,13 @@
                 currentMuInput.value = savedCurrentMu;
             }
 
-            // ฟังก์ชันสำหรับอัปเดตความคืบหน้าของ Progress Bar
             function updateProgress() {
                 const currentSku = parseFloat(currentSkuInput.value) || 0;
                 const currentMu = parseFloat(currentMuInput.value) || 0;
 
-                // ใช้ค่าเป้าหมายที่ได้รับมาโดยตรง
                 const targetSkuNum = targetSku;
                 const targetMuNum = targetMu;
 
-                // คำนวณเปอร์เซ็นต์และอัปเดต SKU Progress Bar
                 let skuPercentage = 0;
                 if (targetSkuNum > 0) {
                     skuPercentage = Math.min(100, (currentSku / targetSkuNum) * 100);
@@ -93,7 +87,6 @@
                 skuProgressBar.textContent = skuPercentage.toFixed(0) + '%';
                 skuProgressBar.style.backgroundColor = getProgressBarColor(skuPercentage);
 
-                // คำนวณเปอร์เซ็นต์และอัปเดต MU Progress Bar
                 let muPercentage = 0;
                 if (targetMuNum > 0) {
                     muPercentage = Math.min(100, (currentMu / targetMuNum) * 100);
@@ -102,41 +95,36 @@
                 muProgressBar.textContent = muPercentage.toFixed(0) + '%';
                 muProgressBar.style.backgroundColor = getProgressBarColor(muPercentage);
 
-                // บันทึกข้อมูลที่กรอกลง Local Storage เพื่อเก็บสถานะ
                 localStorage.setItem('dailySku', currentSku);
                 localStorage.setItem('dailyMu', currentMu);
             }
 
-            // ฟังก์ชันสำหรับกำหนดสีของ Progress Bar ตามเปอร์เซ็นต์
             function getProgressBarColor(percentage) {
                 if (percentage >= 100) {
-                    return '#28a745'; // เขียวเข้ม (เป้าหมายบรรลุ)
+                    return '#28a745';
                 } else if (percentage >= 75) {
-                    return '#ffc107'; // ส้ม (ใกล้บรรลุเป้าหมาย)
+                    return '#ffc107';
                 } else {
-                    return '#007bff'; // น้ำเงิน (เริ่มต้น)
+                    return '#007bff';
                 }
             }
 
-            // เพิ่ม Event Listener สำหรับการเปลี่ยนแปลงค่าในช่องกรอก
             currentSkuInput.addEventListener('input', updateProgress);
             currentMuInput.addEventListener('input', updateProgress);
 
-            // Event Listener สำหรับปุ่มเคลียร์ข้อมูล
             clearDataButton.addEventListener('click', () => {
                 currentSkuInput.value = 0;
                 currentMuInput.value = 0;
                 localStorage.removeItem('dailySku');
                 localStorage.removeItem('dailyMu');
-                updateProgress(); // อัปเดต UI หลังจากเคลียร์ข้อมูล
+                updateProgress();
             });
 
-            // Event Listener สำหรับปุ่มบ้าน (กลับหน้าหลัก)
+            // Event Listener สำหรับปุ่มกลับหน้าหลัก
             document.getElementById("homeButton").addEventListener("click", () => {
-                window.location.href = "index.html";
+                window.location.href = "index.html"; // ลิงก์กลับไปที่ index.html (หน้าเป็ด)
             });
 
-            // เรียกฟังก์ชัน updateProgress ครั้งแรกเมื่อโหลดหน้า เพื่อแสดงสถานะปัจจุบัน
             updateProgress();
         });
     </script>
