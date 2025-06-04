@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* CSS ในส่วนนี้ยังคงเป็นเหมือนเดิม */
     body, input, button, p, h1, h2, h3 {
       font-family: 'Kanit', sans-serif;
       font-weight: 400;
@@ -48,55 +49,12 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
-    /* Floating Buttons */
-    .floating-button {
-      position: fixed;
-      width: 56px;
-      height: 56px;
-      font-size: 2.2em;
-      border-radius: 50%;
-      border: none;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .floating-button:hover {
-      background: linear-gradient(135deg, #ffe066, #ffb84d);
-      transform: scale(1.08);
-    }
-    #moneyBagButton {
-      bottom: 30px;
-      left: 30px;
-    }
-    #duckButton {
-      bottom: 100px;
-      left: 30px;
-    }
-    #fullscreenButton {
-      bottom: 170px;
-      left: 30px;
-    }
-    @media (max-width: 480px) {
-      .floating-button {
-        width: 44px;
-        height: 44px;
-        font-size: 1.5em;
-      }
-      #moneyBagButton { left: 12px; bottom: 12px; }
-      #duckButton { left: 12px; bottom: 66px; }
-      #fullscreenButton { left: 12px; bottom: 120px; }
-    }
+    /* ปรับ Footer ให้พอดีกับหน้าจอ */
     footer {
       margin-top: 3em;
       padding: 1.5em;
       text-align: center;
-      font-size: 0.75em;
+      font-size: 0.75em; /* ลดขนาดลง 30% */
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       max-width: 85%;
@@ -108,10 +66,28 @@
       margin: 0.5em 0;
       color: #ddd;
     }
+    /* เพิ่มลูกเล่นตกแต่ง */
+    .footer-icon {
+      display: inline-block;
+      font-size: 1.2em;
+      margin: 0 6px;
+    }
+    /* ให้ footer ปรับตามมือถือ */
+    @media (max-width: 480px) {
+      footer {
+        font-size: 0.65em;
+        padding: 1em;
+        max-width: 95%;
+      }
+      footer p {
+        margin: 0.4em 0;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="background"></div>
+
   <div class="content-wrapper fade-slide-in">
     <main>
       <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
@@ -128,35 +104,20 @@
         <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
       </form>
     </main>
+
     <footer>
-      <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
-      <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
-      <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
-      <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
+      <p>เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>
+      <p>โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
+      <p>โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
+      <p>พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
       <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
     </footer>
   </div>
 
-  <!-- Floating Buttons -->
-  <button id="moneyBagButton" class="floating-button" aria-label="ไปหน้ารายการเพลง">💰</button>
-  <button id="duckButton" class="floating-button" aria-label="ไปหน้าเป็ด">🦆</button>
-  <button id="fullscreenButton" class="floating-button" aria-label="เปิด/ปิดเต็มจอ">📱</button>
+  <button id="duckButton" class="floating-button right" aria-label="ไปหน้าเลือกเพลง">🦆</button>
+  <button id="fullscreenButton" class="floating-button right" aria-label="เปิด/ปิดเต็มจอ">📱</button>
+  <button id="dailyAverageButton" class="floating-button right" aria-label="ไปหน้าเฉลี่ยรายวัน">💰</button>
 
   <script src="script.js"></script>
-  <script>
-    document.getElementById("moneyBagButton").addEventListener("click", function() {
-      window.location.href = "songs.html";
-    });
-    document.getElementById("duckButton").addEventListener("click", function() {
-      window.location.href = "songs.html"; // หรือเปลี่ยนเป็นหน้าเป็ดถ้ามี
-    });
-    document.getElementById("fullscreenButton").addEventListener("click", function() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    });
-  </script>
 </body>
 </html>
