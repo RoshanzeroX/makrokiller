@@ -10,6 +10,7 @@
         /* สไตล์เพิ่มเติมสำหรับปุ่มลอยตัวใน index.html */
         .floating-button {
             position: fixed;
+            right: 20px; /* ทุกปุ่มอยู่ทางขวา */
             width: 60px;
             height: 60px;
             font-size: 28px;
@@ -30,11 +31,11 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* ตำแหน่งของปุ่มลอยตัวบน PC */
-        #homeButton { top: 20px; left: 20px; right: unset; } /* ปุ่มบ้านย้ายไปซ้ายบน */
-        #dailyAverageButton { top: 20px; right: 100px; } /* ปุ่มถุงเงินอยู่ขวาบน ห่างจากขอบ 100px */
-        #duckButton { top: 20px; right: 20px; } /* ปุ่มเป็ดอยู่ขวาบนสุด */
-        #fullscreenButton { bottom: 20px; right: 20px; top: unset; animation: none; /* ปุ่มเต็มจออยู่ขวาล่าง ไม่ลอย */ }
+        /* ตำแหน่งของปุ่มลอยตัวบน PC (จัดกลางขวา) */
+        #homeButton { top: 50%; margin-top: -120px; transform: translateY(-50%); }
+        #dailyAverageButton { top: 50%; margin-top: -40px; transform: translateY(-50%); }
+        #duckButton { top: 50%; margin-top: 40px; transform: translateY(-50%); }
+        #fullscreenButton { top: 50%; margin-top: 120px; transform: translateY(-50%); }
 
         /* การปรับสำหรับมือถือ (Mobile Specific Styling) */
         @media (max-width: 768px) {
@@ -42,12 +43,13 @@
                 width: 50px;
                 height: 50px;
                 font-size: 24px;
+                right: 10px; /* ชิดขอบ 10px บนมือถือ */
             }
-            /* ตำแหน่งปุ่มลอยตัวบนมือถือ */
-            #homeButton { top: 10px; left: 10px; }
-            #dailyAverageButton { top: 10px; right: 70px; } /* ปรับตำแหน่งให้เหมาะสมบนมือถือ */
-            #duckButton { top: 10px; right: 10px; }
-            #fullscreenButton { bottom: 10px; right: 10px; }
+            /* ตำแหน่งปุ่มลอยตัวบนมือถือ (จัดกลางขวา) */
+            #homeButton { top: 50%; margin-top: -105px; transform: translateY(-50%); }
+            #dailyAverageButton { top: 50%; margin-top: -35px; transform: translateY(-50%); }
+            #duckButton { top: 50%; margin-top: 35px; transform: translateY(-50%); }
+            #fullscreenButton { top: 50%; margin-top: 105px; transform: translateY(-50%); }
         }
 
         @media (max-width: 400px) {
@@ -55,12 +57,13 @@
                 width: 45px;
                 height: 45px;
                 font-size: 20px;
+                right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
             }
-            /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก */
-            #homeButton { top: 5px; left: 5px; }
-            #dailyAverageButton { top: 5px; right: 60px; }
-            #duckButton { top: 5px; right: 5px; }
-            #fullscreenButton { bottom: 5px; right: 5px; }
+            /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก (จัดกลางขวา) */
+            #homeButton { margin-top: -90px; }
+            #dailyAverageButton { margin-top: -30px; }
+            #duckButton { margin-top: 30px; }
+            #fullscreenButton { margin-top: 90px; }
         }
     </style>
 </head>
