@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คำนวณค่าเฉลี่ยและยอดจัด</title>
+    <title>คำนวณค่าเฉลี่ย</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,9 +27,8 @@
                 <input type="number" id="days" name="days" required>
             </div>
             <button type="submit">คำนวณค่าเฉลี่ย</button>
-            <button type="button" id="calculateDailySalesBtn" class="daily-sales-button">คำนวณยอดจัดรายวัน 💰</button>
         </form>
-        <div id="dailySalesResult"></div> </div>
+    </div>
 
     <a href="songs.html" class="floating-button left">🦆</a>
     <button id="fullscreenBtn" class="floating-button right">📱</button>
@@ -45,6 +44,59 @@
         <p>หากพบปัญหาหรือข้อเสนอแนะสามารถติดต่อได้ที่ P'Jack OCS Lock 12</p>
     </footer>
 
-    <script src="script.js" defer></script>
+    <script>
+        document.getElementById('averageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const sku = parseFloat(document.getElementById('sku').value);
+            const mu = parseFloat(document.getElementById('mu').value);
+            const days = parseFloat(document.getElementById('days').value);
+
+            if (isNaN(sku) || isNaN(mu) || isNaN(days) || days <= 0) {
+                alert('กรุณากรอกข้อมูลตัวเลขให้ถูกต้อง และจำนวนวันต้องมากกว่า 0');
+                return;
+            }
+
+            // ใช้สูตรคำนวณตามที่กำหนด
+            const average = ((sku / 12) + (mu / 34)) / (2 * days);
+
+            window.location.href = `average.html?avg=${average.toFixed(2)}`;
+        });
+
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        fullscreenBtn.addEventListener('click', () => {
+            const elem = document.documentElement;
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) { /* Firefox */
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        });
+
+        // ตรวจสอบว่า API Fullscreen และ Orientation Lock รองรับหรือไม่
+        // และป้องกันไม่ให้ล็อกแนวนอนในหน้านี้
+        function checkSupport() {
+            const canFullscreen = document.documentElement.requestFullscreen ||
+                                  document.documentElement.mozRequestFullScreen ||
+                                  document.documentElement.webkitRequestFullscreen ||
+                                  document.documentElement.msRequestFullscreen;
+
+            if (!canFullscreen) {
+                 fullscreenBtn.style.display = 'none'; // ซ่อนปุ่มถ้าไม่รองรับ Fullscreen
+            }
+        }
+        checkSupport();
+
+    </script>
 </body>
 </html>
