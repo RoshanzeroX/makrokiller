@@ -150,15 +150,14 @@ h1 {
     50% { transform: translateY(-8px); }
 }
 
-/* ตำแหน่งปุ่มลอยตัวบน PC */
-/* เรียงปุ่มให้ห่างกัน 80px จากกึ่งกลางหน้าจอ */
+/* ตำแหน่งปุ่มลอยตัวบน PC (มาจาก style.css ของ index.html) */
 #homeButton { top: 50%; margin-top: -120px; transform: translateY(-50%); }
 #duckButton { top: 50%; margin-top: -40px; transform: translateY(-50%); }
 #dailyAverageButton { top: 50%; margin-top: 40px; transform: translateY(-50%); }
 #fullscreenButton { top: 50%; margin-top: 120px; transform: translateY(-50%); }
 
 
-/* Media Queries สำหรับการตอบสนองบนมือถือ */
+/* Media Queries สำหรับการตอบสนองบนมือถือ (มาจาก style.css ของ index.html) */
 @media (max-width: 768px) {
     .content-wrapper { padding: 2vh 1em; }
     main {
@@ -176,17 +175,21 @@ h1 {
     .result-details p { font-size: 1em; }
     .result-value { font-size: 2em; }
 
-    /* ตำแหน่งปุ่มลอยตัวบนมือถือ */
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือ (ปรับให้เหมาะสมกับ 4 ปุ่ม) */
     .floating-button {
         width: 50px;
         height: 50px;
         font-size: 24px;
         right: 10px; /* ชิดขอบ 10px บนมือถือ */
     }
-    /* เรียงปุ่มให้ห่างกัน 70px จากกึ่งกลางหน้าจอ */
     #homeButton { top: 50%; margin-top: -105px; transform: translateY(-50%); }
     #duckButton { top: 50%; margin-top: -35px; transform: translateY(-50%); }
-    #dailyAverageButton { top: 50%; margin-top: 35px; transform: translateY(-50%); }
+    #dailyAverageButton {
+        top: 50%;
+        margin-top: 35px;
+        transform: translateY(-50%);
+        display: flex; /* ทำให้ปุ่มนี้แสดงบนมือถือใน average.html */
+    }
     #fullscreenButton { top: 50%; margin-top: 105px; transform: translateY(-50%); }
 }
 
@@ -198,16 +201,15 @@ h1 {
     .result-message { font-size: 1.3em; }
     .result-value { font-size: 1.8em; }
 
-    /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก */
+    /* ตำแหน่งปุ่มลอยตัวบนมือถือขนาดเล็ก (ปรับให้เหมาะสมกับ 4 ปุ่ม) */
     .floating-button {
         width: 45px;
         height: 45px;
         font-size: 20px;
         right: 5px; /* ชิดขอบ 5px บนมือถือเล็ก */
     }
-    /* เรียงปุ่มให้ห่างกัน 60px จากกึ่งกลางหน้าจอ */
     #homeButton { margin-top: -90px; }
-    #dailyAverageButton { margin-top: -30px; }
-    #duckButton { margin-top: 30px; }
+    #duckButton { margin-top: -30px; }
+    #dailyAverageButton { margin-top: 30px; }
     #fullscreenButton { margin-top: 90px; }
 }
