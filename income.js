@@ -61,15 +61,21 @@ document.addEventListener("DOMContentLoaded", function() {
         const limit = 300;
         const percentage = (totalIncentive / limit) * 100;
         
-        progressBarFillDynamic.style.width = `${percentage}%`;
+        // กำหนดความกว้างของแถบให้ไม่เกิน 100% ของกรอบ
+        progressBarFillDynamic.style.width = `${Math.min(percentage, 100)}%`;
 
+        // ตรวจสอบเงื่อนไขเพื่อกำหนดสีของแถบ
         if (totalIncentive <= limit) {
-            progressBarFillDynamic.style.background = '#007bff';
+            // ถ้า Incentive รวม ไม่เกิน Limit (300 บาท)
+            // แถบจะเป็นสีน้ำเงินทั้งหมด
+            progressBarFillDynamic.style.background = '#007bff'; // สีน้ำเงิน
         } else {
-            const bluePartRelative = (limit / totalIncentive) * 100; 
-            progressBarFillDynamic.style.background = `linear-gradient(to right, #007bff 0%, #007bff ${bluePartRelative}%, #dc3545 ${bluePartRelative}%, #dc3545 100%)`;
+            // ถ้า Incentive รวม เกิน Limit (300 บาท)
+            // แถบจะเต็ม 100% ของกรอบ และเปลี่ยนเป็นสีแดง
+            progressBarFillDynamic.style.background = '#dc3545'; // สีแดง
         }
 
+        // อัปเดตข้อความบนแถบ
         progressTextOverlay.textContent = `${percentage.toFixed(1)}%`;
     });
 
