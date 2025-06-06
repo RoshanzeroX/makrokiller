@@ -8,9 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="background"></div> <div class="content-wrapper"> <main> <h1 class="fade-slide-in">Incentive Calculator</h1>
+    <div class="background"></div>
+    <div class="content-wrapper">
+        <main>
+            <h1 class="fade-slide-in">Incentive Calculator</h1>
             
-            <div class="info-card fade-slide-in"> <div class="input-group">
+            <div class="info-card fade-slide-in">
+                <div class="input-group">
                     <label for="skuInput">SKU / วัน:</label>
                     <input type="number" id="skuInput" placeholder="กรอก SKU/วัน" />
                 </div>
@@ -41,17 +45,9 @@
             </div>
         </main>
 
-        <footer>
-            <p><strong>ข้อมูลอ้างอิง:</strong><br>
-            * Tier SKU: <= 120 (Tier <= 10), 132-168 (Silver), 180-204 (Gold), 216-240 (Platinum), >= 252 (Diamond)<br>
-            * Payout SKU: 0, 0.50, 0.58, 0.67, 0.83 บาท/SKU ตามลำดับ<br>
-            * Tier MU: <= 340 (Tier <= 10), 374-476 (Silver), 510-578 (Gold), 612-680 (Platinum), >= 714 (Diamond)<br>
-            * Payout MU: 0, 0.18, 0.21, 0.24, 0.29 บาท/MU ตามลำดับ<br>
-            * Limit Incentive รวม: 300 บาท/วัน</p>
-            <p>&copy; 2025 Incentive Calculator by [Your Name/Company]. All rights reserved.</p>
-        </footer>
+        </div>
 
-    </div> <button id="homeButton" class="floating-button" style="background: radial-gradient(circle at center, #ffd700ee, #ccaa00cc);">🏠</button>
+    <button id="homeButton" class="floating-button" style="background: radial-gradient(circle at center, #ffd700ee, #ccaa00cc);">🏠</button>
     <button id="duckButton" class="floating-button" style="background: radial-gradient(circle at center, #87ceeb, #4682b4);">🦆</button>
     <button id="incomeButton" class="floating-button" style="background: radial-gradient(circle at center, #90ee90, #3cb371);">💰</button>
     <button id="dailyAverageButton" class="floating-button" style="background: radial-gradient(circle at center, #ff8c00, #e67e22);">📅</button>
