@@ -1,7 +1,28 @@
-document.addEventListener("DOMContentLoaded", function() { // เพิ่มบรรทัดนี้
-    document.getElementById("calculateBtn").addEventListener("click", function() {
-        const sku = parseFloat(document.getElementById("skuInput").value);
-        const mu = parseFloat(document.getElementById("muInput").value);
+document.addEventListener("DOMContentLoaded", function() {
+    const skuInput = document.getElementById("skuInput");
+    const muInput = document.getElementById("muInput");
+    const calculateBtn = document.getElementById("calculateBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const tierSKUElement = document.getElementById("tierSKU");
+    const tierMUElement = document.getElementById("tierMU");
+    const incentiveSKUElement = document.getElementById("incentiveSKU");
+    const incentiveMUElement = document.getElementById("incentiveMU");
+    const totalIncentiveElement = document.getElementById("totalIncentive"); // อ้างอิงถึง span ใน p "วันนี้ได้เงิน"
+    
+    // อ้างอิงถึง elements ของ Progress Bar ใหม่
+    const progressBarFillDynamic = document.getElementById("progressBarFillDynamic");
+    const progressTextOverlay = document.getElementById("progressTextOverlay");
+
+    calculateBtn.addEventListener("click", function() {
+        const sku = parseFloat(skuInput.value);
+        const mu = parseFloat(muInput.value);
+
+        // ตรวจสอบข้อมูลนำเข้า
+        if (isNaN(sku) || sku < 0 || isNaN(mu) || mu < 0) {
+            alert("กรุณากรอกข้อมูลเป็นตัวเลขที่ถูกต้องและเป็นบวก");
+            return;
+        }
 
         // Check tier for SKU
         let tierSKU = "-", payoutSKU = 0;
@@ -36,39 +57,49 @@ document.addEventListener("DOMContentLoaded", function() { // เพิ่มบ
         const incentiveMU = mu * payoutMU;
         const totalIncentive = incentiveSKU + incentiveMU;
 
-        // Calculate % of limit
-        const percent = (totalIncentive / 300) * 100;
-        const percentText = percent.toFixed(1) + "%";
-
         // Update UI
-        document.getElementById("tierSKU").textContent = tierSKU;
-        document.getElementById("tierMU").textContent = tierMU;
-        document.getElementById("incentiveSKU").textContent = incentiveSKU.toFixed(2);
-        document.getElementById("incentiveMU").textContent = incentiveMU.toFixed(2);
-        document.getElementById("totalIncentive").textContent = totalIncentive.toFixed(2);
+        tierSKUElement.textContent = tierSKU;
+        tierMUElement.textContent = tierMU;
+        incentiveSKUElement.textContent = incentiveSKU.toFixed(2);
+        incentiveMUElement.textContent = incentiveMU.toFixed(2);
+        totalIncentiveElement.textContent = totalIncentive.toFixed(2); // อัปเดต "วันนี้ได้เงิน"
 
-        const percentElement = document.getElementById("percentLimit");
-        percentElement.textContent = percentText;
-        percentElement.classList.remove("green", "red");
+        // --- Logic สำหรับ Progress Bar ---
+        const limit = 300;
+        const percentage = (totalIncentive / limit) * 100;
+        
+        // กำหนดความกว้างรวมของแถบ Progress Bar
+        // ถ้าเกิน 100% ก็ให้แถบยื่นออกไปเกิน Container ได้
+        progressBarFillDynamic.style.width = `${percentage}%`;
 
-        if (percent <= 100) {
-            percentElement.classList.add("green");
-        } else {
-            percentElement.classList.add("red");
-        }
+        // คำนวณจุดแบ่งสีน้ำเงินและแดง
+        // bluePartRatio คือสัดส่วนของ Incentive เทียบกับ Limit (สูงสุดคือ 1 หรือ 100%)
+        const bluePartRatio = Math.min(1, totalIncentive / limit); 
+        // แปลงเป็นเปอร์เซ็นต์สำหรับ gradient (ถ้า totalIncentive = 400, limit = 300 -> bluePartRatio = 0.75 -> 75%)
+        const bluePercentOfBar = bluePartRatio * 100; 
+
+        // กำหนดสีของแถบด้วย linear-gradient
+        // สีน้ำเงิน 0% ถึง bluePercentOfBar%
+        // สีแดง bluePercentOfBar% ถึง 100% (ของความยาวแถบที่คำนวณได้)
+        progressBarFillDynamic.style.background = `linear-gradient(to right, #007bff 0%, #007bff ${bluePercentOfBar}%, #dc3545 ${bluePercentOfBar}%, #dc3545 100%)`;
+
+        // อัปเดตข้อความบนแถบ
+        progressTextOverlay.textContent = `${percentage.toFixed(1)}%`;
     });
 
-    document.getElementById("resetBtn").addEventListener("click", function() {
-        document.getElementById("skuInput").value = "";
-        document.getElementById("muInput").value = "";
+    resetBtn.addEventListener("click", function() {
+        skuInput.value = "";
+        muInput.value = "";
 
-        document.getElementById("tierSKU").textContent = "-";
-        document.getElementById("tierMU").textContent = "-";
-        document.getElementById("incentiveSKU").textContent = "0";
-        document.getElementById("incentiveMU").textContent = "0";
-        document.getElementById("totalIncentive").textContent = "0";
-        const percentElement = document.getElementById("percentLimit");
-        percentElement.textContent = "0%";
-        percentElement.classList.remove("green", "red");
+        tierSKUElement.textContent = "-";
+        tierMUElement.textContent = "-";
+        incentiveSKUElement.textContent = "0";
+        incentiveMUElement.textContent = "0";
+        totalIncentiveElement.textContent = "0"; // Reset "วันนี้ได้เงิน"
+
+        // Reset Progress Bar
+        progressBarFillDynamic.style.width = "0%";
+        progressBarFillDynamic.style.background = "#007bff"; // กลับเป็นสีน้ำเงินเริ่มต้น
+        progressTextOverlay.textContent = "0%";
     });
-}); // เพิ่มบรรทัดนี้
+});
