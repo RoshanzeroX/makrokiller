@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const duckButton = document.getElementById("duckButton");
     const dailyAverageButton = document.getElementById("dailyAverageButton");
     const fullscreenButton = document.getElementById("fullscreenButton");
+    const incomeButton = document.getElementById("incomeButton"); // Added: incomeButton
 
     // ฟังก์ชันคำนวณค่าเฉลี่ยตามสูตรใหม่
     function calculateAverage(sku, mu, days) {
@@ -80,6 +81,13 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 document.exitFullscreen();
             }
+        });
+    }
+
+    // Added: Event listener for incomeButton
+    if (incomeButton) {
+        incomeButton.addEventListener("click", () => {
+            window.location.href = "income.html";
         });
     }
 
