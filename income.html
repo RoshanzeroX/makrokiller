@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Incentive Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Incentive Calculator</h1>
+        
+        <label>SKU / day:</label>
+        <input type="number" id="skuInput" placeholder="กรอก SKU/day" />
+
+        <label>MU / day:</label>
+        <input type="number" id="muInput" placeholder="กรอก MU/day" />
+
+        <div class="buttons">
+            <button id="calculateBtn">คำนวณ</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+
+        <div class="result">
+            <p>Tier SKU: <span id="tierSKU">-</span></p>
+            <p>Tier MU: <span id="tierMU">-</span></p>
+            <p>Incentive SKU: <span id="incentiveSKU">0</span> บาท</p>
+            <p>Incentive MU: <span id="incentiveMU">0</span> บาท</p>
+            <p>Incentive รวม: <span id="totalIncentive">0</span> บาท</p>
+            <p>% ของ Limit 300: <span id="percentLimit" class="percent">0%</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
