@@ -250,7 +250,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     margin-bottom: 1em;
     text-align: left;
     width: 100%;
-    position: relative; /* สำหรับปุ่ม clear */
+    position: relative;
 }
 
 .input-group input[type="number"] {
@@ -259,7 +259,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     color: white;
     font-size: 1em;
     box-sizing: border-box;
-    padding-right: 3em; /* เผื่อที่ให้ปุ่ม clear */
+    padding-right: 3em;
 }
 .input-group input[type="number"]::placeholder {
     color: #ddd;
@@ -288,50 +288,51 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
 }
 
 
-/* เพิ่ม Styles สำหรับ Progress Bar และข้อความ "วันนี้ได้เงิน" */
+/* Styles สำหรับ Progress Bar และข้อความ "วันนี้ได้เงิน" */
 .progress-bar-container {
     width: 100%;
     background-color: rgba(255,255,255,0.1);
     border-radius: 5px;
-    overflow: visible; /* เปลี่ยนเป็น overflow: visible เพื่อให้แถบสีแดงสามารถยื่นเกิน 100% ได้ */
+    /* เปลี่ยนกลับเป็น hidden เพื่อซ่อนส่วนที่เกินขอบ */
+    overflow: hidden; 
     margin-top: 1em;
     height: 35px;
     display: flex;
     align-items: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative; /* สำหรับจัดตำแหน่ง text overlay */
+    position: relative;
 }
 
-.progress-bar-fill-dynamic { /* แถบสีที่จะแสดงผล */
+.progress-bar-fill-dynamic {
     height: 100%;
-    background-color: #007bff; /* สีเริ่มต้นเป็นสีน้ำเงิน */
-    position: absolute; /* วางซ้อนบน container */
+    background-color: #007bff;
+    position: absolute;
     left: 0;
     top: 0;
     white-space: nowrap;
     box-sizing: border-box;
-    border-radius: 5px; /* มุมโค้งมน */
-    transition: width 0.5s ease-in-out, background 0.5s ease-in-out; /* เพิ่ม transition ให้เนียนขึ้น */
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out, background 0.5s ease-in-out;
 }
 
-.progress-text-overlay { /* ข้อความ % ที่อยู่บนแถบ */
+.progress-text-overlay {
     position: absolute;
-    width: 100%; /* ครอบคลุมความกว้างของ container */
+    width: 100%;
     text-align: center;
     color: white;
     font-size: 0.9em;
     font-weight: bold;
-    z-index: 2; /* ให้ข้อความอยู่ด้านบนของแถบสี */
-    text-shadow: 0 0 3px rgba(0,0,0,0.7); /* ทำให้ข้อความอ่านง่ายขึ้น */
+    z-index: 2;
+    text-shadow: 0 0 3px rgba(0,0,0,0.7);
 }
 
 /* Styles สำหรับข้อความ "วันนี้ได้เงิน" ให้เด่นขึ้น */
 .total-incentive-display {
-    font-size: 2.2em; /* ขนาดตัวอักษรใหญ่ขึ้น */
+    font-size: 2.2em;
     font-weight: bold;
-    color: #ffd700; /* สีทอง */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* เงาตัวอักษร */
-    margin: 0.8em 0; /* เว้นระยะห่างด้านบน/ล่าง */
+    color: #ffd700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    margin: 0.8em 0;
 }
 
 
@@ -399,7 +400,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         margin-top: 2em;
     }
     .total-incentive-display {
-        font-size: 1.8em; /* ลดขนาดลงเล็กน้อยบนมือถือ */
+        font-size: 1.8em;
     }
 }
 
@@ -429,6 +430,6 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     #dailyAverageButton { margin-top: 60px; }
     #fullscreenButton { margin-top: 120px; }
     .total-incentive-display {
-        font-size: 1.5em; /* ลดขนาดลงอีกบนมือถือเล็ก */
+        font-size: 1.5em;
     }
 }
