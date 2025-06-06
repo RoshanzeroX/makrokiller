@@ -305,7 +305,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
 
 .progress-bar-fill-dynamic {
     height: 100%;
-    background-color: #007bff;
+    /* Background color will be set by JavaScript based on conditions */
     position: absolute;
     left: 0;
     top: 0;
