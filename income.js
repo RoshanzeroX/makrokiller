@@ -61,7 +61,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const limit = 300;
         const percentage = (totalIncentive / limit) * 100;
         
-        // กำหนดความกว้างของแถบให้ไม่เกิน 100% ของกรอบ
+        // จำกัดความกว้างของแถบ Progress Bar ให้ไม่เกิน 100% ของกรอบเสมอ
+        // แต่ยังคงแสดงค่าตามเปอร์เซ็นต์ที่คำนวณได้จริงใน text overlay
         progressBarFillDynamic.style.width = `${Math.min(percentage, 100)}%`;
 
         // ตรวจสอบเงื่อนไขเพื่อกำหนดสีของแถบ
@@ -71,8 +72,15 @@ document.addEventListener("DOMContentLoaded", function() {
             progressBarFillDynamic.style.background = '#007bff'; // สีน้ำเงิน
         } else {
             // ถ้า Incentive รวม เกิน Limit (300 บาท)
-            // แถบจะเต็ม 100% ของกรอบ และเปลี่ยนเป็นสีแดง
-            progressBarFillDynamic.style.background = '#dc3545'; // สีแดง
+            // แถบจะกว้าง 100% และใช้ linear-gradient แบ่งสีน้ำเงิน (ส่วนที่ถึง 300) 
+            // กับสีแดง (ส่วนที่เกินมา) ภายในแถบ 100% นั้น
+            
+            // blueFillPercentageOfBar คือเปอร์เซ็นต์ของแถบ 100% ที่ควรเป็นสีน้ำเงิน
+            // (คำนวณจากสัดส่วนของ Limit เทียบกับ Total Incentive ทั้งหมด)
+            // เช่น ถ้า Total Incentive คือ 450 (150% ของ 300), Blue จะเป็น 300/450 = 66.67% ของแถบ
+            const blueFillPercentageOfBar = (limit / totalIncentive) * 100; 
+            
+            progressBarFillDynamic.style.background = `linear-gradient(to right, #007bff 0%, #007bff ${blueFillPercentageOfBar}%, #dc3545 ${blueFillPercentageOfBar}%, #dc3545 100%)`;
         }
 
         // อัปเดตข้อความบนแถบ
@@ -89,8 +97,9 @@ document.addEventListener("DOMContentLoaded", function() {
         incentiveMUElement.textContent = "0";
         totalIncentiveElement.textContent = "0";
 
+        // Reset Progress Bar to initial state (0% width, solid blue, 0% text)
         progressBarFillDynamic.style.width = "0%";
-        progressBarFillDynamic.style.background = "#007bff";
+        progressBarFillDynamic.style.background = "#007bff"; // กลับเป็นสีน้ำเงินเริ่มต้น
         progressTextOverlay.textContent = "0%";
     });
 });
