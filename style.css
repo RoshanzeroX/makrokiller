@@ -1,7 +1,3 @@
-/*
- * style.css
- */
-
 html, body {
     margin: 0;
     padding: 0;
@@ -29,8 +25,8 @@ html, body {
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-    min-height: 90vh; /* เพื่อให้ footer อยู่ด้านล่าง */
-    justify-content: center; /* จัดให้อยู่ตรงกลางแนวตั้งบน PC */
+    min-height: 90vh;
+    justify-content: center;
 }
 
 .fade-slide-in {
@@ -56,7 +52,7 @@ main {
     min-height: 50vh;
     max-width: 600px;
     margin: 0 auto;
-    width: 100%; /* เพิ่ม width เพื่อให้ responsive มากขึ้น */
+    width: 100%;
 }
 
 h1 {
@@ -117,22 +113,20 @@ button:hover {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* เพิ่ม styles สำหรับ buttons-group เพื่อจัดปุ่มให้เป็นบรรทัดเดียวกัน */
 .buttons-group {
-    display: flex; /* ใช้ flexbox */
-    justify-content: center; /* จัดกึ่งกลางแนวนอน */
-    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
-    width: 100%; /* ให้เต็มความกว้าง */
-    margin-top: 2em; /* เพิ่มระยะห่างด้านบน */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 2em;
 }
 
 .buttons-group button {
-    margin: 0 0.5em; /* ให้ปุ่มมีระยะห่างกันเล็กน้อย */
-    width: auto; /* ให้ปุ่มปรับขนาดตามเนื้อหา */
-    max-width: none; /* ยกเลิก max-width เพื่อให้จัดเรียงได้ */
-    display: inline-block; /* ทำให้ปุ่มอยู่ในบรรทัดเดียวกัน */
+    margin: 0 0.5em;
+    width: auto;
+    max-width: none;
+    display: inline-block;
 }
-
 
 .floating-button {
     position: fixed;
@@ -175,7 +169,7 @@ button:hover {
     transform: translateY(-50%);
 }
 
-#incomeButton { /* Added: Positioning for the income button */
+#incomeButton {
     top: 50%;
     margin-top: 0px;
     transform: translateY(-50%);
@@ -202,12 +196,12 @@ footer {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-sizing: border-box;
-    margin-top: 3em; /* เพิ่ม margin-top เพื่อแยกจาก main */
+    margin-top: 3em;
     position: relative;
     max-width: 85%;
     margin-left: auto;
     margin-right: auto;
-    width: 100%; /* ให้เต็มความกว้าง */
+    width: 100%;
 }
 
 footer p {
@@ -222,7 +216,6 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     background-color: rgba(255,255,255,0.4);
     border-radius: 3px;
 }
-
 
 .info-card {
     background-color: rgba(255, 255, 255, 0.25);
@@ -257,6 +250,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     margin-bottom: 1em;
     text-align: left;
     width: 100%;
+    position: relative; /* สำหรับปุ่ม clear */
 }
 
 .input-group input[type="number"] {
@@ -265,56 +259,83 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     color: white;
     font-size: 1em;
     box-sizing: border-box;
+    padding-right: 3em; /* เผื่อที่ให้ปุ่ม clear */
 }
 .input-group input[type="number"]::placeholder {
     color: #ddd;
 }
 
+.clear-btn {
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: #aaa;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    width: auto;
+    padding: 0.2em 0.5em;
+    box-shadow: none;
+    transition: color 0.2s ease;
+}
 
+.clear-btn:hover {
+    color: #fff;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: none;
+}
+
+
+/* เพิ่ม Styles สำหรับ Progress Bar และข้อความ "วันนี้ได้เงิน" */
 .progress-bar-container {
     width: 100%;
     background-color: rgba(255,255,255,0.1);
     border-radius: 5px;
-    overflow: hidden;
+    overflow: visible; /* เปลี่ยนเป็น overflow: visible เพื่อให้แถบสีแดงสามารถยื่นเกิน 100% ได้ */
     margin-top: 1em;
     height: 35px;
     display: flex;
     align-items: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative; /* สำหรับจัดตำแหน่ง text overlay */
 }
-.progress-bar {
+
+.progress-bar-fill-dynamic { /* แถบสีที่จะแสดงผล */
     height: 100%;
-    background-color: #007bff;
-    width: 0%;
-    border-radius: 5px;
+    background-color: #007bff; /* สีเริ่มต้นเป็นสีน้ำเงิน */
+    position: absolute; /* วางซ้อนบน container */
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-radius: 5px; /* มุมโค้งมน */
+    transition: width 0.5s ease-in-out, background 0.5s ease-in-out; /* เพิ่ม transition ให้เนียนขึ้น */
+}
+
+.progress-text-overlay { /* ข้อความ % ที่อยู่บนแถบ */
+    position: absolute;
+    width: 100%; /* ครอบคลุมความกว้างของ container */
     text-align: center;
-    line-height: 35px;
     color: white;
-    transition: width 0.5s ease-in-out;
     font-size: 0.9em;
     font-weight: bold;
-    white-space: nowrap;
-    padding: 0 0.5em;
-    box-sizing: border-box;
+    z-index: 2; /* ให้ข้อความอยู่ด้านบนของแถบสี */
+    text-shadow: 0 0 3px rgba(0,0,0,0.7); /* ทำให้ข้อความอ่านง่ายขึ้น */
 }
 
-.clear-button {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    color: white;
+/* Styles สำหรับข้อความ "วันนี้ได้เงิน" ให้เด่นขึ้น */
+.total-incentive-display {
+    font-size: 2.2em; /* ขนาดตัวอักษรใหญ่ขึ้น */
     font-weight: bold;
-    border: none;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-.clear-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    color: #ffd700; /* สีทอง */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* เงาตัวอักษร */
+    margin: 0.8em 0; /* เว้นระยะห่างด้านบน/ล่าง */
 }
 
-@media (max-width: 768px) { /* ปรับ media query ให้ครอบคลุมแท็บเล็ตด้วย */
+
+@media (max-width: 768px) {
     h1 {
         font-size: 2em;
     }
@@ -349,12 +370,12 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         font-size: 0.8em;
     }
     .buttons-group {
-        flex-direction: column; /* บนมือถือให้ปุ่มเรียงกันลงมา */
+        flex-direction: column;
         margin-top: 1.5em;
     }
     .buttons-group button {
-        margin: 0.5em 0; /* เพิ่มระยะห่างแนวตั้ง */
-        width: 80%; /* ให้ปุ่มกว้างขึ้นบนมือถือ */
+        margin: 0.5em 0;
+        width: 80%;
         max-width: 300px;
     }
     .floating-button {
@@ -365,33 +386,11 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     }
 
     /* ปรับตำแหน่งปุ่มลอยสำหรับมือถือที่มี 5 ปุ่ม */
-    #homeButton {
-        top: 50%;
-        margin-top: -140px;
-        transform: translateY(-50%);
-    }
-    #duckButton {
-        top: 50%;
-        margin-top: -70px;
-        transform: translateY(-50%);
-    }
-    #incomeButton { /* Added: Adjusted for 5 buttons */
-        top: 50%;
-        margin-top: 0px;
-        transform: translateY(-50%);
-        display: flex; /* Ensure it's visible */
-    }
-    #dailyAverageButton {
-        top: 50%;
-        margin-top: 70px;
-        transform: translateY(-50%);
-        display: flex; /* Ensure it's visible */
-    }
-    #fullscreenButton {
-        top: 50%;
-        margin-top: 140px;
-        transform: translateY(-50%);
-    }
+    #homeButton { top: 50%; margin-top: -140px; transform: translateY(-50%); }
+    #duckButton { top: 50%; margin-top: -70px; transform: translateY(-50%); }
+    #incomeButton { top: 50%; margin-top: 0px; transform: translateY(-50%); display: flex; }
+    #dailyAverageButton { top: 50%; margin-top: 70px; transform: translateY(-50%); display: flex; }
+    #fullscreenButton { top: 50%; margin-top: 140px; transform: translateY(-50%); }
 
     footer {
         padding: 1em;
@@ -399,9 +398,11 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
         max-width: 90%;
         margin-top: 2em;
     }
+    .total-incentive-display {
+        font-size: 1.8em; /* ลดขนาดลงเล็กน้อยบนมือถือ */
+    }
 }
 
-/* เพิ่ม media query สำหรับมือถือขนาดเล็กมาก */
 @media (max-width: 400px) {
     h1 {
         font-size: 1.8em;
@@ -427,4 +428,7 @@ h1.title-no-wrap::-webkit-scrollbar-thumb {
     #incomeButton { margin-top: 0px; }
     #dailyAverageButton { margin-top: 60px; }
     #fullscreenButton { margin-top: 120px; }
+    .total-incentive-display {
+        font-size: 1.5em; /* ลดขนาดลงอีกบนมือถือเล็ก */
+    }
 }
