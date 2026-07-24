@@ -1,124 +1,612 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>โปรแกรมคำนวณค่าเฉลี่ย Order Picker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <style>
-        body, input, button, p, h1, h2, h3 {
-            font-family: 'Kanit', sans-serif;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        .input-wrapper {
-            width: 100%;
-            max-width: 350px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        input {
-            width: 100%;
-            font-size: 1.1em;
-            box-sizing: border-box;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-        input::placeholder {
-            color: #ddd;
-        }
-        button {
-            width: 100%;
-            max-width: 350px;
-            font-size: 1.2em;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-        }
-        /* ปรับ Footer ให้พอดีกับหน้าจอ */
-        footer {
-            margin-top: 3em;
-            padding: 1.5em;
-            text-align: center;
-            font-size: 0.75em; /* ลดขนาดลง 30% */
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            max-width: 85%;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-        }
-        footer p {
-            margin: 0.5em 0;
-            color: #ddd;
-        }
-        /* เพิ่มลูกเล่นตกแต่ง */
-        .footer-icon {
-            display: inline-block;
-            font-size: 1.2em;
-            margin: 0 6px;
-        }
-        /* ให้ footer ปรับตามมือถือ */
-        @media (max-width: 480px) {
-            footer {
-                font-size: 0.65em;
-                padding: 1em;
-                max-width: 95%;
-            }
-            footer p {
-                margin: 0.4em 0;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>จำลองการไหลของอากาศร้อนและกังหันลม</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #fafafa;
+    color: #111;
+    padding: 20px;
+    line-height: 1.5;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 600; margin-bottom: 16px; }
+  h2 { font-size: 16px; font-weight: 500; margin: 20px 0 10px; }
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    cursor: crosshair;
+  }
+  canvas { display: block; width: 100%; height: 100%; }
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .mode-btns { display: flex; gap: 8px; }
+  .mode-btns button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    color: #666;
+    transition: all 0.2s;
+  }
+  .mode-btns button.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+  .slider-group {
+    flex: 1;
+    min-width: 160px;
+  }
+  .slider-group label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+  }
+  .slider-group input[type="range"] {
+    width: 100%;
+    accent-color: #111;
+  }
+  .stats {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 130px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+  }
+  .stat-label { font-size: 11px; color: #666; margin-bottom: 2px; }
+  .stat-value { font-size: 16px; font-weight: 500; }
+  .stat-value.danger { color: #ef4444; }
+  .stat-value.positive { color: #22c55e; }
+  .stat-value.warning { color: #f59e0b; }
+  .note {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+  }
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #666;
+    flex-wrap: wrap;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .drag-hint {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 11px;
+    color: #999;
+    pointer-events: none;
+  }
+  @media (max-width: 600px) {
+    .canvas-wrap { height: 320px; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .mode-btns { justify-content: center; }
+  }
+</style>
 </head>
 <body>
-    <div class="background"></div>
+<div class="container">
+  <h1>🔥 จำลองการไหลของอากาศร้อนและกังหันลม</h1>
 
-    <div class="content-wrapper fade-slide-in">
-        <main>
-            <h1 class="title-no-wrap">📦 โปรแกรมคำนวณค่าเฉลี่ย Order Picker</h1>
-            <form id="averageForm" class="centered-form">
-                <div class="input-wrapper">
-                    <input type="number" id="sku" placeholder="✅ SKU ที่ทำได้แล้ว" required />
-                </div>
-                <div class="input-wrapper">
-                    <input type="number" id="mu" placeholder="✅ MU ที่ทำได้แล้ว" required />
-                </div>
-                <div class="input-wrapper">
-                    <input type="number" id="days" placeholder="📅 จำนวนวันทำงาน" required />
-                </div>
-                <button type="submit">🔍 คำนวณค่าเฉลี่ย</button>
-            </form>
-        </main>
+  <div class="canvas-wrap" id="canvasWrap">
+    <canvas id="simCanvas"></canvas>
+    <div class="drag-hint">ลากกังหันเพื่อย้ายตำแหน่ง</div>
+  </div>
 
-        <footer>    
-            <p> เว็บไซต์นี้ถูกพัฒนาขึ้นเพื่อช่วยคำนวณค่าเฉลี่ยออเดอร์</p>    
-            <p> โดยเน้นให้ผู้ใช้งานสามารถกรอกข้อมูลและรับผลลัพธ์ได้รวดเร็ว</p>
-            <p> โค้ดเขียนด้วย HTML, CSS และ JavaScript เพื่อให้โหลดไว</p>
-            <p> พัฒนาโดย Jack Makro © 2025 | ทีมงาน: Team Dev RoshanzeroX</p>
-            <p><span class="footer-icon">📞</span> ติดต่อ: P'Jack OCS Lock 12</p>
-        </footer>
+  <div class="controls">
+    <div class="mode-btns">
+      <button id="btnStraight" class="active">ใบพัดตรง</button>
+      <button id="btnHelical">ใบพัดบิดเกลียว</button>
     </div>
+    <div class="slider-group">
+      <label>ความเร็วลมร้อน: <span id="windVal">5</span></label>
+      <input type="range" id="windSpeed" min="2" max="10" value="5" step="0.5">
+    </div>
+  </div>
 
-<button id="homeButton" class="floating-button" style="background: radial-gradient(circle at center, #ffd700ee, #ccaa00cc);">🏠</button>
-<button id="duckButton" class="floating-button" style="background: radial-gradient(circle at center, #87ceeb, #4682b4);">🦆</button>
-<button id="incomeButton" class="floating-button" style="background: radial-gradient(circle at center, #90ee90, #3cb371);">💰</button> 
-<button id="dailyAverageButton" class="floating-button" style="background: radial-gradient(circle at center, #ff8c00, #e67e22);">📅</button>
-<button id="fullscreenButton" class="floating-button" style="background: radial-gradient(circle at center, #ff6347, #ff4500);">↔</button>
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-label">ลมตีกลับ → AC</div>
+      <div class="stat-value danger" id="backflowRate">0%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">ลมเบี่ยงรอบ</div>
+      <div class="stat-value positive" id="deflectRate">0%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Wake หลังกังหัน</div>
+      <div class="stat-value warning" id="wakeRate">0%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Drag Coefficient</div>
+      <div class="stat-value" id="dragCoeff">Cd ≈ 1.2</div>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <div class="note" id="explainText">
+    <strong>ใบพัดตรง:</strong> พื้นผิวขนานกับลมในบางช่วง → ชนตรง → สะท้อนกลับสูง ลมตีกลับไปหา AC มาก
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:#ef4444"></span> ลมร้อนจาก AC</span>
+    <span><span class="dot" style="background:#f59e0b"></span> ลมตีกลับ (Backflow)</span>
+    <span><span class="dot" style="background:#22c55e"></span> ลมเบี่ยงรอบ (Deflect)</span>
+    <span><span class="dot" style="background:#8b5cf6"></span> Wake หลังกังหัน</span>
+  </div>
+
+  <h2>💡 วิธีใช้</h2>
+  <div class="note">
+    1. <strong>สลับโหมด</strong> ระหว่าง "ใบพัดตรง" และ "ใบพัดบิดเกลียว" เพื่อดูความแตกต่าง<br>
+    2. <strong>ปรับความเร็วลม</strong> เพื่อดูผลกระทบต่อแรงตีกลับ<br>
+    3. <strong>ลากกังหัน</strong> ด้วยเมาส์/นิ้วเพื่อย้ายตำแหน่งและสังเกตการไหลของอากาศ
+  </div>
+
+  <h2>📐 หลักการ Aerodynamics</h2>
+  <div class="note">
+    <strong>ใบพัดตรง (Straight VAWT):</strong> มีพื้นผิวที่หันเข้าหาลมโดยตรงในบางช่วงการหมุน ทำให้อากาศชนแล้วสะท้อนกลับได้ง่าย (Drag Coefficient ≈ 1.2) เกิดแรงตีกลับสูง<br><br>
+    <strong>ใบพัดบิดเกลียว (Helical VAWT):</strong> รูปทรงบิดช่วยให้อากาศไหล "ตามแนวใบพัด" ลดการชนตรง ลมถูกพาดไปตามผิวเกลียวแล้วเบี่ยงออกด้านข้าง (Drag Coefficient ≈ 0.6) ลดแรงตีกลับและกระแสวนได้มาก
+  </div>
+</div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('simCanvas');
+  const ctx = canvas.getContext('2d');
+  const wrap = document.getElementById('canvasWrap');
+  const btnStraight = document.getElementById('btnStraight');
+  const btnHelical = document.getElementById('btnHelical');
+  const windSlider = document.getElementById('windSpeed');
+  const windVal = document.getElementById('windVal');
+  const backflowEl = document.getElementById('backflowRate');
+  const deflectEl = document.getElementById('deflectRate');
+  const wakeEl = document.getElementById('wakeRate');
+  const dragEl = document.getElementById('dragCoeff');
+  const explainEl = document.getElementById('explainText');
+
+  let W, H;
+  function resize() {
+    const rect = wrap.getBoundingClientRect();
+    W = rect.width;
+    H = rect.height;
+    canvas.width = W * window.devicePixelRatio;
+    canvas.height = H * window.devicePixelRatio;
+    ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let mode = 'straight';
+  let windSpeed = 5;
+  let particles = [];
+  let turbineAngle = 0;
+  let time = 0;
+  let dragging = false;
+  let turbineX = 0;
+  let turbineY = 0;
+
+  const hotColor = '#ef4444';
+  const backColor = '#f59e0b';
+  const passColor = '#22c55e';
+  const wakeColor = '#8b5cf6';
+  const textColor = '#111';
+  const secondaryText = '#666';
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  const obsSize = 80;
+
+  function initPos() {
+    turbineX = W * 0.55;
+    turbineY = H * 0.5;
+  }
+  initPos();
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = 8 + Math.random() * 35;
+      this.y = H * 0.5 + (Math.random() - 0.5) * 100;
+      this.vx = windSpeed * (0.8 + Math.random() * 0.3);
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.life = 1.0;
+      this.state = 'forward';
+      this.size = 1.5 + Math.random() * 1.5;
+      this.trail = [];
+      this.wakeTimer = 0;
+    }
+    update() {
+      this.trail.push({x: this.x, y: this.y});
+      if (this.trail.length > 12) this.trail.shift();
+
+      const cx = turbineX;
+      const cy = turbineY;
+      const dx = this.x - cx;
+      const dy = this.y - cy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+
+      if (this.state === 'forward') {
+        if (mode === 'straight') {
+          if (dist < obsSize * 0.4 && this.x > cx - 12) {
+            const rand = Math.random();
+            if (rand < 0.55) {
+              this.state = 'back';
+              this.vx = -windSpeed * (0.5 + Math.random() * 0.4);
+              this.vy = (Math.random() - 0.5) * 5;
+            } else if (rand < 0.85) {
+              this.state = 'deflect';
+              const angle = Math.atan2(dy, dx);
+              const tangent = angle + (dy > 0 ? 1 : -1) * Math.PI/2;
+              this.vx = Math.cos(tangent) * windSpeed * 0.6;
+              this.vy = Math.sin(tangent) * windSpeed * 0.6;
+            } else {
+              this.state = 'wake';
+              this.vx = windSpeed * 0.2;
+              this.vy = (Math.random() - 0.5) * 3;
+              this.wakeTimer = 40;
+            }
+          }
+        } else {
+          if (dist < obsSize * 0.38 && this.x > cx - 8) {
+            const relY = (this.y - (cy - obsSize * 0.45)) / (obsSize * 0.9);
+            const twist = relY * Math.PI * 2;
+            const effectiveAngle = turbineAngle + twist;
+            const rand = Math.random();
+            if (rand < 0.15) {
+              this.state = 'back';
+              this.vx = -windSpeed * (0.25 + Math.random() * 0.2);
+              this.vy = (Math.random() - 0.5) * 3;
+            } else if (rand < 0.65) {
+              this.state = 'deflect';
+              this.vx = Math.cos(effectiveAngle + Math.PI/2) * windSpeed * 0.5 + windSpeed * 0.15;
+              this.vy = Math.sin(effectiveAngle + Math.PI/2) * windSpeed * 0.5;
+            } else {
+              this.state = 'wake';
+              this.vx = windSpeed * 0.4;
+              this.vy = (Math.random() - 0.5) * 2;
+              this.wakeTimer = 30;
+            }
+          }
+        }
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x > W + 20) this.reset();
+      } else if (this.state === 'back') {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life -= 0.01;
+        if (this.life <= 0 || this.x < -20) this.reset();
+      } else if (this.state === 'deflect') {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x > cx + obsSize * 0.5) {
+          this.vx += 0.05;
+          this.vy *= 0.9;
+          if (this.vx > windSpeed * 0.5) this.state = 'forward';
+        }
+        if (this.x > W + 20 || this.y < -10 || this.y > H + 10) this.reset();
+      } else if (this.state === 'wake') {
+        this.x += this.vx;
+        this.y += this.vy + (Math.random() - 0.5) * 1.5;
+        this.wakeTimer--;
+        this.vx += 0.03;
+        if (this.wakeTimer <= 0) this.state = 'forward';
+        if (this.x > W + 20 || this.y < -10 || this.y > H + 10) this.reset();
+      }
+    }
+    draw() {
+      if (this.trail.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(this.trail[0].x, this.trail[0].y);
+        for (let i = 1; i < this.trail.length; i++) ctx.lineTo(this.trail[i].x, this.trail[i].y);
+        if (this.state === 'forward') ctx.strokeStyle = hexToRgba(hotColor, 0.1);
+        else if (this.state === 'back') ctx.strokeStyle = hexToRgba(backColor, 0.15);
+        else if (this.state === 'deflect') ctx.strokeStyle = hexToRgba(passColor, 0.1);
+        else ctx.strokeStyle = hexToRgba(wakeColor, 0.1);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      if (this.state === 'forward') ctx.fillStyle = hexToRgba(hotColor, 0.7);
+      else if (this.state === 'back') ctx.fillStyle = hexToRgba(backColor, 0.8 * this.life);
+      else if (this.state === 'deflect') ctx.fillStyle = hexToRgba(passColor, 0.6);
+      else ctx.fillStyle = hexToRgba(wakeColor, 0.6);
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 140; i++) {
+      const p = new Particle();
+      p.x = Math.random() * W;
+      particles.push(p);
+    }
+  }
+  initParticles();
+
+  function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  }
+  function isOverTurbine(pos) {
+    const dx = pos.x - turbineX;
+    const dy = pos.y - turbineY;
+    return Math.sqrt(dx*dx + dy*dy) < obsSize * 0.5 + 15;
+  }
+  canvas.addEventListener('mousedown', e => {
+    const pos = getMousePos(e);
+    if (isOverTurbine(pos)) dragging = true;
+  });
+  canvas.addEventListener('touchstart', e => {
+    const pos = getMousePos(e);
+    if (isOverTurbine(pos)) { dragging = true; e.preventDefault(); }
+  }, {passive: false});
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const pos = getMousePos(e);
+    turbineX = Math.max(obsSize/2 + 15, Math.min(W - obsSize/2 - 15, pos.x));
+    turbineY = Math.max(obsSize/2 + 15, Math.min(H - obsSize/2 - 15, pos.y));
+  });
+  window.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const pos = getMousePos(e);
+    turbineX = Math.max(obsSize/2 + 15, Math.min(W - obsSize/2 - 15, pos.x));
+    turbineY = Math.max(obsSize/2 + 15, Math.min(H - obsSize/2 - 15, pos.y));
+    e.preventDefault();
+  }, {passive: false});
+  window.addEventListener('mouseup', () => dragging = false);
+  window.addEventListener('touchend', () => dragging = false);
+
+  function drawACUnit() {
+    const acW = 55, acH = 28;
+    const acX = 8, acY = H * 0.5 - acH/2;
+    ctx.fillStyle = textColor;
+    ctx.beginPath();
+    ctx.roundRect(acX, acY, acW, acH, 5);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '10px sans-serif';
+    ctx.fillText('AC', acX + acW/2 - 8, acY + acH/2 + 3);
+    ctx.strokeStyle = hotColor;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(acX + acW, acY + acH/2);
+    ctx.lineTo(acX + acW + 22, acY + acH/2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(acX + acW + 18, acY + acH/2 - 3);
+    ctx.lineTo(acX + acW + 22, acY + acH/2);
+    ctx.lineTo(acX + acW + 18, acY + acH/2 + 3);
+    ctx.stroke();
+  }
+
+  function drawStraightBlade() {
+    const cx = turbineX;
+    const cy = turbineY;
+    turbineAngle += 0.03 * windSpeed;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.strokeStyle = secondaryText;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, obsSize * 0.45);
+    ctx.lineTo(0, H - cy - 10);
+    ctx.stroke();
+    const bladeW = obsSize * 0.18;
+    const bladeH = obsSize * 0.44;
+    for (let i = 0; i < 3; i++) {
+      const angle = turbineAngle + (i * Math.PI * 2 / 3);
+      ctx.save();
+      ctx.rotate(angle);
+      ctx.fillStyle = textColor;
+      ctx.beginPath();
+      ctx.roundRect(-bladeW/2, -bladeH/2, bladeW, bladeH, 3);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.1)';
+      ctx.beginPath();
+      ctx.roundRect(-bladeW/2 + 1, -bladeH/2 + 1, bladeW/2, bladeH - 2, 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.fillStyle = textColor;
+    ctx.beginPath();
+    ctx.arc(0, 0, obsSize * 0.06, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+    ctx.strokeStyle = hexToRgba(hotColor, 0.1);
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.arc(cx, cy, obsSize * 0.4, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  function drawHelicalBlade() {
+    const cx = turbineX;
+    const cy = turbineY;
+    turbineAngle += 0.03 * windSpeed;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.strokeStyle = secondaryText;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, obsSize * 0.45);
+    ctx.lineTo(0, H - cy - 10);
+    ctx.stroke();
+    const segments = 24;
+    const halfH = obsSize * 0.44;
+    const bladeW = obsSize * 0.18;
+    for (let b = 0; b < 3; b++) {
+      const baseAngle = turbineAngle + (b * Math.PI * 2 / 3);
+      ctx.fillStyle = textColor;
+      ctx.beginPath();
+      for (let i = 0; i <= segments; i++) {
+        const t = i / segments;
+        const y = -halfH + t * halfH * 2;
+        const twist = t * Math.PI * 2;
+        const angle = baseAngle + twist;
+        const px = Math.cos(angle) * bladeW;
+        const pz = Math.sin(angle) * bladeW;
+        const x = px + pz * 0.35;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      for (let i = segments; i >= 0; i--) {
+        const t = i / segments;
+        const y = -halfH + t * halfH * 2;
+        const twist = t * Math.PI * 2;
+        const angle = baseAngle + twist;
+        const px = Math.cos(angle) * (bladeW * 0.25);
+        const pz = Math.sin(angle) * (bladeW * 0.25);
+        const x = px + pz * 0.35;
+        ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.08)';
+      ctx.beginPath();
+      for (let i = 0; i <= segments; i++) {
+        const t = i / segments;
+        const y = -halfH + t * halfH * 2;
+        const twist = t * Math.PI * 2;
+        const angle = baseAngle + twist;
+        const px = Math.cos(angle) * bladeW * 0.75;
+        const pz = Math.sin(angle) * bladeW * 0.75;
+        const x = px + pz * 0.35;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      for (let i = segments; i >= 0; i--) {
+        const t = i / segments;
+        const y = -halfH + t * halfH * 2;
+        const twist = t * Math.PI * 2;
+        const angle = baseAngle + twist;
+        const px = Math.cos(angle) * bladeW * 0.55;
+        const pz = Math.sin(angle) * bladeW * 0.55;
+        const x = px + pz * 0.35;
+        ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = hexToRgba(passColor, 0.15);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let i = 0; i <= segments; i++) {
+        const t = i / segments;
+        const y = -halfH + t * halfH * 2;
+        const twist = t * Math.PI * 2;
+        const angle = baseAngle + twist;
+        const px = Math.cos(angle) * (bladeW + 5);
+        const pz = Math.sin(angle) * (bladeW + 5);
+        const x = px + pz * 0.35;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    ctx.fillStyle = textColor;
+    ctx.beginPath();
+    ctx.arc(0, 0, obsSize * 0.06, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function updateStats() {
+    const backCount = particles.filter(p => p.state === 'back').length;
+    const deflectCount = particles.filter(p => p.state === 'deflect').length;
+    const wakeCount = particles.filter(p => p.state === 'wake').length;
+    const total = particles.length;
+    const backRate = Math.round((backCount / total) * 100);
+    const deflectRate = Math.round((deflectCount / total) * 100);
+    const wakeRate = Math.round((wakeCount / total) * 100);
+    backflowEl.textContent = backRate + '%';
+    backflowEl.className = 'stat-value ' + (backRate > 15 ? 'danger' : (backRate > 5 ? 'warning' : 'positive'));
+    deflectEl.textContent = deflectRate + '%';
+    deflectEl.className = 'stat-value positive';
+    wakeEl.textContent = wakeRate + '%';
+    wakeEl.className = 'stat-value warning';
+    if (mode === 'straight') {
+      dragEl.textContent = 'Cd ≈ 1.2';
+      explainEl.innerHTML = '<strong>ใบพัดตรง:</strong> พื้นผิวขนานกับลมในบางช่วง → ชนตรง → <span style="color:#ef4444">สะท้อนกลับสูง</span> ลมตีกลับไปหา AC มาก';
+    } else {
+      dragEl.textContent = 'Cd ≈ 0.6';
+      explainEl.innerHTML = '<strong>ใบพัดบิดเกลียว:</strong> รูปทรงบิดช่วยให้อากาศไหล <span style="color:#22c55e">ตามแนวใบพัด</span> → สะท้อนกลับน้อย ลมเบี่ยงรอบตัวมากกว่า';
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    time += 0.016;
+    drawACUnit();
+    if (mode === 'straight') drawStraightBlade();
+    else drawHelicalBlade();
+    particles.forEach(p => { p.update(); p.draw(); });
+    if (time % 0.5 < 0.02) updateStats();
+    requestAnimationFrame(animate);
+  }
+
+  btnStraight.addEventListener('click', () => {
+    mode = 'straight';
+    btnStraight.classList.add('active');
+    btnHelical.classList.remove('active');
+    particles.forEach(p => p.reset());
+  });
+  btnHelical.addEventListener('click', () => {
+    mode = 'helical';
+    btnHelical.classList.add('active');
+    btnStraight.classList.remove('active');
+    particles.forEach(p => p.reset());
+  });
+  windSlider.addEventListener('input', e => {
+    windSpeed = parseFloat(e.target.value);
+    windVal.textContent = windSpeed;
+  });
+
+  animate();
+})();
+</script>
 </body>
 </html>
